@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+
+    <ui:insert name="ContenidoEventos">
+
+        <ace:panel header="EVENTOS X COLABORADOR"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="2"> COLABORADOR </th></tr>
+
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label>Identificación *</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%" colspan="3">
+                        <div >
+                            <ace:textEntry value="#{colaboradorJSFBean.colaborador.identificacion}"
+                                           styleClass="inputs" readonly="true">
+
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label> Nombres</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+                        <div >
+                            <ace:textEntry value="#{colaboradorJSFBean.colaborador.nombres}"
+                                           readonly="true"
+                                           styleClass="inputs">
+
+                            </ace:textEntry>
+                        </div>
+                    </td>
+
+
+                </tr>
+            </table>
+
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="2"> EVENTOS </th></tr>
+                <tr>
+                    <td style="width: 100%">
+
+                        <ace:dataExporter 
+                            styleClass="btnGenerarInforme"
+                            label=" "
+                            style=" 
+                            border: none;
+                            width: 45px ;height: 45px;
+                            background-size: 100% auto;
+                            background-repeat: repeat;
+                            background-color: transparent !important;
+                            border: 0px !important;"
+                            includeHeaders="true"
+                            pageOnly="false"
+                            type="xls"
+
+                            target="tablaEvento" fileName="eventos"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%">
+                        <ace:dataTable value="#{colaboradorJSFBean.lstVentasXColaborador}"
+                                       var="itemclb"
+                                       rows="20"
+                                       id="tablaEvento"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <ace:column  headerText="Fecha Evento">
+
+                                <h:outputText value="#{itemclb.vdeId.vdeFechaevt}" 
+
+                                              styleClass="textcolumleft letraOutput">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                </h:outputText>
+
+                            </ace:column>
+                            <ace:column headerText="Cliente Documento" >
+                                <h:outputText value="#{itemclb.vdeId.dclnId.clnId.identificacion}"
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="Cliente Nombres" >
+                                <h:outputText value="#{itemclb.vdeId.dclnId.clnId.nombres}"
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="Homenajeado" >
+                                <h:outputText value="#{itemclb.vdeId.dclnId.nombres}"
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="Dirección Evento"  >
+                                <h:outputText value="#{itemclb.vdeId.vdeDireccionevt}" 
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+                            <ace:column headerText="Motivo Evento" >
+                                <h:outputText value="#{itemclb.vdeId.mteId.mteNombre}"
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Valor Evento ($)" style="width: 100px">
+                                <h:outputText rendered="#{(itemclb.rgvtVlrfactura == null ? true :false)}"
+                                              value="#{itemclb.rgvtValorventa }"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                                <h:outputText rendered="#{(itemclb.rgvtVlrfactura == null ? false :true)}"
+                                              value="#{itemclb.rgvtVlrfactura}"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber locale="es" pattern="#,##0" />
+                                </h:outputText>
+                            </ace:column>
+
+
+
+                        </ace:dataTable>
+
+                    </td>
+                </tr>
+            </table>
+        </ace:panel>
+
+
+
+
+
+
+
+
+
+    </ui:insert>
+
+</html>

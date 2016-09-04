@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="consPedido">
+        <ace:panel header="Total productos asignados">
+            <h:panelGroup id="frmContProdAsig">
+                <h:panelGrid columns="1" styleClass="alturaTablaStd">
+                    <ace:dataTable id="dtProdAprov"
+                                   value="#{compAprbSolsJSFBean.lstTablaProdAprobNativas}" 
+                                   var="item"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText="Producto" styleClass="letraTitColTabla" style="width: 150px">
+                            <h:outputText value="#{item.prdNombre}" styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Marca" styleClass="letraTitColTabla" style="width: 150px">
+                            <h:outputText value="#{item.marNombre}" styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width: 150px;">
+                            <h:outputText value="#{item.pspNombre}" styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad aprobada" styleClass="letraTitColTabla" style="width: 80px;text-align: center">
+                            <h:outputText value="#{item.cantAprob}" styleClass="textcolumright"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad inventario" styleClass="letraTitColTabla" style="width: 80px;text-align: center">
+                            <h:outputText value="#{item.cantInventario}" styleClass="textcolumright"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad a comprar" styleClass="letraTitColTabla" style="width: 80px;text-align: center">
+                            <h:outputText value="#{item.cantAComprar}" styleClass="textcolumright"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>
+

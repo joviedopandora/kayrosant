@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml">
+        <ui:define name="top">
+            <h:panelGroup>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnNuevoStd"
+                                     actionListener="#{invCompJSFBean.btnNuevoProd_ActionEvent}"
+                                     title="Nuevo producto">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{invCompJSFBean.blnEditProd}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnGuardarStd"
+                                     actionListener="#{invCompJSFBean.btnGrabEditProd_ActionEvent}"
+                                     title="Grabar producto" >
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:300px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnVolverStd" 
+                                     actionListener="#{invCompJSFBean.btnVolver_ActionEvent}"
+                                     title="Regresar">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ui:define>
+
+        <ui:define name="left">
+            <ui:include src="NavInventario.xhtml"/>
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <icecore:singleSubmit/>
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">
+                <ace:panel header="Producto" rendered="#{!invCompJSFBean.blnEditProd}">
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Categoría" styleClass="labelFormStd"/>
+                        <h:selectOneMenu style="width: 290px;font-size: 11px"
+                                         value="#{invCompJSFBean.intCpdId}"
+                                         valueChangeListener="#{invCompJSFBean.ddlSelCatProd_ValueChangeEvent}">
+                            <f:selectItem itemValue="-1" itemLabel="SELECCIONE >>"/>
+                            <f:selectItem itemValue="-2" itemLabel="TODOS"/>
+                            <f:selectItems value="#{invCompJSFBean.lstCatProd}" var="item"
+                                           itemValue="#{item.cpdId}" itemLabel="#{item.cpdNombre}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgProd">
+                            <ace:dataTable id="dtMantProducto"
+                                           value="#{invCompJSFBean.lstTablaProducto}"
+                                           var="item"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"
+                                           rows="20"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                           rowsPerPageTemplate="5,10,20 "
+                                           paginatorPosition="bottom"
+                                           currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText=">>>" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:commandLink value=">>>"
+                                                   styleClass="letraConTabla"
+                                                   actionListener="#{invCompJSFBean.dtRowEditProducto_ActionEvent}">
+                                        <f:attribute name="filaSel" value="#{item}"/>                            
+                                    </h:commandLink>
+                                </ace:column>
+                                <ace:column headerText="Nombre" style="width: 200px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProducto.prdNombre}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Descripción" style="width: 250px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProducto.prdDesc}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                <ace:column headerText="Especial" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invProducto.prdEsp}"/>
+                                </ace:column>
+                                <ace:column headerText="Ocacional" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invProducto.prdOcasnl}"/>
+                                </ace:column>
+                                <ace:column headerText="Único" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invProducto.prdUnico}"/>
+                                </ace:column>
+                                <ace:column headerText="Estado" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invProducto.prdEst}"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+                <ace:panel header="Datos del producto" widgetVar="pnlaceEditProd"
+                           rendered="#{invCompJSFBean.blnEditProd}">
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" styleClass="bodePanelGrid" style="width: 600px">
+                            <h:outputLabel value="Categoría *"/>
+                        <h:selectOneMenu styleClass="selectGrande"
+                                         value="#{invCompJSFBean.idCategoria}">
+                            <f:selectItems value="#{invCompJSFBean.lstCategoria}"/>
+                        </h:selectOneMenu>
+                            <h:outputLabel value="Id *"
+                                           styleClass="labelFormStd"/>
+                            <ace:textEntry readonly="#{invCompJSFBean.blnBloqIdProd}"
+                                           value="#{invCompJSFBean.intProdId}"
+                                           styleClass="textPeq">
+                                <f:convertNumber integerOnly="true"/>
+                            </ace:textEntry>
+                            <h:outputLabel value="Nombre *" styleClass="labelFormStd"/>
+                            <ace:textEntry value="#{invCompJSFBean.strProdNombre}"
+                                           styleClass="textGrande">
+                                <f:converter converterId="convertMayusc"/>
+                            </ace:textEntry>
+                            <h:outputLabel value="Descripción"
+                                           styleClass="labelFormStd"/>
+                            <h:inputTextarea value="#{invCompJSFBean.strProdDesc}"
+                                             styleClass="textAreaGrande">
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputTextarea>
+                            <h:outputLabel/>
+                            <h:panelGrid columns="8">
+                                <h:outputLabel value=" Especial" styleClass="labelFormStd"/>
+                                <h:selectBooleanCheckbox value="#{invCompJSFBean.blnProdEspecial}"
+                                                         label="Especial">
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel value="Ocacional" styleClass="labelFormStd"/>
+                                <h:selectBooleanCheckbox value="#{invCompJSFBean.blnProdOcacional}"
+                                                         label="Ocacional">
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel value="Único" styleClass="labelFormStd"/>
+                                <h:selectBooleanCheckbox value="#{invCompJSFBean.blnProdUnico}"
+                                                         label="Único">
+                                </h:selectBooleanCheckbox>
+                                <h:outputLabel value="Estado" styleClass="labelFormStd"/>
+                                <h:selectBooleanCheckbox value="#{invCompJSFBean.blnProdEstado}"
+                                                         label="Estado producto">
+                                </h:selectBooleanCheckbox>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgTablaPresent">
+                            <ace:dataTable id="dtPresentacion" style="width: 400px"
+                                           value="#{invCompJSFBean.lstTablaPresentProd}"
+                                           var="item"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"
+                                           rows="10"  
+                                           height="370"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"  
+                                           paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <h:outputText value="Presentación"/>
+                                </f:facet>
+                                <ace:column headerText="" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                </ace:column>
+                                <ace:column headerText="Presentación" style="width: 150px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invPresentprod.pspNombre}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>
+                        <h:panelGroup id="pnlgTablaMarca">
+                            <ace:dataTable id="dtMarca" style="width: 400px"
+                                           value="#{invCompJSFBean.lstTablaMarca}"
+                                           var="item"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"
+                                           rows="10"  
+                                           height="370"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "  
+                                           paginatorPosition="bottom">
+                                <f:facet name="header">
+                                    <h:outputText value="Marca"/>
+                                </f:facet>
+                                <ace:column headerText="" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                </ace:column>
+                                <ace:column headerText="Marca" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invMarca.marNombre}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>                        
+                    </h:panelGrid>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

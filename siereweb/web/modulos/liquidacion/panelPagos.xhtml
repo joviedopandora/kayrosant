@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <ui:insert name="pagos">
+        <ace:panel header="Liquidacion a Pagar"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="6"> Datos generales de los  pagos</th></tr>
+
+                <tr>
+                    <td >
+                        <div >
+                            <label>Numero de Documento :</label>
+                        </div>
+                    </td>
+                    <td  >
+
+                        <ace:textEntry value="#{liquidacionJSFBean.consultaNominaDTO.numeroDocumento}" 
+                                       maxlength="50"
+                                       styleClass="inputs" 
+                                       >
+                            <f:converter converterId="convertMayusc"/>
+                            <ace:ajax execute="@this" render="@this" />
+                        </ace:textEntry>
+
+                    </td>
+                    <td >
+                        <div >
+                            <label>Tipo Pago :</label>
+                        </div>
+                    </td>
+                    <td  >
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{liquidacionJSFBean.consultaNominaDTO.tipoPago}"
+                                              >
+                                <f:selectItem itemValue="#{null}" itemLabel="Todos" /> 
+                                <f:selectItems value="#{liquidacionJSFBean.listaTiposPago}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div >
+                            <label> Fecha Inicial  </label>
+                        </div>
+                    </td>
+                    <td  >
+                        <ace:dateTimeEntry value="#{liquidacionJSFBean.consultaNominaDTO.fechaInicialNomina}" 
+
+                                           styleClass="inputs"
+                                           pattern="dd/MM/yyyy"
+                                           renderAsPopup="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            <ace:ajax execute="@this" render="@this" />
+                        </ace:dateTimeEntry>
+
+                    </td>
+
+                    <td >
+                        <div >
+                            <label> Fecha Final </label>
+                        </div>
+                    </td>
+                    <td  >
+                        <ace:dateTimeEntry value="#{liquidacionJSFBean.consultaNominaDTO.fechaFinal}" 
+
+                                           styleClass="inputs"
+                                           pattern="dd/MM/yyyy"
+                                           renderAsPopup="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            <ace:ajax execute="@this" render="@this" />
+                        </ace:dateTimeEntry>
+
+
+                    </td>
+
+
+
+                </tr>
+
+            </table>
+            <br />
+
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" > Pendientes por pagar</th></tr>
+
+                <tr>
+                    <td style="width: 100%">
+                        <ace:dataTable value="#{liquidacionJSFBean.listaPagos}" 
+                                       style="font-size: large"
+                                       var="itemLgt"
+                                       paginator="true"
+                                       alwaysExecuteContents="true"
+                                       id="tablaPagos"
+
+                                       paginatorAlwaysVisible="true"
+                                       rows="30"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                       currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                            <ace:column headerText="Indice" 
+
+                                        style="width:30px;"
+                                        >
+                                <h:outputText value="#{itemLgt.inidceFila}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+                            <ace:column headerText="Seleccione" 
+
+                                        >
+                                <h:selectBooleanCheckbox value="#{itemLgt.seleccionado}" 
+                                                         valueChangeListener="#{liquidacionJSFBean.seleccionarParaPago}">
+                                    <f:ajax execute="@this" render="@form"></f:ajax>
+                                    <f:attribute name="tabla"  value="#{itemLgt}" />
+
+                                </h:selectBooleanCheckbox>
+
+                            </ace:column>
+                            <ace:column headerText="Documento Colaborador" 
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.liquidacion.cxcId.cpeId.colCedula.colCedula}">
+                                <h:outputText value="#{itemLgt.liquidacion.cxcId.cpeId.colCedula.colCedula}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+                            <ace:column headerText="Nombre Colaborador" 
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.liquidacion.cxcId.cpeId.colCedula.nombres}">
+                                <h:outputText value="#{itemLgt.liquidacion.cxcId.cpeId.colCedula.nombres}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+
+
+                   
+                            
+                            
+                            <ace:column headerText="Valor a Pagar ($)" style="width: 200px">
+                              <h:outputText value="#{itemLgt.liquidacion.liquidacionValorPagar}"
+                                                  styleClass="textcolumright letraOutput">
+                                        <f:convertNumber pattern="#0.00"/>
+                                        <f:convertNumber groupingUsed="true"/>
+                                    </h:outputText>
+                                </ace:column> 
+                        
+                            
+
+                            <ace:column headerText="Liquidación" 
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.liquidacion.idLiquidaconso.nombreLiquidaconso}">
+                                <h:outputText value="#{itemLgt.liquidacion.idLiquidaconso.nombreLiquidaconso}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+
+                            <ace:column headerText="Pin" 
+
+                                        style="width: 200px;"
+                                        >
+                                <ace:textEntry value="#{itemLgt.liquidacion.liquidacionNumeroAprobacion}" 
+                                               rendered="#{itemLgt.liquidacion.idTipopago.idTipopago !=1}"
+                                               disabled="#{!itemLgt.seleccionado}"
+                                               maxlength="4"
+                                               styleClass="inputs" 
+                                               >
+
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+  <h:outputText   rendered="#{itemLgt.liquidacion.idTipopago.idTipopago ==1}" value="#{itemLgt.liquidacion.liquidacionNumeroAprobacion}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+
+
+                            <ace:column headerText="Tipo de pago" 
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.liquidacion.idTipopago.descTipopago}">
+                                <h:outputText value="#{itemLgt.liquidacion.idTipopago.descTipopago}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+
+
+                        </ace:dataTable>
+                    </td>
+                </tr>
+            </table>
+
+        </ace:panel>
+    </ui:insert>    
+</html>

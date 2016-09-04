@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">   
+    <ui:composition template="/principal/masterpage.xhtml">
+        <ui:define name="top">          
+            <h:panelGroup>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnNuevoStd"
+                                     actionListener="#{invCompJSFBean.btnNuevoProv_ActionEvent}"
+                                     title="Nuevo proveedor">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{invCompJSFBean.blnEditProv}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnGuardarStd"
+                                     actionListener="#{invCompJSFBean.btnGrabEditProv_ActionEvent}"
+                                     title="Grabar proveedor">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:300px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnVolverStd"
+                                     actionListener="#{invCompJSFBean.btnVolver_ActionEvent}"
+                                     title="Regresar">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ui:define>
+
+        <ui:define name="left">
+            <ui:include src="NavInventario.xhtml"/>
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <icecore:singleSubmit/>
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">                
+                <ace:panel header="Proveedor" rendered="#{!invCompJSFBean.blnEditProv}">
+                    <!--
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Forma pago" styleClass="labelFormStd"/>
+                        <h:selectOneMenu style="width: 290px;font-size: 11px"
+                                         value="#{invCompJSFBean.intFpgId}"
+                                         valueChangeListener="#{invCompJSFBean.ddlSelFormaPago_ValueChangeEvent}">
+                            <f:selectItem itemValue="-1" itemLabel="SELECCIONE >>"/>
+                            <f:selectItems value="#{invCompJSFBean.lstFormaPago}" var="item"
+                                           itemValue="#{item.fpgId}" itemLabel="#{item.fpgNombre}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    -->
+                    <h:panelGrid columns="1" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgProv">
+                            <ace:dataTable id="dtMantProveedor"
+                                           value="#{invCompJSFBean.lstTablaProveedor}"
+                                           var="item"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"
+                                           rows="20"  
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                                           rowsPerPageTemplate="3,6,9 "
+                                           paginatorPosition="bottom"
+                                           currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText=">>>" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:commandLink value=">>>"
+                                                   styleClass="letraConTabla"
+                                                   actionListener="#{invCompJSFBean.dtRowEditProveedor_ActionEvent}">
+                                        <f:attribute name="filaSel" value="#{item}"/>
+                                    </h:commandLink>
+                                </ace:column>
+                                <ace:column headerText="Código" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvId}"
+                                                  styleClass="letraConTabla"/>
+                                </ace:column>
+                                <ace:column headerText="NIT" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvNit} - #{item.invProveedor.prvDigver}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Razón social" style="width: 250px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvRazonsoc}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                <!--
+                                <ace:column headerText="Descripción" style="width: 300px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvDesc}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                -->
+                                <ace:column headerText="Dirección" style="width: 150px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvDireccion}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                <ace:column headerText="Teléfono 1" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvTel1}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                <!--                                
+                                <ace:column headerText="Teléfono 2" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvTel2}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                <ace:column headerText="E-mail" style="width: 150px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvEmail}"
+                                                  styleClass="letraConTabla textcolumleft"/>    
+                                </ace:column>
+                                -->
+                                <ace:column headerText="Contacto" style="width: 150px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvContacto}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Teléfono" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.prvTelcontacto}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Forma pago" style="width: 100px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invProveedor.fpgId.fpgNombre}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Estado" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invProveedor.prvEstado}"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+                <ace:panel header="Datos proveedor" widgetVar="pnlaceEditProv"
+                           rendered="#{invCompJSFBean.blnEditProv}">
+                    <h:panelGrid columns="2" styleClass="bodePanelGrid" style="width: 650px">
+                        <h:outputLabel value="Forma pago *"/>
+                        <h:selectOneMenu styleClass="selectGrande"
+                                         value="#{invCompJSFBean.idFormaPago}">
+                            <f:selectItems value="#{invCompJSFBean.lstFormaPago}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel value="Id *" styleClass="labelFormStd"/>
+                        <ace:textEntry readonly="#{invCompJSFBean.blnBloqIdProv}"
+                                       value="#{invCompJSFBean.intPrvId}"
+                                       styleClass="textPeq">
+                            <f:convertNumber integerOnly="true"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="NIT *" styleClass="labelFormStd"/>
+                        <h:panelGrid columns="3">
+                            <ace:textEntry value="#{invCompJSFBean.strPrvNit}"
+                                           styleClass="textMediano">
+                                <f:converter converterId="convertMayusc"/>
+                            </ace:textEntry>
+                            <h:outputLabel value="-"/>
+                            <ace:textEntry value="#{invCompJSFBean.intPrvDigVer}"
+                                           style="width: 30px"
+                                           styleClass="textPeq">
+                                <f:convertNumber integerOnly="true"/>
+                            </ace:textEntry>
+                        </h:panelGrid>
+                        <h:outputLabel value="Razón social *" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvRazon}"
+                                       styleClass="textGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Descripción" styleClass="labelFormStd"/>
+                        <h:inputTextarea value="#{invCompJSFBean.strPrvDesc}"
+                                         styleClass="textAreaGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputTextarea>
+                        <h:outputLabel value="Dirección" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvDir}"
+                                       styleClass="textGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Teléfono 1" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvTel1}"
+                                       styleClass="textMediano">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Teléfono 2" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvTel2}"
+                                       styleClass="textMediano"/>
+                        <h:outputLabel value="E-mail" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvEmail}"
+                                       styleClass="textGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry> 
+                        <h:outputLabel value="Contacto" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvContacto}"
+                                       styleClass="textMediano">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Teléfono" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strPrvTelContacto}"
+                                       styleClass="textMediano">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>                       
+                        <h:outputLabel value="Estado" styleClass="labelFormStd"/>
+                        <h:selectBooleanCheckbox value="#{invCompJSFBean.blnPrvEstado}"
+                                                 label="Estado"/>
+                    </h:panelGrid>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

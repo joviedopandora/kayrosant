@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="navInventario">
+        <ace:accordion collapsible="true" autoHeight="false" event="click"
+                       effect="fade" style="font-size: 11px;">
+            <ace:accordionPane title="Inventario">
+                <h:panelGrid columns="1" rowClasses="altoElmLateral" >
+                    <h:commandLink id="btnNavInv"
+                                   immediate="true"
+                                   value="Producto"
+                                   action="invProd"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Producto">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="1"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNavCatProd"
+                                   immediate="true"
+                                   value="Categoría"
+                                   action="invCatProd"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Categoría producto">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="2"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNavPresentProd"
+                                   immediate="true"
+                                   value="Presentación"
+                                   action="invPresent"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 3 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Presentación producto">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="3"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNavMarca"
+                                   immediate="true"
+                                   value="Marca"
+                                   action="invMarca"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 4 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Marca producto">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="4"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNavProv"
+                                   immediate="true"
+                                   value="Proveedor"
+                                   action="invProv"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 5 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Proveedor">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="5"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNavMant"
+                                   immediate="true"
+                                   value="Volver a Parametrización"
+                                   action="admParam"
+                                   actionListener="#{invCompJSFBean.btnNavInv_ActionEvent}"
+                                   styleClass="#{invCompJSFBean.numPanel == 6 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                   title="Mantenimientos">
+                        <f:attribute name="jsfBean" value="invCompJSFBean"/>
+                        <f:attribute name="numPanel" value="6"/>
+                    </h:commandLink>            
+                </h:panelGrid>
+            </ace:accordionPane>
+        </ace:accordion>
+    </ui:insert>
+</html>

@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+     
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+    >
+    <ui:insert name="panelServicioXventaapp">
+        <ace:panel header="SERVICIOS POR COTIZAR">
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Datos Cliente </th></tr>
+                <tr>
+                    <td style="width: 15%">
+                        <div>
+                            <label>IDENTIFICACION:</label> 
+                        </div>
+
+                    </td>
+                    <td style="width: 35%">
+                        <div>
+                            <h:inputText styleClass="inputs" 
+                                         readonly="true"
+                                         value="#{pcsCotizacionJSFBean.tablaVntClienteSel.vntCliente.identificacion}"/>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div>
+                            <label>CLIENTE:</label>
+                        </div>
+
+                    </td>
+                    <td style="width: 35%">
+                        <div>
+                            <h:inputText styleClass="inputs" 
+                                         readonly="true"
+                                         value="#{pcsCotizacionJSFBean.tablaVntClienteSel.vntCliente.nombres}"/>
+                        </div>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <div>
+                            <label>TIPO :</label> 
+                        </div>
+
+                    </td>
+                    <td style="width: 35%">
+                        <div>
+                            <h:inputText styleClass="inputs" 
+                                         readonly="true"
+                                         value="#{pcsCotizacionJSFBean.tablaVntClienteSel.vntCliente.tclId.tclNombre}"/>
+                        </div>
+
+                    </td>
+                    <td style="width: 15%">
+                        <div>
+                            <label># COTIZACIÓN :</label> 
+                        </div>
+
+                    </td>
+                    <td style="width: 35%">
+                        <div>
+                            <h:inputText styleClass="inputs" 
+                                         readonly="true"
+                                         value="#{pcsCotizacionJSFBean.vntRegistroventa.rgvtId}"/>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+
+            <h:panelGrid columns="1">                
+                <ace:dataTable value="#{pcsCotizacionJSFBean.lstTablaVntServicio}" style="font-size: large" 
+                               var="itemSrv"
+                               reorderableColumns="true"
+
+                               singleSort="true"
+                               groupedFilterResults="true"
+                               alwaysExecuteContents="true"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               rows="10"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Servicios: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="PRODUCTOS Y SERVICIOS"/>
+                    </f:facet>
+                    <ace:column style="width: 50px"  >
+                        <f:facet name="header">
+                            <h:selectBooleanCheckbox valueChangeListener="#{pcsCotizacionJSFBean.selTodoServicio_ValueChange}">
+                                <f:ajax execute="@this" render="@all"/>
+                            </h:selectBooleanCheckbox>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{itemSrv.seleccionado}" valueChangeListener="#{pcsCotizacionJSFBean.selServicio_ValueChange}" > 
+                            <f:ajax execute="@this" render="@all"/>
+                            <f:attribute name="tsxvs" value="#{itemSrv}" />
+                        </h:selectBooleanCheckbox>
+                    </ace:column>
+                    <ace:column id="exp1">
+                        <ace:expansionToggler />
+                    </ace:column>
+                    <ace:column headerText="Servicio" style="width: 200px; font-size: large" sortBy="#{itemSrv.vntServicio.vsrvNombre}"
+                                filterBy="#{itemSrv.vntServicio.vsrvNombre}" filterMatchMode="contains">  
+                        <h:outputText value="#{itemSrv.vntServicio.vsrvNombre}" style="font-size: large"/>
+                    </ace:column>
+
+                    <ace:panelExpansion>
+                        <h:outputText id="costPerLbTxt1" value="Descripción: " />
+
+                        <h:outputText id="costPerLb1" value="#{itemSrv.vntServicio.vsrvDesc}">
+
+                        </h:outputText>
+                    </ace:panelExpansion>
+
+                    <ace:column headerText="Tipo" style="width: 150px">
+                        <h:outputText value="#{itemSrv.vntServicio.tsrvId.tsrvNombre}"/>
+                    </ace:column>
+                    <ace:column headerText="Precio empresa" style="width: 150px">
+                        <h:outputText value="#{itemSrv.vntServicio.vsrvValunitempresa}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="Precio cliente"  style="width: 150px">
+                        <h:outputText value="#{itemSrv.vntServicio.vsrvValunitcliente}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+                    </ace:column>
+                    <ace:column headerText="Cantidad" style="width: 60px"  >
+                        <h:inputText value="#{itemSrv.cantidadSrv}" 
+                                     valueChangeListener="#{pcsCotizacionJSFBean.cambioCantidadServicio_ValueChange}"
+                                     styleClass="inputs" >
+                            <f:convertNumber integerOnly="true" />
+                            <f:validateLongRange minimum="0" maximum="500000"/>
+                            <f:ajax execute="@this" render="@this"/>
+                            <f:attribute name="tsxvs" value="#{itemSrv}" />
+                        </h:inputText>
+                    </ace:column>
+                    <ace:column headerText="Precio venta" style="width: 150px"  >
+                        <h:inputText value="#{itemSrv.bigdPrecioCliente}"
+                                     styleClass="inputs"
+
+                                     valueChangeListener="#{pcsCotizacionJSFBean.cambioPrecioServicio_ValueChange}"
+                                     >
+
+                            <f:convertNumber groupingUsed="true"/>
+
+                            <f:ajax execute="@this" render="@this"/>
+                            <f:attribute name="tsxvs" value="#{itemSrv}" />
+                        </h:inputText>
+                    </ace:column>
+                </ace:dataTable>
+                <h:panelGroup id="tablaServicioXVenta">
+                    <ace:dataTable value="#{pcsCotizacionJSFBean.lstTablaVntSrvXVenta}"
+                                   style="font-size: large"
+                                   var="itemSxv"
+
+
+                                   paginator="true"
+                                   alwaysExecuteContents="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="20"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Eventos a Facturar: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <f:facet name="header">
+                            <h:outputText value="SERVICIOS VENDIDOS"/>
+                        </f:facet>
+
+
+
+                        <ace:column headerText="Servicio" style="width: 250px" footerText="Total" >
+                            <h:outputText value="#{itemSxv.vntServxventa.vsrvId.vsrvNombre}"/>
+                        </ace:column>
+                        <ace:column headerText="Precio vendido" style="width: 150px">
+                            <h:outputText value="#{itemSxv.vntServxventa.srvxventPrecioventa}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:outputText>
+                        </ace:column>                    
+                        <ace:column headerText="Cantidad" style="width: 100px" footerText="#{pcsCotizacionJSFBean.cantidadServiciosSeleccionados}">
+                            <h:outputText value="#{itemSxv.vntServxventa.srvxventCantidad}">
+                                <f:convertNumber integerOnly="true" />
+                            </h:outputText>
+
+                        </ace:column>      
+                        <ace:column headerText="Precio total vendido" style="width: 150px" footerText="">
+                            <h:outputText value="#{itemSxv.vntServxventa.srvxventValtotalclnt}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:outputText>
+                            <f:facet name="footer">
+                                <h:outputText value="#{pcsCotizacionJSFBean.vntRegistroventa.rgvtValorventa}" >
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </f:facet>
+                        </ace:column>
+                        <ace:column style="width: 150px">
+                            <f:facet name="header" >
+                                <h:panelGrid columns="1">
+                                   
+                                    <h:panelGrid columns="3">
+                                        <h:outputText value="Aplicar %" ></h:outputText> 
+                                        <h:inputText value="#{pcsCotizacionJSFBean.valoDescVenta}"
+                                                     validatorMessage="Porcentaje debe ser menor o igual que 100"
+                                                     styleClass="textcolumright inputs" style="width: 60px;"
+                                                     valueChangeListener="#{pcsCotizacionJSFBean.cambioDescuentoAplicarTodos}"
+                                                     onkeypress="if (event.which &lt; 48 || event.which &gt; 57) return false;"
+                                                     id="inputPorcentajeDescxServ"      
+                                                     >
+                                            <f:convertNumber groupingUsed="false"/>
+                                            <f:ajax render="@form" execute="@this"></f:ajax>
+                                           
+                                            <f:validateDoubleRange maximum="100"  />
+
+                                        </h:inputText>
+                                         <h:message for="inputPorcentajeDescxServ" showDetail="true" showSummary="false"  styleClass="mensaje styleMensajeError"  />
+                                    </h:panelGrid>
+                                    <h:outputText value="% Descuento" />
+                                </h:panelGrid>
+                            </f:facet>
+                            <h:panelGrid id="panelTablaDesccuento" columns="1">
+
+
+
+                                <h:inputText value="#{itemSxv.vntServxventa.srvxventPorcentajeDesc}"
+                                             validatorMessage="Porcentaje debe ser menor o igual que 100"
+                                             styleClass="textcolumright inputs" style="width: 60px;"
+                                             valueChangeListener="#{pcsCotizacionJSFBean.cambioDescuentoXServicio}"
+                                             onkeypress="if (event.which &lt; 48 || event.which &gt; 57) return false;"
+                                             id="inputDescxServ"      
+                                             >
+                                    <f:convertNumber groupingUsed="false"/>
+                                    <f:ajax render="@form panelTablaDesccuento" execute="@this"></f:ajax>
+                                    <f:attribute name="tsxvs" value="#{itemSxv}"/>
+                                    <f:validateDoubleRange maximum="100"  />
+
+                                </h:inputText>
+                                <h:message for="inputDescxServ" showDetail="true" showSummary="false"  styleClass="mensaje styleMensajeError"  />
+                            </h:panelGrid>
+                            <f:facet name="footer">
+                                <h:outputText value="#{pcsCotizacionJSFBean.valSubtotal}">
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </f:facet> 
+                        </ace:column>
+                        <ace:column headerText="Descuento" style="width: 150px">
+                            <h:outputText value="#{itemSxv.vntServxventa.srvxventDescuento}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber groupingUsed="true"/>
+
+                            </h:outputText>
+                            <f:facet name="footer">
+                                <h:outputText value="#{pcsCotizacionJSFBean.vntRegistroventa.rgvtDescuento}">
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </f:facet> 
+                        </ace:column>
+
+
+                        <ace:column style="width: 50px">
+                            <h:commandButton styleClass="btnTrashStd"
+                                             actionListener="#{pcsCotizacionJSFBean.btnEliminarServicioXVenta_ActionEvent}"
+                                             title="Eliminar servicio">
+                                <f:attribute name="tsxvs" value="#{itemSxv}"/>
+                                <f:ajax execute ="@this"  render ="@form" />
+                            </h:commandButton>
+                        </ace:column>
+
+
+                    </ace:dataTable>
+
+                </h:panelGroup>
+    <ace:dialog id="dialogDescuento"
+                        header="Descuento"
+                        widgetVar="dialogDescuento"
+                        closable="true"
+                        modal="false"
+                        draggable="false"
+                        showEffect="clip"
+                        hideEffect="fade"
+                        showHeader="true"
+                        width="1500">
+                <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+
+                    <tr>
+                        <td style="width: 5%">
+                            <label>S1</label> 
+
+                        </td>
+                        <td style="width: 20%">
+                            <h:inputText  styleClass="textcolumright"
+
+
+                                          value="#{gestionVentaJSFBean.tablaSrvXVentaSel.vntServxventa.vsrvId.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+
+                        <td style="width: 10%">
+                            <label>Precio vendido</label> 
+
+                        </td>
+                        <td style="width: 10%">
+                            <h:inputText  styleClass="inputs"
+
+
+                                          value="#{itemSrv.vntServicio.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+
+                        <td style="width: 10%">
+                            <label>cantidad</label> 
+
+                        </td>
+                        <td style="width: 5%">
+                            <h:inputText  styleClass="inputs"
+
+
+                                          value="#{itemSrv.vntServicio.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+
+                        <td style="width: 10%">
+                            <label>Precio total vendido</label> 
+
+                        </td>
+                        <td style="width: 10%">
+                            <h:inputText  styleClass="inputs"
+
+
+                                          value="#{itemSrv.vntServicio.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+
+
+                        <td style="width: 10%">
+                            <label>Descuento</label> 
+
+                        </td>
+                        <td style="width: 5%">
+                            <h:inputText  styleClass="inputs"
+
+
+                                          value="#{itemSrv.vntServicio.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+
+                        <td style="width: 5%">
+                            <h:inputText  styleClass="inputs"
+
+
+                                          value="#{itemSrv.vntServicio.vsrvNombre}" >
+
+
+                            </h:inputText>
+
+
+                        </td>
+                    </tr>
+
+
+
+                </table>
+
+                <br>
+                </br>
+
+                <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+
+
+                    <tr><th  class="thtablaFormulario" colspan="2"> Descuentos  </th></tr>
+                    <tr>
+                        <td style="width: 30%">
+                            <label>Sub Total</label> 
+
+                        </td>
+                        <td style="width: 20%">
+                            <h:inputText
+                                readonly="true"
+                                value="#{pcsCotizacionJSFBean.valorTotalVenta}"
+
+                                styleClass="inputs"
+
+                                >
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+
+                            </h:inputText>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%">
+                            <label>Valor Total descuento  [%]</label> 
+
+                        </td>
+                        <td style="width: 20%">
+                            <h:inputText
+                                value="#{pcsCotizacionJSFBean.valoDescVenta}"
+                                styleClass="inputs"
+                                maxlength="3"
+                                valueChangeListener="#{pcsCotizacionJSFBean.cambioDescuento}"
+                                onkeypress="if (event.which &lt; 48 || event.which &gt; 57) return false;"
+                                >
+
+                                <f:ajax execute="@this" render="@this sumaTotal"/>  
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+                            </h:inputText>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%">
+                            <label>Total</label> 
+
+                        </td>
+                        <td style="width: 30%">
+                            <h:inputText  styleClass="inputs"
+                                          readonly="true"
+                                          id="sumaTotal" 
+                                          value="#{pcsCotizacionJSFBean.vntRegistroventa.rgvtValorventa}" >
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+
+                            </h:inputText>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+
+                            <h:commandButton id="submitAceptarCerrarVenta" actionListener="#{pcsCotizacionJSFBean.btnCerrarVenta_ActionEvent}" value="Aceptar" class="wrapper button"/> 
+
+                        </td> 
+                        <td >
+
+                            <h:commandButton id="submitCancelarCerrarVenta" value="Cancelar" onclick="dialogDescuento.hide();" class="wrapper button"/> 
+
+                        </td> 
+                    </tr>
+
+
+                </table>
+
+
+            </ace:dialog>
+            </h:panelGrid>
+
+        
+        </ace:panel>
+
+    </ui:insert>
+</html>

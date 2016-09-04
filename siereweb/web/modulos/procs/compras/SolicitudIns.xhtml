@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html >
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml">
+
+        <ui:define name="top">          
+            <ui:include src="panelAccSolicitudes.xhtml"/>
+        </ui:define>
+
+        <ui:define name="left">
+            <ui:include src="NavSolicitud.xhtml"/>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:panelGroup >
+
+                <ace:panel header="Solicitud insumo" style="width: 100%">
+                    <h:panelGrid id ="palnCabeceraAud" columns="4">
+                        <h:outputLabel value="Categoría" style="font-weight: bold"/>
+                        <h:selectOneMenu styleClass="selectGrande"
+                                         value="#{compSolReqJSFBean.intInvCatProdSel}"
+                                         valueChangeListener="#{compSolReqJSFBean.ddlCatProd_ValueChange}">
+                            <f:selectItems value="#{compSolReqJSFBean.lstItemsInvCatProd}"/>
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:selectOneMenu>
+                      
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgLstProdEnc">
+                            <h:panelGrid columns="1">
+                                <ace:dataTable value="#{compSolReqJSFBean.lstTablaPordExist}"
+                                               var="item"
+                                               widgetVar="dtProdEnc"
+                                               paginatorAlwaysVisible="true"
+                                               emptyMessage="No se encontraron datos"
+                                               paginator="true"
+                                               rows="10"  
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "                               
+                                               paginatorPosition="bottom"
+                                               currentPageReportTemplate="(Productos {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                    <f:facet name="header">
+                                        <h:outputText value="Productos existentes"/>
+                                    </f:facet>
+                                    <ace:column styleClass="columnCheck">
+                                        <f:facet name="header">
+                                            <h:panelGroup>
+                                                <h:selectBooleanCheckbox valueChangeListener="#{compSolReqJSFBean.selTodoProdEnc}"
+                                                                         value="#{compSolReqJSFBean.blnSelTodoProdExt}">                                                   
+                                                    <f:ajax execute="@this" render="@all"/>
+                                                </h:selectBooleanCheckbox>
+                                            </h:panelGroup>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                    </ace:column>
+                                    <ace:column headerText="Nombre" style="width: 250px">
+                                        <h:outputText value="#{item.invProducto.prdNombre}"
+                                                      styleClass="textcolumleft"/>
+                                    </ace:column>
+                                    <ace:column headerText="Descripción" style="width: 390px">
+                                        <h:outputText value="#{item.invProducto.prdDesc}"
+                                                      styleClass="textcolumleft"/>
+                                    </ace:column>
+                                </ace:dataTable> 
+                            </h:panelGrid>
+                        </h:panelGroup>
+                        <h:panelGroup id="pnlgInsumo" rendered="#{compSolReqJSFBean.numPanel == 1 ? true : false}">
+                            <h:panelGroup >
+                                <h:panelGrid columns="1">                                   
+                                    <ace:dataTable id="dtPordSel" value="#{compSolReqJSFBean.lstTablaProdSel}"
+                                                   var="item"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginator="true"
+                                                   paginatorAlwaysVisible="true"
+                                                   rows="10"  
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                               
+                                                   paginatorPosition="bottom"
+                                                   currentPageReportTemplate="(Productos {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <f:facet name="header">
+                                            <h:outputText value="Productos seleccionados"/>
+                                        </f:facet>
+                                        <ace:column styleClass="columnCheck">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <h:panelGroup>
+                                                        <h:selectBooleanCheckbox valueChangeListener="#{compSolReqJSFBean.selTodoProdSel}"
+                                                                                 value="#{compSolReqJSFBean.blnSelTodProdSel}">                                                                
+                                                            <f:ajax execute="@this" render="@all"/>
+                                                        </h:selectBooleanCheckbox>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                        </ace:column>
+                                        <ace:column headerText="Nombre" style="width: 250px"
+                                                    styleClass="letraTitColTabla">
+                                            <h:outputText value="#{item.cmpProdxreq.prdId.prdNombre}"
+                                                          styleClass="textcolumleft"/>
+                                        </ace:column>
+                                        <ace:column headerText="Presentación" style="width: 250px">
+                                            <h:selectOneMenu value="#{item.presentSel}" 
+
+                                                             styleClass="selectMediano">
+                                                <f:selectItems value="#{item.lstItemsPresentacionprod}"/>
+                                            </h:selectOneMenu>
+                                        </ace:column>
+                                        <ace:column headerText="Cantidad *" style="width: 120px"
+                                                    styleClass="letraTitColTabla">
+                                            <h:inputText value="#{item.cantProds}"
+                                                         styleClass="textPeq"
+                                                         style="width:30px;text-align: right"
+                                                         >
+                                            </h:inputText>
+                                        </ace:column>
+                                    </ace:dataTable>
+                                </h:panelGrid>
+                            </h:panelGroup>
+                        </h:panelGroup> 
+
+                    </h:panelGrid>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+
+    <!--
+                    <h:panelGroup id="pnlgProdUni" rendered="#{compSolReqJSFBean.numPanel == 2 ? true : false}">                       
+                        <h:panelGroup id="pnlgDtProdUni">
+                            <h:panelGrid columns="1">
+                                <h:panelGroup>
+                                    <ace:dataTable id="dtProdUni" value="#{compSolReqJSFBean.lstTablaProdUnico}"
+                                                   var="item"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginator="true"
+                                                   paginatorAlwaysVisible="true"
+                                                   rows="10"  
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "                               
+                                                   paginatorPosition="bottom"
+                                                   currentPageReportTemplate="(Productos {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <f:facet name="header">
+                                            <h:outputText value="Productos seleccionados"/>
+                                        </f:facet>
+                                        <ace:column styleClass="columnCheck">
+                                            <f:facet name="header">
+                                                <h:panelGroup>
+                                                    <h:panelGroup>
+                                                        <h:selectBooleanCheckbox valueChangeListener="#{compSolReqJSFBean.selTodoProdSel}"
+                                                                                 value="#{compSolReqJSFBean.blnSelTodProdSel}">                                                              
+                                                        </h:selectBooleanCheckbox>
+                                                    </h:panelGroup>
+                                                </h:panelGroup>
+                                            </f:facet>
+                                            <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                        </ace:column>
+                                        <ace:column headerText="Nombre" style="width: 250px"
+                                                    styleClass="letraTitColTabla">
+                                            <h:outputText value="#{item.cmpProdxreq.prdId.prdNombre}"
+                                                          styleClass="letraConTabla"/>
+                                        </ace:column>
+                                        <ace:column headerText="Presentación" style="width: 250px"
+                                                    styleClass="letraTitColTabla">
+                                            <h:selectOneMenu value="#{item.presentSel}" 
+                                                            
+                                                             styleClass="letraConTabla">
+                                                <f:selectItems value="#{item.lstItemsPresentacionprod}"/>
+                                            </h:selectOneMenu>
+                                        </ace:column>
+                                        <ace:column headerText="Cantidad solicitada" style="width: 120px"
+                                                    styleClass="letraTitColTabla">
+                                            <h:inputText value="#{item.cantProds}"
+                                                         styleClass="letraConTabla"
+                                                         style="width: 40px">                                                  
+                                            </h:inputText>
+                                        </ace:column>
+                                    </ace:dataTable>  
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGroup>   
+                    </h:panelGroup>
+    -->
+</html>

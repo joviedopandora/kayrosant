@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="factura">
+        <ace:panel header="VENTAS REALIZADAS - FACTURAS" rendered="#{!pcsVentasJSFBean.blnMostrarPanel}" style="font-size: large">
+            <ace:dataTable value="#{pcsVentasJSFBean.lstTablaVntRegistroventa}"
+                           var="itemRvf"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{pcsVentasJSFBean.rowDtFacturaRegVenta_ActionEvent}">
+                        <f:attribute name="tvfs" value="#{itemRvf}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nº Venta" style="width: 100px" sortBy="#{itemRvf.vntRegistroventa.rgvtId}"
+                            filterBy="#{itemRvf.vntRegistroventa.rgvtId}" filterMatchMode="contains">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.rgvtId}"/>
+
+                </ace:column>
+                
+
+                <ace:column headerText="CC/NIT" style="width: 100px">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.clnId.identificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+               
+                
+                  <ace:column headerText="Cliente" style="width: 100px" sortBy="#{itemRvf.vntRegistroventa.clnId.nombres}"
+                            filterBy="#{itemRvf.vntRegistroventa.clnId.nombres}" filterMatchMode="contains">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.clnId.nombres}"/>
+                </ace:column>
+                
+                <ace:column headerText="Evento" style="width: 100px" sortBy="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}"
+                            filterBy="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}" filterMatchMode="contains">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}"/>
+                </ace:column>
+                
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Fecha venta" style="width: 100px" groupBy="#{itemRvf.vntRegistroventa.rgvtFechaconfirma}">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.rgvtFechaconfirma}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="FACTURA" rendered="#{pcsVentasJSFBean.blnMostrarPanel}">
+            <ui:include src="contenidoFactura.xhtml"/>
+            
+          
+        </ace:panel>
+    </ui:insert>
+</html>

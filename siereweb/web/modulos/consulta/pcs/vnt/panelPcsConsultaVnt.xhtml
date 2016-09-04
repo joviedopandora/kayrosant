@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="consVenta">
+
+        <ace:confirmationDialog id="confirmDialog" 
+                                widgetVar="confirmDialog"
+                                message="#{pcsVentasJSFBean.confirmation.message}"
+                                header="Confirmación"
+                                width="300"
+                                height="300"
+                                closeOnEscape="true"
+
+                                closable="true"
+                                position="center">
+            <h:panelGrid columns="2" styleClass="centeredPanelGrid">
+                <h:commandButton id="yes" value="Si" onclick="confirmDialog.hide();" actionListener="#{pcsVentasJSFBean.confirmation.update}">
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+                <h:commandButton id="no" value="No" onclick="confirmDialog.hide();" >
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+            </h:panelGrid>
+        </ace:confirmationDialog>
+        <ace:panel header="Facturas" style="font-size: large">
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="4"> Parametros de consulta. </th></tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Número  Factura</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsVentasJSFBean.consultaFacturaDTO.numeroFactura}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Número  Factura.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Número Venta</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsVentasJSFBean.consultaFacturaDTO.idVenta}"
+                            styleClass="inpunts inpuntsLong"
+                            title="ID de la venta.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Fecha Factura</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <div styleClass="inputs">
+                            <ace:dateTimeEntry 
+                                value="#{pcsVentasJSFBean.consultaFacturaDTO.fechaCreacion}"
+                                renderAsPopup="true"
+                                styleClass="inputs inpuntsLong"
+                                immediate="true"
+
+                                pattern="dd/MM/yyyy">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@this"/>
+                            </ace:dateTimeEntry>
+                        </div>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Documento Cliente</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsVentasJSFBean.consultaFacturaDTO.numeroDocumento}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Documento Cliente.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="width: 15%">
+                        <label>Nombre Cliente</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <ace:textEntry
+                            value="#{pcsVentasJSFBean.consultaFacturaDTO.nombreCliente}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Nombre Cliente.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+
+                    <td style="width: 15%">
+                        <label>Nombre Evento</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <ace:textEntry
+
+                            value="#{pcsVentasJSFBean.consultaFacturaDTO.nombreEvento}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Nombre Evento.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Estado Factura</label>
+                    </td>
+                    <td style="width: 100%"  colspan="3">
+
+                        <h:selectOneMenu  styleClass="inputs"
+
+                                          value="#{pcsVentasJSFBean.consultaFacturaDTO.estadoFactura}">
+                            <f:selectItem itemValue="#{null}" itemLabel="Todos" />
+                            <f:selectItems value="#{pcsVentasJSFBean.listaEstados}" var="out" 
+                                           itemValue="#{out.eftId}"  itemLabel="#{out.eftNombre}">
+
+                            </f:selectItems>
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+                    </td>
+
+                </tr>
+            </table>
+
+            <br />
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Facturación  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+
+
+                            <ace:dataTable value="#{pcsVentasJSFBean.listaConsultaFactura}"
+                                           var="item"
+                                           id="tblCotizaciongeneral"
+                                           widgetVar="tblCotizaciongeneral"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="10"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Cotizaciones: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                                <ace:column headerText="Nº Fctura"  styleClass="letraOutput textcolumred" 
+                                            >
+                                    <h:outputText value="#{item.numeroFactura}" ></h:outputText>
+
+
+
+                                </ace:column>
+
+
+                                <ace:column headerText="Numero de Venta" 
+                                            styleClass="letraOutput textcolumred" 
+                                            >
+                                    <h:outputText value="#{item.numeroVenta}" ></h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Nombre del Cliente"  styleClass="letraOutput textcolumred"  
+                                            >
+                                    <h:outputText value="#{item.nombreCliente}"/>
+                                </ace:column>
+                                <ace:column headerText="Fecha Creación"  >
+                                    <h:outputText value="#{item.fechaCreacion}"
+
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+
+                                <ace:column headerText="Fecha de la  radicación"  >
+                                    <ace:dateTimeEntry 
+                                        rendered="#{item.renderDateTimeSelecionado}"
+                                        value="#{item.fechaRadicacion}"
+                                        renderAsPopup="true"
+                                        styleClass="inputs"
+                                        immediate="true"
+
+                                        pattern="dd/MM/yyyy">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                        <ace:ajax execute="@this" render="@form" />
+                                    </ace:dateTimeEntry>
+                                    <h:outputText value="#{item.fechaRadicacion}"
+                                                  rendered="#{!item.renderDateTimeSelecionado}"
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Estados "  >  
+
+                                    <h:outputText value="#{item.estado == null ? null : item.estado.eftNombre}"/>
+
+                                </ace:column>
+
+                                <ace:column headerText="Acciones"  >  
+                                    <h:panelGrid columns="5" id="panelAct" >
+
+                                        <h:commandButton  title="Anular"
+                                                          styleClass="btnCancelarStd"
+                                                          rendered="#{item.renderAnulado}"
+
+                                                          >
+                                            <ace:ajax onComplete="confirmDialog.show();return false;" />
+                                            <f:setPropertyActionListener value="#{1}" target="#{pcsVentasJSFBean.confirmation.accion}" />
+                                            <f:setPropertyActionListener value="#{item}" target="#{pcsVentasJSFBean.confirmation.respuestaFacturaDTO}" />
+                                            <f:setPropertyActionListener value="Esta seguro de anular la #{item.message} # #{item.numeroFactura}" target="#{pcsVentasJSFBean.confirmation.message}" />
+
+
+                                        </h:commandButton> 
+                                        <h:commandButton  title="Pagar"
+
+                                                          styleClass="btnPagadoFactura"
+                                                          rendered="#{item.renderPagar}"
+                                                          >
+                                            <ace:ajax onComplete="confirmDialog.show();return false;" />
+                                            <f:setPropertyActionListener value="#{2}" target="#{pcsVentasJSFBean.confirmation.accion}" />
+                                            <f:setPropertyActionListener value="Esta seguro de guardar el pago de la #{item.message} # #{item.numeroFactura}" target="#{pcsVentasJSFBean.confirmation.message}" />
+                                            <f:setPropertyActionListener value="#{item}" target="#{pcsVentasJSFBean.confirmation.respuestaFacturaDTO}" />
+                                        </h:commandButton> 
+                                        <h:commandButton  title="Radicar"
+                                                          value="Radicar"
+                                                          rendered="#{item.renderDateTimeSelecionado}"
+                                                          >
+                                            <ace:ajax onComplete="confirmDialog.show();return false;" />
+                                            <f:setPropertyActionListener value="#{4}" target="#{pcsVentasJSFBean.confirmation.accion}" />
+                                            <f:setPropertyActionListener value="Esta seguro de guardar la radicación de la #{item.message} # #{item.numeroFactura}" target="#{pcsVentasJSFBean.confirmation.message}" />
+                                            <f:setPropertyActionListener value="#{item}" target="#{pcsVentasJSFBean.confirmation.respuestaFacturaDTO}" />
+                                        </h:commandButton> 
+                                        <h:commandButton  title="Pendiente de pagar"
+
+                                                          styleClass="btnPendientePagoFactura"
+                                                          rendered="#{item.renderPendientePagar}"
+                                                          >
+                                            <ace:ajax onComplete="confirmDialog.show();return false;" />
+                                            <f:setPropertyActionListener value="#{3}" target="#{pcsVentasJSFBean.confirmation.accion}" />
+                                            <f:setPropertyActionListener value="Esta seguro de pasar a pendiente de pago  la #{item.message} # #{item.numeroFactura}" target="#{pcsVentasJSFBean.confirmation.message}" />
+                                            <f:setPropertyActionListener value="#{item}" target="#{pcsVentasJSFBean.confirmation.respuestaFacturaDTO}" />
+
+
+                                        </h:commandButton> 
+
+
+                                    </h:panelGrid>
+                                </ace:column>
+                                <ace:column headerText="Reporte"  >
+                                    <h:panelGrid columns="2" >
+
+                                        <h:commandButton styleClass="btnGenerarInforme"
+                                                         actionListener="#{pcsVentasJSFBean.confirmation.generarReporte}"
+                                                         title="Generar Reporte">  
+
+                                            <f:attribute value="#{item}" name="tabla" />
+                                            <f:ajax execute="@this" render="@form" />
+                                        </h:commandButton>
+                                        <ice:outputResource resource="#{item.resource}"
+                                                            mimeType="application/pdf"
+                                                            fileName="#{item.strEstado}"
+                                                            shared="false"
+                                                            label=" "
+                                                            type="button"
+                                                            styleClass="btnInformePDF">
+                                        </ice:outputResource>
+
+
+                                    </h:panelGrid> 
+
+                                </ace:column>
+
+                                <ace:column headerText="log">
+                                    <h:commandButton styleClass="btn-facebook"  title="Ver Log"
+                                                     value="Log"
+                                                     actionListener="#{pcsVentasJSFBean.confirmation.loadLogs}"> 
+                                        <f:attribute value="#{item}" name="tabla" />
+                                        <ace:ajax execute="@this" render="@form"  onComplete="dialogSellog.show();"/>
+                                    </h:commandButton>
+                                </ace:column>
+
+
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+
+            </table>
+
+
+
+
+        </ace:panel>
+
+
+        <ace:dialog id="dialogSellog"
+                    header="Log"
+                    widgetVar="dialogSellog"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    width="1000"
+
+                    >
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Log  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+
+
+                            <ace:dataTable value="#{pcsVentasJSFBean.confirmation.respuestaFacturaDTO.logs}"
+                                           var="item"
+                                           id="tblog"
+                                           widgetVar="tblog"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="10"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Cotizaciones: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+                                <ace:column headerText="Estado"  styleClass="letraOutput textcolumred" >
+                                    <h:outputText value="#{item.estado.eftNombre}"/>
+                                </ace:column>
+
+                                <ace:column headerText="Fecha de Cambio"  sortBy="#{item.fecha}">
+                                    <h:outputText value="#{item.fecha}"
+
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Estado"  styleClass="letraOutput textcolumred" >
+                                    <h:outputText value="#{item.userCambio.cpeId.colCedula.nombres}"/>
+                                </ace:column>
+
+
+
+
+
+
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </ace:dialog>
+    </ui:insert>
+</html>

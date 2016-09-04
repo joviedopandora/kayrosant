@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="revisaPagoCuenta">
+        <ace:panel header="Factura de compra" rendered="#{!revisaPagoCuentaJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{revisaPagoCuentaJSFBean.lstTablaFinCuentas}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{revisaPagoCuentaJSFBean.rowDtRevisaPagoCuenta_ActionEvent}">
+                        <f:attribute name="tfc" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Fecha solicitud" style="width: 100px">
+                    <h:outputText value="#{item.finCuenta.factId.factFechaproceso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finCuenta.factId.prvId.provRazonsoc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finCuenta.factId.prvId.prvNit} - 
+                                  #{item.finCuenta.factId.prvId.prvDigver}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor bruto" style="width: 150px">
+                    <h:outputText value="#{item.finCuenta.factId.factValorbruto}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Anticipo" style="width: 150px">
+                    <h:outputText value="#{item.finCuenta.factId.factAnticipo}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="Asignar impuestos" rendered="#{revisaPagoCuentaJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="3">
+                <h:panelGrid columns="4" styleClass="tablaGrid">
+                    <h:outputLabel value="Factura N°"/>
+                    <h:outputText value="#{revisaPagoCuentaJSFBean.tablaFinCuentaSel.finCuenta.factId.factNumfact}"
+                                  style="font-weight: 900"/>
+                    <h:outputLabel value="Valor"/>
+                    <h:outputText value="#{revisaPagoCuentaJSFBean.tablaFinCuentaSel.finCuenta.factId.factValorbruto}"
+                                  style="font-weight: 900">
+                        <f:convertNumber locale="es_CO" type="currency"/>
+                    </h:outputText>
+                    <h:outputLabel value="Proveedor"/>
+                    <h:outputText value="#{revisaPagoCuentaJSFBean.tablaFinCuentaSel.finCuenta.factId.prvId.provRazonsoc}"
+                                  style="font-weight: 900"/>
+                    <h:outputLabel value="NIT"/>
+                    <h:outputText value="#{revisaPagoCuentaJSFBean.tablaFinCuentaSel.finCuenta.factId.prvId.prvNit} - 
+                                  #{revisaPagoCuentaJSFBean.tablaFinCuentaSel.finCuenta.factId.prvId.prvDigver}"
+                                  style="font-weight: 900"/>
+                </h:panelGrid>
+                <h:panelGrid columns="4">
+                    <h:outputLabel value="Fecha pago"/>
+                    <ace:maskedEntry style="display: block" id="slidFecRec" 
+                                     mask="99/99/9999"
+                                     value="#{revisaPagoCuentaJSFBean.datFechaPago}"
+                                     styleClass="textPeq"
+                                     title="Formato (dd/MM/yyyy)">
+                        <ace:ajax execute="@this" render="@this" event="blur"/>
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </ace:maskedEntry>
+                    <h:outputLabel value="Concepto *"/>
+                    <h:inputTextarea value="#{revisaPagoCuentaJSFBean.strConceptoPago}"
+                                     styleClass="textAreaMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </h:inputTextarea>
+                </h:panelGrid>
+            </h:panelGrid>            
+            <h:panelGrid columns="2">
+                <h:outputLabel value="IVA"/>
+                <ace:textEntry value="#{revisaPagoCuentaJSFBean.bgdIVA}"
+                               styleClass="textPeq textcolumright">
+                    <f:convertNumber pattern="#00.0"/>
+                </ace:textEntry>
+            </h:panelGrid>
+            <h:panelGrid/>
+            <h:panelGrid columns="2" styleClass="tablaAlnVer">            
+                <ace:dataTable value="#{revisaPagoCuentaJSFBean.lstTablaImpRetencion}"
+                               var="item"
+                               paginator="false"
+                               emptyMessage="No se encontraron registros"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <ace:column headerText="" style="width: 50px">
+                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                    </ace:column>
+                    <ace:column headerText="Renta" style="width: 300px">
+                        <h:outputText value="#{item.finRfImpuesto.impNombre} - 
+                                      #{item.finRfImpuesto.impTarifa} %"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Valor" style="width: 100px">
+                        <ace:textEntry value="#{item.tarifa}"
+                                       styleClass="textPeq textcolumright">
+                            <f:convertNumber pattern="#00.0"/>
+                        </ace:textEntry>
+                    </ace:column>
+                </ace:dataTable>
+                <ace:dataTable value="#{revisaPagoCuentaJSFBean.lstTablaImpReteICA}"
+                               var="item"
+                               paginator="false"
+                               emptyMessage="No se encontraron registros"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <ace:column headerText="" style="width: 50px">
+                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                    </ace:column>
+                    <ace:column headerText="ICA" style="width: 300px">
+                        <h:outputText value="#{item.finRfImpuesto.impNombre} - 
+                                      #{item.finRfImpuesto.impTarifa} %"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Valor" style="width: 100px">
+                        <ace:textEntry value="#{item.tarifa}"
+                                       styleClass="textPeq textcolumright">
+                            <f:convertNumber pattern="#00.0"/>
+                        </ace:textEntry>
+                    </ace:column>
+
+                </ace:dataTable>
+            </h:panelGrid>
+
+            <!--
+            <h:panelGrid columns="4">
+                <h:outputLabel value="Retención"/>
+                <h:selectOneMenu styleClass="selectMediano"
+                                 value="#{revisaPagoCuentaJSFBean.idRetencion}">
+                    <f:selectItems value="#{revisaPagoCuentaJSFBean.lstRetencion}"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Otro valor"/>
+                <h:inputText value="#{revisaPagoCuentaJSFBean.retencion}"
+                             styleClass="textPeq" style="text-align: right">                        
+                    <f:convertNumber integerOnly="true"/>
+                </h:inputText>
+                <h:outputLabel value="ReteICA"/>
+                <h:selectOneMenu styleClass="selectMediano"
+                                 value="#{revisaPagoCuentaJSFBean.idICA}">
+                    <f:selectItems value="#{revisaPagoCuentaJSFBean.lstICA}"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Otro valor"/>
+                <h:inputText value="#{revisaPagoCuentaJSFBean.reteICA}"
+                             styleClass="textPeq" style="text-align: right">                        
+                    <f:convertNumber integerOnly="true"/>
+                </h:inputText>
+                <h:outputLabel value="IVA"/>
+                <h:inputText value="#{revisaPagoCuentaJSFBean.IVA}"
+                             styleClass="textPeq textcolumright"/>                
+            </h:panelGrid>
+            -->
+        </ace:panel>
+    </ui:insert>
+</html>

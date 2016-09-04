@@ -1,0 +1,195 @@
+
+#top {
+    position:absolute;
+    background-color: transparent;
+    /* background-image:url("http://3.bp.blogspot.com/-S2qws4p_xWI/Tpw1baGHr7I/AAAAAAAACMY/-EMn818NdzY/s1600/Monsters_Love_Mus_1600x12.jpg"); */
+    background-image: url("#{resource[':images/masterpage/imag_superior3.png']}");
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+    height:100px;
+    top: 0px;
+    width: 100%;
+    border: 0px;
+    left: 0px;
+    z-index: 4;
+    background-repeat: repeat-x;
+    
+ /*background-repeat: repeat-y;*/
+    
+    /*background-size: inherit;*/
+    background-size: 100% 100px;
+}
+
+#bottom {
+    position: relative;
+    background-color: transparent;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+    background-repeat: repeat-x;
+    /* background-image: url("http://3.bp.blogspot.com/-S2qws4p_xWI/Tpw1baGHr7I/AAAAAAAACMY/-EMn818NdzY/s1600/Monsters_Love_Mus_1600x12.jpg"); */
+    background-image: url("#{resource[':images/masterpage/imag_superior.png']}") ;
+}
+
+#left {
+    float: left;
+    /*background-color: #f6af3a;*/
+    background-color: transparent;
+    background-image: url("#{resource[':images/masterpage/imag_lateral.png']}") ;
+    padding: 2px;
+    left: 2px;
+    width: 150px;
+    top:100px;
+    position:fixed;
+    height: 100%;
+    z-index: 2;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.contenido{
+    margin:10px 10px;    
+    height: 600px;       
+    margin-top: 5px;
+    top :100px;
+    padding-left: 2px;
+    width: 90%;
+    z-index: 1;
+    margin-left: 155px;
+    position: relative;
+    background-color: white;
+
+
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+#arriba {
+    position:fixed;
+    background-color: transparent;
+    /* background-image:url("http://3.bp.blogspot.com/-S2qws4p_xWI/Tpw1baGHr7I/AAAAAAAACMY/-EMn818NdzY/s1600/Monsters_Love_Mus_1600x12.jpg"); */
+    background-image: url("#{resource[':images/masterpage/imag_superior.png']}");
+    padding: 0px;
+    margin: 0px 0px 0px 0px;
+    height:60px;
+    top: 0px;
+    width: 100%;
+    border: 0px;
+    left: 0px;
+    z-index: 4;
+    background-repeat: repeat-x;
+     
+    border-bottom: 2px;
+    
+ /*background-repeat: repeat-y;*/
+    
+    /*background-size: inherit;*/
+    background-size: 100% 50px;
+}
+
+#arriba a:link, #arriba a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#arriba a:link:hover, #arriba a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+.derecha {
+    float: left;
+    /*background-color: #f6af3a;*/
+    background-color: transparent;
+    background-image: url("#{resource[':images/masterpage/imag_lateral.png']}") ;
+    padding: 0px;
+    left: 0px;
+    width: 150px;
+    top:50px;
+    position:fixed;
+    height: 100%;
+    z-index: 2;
+    border-right: 2px;
+    border-top: 0px;
+}
+
+.derecha_abierta{
+    float: left;
+    /*background-color: #f6af3a;*/
+    background-color: transparent;
+    background-image: url("#{resource[':images/masterpage/imag_lateral.png']}") ;
+    padding: 0px;
+    left: 0px;
+    width: 50px;
+    top:50px;
+    position:fixed;
+    height: 100%;
+    z-index: 2;
+     border-right: 1px;
+    border-top: 1px;
+}
+
+.contenido_0{
+    margin:10px 10px;    
+    height: 600px;       
+    margin-top: 5px;
+    top :100px;
+    padding-left: 2px;
+    width: 90%;
+    z-index: 1;
+    margin-left: 155px;
+    position: relative;
+    background-color: white;
+
+
+}
+.contenido_1{
+    margin:10px 10px;    
+    height: 600px;       
+    margin-top: 5px;
+    top :100px;
+    padding-left: 2px;
+    width: 90%;
+    z-index: 1;
+    margin-left: 66px;
+    position: relative;
+    background-color: white;
+
+
+}
+
+

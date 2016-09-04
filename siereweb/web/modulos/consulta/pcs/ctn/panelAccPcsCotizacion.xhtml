@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccCCotizacion">  
+        <h:panelGrid columns="5"  style="z-index: 15;right: 250px !important; margin-right: 20px !important; position: fixed !important;"   rendered="#{pcsCotizacionJSFBean.numPanel == 5 ? true : false}">
+
+            <!-- panel para eventos de llamadas -->
+            <h:commandButton styleClass="botones btnPendienteConfirmacion"
+
+                             actionListener="#{pcsCotizacionJSFBean.grabarCierreLLamadaPorPendienteConfirmacion_ActionEvent}"
+                             title="Cotización Pendiente de Confirmación">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="botones btnEnviarCotizacion"
+
+                             actionListener="#{pcsCotizacionJSFBean.grabarCierreLLamadaPorEnvioCorreo_ActionEvent}"
+                             title="Envio Correo Electronico con los Servicios seleccionados.">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="botones btnPerdida"
+
+                             actionListener="#{pcsCotizacionJSFBean.grabarCierreLLamadaPorLlamadaPerdida_ActionEvent}"
+                             title="Fin de Llamada por llamada perdida.">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="botones btnAgendar"
+                             actionListener="#{pcsCotizacionJSFBean.grabarCierreLLamadaPorNuevaCotizacion_ActionEvent}"
+
+                             title="Nueva Cotización">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="botones btnVolverStd"
+
+                             actionListener="#{pcsCotizacionJSFBean.btnRegresarBuscarClt_ActionEvent}"
+                             title="Regresar">
+            </h:commandButton>
+            <!-- panel para eventos de llamadas -->
+        </h:panelGrid>
+        <h:panelGrid columns="5"  style="z-index: 15"   rendered="#{pcsCotizacionJSFBean.numPanel == 5 ? false : true}">
+            <icecore:singleSubmit />
+            <h:commandButton styleClass="btnGuardarStd"
+                             actionListener="#{pcsCotizacionJSFBean.btnGrabarCliente_ActionEvent}"
+                             rendered="#{pcsCotizacionJSFBean.numPanel == 2 ? true : false}"
+                             title="Grabar cliente">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton> 
+
+            <h:commandButton styleClass="btnNuevoStd"
+                             actionListener="#{pcsCotizacionJSFBean.btnGrabarDetalleCliente_ActionEvent}"
+                             title="Agregar detalle cliente">
+                <f:ajax execute="@this" render="@all" />
+
+            </h:commandButton>  
+
+            <h:commandButton styleClass="btnVolverStd"
+                             rendered="#{(pcsCotizacionJSFBean.numPanel == 1 ? true : (pcsCotizacionJSFBean.numPanel == 2 ? true :false))}"
+                             actionListener="#{pcsCotizacionJSFBean.btnRegresarBuscarClt_ActionEvent}"
+                             title="Regresar">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsCotizacionJSFBean.numPanel == 3 ? true : false}"
+                             actionListener="#{pcsCotizacionJSFBean.btnGrabarDetalleEvento_ActionEvent}"
+                             title="Grabar detalle evento">
+            </h:commandButton>        
+            <h:commandButton styleClass="btnVolverStd"
+                             rendered="#{pcsCotizacionJSFBean.numPanel == 3 ? true : false}"
+                             actionListener="#{pcsCotizacionJSFBean.btnRegresarCliente_ActionEvent}"
+                             title="Regresar">
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsCotizacionJSFBean.numPanel == 4 ? true : false}"
+
+                             actionListener="#{pcsCotizacionJSFBean.btnGrabarServicioXVenta_ActionEvent}"
+                             title="Agregar servicio a la venta">
+                <f:ajax execute="@this" render="@all"  />
+            </h:commandButton>           
+            <h:commandButton styleClass="btnCerrarStd"
+                             rendered="#{pcsCotizacionJSFBean.numPanel == 4 ? true : false}"
+
+                             actionListener="#{pcsCotizacionJSFBean.btnCerrarVenta_ActionEvent}"
+                             title="Cerrar venta">
+                <f:ajax execute="@this" render="@form" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnBurcarC" title="Consultar Cotizaciones"
+                             onclick="dialogSelCotizacion.show();" 
+                             actionListener="#{pcsCotizacionJSFBean.cargarEventosGenerales_ActionEvent}"
+                             >
+                <f:ajax execute="@this" render="dialogSelCotizacion" />
+
+            </h:commandButton>
+
+
+
+
+        </h:panelGrid>    
+        <ace:dialog id="dialogSelCotizacion"
+                    header="Cotizaciones"
+                    widgetVar="dialogSelCotizacion"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    width="1200">
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Cotizaciones  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+
+
+                            <ace:dataTable value="#{pcsCotizacionJSFBean.lstVentas}"
+                                           var="item"
+                                           id="tblCotizaciongeneral"
+                                           widgetVar="tblCotizaciongeneral"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="10"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Cotizaciones: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                                <ace:column headerText="Nº Cotizacion"  styleClass="letraOutput textcolumred" sortBy="#{item.detevento.rgvtId.rgvtId}"
+                                            filterBy="#{item.detevento.rgvtId.rgvtId}" filterMatchMode="contains">
+                                    <h:commandLink value="#{item.detevento.rgvtId.rgvtId}" 
+                                                   onclick="dialogSelCotizacion.hide();"
+                                                   actionListener="#{pcsCotizacionJSFBean.cargarListaServiciosPorVentaSel_ActionEvent}"
+                                                   rendered="#{pcsCotizacionJSFBean.numPanel == 4}">
+                                        <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                        <f:ajax execute="@this" render="@form" />
+                                    </h:commandLink>
+                                    <h:outputText value="#{item.detevento.rgvtId.rgvtId}" rendered="#{pcsCotizacionJSFBean.numPanel != 4}"></h:outputText>
+
+
+
+                                </ace:column>
+
+
+                                <ace:column headerText="Fecha Venta"  sortBy="#{item.detevento.rgvtId.rgvtFechacre}">
+                                    <h:outputText value="#{item.detevento.rgvtId.rgvtFechacre}"
+
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Nombre Archivo"  styleClass="letraOutput textcolumred" sortBy="#{item.nombreArchivo}"
+                                            filterBy="#{item.nombreArchivo}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.nombreArchivo}" style="font-size: 11px"/>
+                                </ace:column>
+
+                                <ace:column headerText="Cronograma">
+                                    <h:selectBooleanCheckbox value="#{item.detevento.rgvtId.rgvtActCronograma}"
+                                                             valueChangeListener="#{pcsCotizacionJSFBean.activarGeneracionCronograma_actionEvent}"
+                                                             disabled="#{item.detevento.rgvtId.rgvtActCronograma}"
+                                                             styleClass="letraOutput textcolumleft">
+                                        <f:ajax execute="@this" render="@this" />
+                                        <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                    </h:selectBooleanCheckbox>
+                                </ace:column>
+
+
+
+                                <ace:column headerText="Reporte"  >
+                                    <h:panelGrid columns="2" >
+
+                                        <h:commandButton styleClass="btnGenerarInforme"
+                                                         actionListener="#{pcsCotizacionJSFBean.generarReporteCotizacionXventa_ActionEvent}"
+                                                         title="Generar Reporte">  
+                                            <f:ajax execute="@this" render="@all" />
+                                            <f:attribute name="tabla" value="#{item}" />
+                                        </h:commandButton>
+                                        <ice:outputResource resource="#{item.jaspResource}"
+                                                            mimeType="application/vnd.ms-excel"
+                                                            fileName="#{item.nombreArchivo}"
+                                                            shared="false"
+                                                            label=" "
+                                                            type="button"
+                                                            styleClass="btnInformeEXCEL">
+                                        </ice:outputResource>
+
+
+                                    </h:panelGrid> 
+
+                                </ace:column>
+
+
+                                <ace:column headerText="Autorizar "  >  
+                                    <h:panelGrid columns="4" id="panelAct" >
+                                        <h:commandButton styleClass="#{item.detevento.rgvtId.rgvtEstados == 1 ? 'red' : 'opaque'}" title="Anular"
+
+                                                         actionListener="#{pcsCotizacionJSFBean.anularGeneracionOrdenProducion_actionEvent}"
+                                                         >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                        </h:commandButton> 
+
+
+                                        <h:commandButton 
+                                            styleClass="#{item.detevento.rgvtId.rgvtEstados == 2 ? 'yelow' : 'opaque'}" 
+                                            title="Espera"
+
+                                            actionListener="#{pcsCotizacionJSFBean.inactivarGeneracionOrdenProducion_actionEvent}"
+                                            >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                        </h:commandButton> 
+
+                                        <h:commandButton  title="Factura"
+                                                          styleClass="#{(item.detevento.rgvtId.rgvtEstados == 3 || item.detevento.rgvtId.rgvtEstados == 5 ) ? 'green' : 'opaque'}" 
+                                                          actionListener="#{pcsCotizacionJSFBean.activarGeneracionOrdenProducion_actionEvent}"
+                                                          >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                            <f:attribute name="estado" value="3" />
+                                        </h:commandButton> 
+
+                                        <h:commandButton styleClass="#{(item.detevento.rgvtId.rgvtEstados == 4 || item.detevento.rgvtId.rgvtEstados == 5 )? 'orange' : 'opaque'}" title="Orden Producción"
+
+                                                         actionListener="#{pcsCotizacionJSFBean.activarGeneracionOrdenProducion_actionEvent}"
+                                                         >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                            <f:attribute name="estado" value="4" />
+                                        </h:commandButton> 
+
+                                    </h:panelGrid>
+                                </ace:column>
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+                <!--                <tr>
+                                    <td style="width: 100%">
+                                        <div style="width: 100%">
+                                            <h:commandButton id="submit" value="Aceptar" onclick="dialogCotizacion.hide();" class="wrapper button"/> 
+                                        </div>
+                                    </td>                </tr>-->
+            </table>
+
+        </ace:dialog>
+
+
+
+
+
+
+    </ui:insert>
+</html>

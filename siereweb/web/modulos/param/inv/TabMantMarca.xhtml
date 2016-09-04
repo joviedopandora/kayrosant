@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml">
+        <ui:define name="top">
+            <h:panelGroup>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnNuevoStd"
+                                     actionListener="#{invCompJSFBean.btnNuevaMarca_ActionEvent}"
+                                     title="Nueva marca">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{invCompJSFBean.blnEditMarca}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnGuardarStd"
+                                     actionListener="#{invCompJSFBean.btnGrabEditMarca_ActionEvent}"
+                                     title="Grabar marca">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:300px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnVolverStd"
+                                     actionListener="#{invCompJSFBean.btnVolver_ActionEvent}"
+                                     title="Regresar">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ui:define>
+
+        <ui:define name="left">
+            <ui:include src="NavInventario.xhtml"/>
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">
+                <ace:panel header="Marca" rendered="#{!invCompJSFBean.blnEditMarca}">
+                    <h:panelGrid columns="1" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgMarca">
+                            <ace:dataTable id="dtMantMarca"
+                                           value="#{invCompJSFBean.lstTablaMarcas}"
+                                           var="item"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"
+                                           rows="20"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                           rowsPerPageTemplate="5,10,20 "
+                                           paginatorPosition="bottom"
+                                           currentPageReportTemplate="(Marcas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">                                
+                                <ace:column headerText=">>>" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:commandLink value=">>>"
+                                                   styleClass="letraConTabla"
+                                                   actionListener="#{invCompJSFBean.dtRowEditMarca_ActionEvent}">
+                                        <f:attribute name="filaSel" value="#{item}"/>
+                                    </h:commandLink>
+                                </ace:column>
+                                <ace:column headerText="Nombre" style="width: 200px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invMarca.marNombre}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Descripción" style="width: 250px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.invMarca.marDesc}"
+                                                  styleClass="letraConTabla textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Estado" style="width: 50px"
+                                            styleClass="letraTitColTabla">
+                                    <h:selectBooleanCheckbox value="#{item.invMarca.marEst}"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+                <ace:panel header="Datos de la marca" widgetVar="pnlaceEditMarca"
+                           rendered="#{invCompJSFBean.blnEditMarca}">
+                    <h:panelGrid columns="2" styleClass="bodePanelGrid" style="width: 600px">                            
+                        <h:outputLabel value="Id *" styleClass="labelFormStd"/>
+                        <ace:textEntry readonly="#{invCompJSFBean.blnBloqIdMar}"
+                                       value="#{invCompJSFBean.intMarId}"
+                                       styleClass="textPeq">
+                            <f:convertNumber integerOnly="true"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Nombre *" styleClass="labelFormStd"/>
+                        <ace:textEntry value="#{invCompJSFBean.strMarNombre}"
+                                       styleClass="textGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </ace:textEntry>
+                        <h:outputLabel value="Descripción" styleClass="labelFormStd"/>
+                        <h:inputTextarea value="#{invCompJSFBean.strMarDesc}"
+                                         styleClass="textAreaGrande">
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputTextarea>
+                        <h:outputLabel value="Estado" styleClass="labelFormStd"/>
+                        <h:selectBooleanCheckbox value="#{invCompJSFBean.blnMarEstado}"
+                                                 label="Estado"/>
+                    </h:panelGrid>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

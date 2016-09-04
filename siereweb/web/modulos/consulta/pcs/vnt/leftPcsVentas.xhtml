@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="navVentas">
+        <ace:accordion collapsible="true" autoHeight="false" event="click" effect="fade" style="font-size: 11px;">
+            <ace:accordionPane title="Mis ventas">
+                <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                    
+                    <h:commandLink immediate="true" rendered="#{pcsVentasJSFBean.blnMostrarPanelRemision}"
+                                   value="Anticipos"
+                                   actionListener="#{pcsVentasJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{pcsVentasJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'} ">
+                        <f:attribute name="jsfBean" value="pcsVentasJSFBean"/>
+                        <f:attribute name="numPanel" value="1"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandLink>
+                    
+                    <h:commandLink immediate="true"
+                                   value="Facturas"
+                                   rendered="#{!pcsVentasJSFBean.blnMostrarPanelRemision}"
+                                   actionListener="#{pcsVentasJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{pcsVentasJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'} ">
+                        <f:attribute name="jsfBean" value="pcsVentasJSFBean"/>
+                        <f:attribute name="numPanel" value="2"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandLink>
+                    
+                  <h:commandLink immediate="true"
+                                   value="Remisiones"
+                                    rendered="#{pcsVentasJSFBean.blnMostrarPanelRemision}"
+                                   actionListener="#{pcsVentasJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{pcsVentasJSFBean.numPanel == 3 ? 'btnNavLateralSel' : 'btnNavLateral'} ">
+                        <f:attribute name="jsfBean" value="pcsVentasJSFBean"/>
+                        <f:attribute name="numPanel" value="3"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandLink>
+                   
+                    <h:commandLink immediate="true"
+                                   value="Cartera"
+                                   actionListener="#{pcsVentasJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{pcsVentasJSFBean.numPanel == 4 ? 'btnNavLateralSel' : 'btnNavLateral'} ">
+                        <f:attribute name="jsfBean" value="pcsVentasJSFBean"/>
+                        <f:attribute name="numPanel" value="4"/>
+                        <f:ajax execute="@this" render="@all"/>
+                    </h:commandLink>
+                </h:panelGrid>
+            </ace:accordionPane>
+            
+           
+            
+        </ace:accordion>
+    </ui:insert>
+</html>

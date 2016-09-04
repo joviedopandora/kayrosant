@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="ContenidoListaOp">
+        <ace:panel header="Ordenes de producción" style="font-size: large" >
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="4"> Parametros de consulta. </th></tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Número OP</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <h:inputText
+                            value="#{evaluacionJSFBean.parametrosConsulta.idOp}"
+                            styleClass="inpunts"
+                            title="ID orden de produccón.">
+
+                            <f:ajax execute="@this" render="@this"/>
+                        </h:inputText>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Número Venta</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <h:inputText
+                            value="#{evaluacionJSFBean.parametrosConsulta.idVenta}"
+                            styleClass="inpunts "
+                            title="ID de la venta.">
+
+                            <f:ajax execute="@this" render="@this"/>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Fecha OP</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <div styleClass="inputs">
+                            <ace:dateTimeEntry 
+                                value="#{evaluacionJSFBean.parametrosConsulta.fechaOp}"
+                                renderAsPopup="true"
+                                styleClass="inputs"
+                                immediate="true"
+                                maxdate="#{evaluacionJSFBean.fechaHoy}"
+                                pattern="dd/MM/yyyy">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                
+                            </ace:dateTimeEntry>
+                        </div>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Documento Cliente</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <h:inputText
+                            value="#{evaluacionJSFBean.parametrosConsulta.numeroDocumento}"
+                            styleClass="inpunts"
+                            title="ID orden de produccón.">
+
+                            <f:ajax execute="@this" render="@this"/>
+                        </h:inputText>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="width: 15%">
+                        <label>Nombre Cliente</label>
+                    </td>
+                    <td style="width: 100%" colspan="3">
+
+                        <h:inputText
+                            value="#{evaluacionJSFBean.parametrosConsulta.nombre}"
+                            styleClass="inpunts"
+                            title="ID de la venta.">
+
+                            <f:ajax execute="@this" render="@this"/>
+                        </h:inputText>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="4"> Ordenes de Producción Por Evaluar. </th></tr>
+                 <tr><td><div style="width: 100%">
+                            <ace:dataTable value="#{evaluacionJSFBean.lstTablaVntRegistroventa}"
+                                           var="itemRgv"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="30"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Eventos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText=">>>" style="width: 50px">
+                                   <h:commandLink value=">>>" 
+                                                   actionListener="#{evaluacionJSFBean.rowDtOrdenProduccionCargarColaboradores_ActionEvent}">
+                                        <f:attribute name="trvs" value="#{itemRgv}"/>
+                                    </h:commandLink> 
+                                </ace:column>
+                                <ace:column headerText="Nº Venta" style="width: 70px" groupBy="#{itemRgv.vntRegistroventa.rgvtId}">
+                                    <h:outputText value="#{itemRgv.vntRegistroventa.rgvtId}"/>
+                                </ace:column>
+                                
+                                <ace:column headerText="Nº OP" style="width: 70px" >
+                                    <h:outputText value="#{itemRgv.ordenprod.oprId}"/>
+                                </ace:column>
+                                
+                                <ace:column headerText="Fecha evento" style="width: 100px" >
+                                    <h:outputText value="#{itemRgv.ordenprod.oprFechaevtini}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+                                
+                                 <ace:column headerText="Evento" style="width: 200px">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.vdeId.vdeObsr}"/>
+                </ace:column>
+                        
+                        
+                                <ace:column headerText="Documento" style="width: 100px">
+                                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.identificacion}"
+                                                  styleClass="textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Cliente" style="width: 200px" groupBy="#{itemRgv.vntRegistroventa.clnId.clnNombres}">
+                                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.clnNombres}"
+                                                  styleClass="textcolumleft"/>
+                                </ace:column>
+                                <ace:column headerText="Tipo cliente" style="width: 100px">
+                                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.tclId.tclNombre}"
+                                                  styleClass="textcolumleft"/>
+                                </ace:column>
+                               
+                                 <!--
+                                <ace:column headerText="Generar Preliminar Pago" >
+                                   <h:panelGrid columns="2">
+                                    <h:commandButton styleClass="btnGenerarInforme"
+
+                                                     title="Generar reporte"
+                                                     actionListener="#{evaluacionJSFBean.rowDtGenerarFormatoPago_ActionEvent}">
+                                        <f:attribute name="trvs" value="#{itemRgv}"/>
+                                        <f:ajax execute="@this" render="@all" />
+                                    </h:commandButton>
+
+                                    <ice:outputResource resource="#{itemRgv.jrResourceRetorna}"
+                                                        mimeType="application/vnd.ms-excel"
+                                                        fileName="PreliminarPago_#{itemRgv.vntRegistroventa.rgvtId}.xls"
+                                                        shared="false"
+                                                        label=" "
+                                                        type="button"
+                                                        styleClass="btnInformeEXCEL">
+                                    </ice:outputResource>
+                                    </h:panelGrid> 
+                                </ace:column>-->
+                            </ace:dataTable>
+                        </div></td></tr>
+            </table>
+        </ace:panel>
+
+
+
+    </ui:insert>
+
+</html>

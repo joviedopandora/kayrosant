@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:icecore="http://www.icefaces.org/icefaces/core"
+        xmlns:ace="http://www.icefaces.org/icefaces/components"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="admEmp">
+        <h:panelGroup id="mantEmpresa">
+            <h:panelGrid columns="1">
+                <h:panelGroup>
+                </h:panelGroup>
+                <ace:dataTable id="dtMantEmpresa"
+                             var="item"                            
+                             selectionMode="single"
+                             scrollable="true"
+                             scrollHeight="180"
+                             emptyMessage="No se encontraron datos"
+                             paginator="true"
+                             rows="10"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="3,6,9 "
+                             paginatorPosition="bottom"
+                             currentPageReportTemplate="(Procesos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                    <f:facet name="header">
+                        <h:outputText value="Empresas"/>
+                    </f:facet>
+                    <ace:column style="width: 50px">
+                        <f:facet name="header">
+                            <h:outputText value="Id empresa" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.admEmpresa.empId}"
+                                      styleClass="letraConTabla"/>
+                    </ace:column>
+                    <ace:column style="width: 200px">
+                        <f:facet name="header">
+                            <h:outputText value="Nombre empresa" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.admEmpresa.empNombre}"
+                                      styleClass="letraConTabla"/>
+                    </ace:column>
+                    <ace:column style="width: 250px">
+                        <f:facet name="header">
+                            <h:outputText value="Descripción empresa" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.admEmpresa.empDesc}"
+                                      styleClass="letraConTabla"/>
+                    </ace:column>
+                    <ace:column style="width: 200px">
+                        <f:facet name="header">
+                            <h:outputText value="Dominio empresa" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.admEmpresa.empDominio}"
+                                      styleClass="letraConTabla"/>
+                    </ace:column>
+                    <ace:column style="width: 100px">
+                        <f:facet name="header">
+                            <h:outputText value="Estado" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        
+                    </ace:column>
+                </ace:dataTable>
+            </h:panelGrid>
+        </h:panelGroup>
+        <h:panelGroup id="pnlDatosEmpresa">
+            <h:panelGrid columns="2">
+                <f:facet name="header">
+                    <h:outputText value="Datos de la empresa"/>
+                </f:facet>
+                <h:outputLabel for="txtIdEmp" value="Id empresa *"/>
+                <h:inputText id="txtIdEmp"
+                             required="false"
+                             styleClass="txtNombreDato"/>
+                <h:outputLabel for="txtNombreEmp" value="Nombre empresa *"/>
+                <h:inputText id="txtNombreEmp"
+                             required="false"
+                             styleClass="txtNombreDato"/>
+                <h:outputLabel for="txtDescEmp" value="Descripción empresa"/>
+                <h:inputTextarea id="txtDescEmp"
+                                 required="false"
+                                 styleClass="txtNombreDato"/>
+                <h:outputLabel for="txtDominioEmp" value="Dominio empresa"/>
+                <h:inputText id="txtDominioEmp"
+                             required="false"
+                             styleClass="txtNombreDato"/>
+                <h:outputLabel for="sbcbEstado" value="Estado empresa"/>
+                <h:selectBooleanCheckbox id="sbcbEstado"
+                                         required="false"
+                                         label="Estado empresa"/>
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>

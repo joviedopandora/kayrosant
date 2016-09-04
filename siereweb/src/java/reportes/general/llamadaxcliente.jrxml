@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="llamadaxcliente" pageWidth="810" pageHeight="555" orientation="Landscape" columnWidth="810" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5eedb359-f917-4ef2-bd67-8dc0e267b3a3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="112"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pFechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaInicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pTipoCliente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  vnt_registro_llamada.regllam_id,
+  vnt_registro_llamada.cxc_id,
+  vnt_registro_llamada.cln_id,
+  vnt_registro_llamada.regllam_fechaproceso,
+  vnt_registro_llamada.regllam_edad,
+  vnt_registro_llamada.sex_id,
+  vnt_registro_llamada.regllam_observacion,
+  vnt_cliente.cln_identificacion,
+  vnt_cliente.cln_nombres,
+  vnt_cliente.cln_apellidos,
+  vnt_cliente.cln_contacto,
+  vnt_cliente.cln_correoe,
+  vnt_cliente.cln_nuevo,
+  vnt_cliente.cln_diereccion,
+  vnt_cliente.cln_celular,
+  vnt_cliente.cln_fijo,
+  vnt_cliente.tcl_id,
+  vnt_cliente.cln_fechaproceso,
+  vnt_cliente.cln_fechanace,
+  vnt_cliente.cln_numhijos,
+  vnt_cliente.sex_id,
+  vnt_cliente.ate_id,
+  vnt_registro_llamada.cmc_id,
+  vnt_registro_llamada.tipocierre_id,
+  vnt_rf_tipocliente.tcl_nombre,
+  rf_tipocierrellamada.tipocierre_nombre
+FROM
+  vnt_registro_llamada,
+  vnt_cliente,
+  vnt_rf_tipocliente,
+  rf_tipocierrellamada
+WHERE
+  vnt_registro_llamada.cln_id = vnt_cliente.cln_id AND
+  vnt_cliente.tcl_id = vnt_rf_tipocliente.tcl_id AND
+  rf_tipocierrellamada.tipocierre_id = vnt_registro_llamada.tipocierre_id AND
+ to_date(to_char(vnt_registro_llamada.regllam_fechaproceso,'YYYYMMDD'),'YYYYMMDD')>=$P{pFechaInicial}  AND to_date(to_char(vnt_registro_llamada.regllam_fechaproceso,'YYYYMMDD'),'YYYYMMDD')<= $P{pFechaFinal} AND
+    vnt_cliente.tcl_id = $P{pTipoCliente}
+ORDER BY vnt_registro_llamada.regllam_fechaproceso DESC ,  vnt_cliente.cln_nombres,
+  vnt_cliente.cln_apellidos]]>
+	</queryString>
+	<field name="regllam_id" class="java.lang.Long"/>
+	<field name="cxc_id" class="java.lang.Integer"/>
+	<field name="cln_id" class="java.lang.Long"/>
+	<field name="regllam_fechaproceso" class="java.sql.Timestamp"/>
+	<field name="regllam_edad" class="java.lang.Integer"/>
+	<field name="sex_id" class="java.lang.String"/>
+	<field name="regllam_observacion" class="java.lang.String"/>
+	<field name="cln_identificacion" class="java.lang.String"/>
+	<field name="cln_nombres" class="java.lang.String"/>
+	<field name="cln_apellidos" class="java.lang.String"/>
+	<field name="cln_contacto" class="java.lang.String"/>
+	<field name="cln_correoe" class="java.lang.String"/>
+	<field name="cln_nuevo" class="java.lang.Boolean"/>
+	<field name="cln_diereccion" class="java.lang.String"/>
+	<field name="cln_celular" class="java.lang.String"/>
+	<field name="cln_fijo" class="java.lang.String"/>
+	<field name="tcl_id" class="java.lang.Integer"/>
+	<field name="cln_fechaproceso" class="java.sql.Timestamp"/>
+	<field name="cln_fechanace" class="java.sql.Date"/>
+	<field name="cln_numhijos" class="java.lang.Integer"/>
+	<field name="ate_id" class="java.lang.Integer"/>
+	<field name="cmc_id" class="java.lang.Integer"/>
+	<field name="tipocierre_id" class="java.lang.Integer"/>
+	<field name="tcl_nombre" class="java.lang.String"/>
+	<field name="tipocierre_nombre" class="java.lang.String"/>
+	<title>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b3b8324a-5007-462c-b399-ab01701a6265" mode="Opaque" x="0" y="61" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0fa1271-1e5a-4540-be2c-80898e65bba3" mode="Opaque" x="100" y="61" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f7abe6f-e15e-417c-9d60-804acf2497c9" mode="Opaque" x="200" y="61" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7565d85a-ea1d-4f6e-a2e3-a653af513971" mode="Opaque" x="416" y="61" width="194" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo  de Llamada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="33bbc47f-a64b-4e92-8fcd-5a3050f5323d" mode="Opaque" x="710" y="61" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha LLamada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d6df6a9c-801e-4a3e-9bfc-10d1b7a35e27" mode="Opaque" x="610" y="61" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="14ed9c2b-e8c9-4406-87e4-3782279c3086" mode="Opaque" x="300" y="61" width="116" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92370410-e425-4e5f-a4bd-481c109375e9" x="416" y="0" width="194" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LLAMADA POR TIPO CLIENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9777f47f-588a-4825-9899-7752eed76dcd" x="200" y="28" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaFinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bce4d6b3-e17e-43f7-9157-6551fb05278c" x="0" y="28" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaFinal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9a50082f-9eb6-4e81-9018-ab98ee7d96cc" x="0" y="8" width="100" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha  Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b02cca9-2020-44ab-83ee-dde6cf8a67b8" x="200" y="8" width="100" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Final]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="00a5c8ac-bc0f-45dd-b7c6-c3a2c4a0148a" x="0" y="0" width="100" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6cd499c9-b3b6-4e05-8ff2-1f3347d11855" x="100" y="0" width="100" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="35ca5285-59bd-4532-a535-e918838346b6" x="200" y="0" width="100" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_apellidos}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true">
+				<reportElement uuid="d9ba6c44-86e2-4956-892a-6655ad35600a" x="710" y="0" width="100" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{regllam_fechaproceso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b7d6dc45-5619-41d9-941f-e0ea7d732b9e" x="610" y="0" width="100" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tcl_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5e40f8af-9cdf-4f2c-b42e-3c3e048d5d70" x="300" y="0" width="116" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_celular}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a46a4874-0093-4411-aa97-ac07c731a476" x="416" y="0" width="194" height="20"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipocierre_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

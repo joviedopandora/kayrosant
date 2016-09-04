@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="ContenidoPerfil">
+        <ace:panel header="COLABORADORES"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> CREAR/EDITAR COLABORADORES </th></tr>
+                <tr><td style="width: 100%"  colspan="4">
+                        <div >
+                            <h:panelGrid columns="6">
+                                <ace:tooltip id="tooltipBMW"
+                                             for="bmw"
+                                             speechBubble="true"
+                                             showEffect="slide"
+                                             hideEffect="slide"
+                                             showDelay="500"
+                                             hideDelay="500"
+                                             position="topRight"
+                                             targetPosition="topRight"
+                                             showEffectLength="500"
+                                             hideEffectLength="500">
+
+                                    <h:panelGrid > 
+                                        <h:graphicImage 
+                                            id="img0" height="300px" width="300px" name="images/users/#{colaboradorJSFBean.foto}"   alt="Imagen Colaborador"  />
+
+                                    </h:panelGrid>
+                                </ace:tooltip>
+                                <h:graphicImage name="images/users/#{colaboradorJSFBean.foto}"  
+
+                                                id="bmw"
+                                                alt="Imagen Colaborador" height="30px" width="50px"/>
+                                <h:outputText value="" />
+                                <ace:fileEntry id="file-entry"
+                                               fileEntryListener="#{colaboradorJSFBean.fileEntryAction}" 
+                                               immediate="true" useOriginalFilename="true" 
+
+
+                                               label ="File Entry">
+
+                                </ace:fileEntry>
+                                <h:outputText value="" />
+                                <h:commandButton value=" " type="submit"
+                                                 styleClass="btnSubirArchivo" />
+                            </h:panelGrid>
+
+
+
+                        </div>
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label> Tipo Doc *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.coltdcid}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstTipoDocumento}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Identificación *</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colcedula}"
+                                           maxlength="50"
+                                           styleClass="inputs" 
+                                           readonly="#{!colaboradorJSFBean.nuevo}">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+                <tr>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label> Primer Nombre *</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colnombre1}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+
+
+
+                        </div>
+
+                    </td>
+
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Segundo Nombre</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colnombre2}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <ace:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </ace:textEntry>
+
+
+
+                        </div>
+
+                    </td>    
+
+                </tr>    
+
+                <tr>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Primer Apellido*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colapellido1}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Segundo Apellido</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colapellido2}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+
+                        </div>
+                    </td>    
+                </tr>
+
+
+
+                <tr>
+                    <td style="width: 20%" ><div class="form-group">
+                            <label >Departamento </label>
+
+                        </div>
+                    </td> 
+                    <td style="width: 30%"><div class="form-group">
+
+                            <div class="input-group">
+                                <h:selectOneMenu  styleClass="inputs"
+                                                  valueChangeListener="#{colaboradorJSFBean.selDepartamento_ValueChangeEvent}"
+                                                  value="#{colaboradorJSFBean.colDepar}"
+                                                  >
+                                    <f:selectItems value="#{colaboradorJSFBean.lstDepCol}" />
+                                    <f:ajax execute="@this" render="@this ciudadCol" />
+                                    
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </td> 
+
+                    <td style="width: 20%"><div class="form-group">
+                            <label >Municipio o Localidad </label>
+
+                        </div>
+                    </td> 
+                    <td style="width: 30%"><div class="form-group">
+
+                            <div class="input-group">
+                                <h:selectOneMenu  styleClass="inputs" id="ciudadCol"
+                                                  value="#{colaboradorJSFBean.colCiudad}"
+                                                  >
+                                    <f:selectItems value="#{colaboradorJSFBean.lstCiudCol}" />
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:selectOneMenu>
+
+                            </div>
+                        </div>
+                    </td> 
+                </tr>
+
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label> Estado de Colaborador *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.colEstado}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstEstado}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label> Antiguedad del Colaborador *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.colAntiguedad}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstAntiguedad}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+
+                </tr>
+
+
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label> Sexo *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.colSexo}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstSexo}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Tipo Cliente Maneja *</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.colTipoCliente}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstTipoCliente}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>
+
+
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <div >
+                            <label> Estado *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+
+                            <h:selectBooleanCheckbox  value="#{colaboradorJSFBean.estado}">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectBooleanCheckbox>
+
+
+                        </div>
+
+                    </td>
+
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Tipo  Contrato *</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+                            <h:selectOneMenu  value="#{colaboradorJSFBean.tipoContrato}"  styleClass="inputs">
+                                <f:ajax execute="@this" render="@this"/>
+                                <f:selectItems value="#{colaboradorJSFBean.lstTipoContrato}" />
+                            </h:selectOneMenu>
+
+                        </div>
+
+                    </td>
+
+
+                </tr>
+                <tr> 
+                    <td style="width: 15%">
+                        <div >
+                            <label>Dirección:* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+                        <div >
+                            <ace:textEntry value="#{colaboradorJSFBean.coldireccion}"
+                                           maxlength="400"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+
+                        </div>
+
+                    </td>
+                    <td style="width: 15%">
+                        <div >
+                            <label>Telefono</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+                            <ace:maskedEntry 
+                                value="#{colaboradorJSFBean.coltelefono1}"
+                                maxlength="20"
+                                styleClass="inputs"
+                                mask="999-9999"  >
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:maskedEntry>
+                        </div>
+                    </td>    
+
+                </tr>
+                <tr>  
+                    <td style="width: 15%">
+                        <div >
+                            <label>Celular * </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:maskedEntry 
+                                value="#{colaboradorJSFBean.celular}" 
+                                mask="(999)999-9999"  
+                                maxlength="20"
+                                styleClass="inputs">    
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:maskedEntry>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Fecha de Nacimiento*</label>
+                        </div>
+                    </td>
+                    <td  style="width: 30%">
+
+                        <div>
+
+                            <ace:dateTimeEntry value="#{colaboradorJSFBean.colfechanacimiento}" 
+
+                                               styleClass="inputs"
+                                               pattern="dd/MM/yyyy"
+                                               renderAsPopup="true">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:dateTimeEntry>
+                        </div>
+                    </td>    
+                </tr>
+
+
+                <tr>  
+                    <td style="width: 15%">
+                        <div >
+                            <label>EPS* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.coleps}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Referencia Personal*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colrefpersonal}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry> 
+                        </div>
+                    </td>    
+                </tr>
+
+                <tr>  
+                    <td style="width: 15%">
+                        <div >
+                            <label>Barrio* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colbarrio}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>Talla Zapatos*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div  >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.coltallazapatos}"
+                                           maxlength="15"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+                    </td>    
+                </tr>
+
+
+                <tr>  
+                    <td  style="width: 15%">
+                        <div >
+                            <label>Talla  Camisa* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div  >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colcamisa}"
+                                           maxlength="15"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+                    <td  style="width: 15%">
+                        <div >
+                            <label>Talla pantalon*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div  >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colpantalon}"
+                                           maxlength="15"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+                    </td>    
+                </tr>
+
+
+
+                <tr>  
+                    <td style="width: 15%">
+                        <div >
+                            <label>Estatura(cm)* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colestatura}"
+                                           styleClass="inputs">
+                                <f:convertNumber integerOnly="true" />
+                                <f:validateLongRange minimum="1" maximum="300" /> 
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label>RH*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colrh}"
+                                           maxlength="15"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+                    </td>    
+                </tr>
+
+                
+                
+                <tr>  
+                    <td style="width: 15%">
+                        <div >
+                            <label>Nombre de Banco* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colnombrebanco}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+
+                        </div>
+
+                    </td>
+
+                    <td style="width: 15%">
+                        <div >
+                            <label> Numero de Cuenta*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+
+                            <ace:textEntry value="#{colaboradorJSFBean.colnumerocuenta}"
+                                           maxlength="150"
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+
+                        </div>
+                    </td>    
+                </tr>
+
+                <tr>  
+
+                    <td style="width: 15%">
+                        <div  >
+                            <label> Email*</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+                            <ace:textEntry value="#{colaboradorJSFBean.colemail}"
+                                           styleClass="inputs" maxlength="100">
+
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td>     
+                    <td style="width: 15%">
+                        <div  >
+                            <label> Email 2</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div >
+                            <ace:textEntry value="#{colaboradorJSFBean.colEmail2}"
+                                           styleClass="inputs" maxlength="100">
+
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td> 
+
+
+
+
+                </tr>
+                <tr>  
+
+                    <td style="width: 15%">
+                        <div  >
+                            <label> Cargo *</label>
+                        </div>
+                    </td>
+                    <td style="width: 30%" colspan="1">
+
+                        <div >
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{colaboradorJSFBean.cargxcolaborador}"
+                                              >
+                                <f:selectItems value="#{colaboradorJSFBean.lstCargos}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                    </td>   
+
+
+                    <td  style="width: 15%">
+                        <div >
+                            <label>Fecha Vinculación* </label>
+                        </div>
+                    </td>
+                    <td>
+
+                        <div style="width: 30%">
+
+                            <ace:dateTimeEntry value="#{colaboradorJSFBean.colfechavinculacion}"
+                                               styleClass="inputs"
+                                               pattern="dd/MM/yyyy"
+                                               renderAsPopup="true">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:dateTimeEntry>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr>  
+
+                    <td style="width: 15%">
+                        <div  >
+                            <label> Usuario *</label>
+                        </div>
+                    </td>
+
+
+                    <td style="width: 30%" >
+
+                        <div >
+                            <ace:textEntry disabled="#{(colaboradorJSFBean.colXEmpresaUsuario.cpeId == null ? false : true )}"
+
+                                           value="#{colaboradorJSFBean.colUsuario}"
+                                           styleClass="inputs" maxlength="50" >
+
+
+                                <ace:ajax execute="@this" render="@this" />
+                            </ace:textEntry>
+                        </div>
+
+                    </td> 
+                    <td style="width: 30%" colspan="2">
+                        <div  >
+                            <label> Usuario debe tener mínimo ocho caracteres máximo 50 entre (Letras,Números y caracteres especiales) </label>
+                        </div>
+                    </td>
+
+
+                </tr>
+
+
+            </table>
+        </ace:panel>
+    </ui:insert>
+
+</html>

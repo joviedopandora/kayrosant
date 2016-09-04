@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:icecore="http://www.icefaces.org/icefaces/core"
+        xmlns:ace="http://www.icefaces.org/icefaces/components"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="asignarProdXReq">
+        <ace:panel header="Solicitudes">
+            <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                <h:panelGroup id="pnlgTablaSolAbi">
+                    <ace:dataTable id="dtResSolicitudes" value="#{compAprbSolsJSFBean.lstTablaReqComps}"
+                                   var="item"                                               
+                                   emptyMessage="No se encontraron datos"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"                                                                                                     
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                                   paginatorPosition="bottom"
+                                   currentPageReportTemplate="(Solicitudes: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText=">>>" style="width: 50px">
+                            <h:commandLink value=">>>"                                              
+                                           styleClass="#{item.claseSel}"
+                                           actionListener="#{compAprbSolsJSFBean.dtResSolicitudes_RowSel}">
+                                <f:attribute name="itemSel" value="#{item}"/>
+                            </h:commandLink>
+                        </ace:column>
+                        <ace:column headerText="N° Solicitud" styleClass="letraTitColTabla" style="width: 70px">
+                            <h:outputText value="#{item.cmpRequiscomp.crqId}"                                              
+                                          styleClass="#{item.claseSel}"/>
+                        </ace:column>
+                        <ace:column headerText="Fecha" styleClass="letraTitColTabla" style="width: 100px">
+                            <h:outputText value="#{item.cmpRequiscomp.crqFproc}"  
+                                          styleClass="#{item.claseSel}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Nombre solicitante" styleClass="letraTitColTabla" style="width: 200px">
+                            <h:outputText value="#{item.cmpRequiscomp.cxcId.cpeId.colCedula.colNombres} 
+                                          #{item.cmpRequiscomp.cxcId.cpeId.colCedula.colApellido}"  
+                                          styleClass="#{item.claseSel} textcolumleft"/>       
+                        </ace:column>
+                        <ace:column headerText="Zonal" styleClass="letraTitColTabla" style="width: 150px">
+                            <h:outputText value="#{item.cmpRequiscomp.cxcId.cpeId.copId.copNombre}" 
+                                          styleClass="#{item.claseSel} textcolumleft"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+        </ace:panel>
+
+        <ace:panel header="Asignar insumos por solicitud">
+            <h:panelGroup id="pnlgTablaProdSol" >
+                <ace:dataTable id="dtProdXReqInv" value="#{compAprbSolsJSFBean.lstTablaProdSel}"
+                               var="item"                                                 
+                               emptyMessage="No se encontraron datos"
+                               paginator="true"  
+                               rows="10"  
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                               paginatorPosition="bottom"
+                               currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})"
+                               scrollHeight="30"
+                               scrollable="false">
+                    <ace:columnGroup type="header">
+                        <ace:row>
+                            <ace:column colspan="5">
+                                <h:outputText value="Productos por solicitud"/>
+                            </ace:column>
+                            <ace:column colspan="5">
+                                <h:outputText value="Aprobar productos por solicitud"/>
+                            </ace:column>
+                        </ace:row>
+                        <ace:row>
+                            <!--
+                            <ace:column  style="width: 50px">
+                                <h:outputText value=">>>" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            -->
+                            <ace:column style="width: 250px"> 
+                                <h:outputText value="Producto" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 150px">
+                                <h:outputText value="Presentación" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <ace:column  style="width: 50px">
+                                <h:outputText value="Cantidad" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <ace:column  style="width: 150px">
+                                <h:outputText value="Presentación *" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 150px">
+                                <h:outputText value="Marca *" styleClass="letraTitColTabla"/>
+                            </ace:column> 
+                            <ace:column style="width: 60px">
+                                <h:outputText value="Cantidad *" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <!--    
+                            <ace:column style="width: 200px">
+                                <h:outputText value="Observación" styleClass="letraConTabla"/>
+                            </ace:column>
+                            -->
+                            <ace:column style="width:50px">
+                                <h:outputText value="Rechazar" styleClass="letraTitColTabla"/>
+                            </ace:column>
+                            <ace:column style="width:50px">
+                                <h:outputText value="Agregar" styleClass="letraTitColTabla"/>
+                            </ace:column>                                
+                        </ace:row>
+                    </ace:columnGroup>
+                    <!--
+                    <ace:column styleClass="letraTitColTabla" style="width: 50px">
+                        <h:commandLink value=">>>"
+                                       styleClass="#{item.claseSel}"
+                                       actionListener="#{compAprbSolsJSFBean.dtProdXReqInv_RowSel}">
+                            <f:attribute name="itemSel" value="#{item}"/>
+                        </h:commandLink>
+                    </ace:column>
+                    -->
+                    <ace:column style="width: 250px">
+                        <h:outputText value="#{item.cmpProdxreq.prdId.prdNombre}"
+                                      styleClass="textcolumleft #{item.claseSel}"/>                            
+                    </ace:column>
+                    <ace:column style="width: 150px">
+                        <h:outputText value="#{item.cmpProdxreq.pspId.pspNombre}"
+                                      styleClass="textcolumleft #{item.claseSel}"/>
+                    </ace:column>
+                    <ace:column style="width: 50px">
+                        <h:outputText value="#{item.cmpProdxreq.pxrCantsol}"
+                                      styleClass="textcolumright #{item.claseSel}" 
+                                      style="position: relative;float: right"/>
+                    </ace:column>
+                    <ace:column style="width: 150px">                         
+                        <h:selectOneMenu  value="#{item.presentSel}"
+                                          style="width: 160px">
+
+                            <f:selectItems value="#{item.lstItemsPresentacionprod}"/>
+                        </h:selectOneMenu>
+                    </ace:column>
+                    <ace:column style="width: 150px">                        
+                        <h:selectOneMenu  value="#{item.marcaSel}"
+                                          style="width: 160px">
+                            <f:selectItems value="#{item.lstItemsMarcas}" />
+                        </h:selectOneMenu>
+                    </ace:column>
+                    <ace:column style="width: 60px">                           
+                        <ace:textEntry value="#{item.cantProds}"
+                                       style="width:30px;text-align: right">
+                            <ace:ajax execute="@this" render="@this"/>
+                            <f:convertNumber integerOnly="true"/>
+                        </ace:textEntry>
+                    </ace:column>
+                    <!--
+                    <ace:column style=" width: 200px">
+                        <h:inputTextarea value="#{item.cmpProdxreq.pxrObsrsol}"
+                                         styleClass="textAreaGrande"
+                                         style="height: 50px">
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputTextarea>
+                    </ace:column>
+                    -->
+                    <ace:column style="width:50px">
+
+                        <h:selectBooleanCheckbox value="#{item.cmpProdxreq.pxrRechaza}"                                                              
+                                                 valueChangeListener="#{compAprbSolsJSFBean.dtdtProdXReqInvChkRechzr}">                                                
+                            <f:attribute name="tablaProdXReqSel" value="#{item}"/>
+                            <f:ajax execute="@this" render="@all"/>
+                        </h:selectBooleanCheckbox>
+                    </ace:column>
+                    <ace:column style="width:50px">
+                        <h:commandButton styleClass="btnNuevoStd"                                                                                          
+                                         actionListener="#{compAprbSolsJSFBean.btnAsigProd_ActionEvent}"
+                                         title="Asignar elementos a la solicitud">
+                            <f:attribute name="itemSel" value="#{item}"/>
+                        </h:commandButton>
+                    </ace:column>                       
+                </ace:dataTable>
+                <ace:confirmationDialog id="confirmDialog" message="Se eliminarán las asignaciones de este producto, ¿desea continuar?"  
+                                        header="Rechazar solicitud de producto" severity="alert" widgetVar="confirmation">  
+                    <h:panelGrid columns="1">
+                        <f:facet name="header">
+                            <h:outputText value="Eliminar asignación"/>
+                        </f:facet>
+                        <h:panelGrid columns="1">
+                            <h:inputTextarea value="#{compAprbSolsJSFBean.tablaProdXReqSel.cmpProdxreq.pxrObsrrechza}"
+                                             style="width: 250px;float: right"/>
+                        </h:panelGrid> 
+                        <h:panelGroup>
+                            <h:commandButton id="confirm" value="Eliminar"
+                                             actionListener="#{compAprbSolsJSFBean.btnConfRecz_ActionEvent}" 
+                                             style="float: left"/>  
+                            <h:commandButton id="decline" value="No" onclick="confirmation.hide()" type="button"
+                                             style="float: right"/> 
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:confirmationDialog> 
+            </h:panelGroup>
+            <h:panelGroup>
+                <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                    <h:panelGroup id="pnlgInsXSol">
+                        <ace:dataTable id="dtProdAprovXReq"
+                                       value="#{compAprbSolsJSFBean.lstTablaProdAprobs}"
+                                       var="item"                                                 
+                                       emptyMessage="No se encontraron datos"
+                                       paginator="true"  
+                                       rows="10"  
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                                       paginatorPosition="bottom"
+                                       currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})"
+                                       widgetVar="dtProdAprovXReq">
+                            <f:facet name="header">
+                                <h:outputText value="Productos asignados por solicitud"/>
+                            </f:facet>
+                            <ace:column style="width: 50px">
+                                <f:facet name="header">
+                                    <icecore:singleSubmit>
+                                        <h:selectBooleanCheckbox value="#{compAprbSolsJSFBean.blnSelTodoprodAprov}" 
+                                                                 valueChangeListener="#{compAprbSolsJSFBean.dtProdAprovXReq_ValueChange}">                                           
+                                        </h:selectBooleanCheckbox>
+                                    </icecore:singleSubmit>
+                                    <!--
+                                    <ace:checkboxButton value="#{compAprbSolsJSFBean.blnSelTodoprodAprov}" 
+                                                        valueChangeListener="#{compAprbSolsJSFBean.dtProdAprovXReq_ValueChange}" 
+                                                        style="width: 10px" >
+                                        <ace:ajax execute="@this" render="dtProdAprovXReq"/>
+                                    </ace:checkboxButton>
+                                    -->
+                                </f:facet>
+                                <h:selectBooleanCheckbox  value="#{item.seleccionado}"/>
+                            </ace:column>
+                            <ace:column headerText="Producto" styleClass="letraTitColTabla" style="width: 250px">
+                                <h:outputText value="#{item.cmpPxraprob.pxrId.prdId.prdNombre}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Marca" styleClass="letraTitColTabla" style="width: 150px">
+                                <h:outputText value="#{item.cmpPxraprob.marId.marNombre}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width: 150px">
+                                <h:outputText value="#{item.cmpPxraprob.pspId.pspNombre}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Cantidad aprobada" styleClass="letraTitColTabla" style="width: 50px">
+                                <h:outputText value="#{item.cmpPxraprob.cantAprob}"
+                                              styleClass="textcolumright"/>
+                            </ace:column>
+                        </ace:dataTable>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+
+        <ace:panel toggleable="true" toggleSpeed="10" >
+            <f:facet name="header">
+                <h:outputText value="Existencias en inventario"/>
+            </f:facet>
+            <h:panelGroup>
+                <ace:dataTable value="#{compAprbSolsJSFBean.lstTablaConsolidadoInv}" 
+                               var="item"
+                               rows="10"
+                               paginator="true"
+                               emptyMessage="No existe en inventario"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="Inventario de productos"/>
+                    </f:facet>
+                    <ace:column headerText="Producto" styleClass="letraTitColTabla" style="width: 150px">
+                        <h:outputText value="#{item.prdNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width: 150px">
+                        <h:outputText value="#{item.pspNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Cantidad" styleClass="letraTitColTabla" style="width: 80px">
+                        <h:outputText value="#{item.invCant}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                </ace:dataTable>                
+                <!--
+                <ace:dataTable value="#{compAprbSolsJSFBean.lstTablaInvenXProd}" var="itemInv"
+                               emptyMessage="No existe en inventario"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                               paginatorPosition="bottom"
+                               currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="Existencia de producto en inventario"/>
+                    </f:facet>
+                    <ace:column headerText="Lote" styleClass="letraTitColTabla" style="width: 50px">
+                        <h:outputText value="#{itemInv.invent.invId}"
+                                      styleClass="textcolumright"/>
+                    </ace:column>
+                    <ace:column headerText="Marca" styleClass="letraTitColTabla" style="width: 150px">
+                        <h:outputText value="#{itemInv.invent.marId.marNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width: 150px">
+                        <h:outputText value="#{itemInv.invent.pspId.pspNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Cantidad" styleClass="letraTitColTabla" style="width: 50px">
+                        <h:outputText value="#{itemInv.invent.invCant}"
+                                      styleClass="textcolumright"
+                                      style="float: right;position: relative"/>
+                        <f:facet name="footer">
+                            <h:panelGroup>
+                                <h:outputText value="Total:"/>  
+                                <h:outputText value="#{compAprbSolsJSFBean.tablaProdXReqSel.cantProdInv}"
+                                              style="float: right;position: relative"
+                                              styleClass="textcolumright"/>  
+                            </h:panelGroup>
+                        </f:facet>
+                    </ace:column>
+                </ace:dataTable>
+                -->
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

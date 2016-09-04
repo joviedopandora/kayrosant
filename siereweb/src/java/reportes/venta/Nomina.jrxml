@@ -1,0 +1,753 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1314" pageHeight="842" columnWidth="1274" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="299306d8-f3b2-4073-86d4-f80d42dfbbfc">
+	<property name="ireport.zoom" value="3.1329361270617415"/>
+	<property name="ireport.x" value="1890"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_Liquida" class="java.lang.Integer"/>
+	<parameter name="rutalogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\Garcia Bosso\\Documents\\sieree\\siereweb\\src\\java\\reportes\\venta\\logos\\maximus.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     COALESCE(pop_cxcevento.cxe_valor_pagar,0)+COALESCE(pop_cxcevento.cxe_valor_bonificacion,0)-COALESCE(pop_cxcevento.cxe_valor_descuento,0)Pagototal,
+     pg_liquidacionxcolaborador."cxe_id" AS pg_liquidacionxcolaborador_cxe_id,
+     pg_liquidacionxcolaborador."pg_liquidacionxcol_id" AS pg_liquidacionxcolaborador_pg_liquidacionxcol_id,
+     pg_liquidacionxcolaborador."liquidacion_id" AS pg_liquidacionxcolaborador_liquidacion_id,
+     pg_liquidacionconsolidado."id_liquidaconso" AS pg_liquidacionconsolidado_id_liquidaconso,
+     pg_liquidacionconsolidado."fechai_liquidaconso" AS pg_liquidacionconsolidado_fechai_liquidaconso,
+     pg_liquidacionconsolidado."fechaf_liquidaconso" AS pg_liquidacionconsolidado_fechaf_liquidaconso,
+     pg_liquidacionconsolidado."nombre_liquidaconso" AS pg_liquidacionconsolidado_nombre_liquidaconso,
+     pg_liquidacionconsolidado."cxc_id" AS pg_liquidacionconsolidado_cxc_id,
+     pg_liquidacionconsolidado."fechap_liquidaconso" AS pg_liquidacionconsolidado_fechap_liquidaconso,
+     pg_liquidacion."liquidacion_id" AS pg_liquidacion_liquidacion_id,
+     pg_liquidacion."liquidacion_valor_pagar" AS pg_liquidacion_liquidacion_valor_pagar,
+     pg_liquidacion."liquidacion_numero_aprobacion" AS pg_liquidacion_liquidacion_numero_aprobacion,
+     pg_liquidacion."id_tipopago" AS pg_liquidacion_id_tipopago,
+     pg_liquidacion."liquidacion_numero_pin" AS pg_liquidacion_liquidacion_numero_pin,
+     pg_liquidacion."id_liquidaconso" AS pg_liquidacion_id_liquidaconso,
+     pg_liquidacion."cxc_id" AS pg_liquidacion_cxc_id,
+     pop_cxcevento."cxe_id" AS pop_cxcevento_cxe_id,
+     pop_cxcevento."cxe_observacion" AS pop_cxcevento_cxe_observacion,
+     pop_cxcevento."cxe_fechaproceso" AS pop_cxcevento_cxe_fechaproceso,
+     pop_cxcevento."cxe_estado" AS pop_cxcevento_cxe_estado,
+     pop_cxcevento."cxc_id" AS pop_cxcevento_cxc_id,
+     pop_cxcevento."opr_id" AS pop_cxcevento_opr_id,
+     pop_cxcevento."indversion" AS pop_cxcevento_indversion,
+     pop_cxcevento."cxr_id" AS pop_cxcevento_cxr_id,
+     pop_cxcevento."cxci_id" AS pop_cxcevento_cxci_id,
+     pop_cxcevento."cxre_id" AS pop_cxcevento_cxre_id,
+     pop_cxcevento."cxu_id" AS pop_cxcevento_cxu_id,
+     pop_cxcevento."crg_id" AS pop_cxcevento_crg_id,
+     pop_cxcevento."calificacion_id" AS pop_cxcevento_calificacion_id,
+     pop_cxcevento."cxe_valor_pagar" AS pop_cxcevento_cxe_valor_pagar,
+     pop_cxcevento."cxe_valor_bonificacion" AS pop_cxcevento_cxe_valor_bonificacion,
+     pop_cxcevento."cxe_valor_descuento" AS pop_cxcevento_cxe_valor_descuento,
+     pop_cxcevento."cxe_valor_antiguedad" AS pop_cxcevento_cxe_valor_antiguedad,
+adm_colaborador.col_nombre1,
+adm_colaborador.col_apellido1,
+adm_colaborador.col_cedula,
+pg_liquidacionconsolidado.fechai_liquidaconso,
+pg_liquidacionconsolidado.fechaf_liquidaconso,
+pg_liquidacionconsolidado.nombre_liquidaconso,
+pg_liquidacionconsolidado.fechap_liquidaconso,
+pg_liquidacionconsolidado.fechai_liquidaconso,
+pg_liquidacionconsolidado.fechaf_liquidaconso,
+ pg_liquidacionconsolidado.id_liquidaconso,
+
+
+pop_ordenprod.opr_titulo,
+ pop_ordenprod.opr_fechaevtini,
+                  adm_cargo.crg_nombre,
+
+     pop_cxcevento."cxe_id_antiguedad" AS pop_cxcevento_cxe_id_antiguedad,
+  eval_calificacion.calificacion_desc,
+vnt_cliente.cln_nombres,
+adm_tipopagoxcol.desc_tipopago,
+  pg_liquidacion.liquidacion_numero_aprobacion
+   
+FROM
+pg_liquidacionconsolidado,
+pg_liquidacion,
+pg_liquidacionxcolaborador, 
+pop_cxcevento,
+adm_crgxcol,
+adm_colxemp,
+adm_colaborador,
+eval_calificacion,
+pop_ordenprod,
+adm_cargo,
+vnt_registroventa,
+adm_tipopagoxcol,
+vnt_cliente
+where 
+ pop_ordenprod.rgvt_id=vnt_registroventa.rgvt_id AND
+pg_liquidacion.id_tipopago =   adm_tipopagoxcol.id_tipopago AND
+vnt_registroventa.cln_id = vnt_cliente.cln_id AND
+pg_liquidacionconsolidado.id_liquidaconso = pg_liquidacion.id_liquidaconso AND
+pop_cxcevento.calificacion_id =  eval_calificacion.calificacion_id AND
+pg_liquidacion.liquidacion_id = pg_liquidacionxcolaborador.liquidacion_id AND
+pg_liquidacionxcolaborador.cxe_id = pop_cxcevento.cxe_id AND
+pop_cxcevento.opr_id = pop_ordenprod.opr_id AND
+pop_cxcevento.cxc_id =  adm_crgxcol.cxc_id AND
+  adm_crgxcol.cpe_id = adm_colxemp.cpe_id AND
+adm_colxemp.col_cedula =  adm_colaborador.col_cedula AND
+adm_crgxcol.crg_id = adm_cargo.crg_id AND
+pg_liquidacionconsolidado.id_liquidaconso = $P{p_Liquida}
+ORDER BY  adm_tipopagoxcol.desc_tipopago,adm_colaborador.col_cedula]]>
+	</queryString>
+	<field name="pagototal" class="java.math.BigDecimal"/>
+	<field name="pg_liquidacionxcolaborador_cxe_id" class="java.lang.Integer"/>
+	<field name="pg_liquidacionxcolaborador_pg_liquidacionxcol_id" class="java.lang.Long"/>
+	<field name="pg_liquidacionxcolaborador_liquidacion_id" class="java.lang.Integer"/>
+	<field name="pg_liquidacionconsolidado_id_liquidaconso" class="java.lang.Integer"/>
+	<field name="pg_liquidacionconsolidado_fechai_liquidaconso" class="java.sql.Date"/>
+	<field name="pg_liquidacionconsolidado_fechaf_liquidaconso" class="java.sql.Date"/>
+	<field name="pg_liquidacionconsolidado_nombre_liquidaconso" class="java.lang.String"/>
+	<field name="pg_liquidacionconsolidado_cxc_id" class="java.lang.Integer"/>
+	<field name="pg_liquidacionconsolidado_fechap_liquidaconso" class="java.sql.Timestamp"/>
+	<field name="pg_liquidacion_liquidacion_id" class="java.lang.Long"/>
+	<field name="pg_liquidacion_liquidacion_valor_pagar" class="java.math.BigDecimal"/>
+	<field name="pg_liquidacion_liquidacion_numero_aprobacion" class="java.lang.String"/>
+	<field name="pg_liquidacion_id_tipopago" class="java.lang.Integer"/>
+	<field name="pg_liquidacion_liquidacion_numero_pin" class="java.lang.String"/>
+	<field name="pg_liquidacion_id_liquidaconso" class="java.lang.Integer"/>
+	<field name="pg_liquidacion_cxc_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxe_id" class="java.lang.Long"/>
+	<field name="pop_cxcevento_cxe_observacion" class="java.lang.String"/>
+	<field name="pop_cxcevento_cxe_fechaproceso" class="java.sql.Timestamp"/>
+	<field name="pop_cxcevento_cxe_estado" class="java.lang.Boolean"/>
+	<field name="pop_cxcevento_cxc_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_opr_id" class="java.lang.Long"/>
+	<field name="pop_cxcevento_indversion" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxr_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxci_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxre_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxu_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_crg_id" class="java.lang.String"/>
+	<field name="pop_cxcevento_calificacion_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxe_valor_pagar" class="java.math.BigDecimal"/>
+	<field name="pop_cxcevento_cxe_valor_bonificacion" class="java.math.BigDecimal"/>
+	<field name="pop_cxcevento_cxe_valor_descuento" class="java.math.BigDecimal"/>
+	<field name="pop_cxcevento_cxe_valor_antiguedad" class="java.math.BigDecimal"/>
+	<field name="col_nombre1" class="java.lang.String"/>
+	<field name="col_apellido1" class="java.lang.String"/>
+	<field name="col_cedula" class="java.lang.String"/>
+	<field name="fechai_liquidaconso" class="java.sql.Date"/>
+	<field name="fechaf_liquidaconso" class="java.sql.Date"/>
+	<field name="nombre_liquidaconso" class="java.lang.String"/>
+	<field name="fechap_liquidaconso" class="java.sql.Timestamp"/>
+	<field name="id_liquidaconso" class="java.lang.Integer"/>
+	<field name="opr_titulo" class="java.lang.String"/>
+	<field name="opr_fechaevtini" class="java.sql.Timestamp"/>
+	<field name="crg_nombre" class="java.lang.String"/>
+	<field name="pop_cxcevento_cxe_id_antiguedad" class="java.lang.Integer"/>
+	<field name="calificacion_desc" class="java.lang.String"/>
+	<field name="cln_nombres" class="java.lang.String"/>
+	<field name="desc_tipopago" class="java.lang.String"/>
+	<field name="liquidacion_numero_aprobacion" class="java.lang.String"/>
+	<variable name="sum_group_colaborador" class="java.math.BigDecimal" resetType="Group" resetGroup="colaborador_group" calculation="Sum">
+		<variableExpression><![CDATA[$F{pagototal}]]></variableExpression>
+	</variable>
+	<variable name="sum_tipo_pago_group" class="java.math.BigDecimal" resetType="Group" resetGroup="group_tipo_pago" calculation="Sum">
+		<variableExpression><![CDATA[$F{pagototal}]]></variableExpression>
+	</variable>
+	<variable name="suma" class="java.math.BigDecimal" resetType="Group" resetGroup="sumatotal" incrementType="Group" incrementGroup="group_tipo_pago" calculation="Sum"/>
+	<variable name="SUMA_GENERAL" class="java.math.BigDecimal" resetType="None" calculation="Sum">
+		<variableExpression><![CDATA[$F{pagototal}]]></variableExpression>
+	</variable>
+	<group name="group_tipo_pago">
+		<groupExpression><![CDATA[$F{desc_tipopago}]]></groupExpression>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="¤ #,##0" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="1140" y="0" width="84" height="20" backcolor="#FFFF33" uuid="cd4d57f6-24d5-42c5-87d0-e68bf82602d8"/>
+					<box>
+						<topPen lineStyle="Double"/>
+						<leftPen lineStyle="Double"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<rightPen lineStyle="Double"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sum_tipo_pago_group}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="1039" y="0" width="101" height="20" backcolor="#FFFF33" uuid="a65ca676-d35a-4232-b77a-8621912c28c8"/>
+					<box>
+						<topPen lineStyle="Double"/>
+						<leftPen lineStyle="Double"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<rightPen lineStyle="Double"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TOTAL PAGO  =]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="1039" height="20" backcolor="#999999" uuid="c9f6a832-79a3-4e05-bbd9-dcbdaf842836"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1224" y="0" width="50" height="20" backcolor="#999999" uuid="ef8de143-0a9a-4036-ba18-89ebac2d68bc"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="colaborador_group">
+		<groupExpression><![CDATA[$F{col_cedula}]]></groupExpression>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="¤ #,##0" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="1040" y="0" width="100" height="22" backcolor="#CCCCCC" uuid="2604e187-1f12-4353-b4f5-b8f504d90094"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sum_group_colaborador}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="894" y="0" width="146" height="22" backcolor="#CCCCCC" uuid="1ad27e8d-9ecd-4d99-9f88-6fb8bcacd5c5"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[PAGO X COLABORADOR =]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="0" y="0" width="894" height="22" backcolor="#CCCCCC" uuid="4a44dd64-4aa6-4ada-a8e5-fbe279147db8"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="1140" y="0" width="134" height="22" backcolor="#CCCCCC" uuid="b2ef0497-6220-48c4-be37-d7447b0c43d2"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<text><![CDATA[]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="pagototalnomina">
+		<groupExpression><![CDATA[$F{pagototal}]]></groupExpression>
+	</group>
+	<group name="sumatotal">
+		<groupExpression><![CDATA[$F{pg_liquidacionconsolidado_id_liquidaconso}]]></groupExpression>
+	</group>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="65" y="89" width="159" height="20" backcolor="#999999" uuid="0e172300-f405-4869-99c0-467a18049995"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRES Y APELLIDOS ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="224" y="89" width="80" height="20" backcolor="#999999" uuid="85049798-e988-401b-8c98-917e260f4b07"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CARGO OF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="368" y="89" width="101" height="20" backcolor="#999999" uuid="7713db1f-976e-4346-a2f8-62f81f9e7465"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="469" y="89" width="100" height="20" backcolor="#999999" uuid="775cbcc8-126f-403e-b129-7da66ea6e8bf"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="569" y="89" width="99" height="20" backcolor="#999999" uuid="cef6a163-99e9-4868-bb7f-ce3d1497ca8a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN EVENTO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="668" y="89" width="83" height="20" backcolor="#999999" uuid="8c80e284-fd81-47d5-924b-13f304b4128a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CALIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="926" y="89" width="114" height="20" backcolor="#999999" uuid="7ffcd850-56c5-42fd-be37-10363b56cf22"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MULTAS  /OTROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="751" y="89" width="72" height="20" backcolor="#999999" uuid="731ba105-1c88-473a-8344-19e7a879fe6e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[VALOR ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1040" y="89" width="84" height="20" backcolor="#999999" uuid="6fe3ce3b-7853-4e0e-a3df-8d99243ed906"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1124" y="89" width="100" height="20" backcolor="#999999" uuid="2bec6c5e-13e3-495a-b02d-bc683f1d9aa3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TIPO DE PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="823" y="89" width="103" height="20" backcolor="#999999" uuid="c5ea85d3-2fe7-45ec-b358-a1974ff1ec01"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[BONIFIC]]></text>
+			</staticText>
+			<image onErrorType="Icon">
+				<reportElement x="0" y="0" width="346" height="78" uuid="8a3455ca-d882-4ff0-991e-9c466d2ebeda"/>
+				<imageExpression><![CDATA[$P{rutalogo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="1174" y="40" width="100" height="20" uuid="1a928c22-db50-4cbc-821b-988754041bbe"/>
+				<textFieldExpression><![CDATA[$F{fechap_liquidaconso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1074" y="40" width="100" height="20" uuid="07bfcd4a-79a3-4993-ba9b-95659499e40b"/>
+				<text><![CDATA[Fecha de Proceso:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1224" y="89" width="50" height="20" backcolor="#999999" uuid="4ff77e50-8a0d-4f4f-a30d-704aa7382ccd"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="89" width="65" height="20" backcolor="#999999" uuid="d4a1796b-5ad5-4e04-a37f-02ee4a63aea4"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CEDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="20" width="340" height="20" uuid="140d8692-b253-49df-a0ac-8054e3275594"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Planilla Pago Servicios Ludicos y Recreativos entre]]></text>
+			</staticText>
+			<textField pattern="EEE, d MMM" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="776" y="20" width="58" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="86fe90f4-7fd0-4642-ad25-2c737cb6d8f6"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechai_liquidaconso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="834" y="20" width="14" height="20" uuid="a7c0e3f0-1314-491a-a0af-0cd951053c62"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[y]]></text>
+			</staticText>
+			<textField pattern="EEE, d MMM yyyy " isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="848" y="20" width="113" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="665edb79-a1ba-448d-8244-df911ed39974"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaf_liquidaconso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="304" y="89" width="64" height="20" backcolor="#999999" uuid="fe27874e-974b-42fd-ae95-6d24353e104b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CARGO E]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1201" y="0" width="73" height="20" forecolor="#FF0033" uuid="3912f2db-8ebe-4553-b169-ccaa3af3a62f"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_liquidaconso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1101" y="0" width="100" height="20" uuid="2a671a1e-b9b1-4ad4-ba91-a3dfeb50f240"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Planilla:  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1025" y="70" width="99" height="19" forecolor="#000000" backcolor="#FF0000" uuid="5ca7dd6b-a1c6-4a17-85c7-810d5dfd3643"/>
+				<box>
+					<topPen lineStyle="Double"/>
+					<leftPen lineStyle="Double"/>
+					<rightPen lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[TOTAL PLANILLA]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="1124" y="70" width="100" height="19" forecolor="#000000" backcolor="#FF0000" uuid="f5d619d0-1b5f-4196-ac8e-62b970c2f5cf"/>
+				<box>
+					<topPen lineStyle="Double"/>
+					<leftPen lineStyle="Double"/>
+					<rightPen lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMA_GENERAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="20">
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="1040" y="0" width="84" height="20" uuid="07aa4f27-8149-4b20-a4ac-ca3d96e7000f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pagototal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="0" width="82" height="20" uuid="41399b1c-811b-451e-ac60-10b8123cf80f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{col_nombre1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="0" width="77" height="20" uuid="75990bed-3187-4438-bba1-74ec4c3a5f32"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{col_apellido1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="823" y="0" width="103" height="20" uuid="17863d7c-c37a-4779-9cf1-9114f9dc6db9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcevento_cxe_valor_bonificacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="926" y="0" width="114" height="20" uuid="123fc83d-24c2-4ab9-92dd-1b915e7b3646"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcevento_cxe_valor_descuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="751" y="0" width="72" height="20" uuid="5b89c264-859d-44b2-9ee4-8004f0ef59b7"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcevento_cxe_valor_pagar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="569" y="0" width="99" height="20" uuid="44576e15-0bf6-4f4f-a20b-e2b1e40fdc37"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{opr_titulo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEE, d MMM yyyy ">
+				<reportElement x="368" y="0" width="101" height="20" uuid="3130580b-2787-4bbf-8572-ad984613b3cc"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{opr_fechaevtini}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="224" y="0" width="80" height="20" uuid="6793c3c0-ce71-4050-9c77-bc4c946adb0f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{crg_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0">
+				<reportElement x="668" y="0" width="83" height="20" uuid="fbaa1414-f076-4f2b-9fea-5a32f57bc7f2"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{calificacion_desc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="469" y="0" width="100" height="20" uuid="a76abe39-4258-41a5-b6eb-ae5d7f4c06c2"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cln_nombres}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1124" y="0" width="100" height="20" uuid="d47b5412-41f3-4cb0-b917-511af17d8d56"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{desc_tipopago}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1224" y="0" width="50" height="20" uuid="8ce2903f-050e-4ccd-ae61-b2c4b1656fd5"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{liquidacion_numero_aprobacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="65" height="20" uuid="149236bc-0347-445e-a66b-6dd336f2c210"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{col_cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="304" y="0" width="64" height="20" uuid="bcc202e9-8267-41f7-b53f-4a4e147f0f2a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{crg_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="45">
+			<textField>
+				<reportElement x="1154" y="24" width="80" height="20" uuid="50f0b49d-db03-44f7-b550-08836c26c3b6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="1234" y="24" width="40" height="20" uuid="c0202b29-a49e-4faa-8dbc-b5b2b66448ae"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="9" width="147" height="20" uuid="4dbb89b6-507b-4e93-856c-8c88ec43fa42"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA KAYROS coprg 2016]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="174" y="9" width="158" height="35" uuid="f7899160-a4aa-4252-9da8-a19afb72fd27"/>
+				<box>
+					<pen lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Calificado por:  Camilo  Aleman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="9" width="158" height="35" uuid="3e195c2e-7765-48f5-ba9a-a972f34125a5"/>
+				<box>
+					<pen lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Elaborado por:  Diana Guzman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="490" y="9" width="202" height="35" uuid="4132dfc6-8422-449d-aa95-f0f946dd8505"/>
+				<box>
+					<pen lineStyle="Double"/>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<leftPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="1.0" lineStyle="Double"/>
+					<rightPen lineWidth="1.0" lineStyle="Double"/>
+				</box>
+				<textElement>
+					<font isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Auditado Por:  Jose Mario Guzman Cabral]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

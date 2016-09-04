@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="Contenidofactura">
+       
+
+        <br></br>
+        <p style="margin:-0.3% 0;font-weight: bold;">FECHA REMISIÓN: <h:outputText value="#{pcsVentasJSFBean.remision.vrmsFecharemision}" >
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+            </h:outputText></p>
+        <br></br>
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+             <tr><th    class="thtablaFormulario"  colspan="2"> Cliente  </th></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label> Nombre</label>
+                    </div>
+                </td>
+                <td  style="width: 70%">
+
+                    <div>
+
+                        <span >
+                            <h:inputText value="#{pcsVentasJSFBean.remision.vrmsclNombres}"  maxlength="100"  styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Cedula</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+
+                        <div >
+                            <h:inputText maxlength="25"
+                                          value="#{pcsVentasJSFBean.remision.vrmsclIdentificacion}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+
+
+                        </div>
+                   
+                </td></tr>
+             
+             
+             
+              <tr>
+                <td style="width: 30%"><div >
+                        <label>Numero Dias Pago despues de Radicación</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%"><div >
+
+
+                        <h:inputText  styleClass="inputs" id="numeropago"
+                                      maxlength="200" size="60" 
+                                      value="#{pcsVentasJSFBean.remision.vrmsnumdiaspago}"
+                                      required="true" requiredMessage="Numero de dias de pago requerido"
+                                      >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label >Dirección</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+
+                        <div>
+                            <h:inputText  
+                                         maxlength="200" 
+                                         value="#{pcsVentasJSFBean.remision.vrmsclDiereccion}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                        </div>
+                    
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div>
+                        <label>Telefono</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+
+                        <div >
+                            <h:inputText  maxlength="60" 
+                                         value="#{pcsVentasJSFBean.remision.vrmsclFijo}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                        </div>
+                    
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div>
+                        <label >Celular</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+
+                        <div>
+                            <h:inputText   
+                                          maxlength="30" 
+                                          value="#{pcsVentasJSFBean.remision.vrmsclCelular}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                        </div>
+                   
+                </td> 
+            </tr>
+            <tr>
+                <td  style="width: 30%">
+                    <div>
+                        <label >E-mail</label>
+                    </div>
+                </td>
+
+                <td  style="width: 70%">
+
+
+                        <div>
+
+                            <h:inputText maxlength="100" 
+                                         value="#{pcsVentasJSFBean.remision.vrmsclEmail}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                        </div>
+                   
+                </td></tr>
+
+
+        </table>
+        <br></br>
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+             <tr><th    class="thtablaFormulario"  colspan="2"> Evento </th></tr>
+
+ <tr>
+                <td style="width: 30%"><div >
+                        <label >Venta N°</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+
+                        <div >
+                            <h:inputText  maxlength="100" readonly="true"
+                                          value="#{pcsVentasJSFBean.remision.rgvtId.vdeId.vdeId}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                        </div>
+                    
+                </td> 
+            </tr>
+
+
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label>Fecha Evento</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+
+                        <div >
+                             <h:inputText styleClass="inputs" 
+                                          value="#{pcsVentasJSFBean.remision.rgvtId.vdeId.vdeFechaevt}">
+                                 <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                   <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+                          
+
+
+                        </div>
+                     
+                </td></tr>
+            <tr>
+                <td  style="width: 30%">
+                    <div>
+                        <label>Dirección  Evento</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+
+                        <div >
+                            <h:inputText   maxlength="100"
+                                          value="#{pcsVentasJSFBean.remision.vrmsDireccionevento}" styleClass="inputs">
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+
+                        </div>
+                    
+                </td></tr>
+           
+
+
+        </table>
+
+        <br></br>
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario"  colspan="2"> Observación  </th></tr>
+            
+            <tr><td><div>
+                        <h:inputTextarea cols="155" rows="3" 
+                                         value="#{pcsVentasJSFBean.remision.vrmsObservacion}" styleClass="inputs">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputTextarea>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                 <tr><th    class="thtablaFormulario"  colspan="2"> Servicios  </th></tr>
+            
+            <tr><td><div class="form-group">
+                        <ace:dataTable value="#{pcsVentasJSFBean.lstDetalleXRemision}"
+                                       var="itemRvf"
+                                       rows="10"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron registros"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                            <ace:column headerText="Servicio">
+                                <h:inputText  
+                                    value="#{itemRvf.vdrmServico}" class="tablaFormulario">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:inputText>
+                            </ace:column>
+                            <ace:column headerText="Descripción">
+                                <h:inputTextarea cols="30" rows="2" 
+                                                 value="#{itemRvf.vdrmSubservico}" styleClass="inputs">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:inputTextarea>
+                            </ace:column>
+                            <ace:column headerText="Cantidad">
+
+                                <h:outputText  value="#{itemRvf.vdrmCantidad}"
+                                               styleClass="textcolumcenter">
+                                </h:outputText>
+
+                            </ace:column>
+                            <ace:column headerText="Especificación Técnica"  >
+                                <h:inputTextarea cols="20" rows="2"  styleClass="inputs"
+                                                 value="#{itemRvf.vdrmEspecificaciones}">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:inputTextarea>
+                            </ace:column>
+                            <ace:column headerText="Costo Unitario">
+                                <h:outputText value="#{itemRvf.vdrmCostounitario}"
+                                             styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0" />
+                                </h:outputText>
+                            </ace:column>
+                            <ace:column headerText="Costo Total" >
+                                <h:outputText value="#{itemRvf.vdrmCostototal}"
+                                             styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0" />
+                                </h:outputText>
+                            </ace:column>
+
+                        </ace:dataTable>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+               <tr><th    class="thtablaFormulario"  colspan="2"> Valores  </th></tr>
+
+            <tr><td style="width: 600px;"><label>Descuento</label></td><td>
+                    <h:inputText   size="60" maxlength="100" 
+                                   readonly="true"
+                                  value="#{pcsVentasJSFBean.remision.vrmsDescuento}" styleClass="inputs">
+                        <f:ajax execute="@this" render="@all" />
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                    </h:inputText>
+                </td></tr>
+
+
+            <tr><td><label>Total</label></td><td>
+                    <h:outputText class="form-control"
+                                  value="#{pcsVentasJSFBean.remision.vrmsValortotal}" styleClass="inputs">
+
+                        <f:convertNumber locale="es" pattern="#,##0" />
+                    </h:outputText>
+                </td></tr>
+            <tr><td><label>Valor Anticipo</label></td><td>
+                    <h:outputText  class="form-control"  
+                                   value="#{pcsVentasJSFBean.remision.vrmsAnticipo}" styleClass="inputs">
+
+                        <f:convertNumber locale="es" pattern="#,##0" />
+                    </h:outputText>
+                </td></tr>
+            <tr><td><label>Saldo</label></td><td>
+                    <h:outputText  class="form-control" 
+
+                                   value="#{pcsVentasJSFBean.remision.vrmsSaldo}" styleClass="inputs">
+                        <f:convertNumber locale="es" pattern="#,##0" />
+                    </h:outputText>
+                </td></tr>
+
+        </table>
+
+    </ui:insert>
+
+</html>

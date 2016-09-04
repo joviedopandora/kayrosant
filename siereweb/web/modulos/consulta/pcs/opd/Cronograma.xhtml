@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+    <ui:insert name="Cronograma">
+        <ace:panel header="Cronograma"  style="width: 100%" styleClass="thtablaFormulario" >
+          
+            <ace:dataTable id="carTable"
+                           value="#{pcsOrdenProduccionJSFBean.lstTablaServiciosPendientes}"
+                          var="car"
+                          paginator="true"
+                          paginatorPosition="bottom"
+                          rows="20">
+        
+                <ace:column  headerText="#Venta" sortBy="#{car.vntServxventa.rgvtId.rgvtId}}"
+                                filterBy="#{car.vntServxventa.rgvtId.rgvtId}" filterMatchMode="contains">
+                    <h:outputText  value="#{car.vntServxventa.rgvtId.rgvtId}"/>
+                </ace:column>
+                <ace:column  headerText="Indice">
+                     <h:outputText  value="#{car.inidceFila}"/>
+                </ace:column>
+                <ace:column  headerText="Cliente"  sortBy="#{car.vntServxventa.rgvtId.clnId.clnAlias}">
+                    <h:outputText  value="#{car.vntServxventa.rgvtId.clnId.clnAlias}"/>
+                </ace:column>
+                
+            
+                
+                <ace:column headerText="Nombre Evento"  styleClass="textcolumleft letraOutput" sortBy="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}"
+                                filterBy="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}" filterMatchMode="contains">
+                        <h:outputText value="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}"/>
+                   
+                    </ace:column>
+                
+                
+                <ace:column  headerText="N° de Solicitud">
+                    <h:inputText  value="#{car.cronogramaSel.cronogramacop}" styleClass="textcolumright inputs">
+                        <f:ajax execute="@this" render="@this"/>
+                     </h:inputText> 
+                </ace:column>
+                
+                 
+                <ace:column  headerText="Semana">
+                    <h:inputText  value="#{car.cronogramaSel.cronogramaSemana}" styleClass="textcolumright inputs">
+                        <f:converter converterId="convertMayusc"/>
+                        <f:ajax execute="@this" render="@this"/>
+                     </h:inputText>    
+                </ace:column>
+                
+                <ace:column  headerText="Fecha" sortBy ="#{car.cronogramaSel.cronogramaFecha}">
+                    <ace:dateTimeEntry value="#{car.cronogramaSel.cronogramaFecha}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="dd/MM/yyyy" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>    
+                </ace:column>
+                
+                <ace:column  headerText="Distribuidor" >
+                    <h:inputText  value="#{car.cronogramaSel.cronogramaDistribuidor}" styleClass="textcolumright inputs">
+                        <f:converter converterId="convertMayusc"/> 
+                        <f:ajax execute="@this" render="@this" />
+                     </h:inputText>    
+                </ace:column>
+                <ace:column  headerText="Servicio">
+                    <h:outputText  value="#{car.vntServxventa.vsrvId.vsrvNombre}"/>
+                </ace:column>
+                
+                <ace:column  headerText="Costo" >                    
+                    <h:outputText  value="#{car.vntServxventa.vsrvId.vsrvValunitcliente}"/>
+                </ace:column>
+                
+                <ace:column id="OP" headerText="OP">
+                    <h:outputText  value="#{car.cronogramaSel.numeroOP}"  rendered="#{car.cronogramaSel.numeroOP != null}" />
+                    <h:commandButton styleClass="btnirop"
+                             rendered="#{car.cronogramaSel.numeroOP == null}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.irGenerarOPCronograma}"
+                             title="Ir a generar OP">
+                <f:ajax execute="@this" render="@all" />
+                <f:attribute name="cronosel" value="#{car}" />
+                </h:commandButton>
+                </ace:column>
+                
+                   
+                
+                  <ace:column id="Cancelar" headerText="Cancelar">
+                      
+                      <h:commandButton styleClass="btncancelarop"
+                             rendered="#{car.cronogramaSel.numeroOP == null}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.cancelarCronograma}"
+                             title="Cancelar OP">
+                <f:ajax execute="@this" render="@all" />
+                <f:attribute name="cronosel" value="#{car}" />
+            </h:commandButton>
+                    
+                </ace:column>
+                
+                     
+                    
+                    
+            </ace:dataTable>
+        </ace:panel>
+                               
+    </ui:insert> 
+
+
+
+</html>

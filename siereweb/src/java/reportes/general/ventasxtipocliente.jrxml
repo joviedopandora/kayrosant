@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ventasxtipocliente" pageWidth="1400" pageHeight="500" orientation="Landscape" columnWidth="1380" leftMargin="0" rightMargin="20" topMargin="10" bottomMargin="0" uuid="26c28c66-aeb3-472d-8fbb-df7ad9f47899">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="396"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pFechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pFechaInicial" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pTipoCliente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  vnt_registroventa.rgvt_id,
+  vnt_registroventa.rgvt_fechacre,
+  vnt_registroventa.rgvt_est,
+  vnt_registroventa.cln_id,
+  vnt_registroventa.rgvt_obsr,
+  vnt_registroventa.rgvt_anulado,
+  vnt_registroventa.indversion,
+  vnt_registroventa.str_id,
+  vnt_registroventa.estrvnt_id,
+  vnt_registroventa.rgvt_transacbanco,
+  vnt_registroventa.rgvt_numordenejec,
+  vnt_registroventa.rgvt_valorventa,
+  vnt_registroventa.bnc_id,
+  vnt_registroventa.rgvt_valorpagado,
+  vnt_registroventa.rgvt_pagado,
+  vnt_cliente.cln_identificacion,
+  vnt_cliente.cln_nombres,
+  vnt_registroventa.rgvt_estconfirmada,
+  vnt_registroventa.rgvt_fechaconfirma,
+  vnt_registroventa.fpg_id,
+  vnt_registroventa.rgvt_descuento,
+  vnt_registroventa.rgvt_facturada,
+  vnt_registroventa.rgvt_idordenprod,
+  vnt_registroventa.rgvt_vlrfactura,
+  vnt_cliente.cln_apellidos,
+  vnt_cliente.cln_contacto,
+  vnt_cliente.cln_nuevo,
+  vnt_cliente.cln_correoe,
+  vnt_cliente.cln_diereccion,
+  vnt_cliente.cln_celular,
+  vnt_cliente.cln_fijo,
+  vnt_cliente.tcl_id,
+  vnt_cliente.tdc_id,
+  vnt_cliente.cln_estado,
+  vnt_cliente.cln_fechaproceso,
+  vnt_cliente.cln_fechanace,
+  vnt_cliente.cln_numhijos,
+  vnt_cliente.sex_id,
+  vnt_cliente.ate_id,
+  vnt_rf_tipocliente.tcl_nombre,
+  vnt_rf_tipocliente.tcl_desc
+FROM
+  vnt_registroventa,
+  vnt_cliente,
+  vnt_rf_tipocliente
+WHERE
+  vnt_registroventa.cln_id = vnt_cliente.cln_id AND
+  vnt_cliente.tcl_id = vnt_rf_tipocliente.tcl_id AND
+  vnt_rf_tipocliente.tcl_id = $P{pTipoCliente} AND
+  vnt_registroventa.rgvt_estconfirmada = true AND
+ to_date(to_char(vnt_registroventa.rgvt_fechacre,'YYYYMMDD'),'YYYYMMDD') >= $P{pFechaInicial}
+AND  to_date(to_char(vnt_registroventa.rgvt_fechacre,'YYYYMMDD'),'YYYYMMDD') <= $P{pFechaFinal}]]>
+	</queryString>
+	<field name="rgvt_id" class="java.lang.Long"/>
+	<field name="rgvt_fechacre" class="java.sql.Timestamp"/>
+	<field name="rgvt_est" class="java.lang.Boolean"/>
+	<field name="cln_id" class="java.lang.Long"/>
+	<field name="rgvt_obsr" class="java.lang.String"/>
+	<field name="rgvt_anulado" class="java.lang.Boolean"/>
+	<field name="indversion" class="java.lang.Integer"/>
+	<field name="str_id" class="java.lang.Long"/>
+	<field name="estrvnt_id" class="java.lang.Integer"/>
+	<field name="rgvt_transacbanco" class="java.lang.String"/>
+	<field name="rgvt_numordenejec" class="java.lang.String"/>
+	<field name="rgvt_valorventa" class="java.math.BigDecimal"/>
+	<field name="bnc_id" class="java.lang.Long"/>
+	<field name="rgvt_valorpagado" class="java.math.BigDecimal"/>
+	<field name="rgvt_pagado" class="java.lang.Boolean"/>
+	<field name="cln_identificacion" class="java.lang.String"/>
+	<field name="cln_nombres" class="java.lang.String"/>
+	<field name="rgvt_estconfirmada" class="java.lang.Boolean"/>
+	<field name="rgvt_fechaconfirma" class="java.sql.Timestamp"/>
+	<field name="fpg_id" class="java.lang.Integer"/>
+	<field name="rgvt_descuento" class="java.math.BigDecimal"/>
+	<field name="rgvt_facturada" class="java.lang.Boolean"/>
+	<field name="rgvt_idordenprod" class="java.lang.Long"/>
+	<field name="rgvt_vlrfactura" class="java.math.BigDecimal"/>
+	<field name="cln_apellidos" class="java.lang.String"/>
+	<field name="cln_contacto" class="java.lang.String"/>
+	<field name="cln_nuevo" class="java.lang.Boolean"/>
+	<field name="cln_correoe" class="java.lang.String"/>
+	<field name="cln_diereccion" class="java.lang.String"/>
+	<field name="cln_celular" class="java.lang.String"/>
+	<field name="cln_fijo" class="java.lang.String"/>
+	<field name="tcl_id" class="java.lang.Integer"/>
+	<field name="tdc_id" class="java.lang.String"/>
+	<field name="cln_estado" class="java.lang.Boolean"/>
+	<field name="cln_fechaproceso" class="java.sql.Timestamp"/>
+	<field name="cln_fechanace" class="java.sql.Date"/>
+	<field name="cln_numhijos" class="java.lang.Integer"/>
+	<field name="sex_id" class="java.lang.String"/>
+	<field name="ate_id" class="java.lang.Integer"/>
+	<field name="tcl_nombre" class="java.lang.String"/>
+	<field name="tcl_desc" class="java.lang.String"/>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="79da12f9-2364-4f06-831e-e50e4a3239f9" mode="Opaque" x="0" y="60" width="100" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero de venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e975d764-5033-4301-af82-72bfdae09c03" mode="Opaque" x="100" y="60" width="200" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="801af927-70dd-45c9-849a-e0603339b89c" mode="Opaque" x="300" y="60" width="137" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor de la venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b660617a-d570-471b-8920-e64230e4962e" mode="Opaque" x="554" y="60" width="146" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="869f6e2b-4cbe-458d-a59d-54b36166b963" mode="Opaque" x="700" y="60" width="235" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c04d2983-f60c-4b86-beb6-33d523fa9b60" mode="Opaque" x="935" y="60" width="136" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6665eec7-d7c2-4627-b51f-9718d6fd3a8a" mode="Opaque" x="437" y="60" width="117" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descuento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a22c8757-4c26-48b5-b621-69a6f2173cf2" mode="Opaque" x="1071" y="60" width="169" height="20" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d8b2d99d-1037-4315-ace7-21c3dd03a42b" x="0" y="20" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaFinal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3883a9f5-c6a2-4691-b1e7-9836c85127ee" x="100" y="20" width="200" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pFechaInicial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4c1a4fd1-067f-4753-b56a-ba8943b9a89c" x="700" y="0" width="235" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VENTAS  POR  CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cae385e1-c710-43af-b7f4-d3c74fe839e8" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="85eec70d-c7c2-4cb1-87b1-e3657fc1a4e5" x="100" y="0" width="200" height="20"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Final]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eb78acc8-4305-48c5-bdea-f47b7c2839db" x="0" y="0" width="100" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="26aaed42-6207-4365-9c0c-a919fb1c9112" x="100" y="0" width="200" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_fechacre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="88b3e43e-de0c-4582-aecb-8baec063f6cf" x="300" y="0" width="137" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_valorventa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="19a934eb-b8d3-46b4-82a2-cbee048533dc" x="554" y="0" width="146" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_identificacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d8e7e3d6-50ac-4734-9de0-81031738f162" x="700" y="0" width="235" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_apellidos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="55c78a06-c0d4-4ac0-9f3f-9cde80e5ea99" x="935" y="0" width="136" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_nombres}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="5f2087e5-6a69-455c-a9d5-b0df1661ac3d" x="437" y="0" width="117" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_descuento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2e627f72-b336-4364-86f9-d8354855b249" x="1071" y="0" width="169" height="20"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tcl_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

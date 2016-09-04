@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="cargo">
+        <ace:panel header="Cargo">
+            <h:panelGrid columns="2" styleClass="tablaGrid">
+                <h:outputLabel value="Código *"/>
+                <ace:textEntry value="#{cargoJSFBean.strCrgId}"
+                               styleClass="textMediano"
+                               readonly="#{cargoJSFBean.blnHabilitar}">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Nombre *"/>
+                <ace:textEntry value="#{cargoJSFBean.strCrgNombre}"
+                               styleClass="textGrande">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Descripción"/>
+                <h:inputTextarea value="#{cargoJSFBean.strCrgDescripcion}"
+                               styleClass="textAreaGrande">
+                    <f:converter converterId="convertMayusc"/>
+                </h:inputTextarea>
+                <h:outputLabel value="Estado"/>
+                <h:selectBooleanCheckbox value="#{cargoJSFBean.blnCrgEstado}"/>
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="Cargos registrados">
+            <ace:dataTable value="#{cargoJSFBean.lstTablaAdmCargo}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{cargoJSFBean.rowDtCargo_ActionEvent}">
+                        <f:attribute name="tcs" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Id" style="width: 75px">
+                    <h:outputText value="#{item.admCargo.crgId}"/>
+                </ace:column>
+                <ace:column headerText="Nombre" style="width: 250px">
+                    <h:outputText value="#{item.admCargo.crgNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Descripción" style="width: 250px">
+                    <h:outputText value="#{item.admCargo.crgDesc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{item.admCargo.crgEst}"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

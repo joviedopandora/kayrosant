@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="Contenidofactura">
+
+        <p style="margin:-0.3% 0;font-weight: bold;">FECHA PAGO: <h:outputText value="#{pcsVentasJSFBean.pago.rgpcFechapago}" >
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+            </h:outputText></p>
+        <br></br>
+        
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            
+                <tr><th  class="thtablaFormulario" colspan="2"> Datos Cliente  </th></tr>
+            
+            <tr>
+                <td  style="width: 30%"> 
+                    <div> 
+                        <label>Nombre </label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div>
+
+                        
+                        <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.nombres}"
+                                          styleClass="letraOutput"/>
+
+
+                        
+
+                    </div>
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Identificación</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+                    <div>
+
+
+                        <div>
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.identificacion}"
+                                         styleClass="letraOutput"/>
+
+
+                        </div>
+                    </div> 
+                </td></tr>
+
+            <tr>
+                <td style="width: 30%"
+                    ><div>
+                        <label >Tipo Cliente</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+                    <div>
+
+                        <div>
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tclId.tclNombre}"
+                                          styleClass="letraOutput"/>
+                        </div>
+                    </div>
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div>
+                        <label>Protagonista</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%"><div>
+
+                        <div>
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.dclnId.nombres}"
+                                        styleClass="letraOutput"/>
+                        </div>
+                    </div>
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div>
+                        <label >Fecha Evento</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+                
+
+                        <div>
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeFechaevt}"
+                                           styleClass="letraOutput">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            </h:outputText>
+                        </div>
+                   
+                </td> 
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Hora</label>
+                    </div>
+                </td>
+
+                <td style="width: 70%"><div>
+
+
+                        <div>
+
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeHorainicio}"
+                                           styleClass="letraOutput">
+                                <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                            </h:outputText>
+                        </div>
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Dirección Cliente</label>
+                    </div>
+                </td>
+
+                <td style="width: 70%"><div>
+
+
+                        <div>
+
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnDiereccion}"
+                                          styleClass="letraOutput"/>
+                        </div>
+                    </div> 
+                </td></tr>
+
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Dirección Evento</label>
+                    </div>
+                </td>
+
+                <td><div>
+
+
+                        <div>
+
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeDireccionevt}"
+                                         styleClass="letraOutput"/>
+                        </div>
+                    </div> 
+                </td></tr>
+
+            <tr>
+                <td >
+                    <div styleClass="inputs">
+                        <label >Teléfono</label>
+                    </div>
+                </td>
+
+                <td><div class="form-group">
+
+
+                        <div styleClass="inputs">
+
+                            <h:outputText  value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnFijo}"
+                                            styleClass="letraOutput"/>
+                        </div>
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >Celular</label>
+                    </div>
+                </td>
+
+                <td style="width: 70%"><div>
+
+
+                        <div style="font-size: large">
+
+                            <h:outputText  value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCelular}"
+                                           styleClass="letraOutput"/>
+                        </div>
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label >E-Mail</label>
+                    </div>
+                </td>
+
+                <td style="width: 70%">
+                        <div >
+                            <h:outputText  value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCorreoe}"
+                                            styleClass="letraOutput"/>
+                        </div>
+                     
+                </td></tr>
+
+
+        </table>
+        <br></br>
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th  class="thtablaFormulario" colspan="2"> Detalle Venta / Pago  </th>
+            </tr>
+
+            <tr>
+                <td style="width: 30%">
+                    <div> 
+                        <label>No Venta</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div>
+
+                        <span style="font-size: large">
+                            <h:outputText value="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtId}"
+                                         styleClass="letraOutput">
+                               
+                            </h:outputText>
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+            
+            <tr>
+                <td style="width: 30%">
+                    <div> 
+                        <label>Costo Total Evento $</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div>
+
+                        <span  styleClass="inputs">
+                            <h:outputText value="#{pcsVentasJSFBean.bdTotalPagado}"
+                                          styleClass="letraOutput">
+                                <f:convertNumber locale="es" pattern="#,##0.00" />
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:outputText>
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+            
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label>Pendiente Pago $</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div  styleClass="inputs">
+
+                        <span  styleClass="inputs">
+                            <h:outputText value="#{pcsVentasJSFBean.bdValorPago}" 
+                                          styleClass="letraOutput">
+
+                                <f:convertNumber locale="es" pattern="#,##0.00" />
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:outputText>
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+
+            <tr>
+                <td style="width: 30%">
+                    <div  styleClass="inputs">
+                        <label>Forma Pago </label>
+                    </div>
+                </td>
+                <td style="width: 70%" >
+
+                    <div>
+
+                        <span  styleClass="inputs">
+                            <h:selectOneMenu  styleClass="inputs"
+                                              valueChangeListener="#{pcsVentasJSFBean.cambioFormaPago}"
+                                              value="#{pcsVentasJSFBean.idFormaPago}">
+                                <f:selectItems value="#{pcsVentasJSFBean.lstFormaPago}"/>
+                                <f:ajax execute="@this" render="@all" />
+                            </h:selectOneMenu>
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div>
+                        <label>Banco </label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div>
+
+                        <span  styleClass="inputs">
+                            <h:selectOneMenu styleClass="inputs" 
+                                             rendered="#{pcsVentasJSFBean.blnAplicaBanco}"
+                                             value="#{pcsVentasJSFBean.idBanco}">
+                                <f:selectItems value="#{pcsVentasJSFBean.lstBancos}"/>
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+                            <h:outputText value="No Aplica" styleClass="textcolumleft letraOutput" rendered="#{!pcsVentasJSFBean.blnAplicaBanco}" />
+
+                        </span>
+
+                    </div>
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div   styleClass="inputs">
+                        <label>Valor Pago $</label>
+                    </div>
+                </td>
+                <td style="width: 70%">
+
+                    <div>
+
+                        
+                            <h:inputText   styleClass="inputs" 
+                                          value="#{pcsVentasJSFBean.pago.rgpcValorpago}">
+                                <f:ajax execute="@this" render="@all" />
+                                <f:validateDoubleRange minimum="1" maximum="#{pcsVentasJSFBean.bdValorPago}" />
+                                <f:convertNumber locale="es" pattern="#,##0.00" />
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:inputText>
+
+                        
+
+                    </div>
+
+                </td>     
+            </tr>
+
+        </table>
+
+        <br></br>
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th colspan="2"  class="thtablaFormulario">  Observación  </th></tr>
+            <div >
+                <div ></div></div>
+            <tr><td><div  >
+                        <h:inputTextarea cols="155" rows="3"   styleClass="inputs"
+                                         value="#{pcsVentasJSFBean.pago.rgpcObservacion}" >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputTextarea>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table width="100%" border="1" style="font-size: large">
+            <tr><th colspan="2" class="thtablaFormulario"> Servicios  </th></tr>
+            <div class="form-body">
+                <div class="form-group"></div></div>
+            <tr><td><div class="form-group">
+                        <ace:dataTable value="#{pcsVentasJSFBean.lstTablaVntSrvXVenta}"
+                                       var="item"
+                                       rows="30"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <ace:column headerText="Servicio">
+                                <h:outputText value="#{item.vntServxventa.vsrvId.vsrvNombre}"
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="Cantidad" >
+                                <h:outputText value="#{item.vntServxventa.srvxventCantidad}"   class="form-control"/>
+                            </ace:column>
+                            <ace:column headerText="Costo" >
+                                <h:outputText value="#{item.vntServxventa.srvxventPrecioventa}"
+                                              styleClass="textcolumleft letraOutput" > 
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                            <ace:column headerText="Costo Total">
+                                <h:outputText value="#{item.vntServxventa.srvxventValtotalclnt}"
+                                              styleClass="textcolumleft letraOutput" >
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column>
+                        </ace:dataTable>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table width="100%" border="1" style="font-size: large">
+            <tr><th colspan="2" class="thtablaFormulario">  Pagos </th></tr>
+            <div class="form-body">
+                <div class="form-group"></div></div>
+            <tr><td><div class="form-group">
+                        <ace:dataTable value="#{pcsVentasJSFBean.lstVntPagoventa}"
+                                       var="itemSxv"
+                                       rows="30"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <ace:column headerText="FECHA  ABONO">
+
+                                <h:outputText value="#{itemSxv.rgpcFechapago}"
+                                              styleClass="textcolumleft letraOutput"
+                                              >
+                                    <f:convertDateTime pattern="dd/MM/YYYY" />
+                                </h:outputText>
+
+                            </ace:column>
+                            <ace:column headerText="ABONO A VENTA" >
+                                <h:outputText value="#{itemSxv.rgvtId.rgvtId}" styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="VALOR DEL PAGO" >
+                                <h:outputText value="#{itemSxv.rgpcValorpago}"
+                                             styleClass="textcolumleft letraOutput" > 
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column>
+                            <ace:column headerText="FORMA DE PAGO">
+                                <h:outputText value="#{itemSxv.finFormapago.fpgNombre}"
+                                              styleClass="textcolumleft letraOutput"
+                                              >
+
+                                </h:outputText>
+                            </ace:column>
+                        </ace:dataTable>
+                    </div></td></tr>
+
+        </table>
+
+
+
+    </ui:insert>
+
+</html>

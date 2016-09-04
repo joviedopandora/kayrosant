@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccOrdenProd">
+        <h:panelGrid style="z-index: 15"
+                     columns="4">
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 1 ? pcsOrdenProduccionJSFBean.blnMostrarPanel : false}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.irGenerarOP}"
+                             title="Ir a generar OP">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnVolverStd"
+                             rendered="#{(pcsOrdenProduccionJSFBean.numPanel == 1 || pcsOrdenProduccionJSFBean.numPanel == 2) ? true : false}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.btnRegresarOrdenProd_ActionEvent}"
+                             title="Regresar">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 2 ? true : false}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.btnGenerarReporteOrdenProduccion_ActionEvent}"
+                             title="Generar Informe de Orden Producción">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 3 ? true : false}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.guardarCronograma_ActionEvent}"
+                             title="Guardar Cronograma">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnBuscarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 3 ? true : false}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.guardarCronograma_ActionEvent}"
+                             title="Buscar Ordenes de producción pendientes.">
+                <f:ajax execute="@this" render="@form" />
+            </h:commandButton>
+
+            <ice:outputResource resource="#{pcsOrdenProduccionJSFBean.jasperResource}"
+                                rendered="#{pcsOrdenProduccionJSFBean.numPanel == 2 or pcsOrdenProduccionJSFBean.numPanel == 4}"
+                                mimeType="application/pdf"
+                                fileName="OP_#{pcsOrdenProduccionJSFBean.nombreArchivoGeneracionOp}.pdf"
+                                shared="false"
+                                label=" "
+                                type="button"
+                                styleClass="btnInformePDF">
+            </ice:outputResource>
+
+            <h:commandButton styleClass="btnBuscarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 4 and !pcsOrdenProduccionJSFBean.blnMostrarPanel}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.buscarGen_ActionEvent}"
+                             title="Buscar">
+                <f:ajax execute="@this" render="@form" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{pcsOrdenProduccionJSFBean.numPanel == 4 and pcsOrdenProduccionJSFBean.blnMostrarPanel}"
+                             actionListener="#{pcsOrdenProduccionJSFBean.btnGenerarReporteOrdenProduccion_ActionEvent}"
+                             title="Generar Informe de Orden Producción">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+        </h:panelGrid>
+    </ui:insert>
+</html>

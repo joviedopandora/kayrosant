@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+    <ui:insert name="panelEntrada">
+        <ace:panel header="Producto"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409" >
+                <tr><th class="thtablaFormulario" colspan="4"> <font color="FFFFFF">Crear/Editar Producto</font> </th></tr>
+                <tr>
+<!--                    <td style="width: 20%"> 
+                        <div> 
+                            <label>ID </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div>
+
+                            <h:inputText value="#{inventarioJSFBean.producto.prdId}"  readonly="true" styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>     -->
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Nombre *</label>
+                        </div>
+                    </td>
+                    <td style="width: 40%">
+
+                        <div>
+
+                            <h:inputText value="#{inventarioJSFBean.producto.prdNombre}" 
+                                         maxlength="500"
+                                         styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Ubicación </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div>
+
+                            <h:inputText value="#{inventarioJSFBean.producto.prdDesc}"  styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>     
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Categoria* </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              value="#{inventarioJSFBean.catProducto}"
+                                              >
+                                <f:selectItems value="#{inventarioJSFBean.lstInvCatprod}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Activo </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div>
+
+                            <h:selectBooleanCheckbox value="#{inventarioJSFBean.producto.prdEst}" >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectBooleanCheckbox>
+                        </div>
+
+                    </td>     
+                    <td style="width: 100%" colspan="2"> 
+                        <h:commandButton value="Asociar Marca"
+                                         styleClass="button"
+                                         actionListener="#{inventarioJSFBean.mostarPopUpMarcas_ActionEvent}"
+                                         onclick="sampleDialog.show();"
+                                         title="Asociar Marca">
+                        </h:commandButton>
+                        <h:commandButton value="Asociar Presentación"
+                                         styleClass="button"
+                                         actionListener="#{inventarioJSFBean.mostarPopUpPresentacion_ActionEvent}"
+                                         onclick="dialogPresentacion.show();"
+                                         title="Asociar Presentación">
+                        </h:commandButton>
+
+                    </td>
+
+                </tr>
+
+            </table>
+            <br></br>
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="2"> Productos </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <ace:dataTable value="#{inventarioJSFBean.lstInvProducto}"
+                                           var="itemInv"
+                                           rows="20"
+                                           id="tablaColw"
+                                           alwaysExecuteContents="true"
+                                           paginator="true"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText=">>>" >
+                                    <h:commandLink value=">>>"
+                                                   actionListener="#{inventarioJSFBean.rowDtProducto_ActionEvent}">
+                                        <f:attribute name="producto" value="#{itemInv}"/>
+                                        <f:ajax execute="@this" render="@all" />
+                                    </h:commandLink>
+                                </ace:column>
+                                <ace:column headerText="ID"  sortBy="#{itemInv.prdId}"
+                                            filterBy="#{itemInv.prdId}" filterMatchMode="contains" >
+                                    <h:outputText value="#{itemInv.prdId}"
+
+                                                  styleClass="textcolumnjustify letraOutput"/>
+                                </ace:column>
+
+
+                                <ace:column headerText="Nombre"  sortBy="#{itemInv.prdNombre}"
+                                                  filterBy="#{itemInv.prdNombre}" filterMatchMode="contains" >
+                                    <h:outputText value="#{itemInv.prdNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+                                <ace:column headerText="Ubicación" >
+                                    <h:outputText value="#{itemInv.prdDesc}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+
+
+                                <ace:column headerText="Categoria" >
+                                    <h:outputText value="#{itemInv.cpdId.cpdNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>               
+
+                                <ace:column headerText="Estado" >
+                                    <h:outputText value="#{(itemInv.prdEst ? 'Activo' : 'Inactivo')}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>               
+
+                            </ace:dataTable>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br></br>
+            <ace:dialog id="dialog"
+                        header="Asociar Marcas"
+                        widgetVar="sampleDialog"
+                        closable="false"
+                        modal="false"
+                        draggable="true"
+                        showEffect="clip"
+                        hideEffect="fade"
+                        width="1000"
+                        height="400"
+
+                        >
+
+                <h:panelGroup>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409" >
+                        <tr><th class="thtablaFormulario" colspan="4"> <font color="FFFFFF">Asociar marcar a Producto</font> </th></tr>
+
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Marca * </label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+
+                                <div>
+                                    <h:selectOneMenu  styleClass="inputs"
+                                                      value="#{inventarioJSFBean.marca}"
+                                                      >
+                                        <f:selectItems value="#{inventarioJSFBean.lstMarcasActivas}" />
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+
+
+
+
+                                </div>
+
+                            </td>     
+
+
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Activo </label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+
+                                <div>
+
+                                    <h:selectBooleanCheckbox value="#{inventarioJSFBean.estadoMarcaXprod}" >
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectBooleanCheckbox>
+                                </div>
+
+                            </td> 
+
+                        </tr>
+
+
+
+
+                        <tr align="center" style="text-align: center">
+
+                            <td style="text-align: center" colspan="2" align="center"  width="100%">  
+                            </td>
+                            <td style="text-align: center" colspan="2" align="center"  width="100%">
+                                <h:commandButton value="Asociar"
+                                                 styleClass="button"
+                                                 actionListener="#{inventarioJSFBean.asociarMarcaXProducto_ActionEvent}"
+
+                                                 title="Asociar">
+                                </h:commandButton>
+
+                                <h:commandButton value="Nuevo"
+                                                 styleClass="button"
+                                                 actionListener="#{inventarioJSFBean.crearMarcaXProducto_ActionEvent}"
+
+                                                 title="Nuevo">
+                                </h:commandButton>
+
+                                <h:commandButton value="Aceptar"
+                                                 styleClass="button"
+
+                                                 onclick="sampleDialog.hide();"
+                                                 title="Aceptar">
+                                </h:commandButton>
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                    <br></br>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Marcas Asociadas </th></tr>
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="width: 100%">
+                                    <ace:dataTable value="#{inventarioJSFBean.lstInvMarcxprods}"
+                                                   var="item"
+                                                   rows="20"
+                                                   id="tablaMarcasXprod"
+                                                   alwaysExecuteContents="true"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <ace:column headerText=">>>" >
+                                            <h:commandLink value=">>>"
+                                                           actionListener="#{inventarioJSFBean.rowDtMarcaXProducto_ActionEvent}">
+                                                <f:attribute name="mxprd" value="#{item}"/>
+                                                <f:ajax execute="@this" render="@all" />
+                                            </h:commandLink>
+                                        </ace:column>
+                                        <ace:column headerText="Marca" >
+                                            <h:outputText value="#{item.marId.marNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+                                        <ace:column headerText="Estado" >
+                                            <h:outputText value="#{(item.mxpEst ? 'Activo' : 'Inactivo')}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>               
+
+                                    </ace:dataTable>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+
+            </ace:dialog>
+
+
+
+            <br></br>
+            <ace:dialog id="dialogPresentacion"
+                        header="Asociar Presentación"
+                        widgetVar="dialogPresentacion"
+                        closable="false"
+                        modal="false"
+                        draggable="true"
+                        showEffect="clip"
+                        hideEffect="fade"
+                        width="1000"
+                        height="400"
+
+                        >
+
+                <h:panelGroup>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409" >
+                        <tr><th class="thtablaFormulario" colspan="4"> <font color="FFFFFF">Asociar Presentación a Producto</font> </th></tr>
+
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Presentación * </label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+
+                                <div>
+                                    <h:selectOneMenu  styleClass="inputs"
+                                                      value="#{inventarioJSFBean.presentacion}"
+                                                      >
+                                        <f:selectItems value="#{inventarioJSFBean.lstPresentacionesActivas}" />
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+
+
+
+
+                                </div>
+
+                            </td>     
+
+
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Activo </label>
+                                </div>
+                            </td>
+                            <td width="30%">
+
+                                <div>
+
+                                    <h:selectBooleanCheckbox value="#{inventarioJSFBean.presntxprod.pxpEst}" >
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectBooleanCheckbox>
+                                </div>
+
+                            </td>     
+
+
+
+                        </tr>
+                        <tr align="center" style="text-align: center">
+
+                            <td style="text-align: center" colspan="2" align="center"  width="100%">  
+                            </td>
+                            <td style="text-align: center" colspan="2" align="center"  width="100%">  
+                                <h:commandButton value="Asociar"
+                                                 styleClass="button"
+                                                 actionListener="#{inventarioJSFBean.asociarPresentacionXProducto_ActionEvent}"
+
+                                                 title="Asociar">
+                                </h:commandButton>
+
+                                <h:commandButton value="Nuevo"
+                                                 styleClass="button"
+                                                 actionListener="#{inventarioJSFBean.crearPresentacionXProducto_ActionEvent}"
+
+                                                 title="Nuevo">
+                                </h:commandButton>
+
+                                <h:commandButton value="Aceptar"
+                                                 styleClass="button"
+
+                                                 onclick="dialogPresentacion.hide();"
+                                                 title="Aceptar">
+                                </h:commandButton>
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                    <br></br>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Presentaciones Asociadas </th></tr>
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="width: 100%">
+                                    <ace:dataTable value="#{inventarioJSFBean.lstInvPresntxprods}"
+                                                   var="itemPr"
+                                                   rows="20"
+                                                   id="tablaPresentacionXprod"
+                                                   alwaysExecuteContents="true"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <ace:column headerText=">>>" >
+                                            <h:commandLink value=">>>"
+                                                           actionListener="#{inventarioJSFBean.rowDtMarcaXProducto_ActionEvent}">
+                                                <f:attribute name="pxprd" value="#{itemPr}"/>
+                                                <f:ajax execute="@this" render="@all" />
+                                            </h:commandLink>
+                                        </ace:column>
+                                        <ace:column headerText="Presentación" >
+                                            <h:outputText value="#{itemPr.pspId.pspNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+
+
+
+                                        <ace:column headerText="Estado" >
+                                            <h:outputText value="#{(itemPr.pxpEst ? 'Activo' : 'Inactivo')}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>               
+
+                                    </ace:dataTable>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+
+            </ace:dialog>
+        </ace:panel>
+
+    </ui:insert> 
+
+
+
+
+
+</html>

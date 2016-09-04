@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="apruebaPagoCuenta">
+        <ace:panel header="Facturas revisadas">
+            <ace:dataTable value="#{apruebaPagoCuentaJSFBean.lstTablaFinAprobado}"
+                           var="item"
+                           rows="20"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">                
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{apruebaPagoCuentaJSFBean.rowDtApruebaPagoCuenta_ActionEvent}">
+                        <f:attribute name="tfa" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Fecha revisado" style="width: 100px">
+                    <h:outputText value="#{item.finAprobado.ctaId.ctaFechaproceso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finAprobado.ctaId.factId.prvId.provRazonsoc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finAprobado.ctaId.factId.prvId.prvNit} - 
+                                  #{item.finAprobado.ctaId.factId.prvId.prvDigver}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor a pagar" style="width: 150px">
+                    <h:outputText value="#{item.finAprobado.ctaId.factId.factValorbruto}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                </ace:column>
+                <!--
+                <ace:column headerText="Aprobar" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{item.seleccionado}">
+                        <f:ajax execute="@this" render="@this"/>
+                    </h:selectBooleanCheckbox>
+                </ace:column>
+                -->
+            </ace:dataTable>
+            <ace:panel header="Forma de pago" rendered="#{apruebaPagoCuentaJSFBean.blnMostrarPanelFormaPago}" style="width: 450px">
+                <ace:dataTable value="#{apruebaPagoCuentaJSFBean.lstTablaFormaPago}"
+                               var="item"
+                               rows="20"
+                               paginator="true"
+                               emptyMessage="No se encontraron registros"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <ace:column headerText="" style="width: 50px">
+                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                    </ace:column>
+                    <ace:column headerText="Forma pago *" style="width: 200px">
+                        <h:outputText value="#{item.finFormapago.fpgNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Valor ($) *" style="width: 100px">
+                        <ace:textEntry value="#{item.valor}"
+                                       styleClass="textMediano textcolumright">
+                            <f:convertNumber integerOnly="true"/>
+                        </ace:textEntry>
+                    </ace:column>
+                </ace:dataTable>                
+                <!--
+                <h:panelGrid columns="2">
+                    <h:panelGrid style="width:390px"/>
+                    <h:panelGrid>                        
+                        <h:commandButton styleClass="btnGuardarStd"
+                                         actionListener="#{apruebaPagoCuentaJSFBean.btnAsignarFormaPago_ActionEvent}"
+                                         title="Asignar forma de pago">
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:panelGrid>
+                -->    
+            </ace:panel>
+        </ace:panel>        
+    </ui:insert>
+</html>

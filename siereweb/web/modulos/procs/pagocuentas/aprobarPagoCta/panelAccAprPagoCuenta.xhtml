@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccAprPagoCuenta">
+        <h:panelGroup id="frmAccAprPagoCuenta" rendered="#{apruebaPagoCuentaJSFBean.numPanel == 1 ? true : false}">
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnGuardarStd"                                                              
+                                 actionListener="#{apruebaPagoCuentaJSFBean.btnGrabarApruebaPagoCuenta_ActionEvent}"
+                                 title="Grabar pago de cuenta aprobada">
+                </h:commandButton>            
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15" 
+                         rendered="#{apruebaPagoCuentaJSFBean.blnCerrarProceso}">
+                <h:commandButton styleClass="btnCerrarStd"                                                                                           
+                                 actionListener="#{apruebaPagoCuentaJSFBean.btnCerrarAprobacionPago()}"
+                                 title="Cerrar aprobación">
+                </h:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>
+

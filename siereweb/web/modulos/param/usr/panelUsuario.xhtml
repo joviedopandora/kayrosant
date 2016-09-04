@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="usuario">
+        <ace:panel header="Usuario">
+            <h:panelGrid columns="4" styleClass="tablaGrid">
+                <h:outputLabel value="Tipo Doc *"/>
+                <h:selectOneMenu styleClass="selectMediano"
+                                 value="#{usuarioJSFBean.idTipoDoc}">
+                    <f:selectItems value="#{usuarioJSFBean.lstTipoDoc}"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Documento *"/>
+                <h:panelGrid columns="3">
+                    <ace:textEntry value="#{usuarioJSFBean.strColDocumento}"
+                                   styleClass="textMediano"
+                                   readonly="#{usuarioJSFBean.blnHabilitar}">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputText value="de"/>
+                    <ace:textEntry value="#{usuarioJSFBean.strColExpedicion}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                </h:panelGrid>
+                <h:outputLabel value="Primer nombre *"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColNombre1}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Segundo nombre"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColNombre2}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Primer apellido *"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColApellido1}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Segundo apellido"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColApellido2}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Dirección *"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColDireccion}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Teléfono 1 *"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColTelefono1}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Teléfono 2"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColTelefono2}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Celular"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColCelular}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="E-mail"/>
+                <ace:textEntry value="#{usuarioJSFBean.strColEmail}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Estado"/>
+                <h:selectBooleanCheckbox value="#{usuarioJSFBean.blnColEstado}"/>
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="Usuarios registrados">
+            <ace:dataTable value="#{usuarioJSFBean.lstTablaAdmColaborador}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{usuarioJSFBean.rowDtUsuario_ActionEvent}">
+                        <f:attribute name="tcs" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Tipo doc" style="width: 50px">
+                    <h:outputText value="#{item.admColaborador.tdcId.tdcId}"/>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colCedula}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Expedida" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colExpcedula}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Primer nombre" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colNombre1}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Segundo nombre" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colNombre2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Primer apellido" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colApellido1}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Segundo apellido" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colApellido2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Dirección" style="width: 150px">
+                    <h:outputText value="#{item.admColaborador.colDireccion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Teléfono 1" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colTelefono1}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Teléfono 2" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colTelefono2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Celular" style="width: 100px">
+                    <h:outputText value="#{item.admColaborador.colCelular}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="E-mail" style="width: 150px">
+                    <h:outputText value="#{item.admColaborador.colEmail}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{item.admColaborador.colEst}"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

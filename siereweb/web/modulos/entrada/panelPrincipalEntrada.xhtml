@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="contPrincipal">
+        <ace:panel header="Actividades"  style="font-size: large">
+            <h:panelGroup id="frmContBandEntr">
+                <icecore:singleSubmit/>
+                <h:panelGrid columns="1" styleClass="alturaTablaStd">
+                    <ace:dataTable value="#{bandejaEntradaJSFBean.lstSegtareaXUsr}"
+                                   var="item"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText=">>>" style="width: 50px"
+                                    styleClass="letraTitColTabla">
+                            <h:commandLink value=">>>"
+                                           styleClass="#{item.claseSegTarea}"
+                                           actionListener="#{bandejaEntradaJSFBean.accionXTareaXPaso_ActionEvent}"
+                                           action="#{bandejaEntradaJSFBean.accionXTareaXPaso_Action}">
+                                <f:attribute name="navegacion" value="#{item.sysSegtarea.spsId.spsReglanav}"/>
+                                <f:attribute name="beanpaso" value="#{item.sysSegtarea.spsId.spsJsfbean}"/>
+                                <f:attribute name="segtarea" value="#{item.sysSegtarea}"/>
+                            </h:commandLink>
+                        </ace:column>
+                        <ace:column headerText="Tarea" style="width: 90px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.strId.strId}"
+                                          styleClass="#{item.claseSegTarea}"/>
+                        </ace:column>
+                        <ace:column headerText="Paso" style="width: 200px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.spsId.spsNombre}"
+                                          styleClass="#{item.claseSegTarea} textcolumleft"/> 
+                        </ace:column>
+                        <ace:column headerText="Proceso" style="width: 200px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.spsId.sprId.sprNombre}"
+                                          styleClass="#{item.claseSegTarea} textcolumleft"/> 
+                        </ace:column>
+                        <ace:column headerText="Fecha inicial" style="width: 100px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.sgtFinicio}"
+                                          styleClass="#{item.claseSegTarea}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText> 
+                        </ace:column>
+                        <ace:column headerText="Fecha final" style="width: 100px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.sgtFfinal}"
+                                          styleClass="#{item.claseSegTarea}"> 
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText> 
+                        </ace:column>
+                        <ace:column headerText="Estado" style="width: 90px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysSegtarea.strId.etrId.etrNombre}"
+                                          styleClass="#{item.claseSegTarea} textcolumleft"/> 
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

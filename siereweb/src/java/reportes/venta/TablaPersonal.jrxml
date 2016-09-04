@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="823" pageHeight="886" columnWidth="823" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1dde2100-8302-48ff-b6a9-2e7d59da73fd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_idorden" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     pop_cxcevento."cxe_id",
+     pop_cxcevento."opr_id",
+     pop_cxcevento."cxr_id",
+     pop_cxcevento."cxci_id" AS pop_cxcevento_cxci_id,
+     pop_cxcrol."cxr_rol" AS pop_cxcrol_cxr_rol,
+     pop_cxcuniforme."cxu_uniforme" AS pop_cxcuniforme_cxu_uniforme,
+     pop_cxccitacion."cxci_citacion" AS pop_cxccitacion_cxci_citacion,
+     pop_cxcrespon."cxre_respon" AS pop_cxcrespon_cxre_respon,
+     pop_cxcevento."cxc_id" AS pop_cxcevento_cxc_id,
+     adm_crgxcol."cxc_id" AS adm_crgxcol_cxc_id,
+     adm_crgxcol."crg_id" AS adm_crgxcol_crg_id,
+     adm_crgxcol."cpe_id" AS adm_crgxcol_cpe_id,
+     adm_crgxcol."cxc_est" AS adm_crgxcol_cxc_est,
+     adm_crgxcol."indversion" AS adm_crgxcol_indversion,
+     adm_crgxcol."cxc_fcre" AS adm_crgxcol_cxc_fcre,
+     adm_crgxcol_A."cxc_id" AS adm_crgxcol_A_cxc_id,
+     adm_crgxcol_A."crg_id" AS adm_crgxcol_A_crg_id,
+     adm_crgxcol_A."cpe_id" AS adm_crgxcol_A_cpe_id,
+     adm_crgxcol_A."cxc_est" AS adm_crgxcol_A_cxc_est,
+     adm_crgxcol_A."indversion" AS adm_crgxcol_A_indversion,
+     adm_crgxcol_A."cxc_fcre" AS adm_crgxcol_A_cxc_fcre,
+     adm_colxemp."cpe_id" AS adm_colxemp_cpe_id,
+     adm_colxemp."col_cedula" AS adm_colxemp_col_cedula,
+     adm_colxemp."emp_id" AS adm_colxemp_emp_id,
+     adm_colxemp."cpe_usuario" AS adm_colxemp_cpe_usuario,
+     adm_colxemp."cpe_clave" AS adm_colxemp_cpe_clave,
+     adm_colxemp."cpe_estcop" AS adm_colxemp_cpe_estcop,
+     adm_colxemp."cpe_email" AS adm_colxemp_cpe_email,
+     adm_colxemp."cpe_tel" AS adm_colxemp_cpe_tel,
+     adm_colxemp."cop_id" AS adm_colxemp_cop_id,
+     adm_colxemp."cct_id" AS adm_colxemp_cct_id,
+     adm_colxemp."cpe_fcre" AS adm_colxemp_cpe_fcre,
+     adm_colxemp."indversion" AS adm_colxemp_indversion,
+     adm_colaborador."col_cedula" AS adm_colaborador_col_cedula,
+     adm_colaborador."col_nombre1" AS adm_colaborador_col_nombre1,
+     adm_colaborador."col_apellido1" AS adm_colaborador_col_apellido1,
+     adm_colaborador."col_est" AS adm_colaborador_col_est,
+     adm_colaborador."indversion" AS adm_colaborador_indversion,
+     adm_colaborador."tdc_id" AS adm_colaborador_tdc_id,
+     adm_colaborador."col_nombre2" AS adm_colaborador_col_nombre2,
+     adm_colaborador."col_apellido2" AS adm_colaborador_col_apellido2,
+     adm_colaborador."col_direccion" AS adm_colaborador_col_direccion,
+     adm_colaborador."col_telefono1" AS adm_colaborador_col_telefono1,
+     adm_colaborador."col_telefono2" AS adm_colaborador_col_telefono2,
+     adm_colaborador."col_celular" AS adm_colaborador_col_celular,
+     adm_colaborador."col_email" AS adm_colaborador_col_email,
+     adm_colaborador."col_expcedula" AS adm_colaborador_col_expcedula,
+     adm_colaborador."col_eps" AS adm_colaborador_col_eps,
+     adm_colaborador."col_fecha_nacimiento" AS adm_colaborador_col_fecha_nacimiento,
+     adm_colaborador."col_edad" AS adm_colaborador_col_edad,
+     adm_colaborador."col_barrio" AS adm_colaborador_col_barrio,
+     adm_colaborador."col_talla_zapatos" AS adm_colaborador_col_talla_zapatos,
+     adm_colaborador."col_camisa" AS adm_colaborador_col_camisa,
+     adm_colaborador."col_pantalon" AS adm_colaborador_col_pantalon,
+     adm_colaborador."col_estatura" AS adm_colaborador_col_estatura,
+     adm_colaborador."col_rh" AS adm_colaborador_col_rh,
+     adm_colaborador."col_ref_personal" AS adm_colaborador_col_ref_personal,
+     adm_colaborador."col_fecha_vinculacion" AS adm_colaborador_col_fecha_vinculacion,
+     adm_colaborador."tcl_id" AS adm_colaborador_tcl_id,
+     adm_colaborador."sex_id" AS adm_colaborador_sex_id,
+     adm_colaborador."foto" AS adm_colaborador_foto,
+     adm_colaborador."tct_id" AS adm_colaborador_tct_id,
+     adm_colaborador."col_email2" AS adm_colaborador_col_email2
+FROM
+     "public"."pop_cxcrol" pop_cxcrol INNER JOIN "public"."pop_cxcevento" pop_cxcevento ON pop_cxcrol."cxr_id" = pop_cxcevento."cxr_id"
+     INNER JOIN "public"."pop_cxcuniforme" pop_cxcuniforme ON pop_cxcevento."cxu_id" = pop_cxcuniforme."cxu_id"
+     INNER JOIN "public"."pop_cxccitacion" pop_cxccitacion ON pop_cxcevento."cxci_id" = pop_cxccitacion."cxci_id"
+     INNER JOIN "public"."pop_cxcrespon" pop_cxcrespon ON pop_cxcevento."cxre_id" = pop_cxcrespon."cxre_id"
+     INNER JOIN "public"."adm_crgxcol" adm_crgxcol ON pop_cxcevento."cxc_id" = adm_crgxcol."cxc_id"
+     INNER JOIN "public"."adm_crgxcol" adm_crgxcol_A ON pop_cxcevento."cxc_id" = adm_crgxcol_A."cxc_id"
+     INNER JOIN "public"."adm_colxemp" adm_colxemp ON adm_crgxcol_A."cpe_id" = adm_colxemp."cpe_id"
+     INNER JOIN "public"."adm_colaborador" adm_colaborador ON adm_colxemp."col_cedula" = adm_colaborador."col_cedula"  
+WHERE
+     opr_id = $P{p_idorden} order by cxre_respon desc]]>
+	</queryString>
+	<field name="cxe_id" class="java.lang.Long"/>
+	<field name="opr_id" class="java.lang.Long"/>
+	<field name="cxr_id" class="java.lang.Integer"/>
+	<field name="pop_cxcevento_cxci_id" class="java.lang.Integer"/>
+	<field name="pop_cxcrol_cxr_rol" class="java.lang.String"/>
+	<field name="pop_cxcuniforme_cxu_uniforme" class="java.lang.String"/>
+	<field name="pop_cxccitacion_cxci_citacion" class="java.lang.String"/>
+	<field name="pop_cxcrespon_cxre_respon" class="java.lang.String"/>
+	<field name="pop_cxcevento_cxc_id" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_cxc_id" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_crg_id" class="java.lang.String"/>
+	<field name="adm_crgxcol_cpe_id" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_cxc_est" class="java.lang.Boolean"/>
+	<field name="adm_crgxcol_indversion" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_cxc_fcre" class="java.sql.Timestamp"/>
+	<field name="adm_crgxcol_a_cxc_id" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_a_crg_id" class="java.lang.String"/>
+	<field name="adm_crgxcol_a_cpe_id" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_a_cxc_est" class="java.lang.Boolean"/>
+	<field name="adm_crgxcol_a_indversion" class="java.lang.Integer"/>
+	<field name="adm_crgxcol_a_cxc_fcre" class="java.sql.Timestamp"/>
+	<field name="adm_colxemp_cpe_id" class="java.lang.Integer"/>
+	<field name="adm_colxemp_col_cedula" class="java.lang.String"/>
+	<field name="adm_colxemp_emp_id" class="java.lang.Integer"/>
+	<field name="adm_colxemp_cpe_usuario" class="java.lang.String"/>
+	<field name="adm_colxemp_cpe_clave" class="java.lang.String"/>
+	<field name="adm_colxemp_cpe_estcop" class="java.lang.Boolean"/>
+	<field name="adm_colxemp_cpe_email" class="java.lang.String"/>
+	<field name="adm_colxemp_cpe_tel" class="java.lang.String"/>
+	<field name="adm_colxemp_cop_id" class="java.lang.Integer"/>
+	<field name="adm_colxemp_cct_id" class="java.lang.Integer"/>
+	<field name="adm_colxemp_cpe_fcre" class="java.sql.Timestamp"/>
+	<field name="adm_colxemp_indversion" class="java.lang.Integer"/>
+	<field name="adm_colaborador_col_cedula" class="java.lang.String"/>
+	<field name="adm_colaborador_col_nombre1" class="java.lang.String"/>
+	<field name="adm_colaborador_col_apellido1" class="java.lang.String"/>
+	<field name="adm_colaborador_col_est" class="java.lang.Boolean"/>
+	<field name="adm_colaborador_indversion" class="java.lang.Integer"/>
+	<field name="adm_colaborador_tdc_id" class="java.lang.String"/>
+	<field name="adm_colaborador_col_nombre2" class="java.lang.String"/>
+	<field name="adm_colaborador_col_apellido2" class="java.lang.String"/>
+	<field name="adm_colaborador_col_direccion" class="java.lang.String"/>
+	<field name="adm_colaborador_col_telefono1" class="java.lang.String"/>
+	<field name="adm_colaborador_col_telefono2" class="java.lang.String"/>
+	<field name="adm_colaborador_col_celular" class="java.lang.String"/>
+	<field name="adm_colaborador_col_email" class="java.lang.String"/>
+	<field name="adm_colaborador_col_expcedula" class="java.lang.String"/>
+	<field name="adm_colaborador_col_eps" class="java.lang.String"/>
+	<field name="adm_colaborador_col_fecha_nacimiento" class="java.sql.Date"/>
+	<field name="adm_colaborador_col_edad" class="java.math.BigDecimal"/>
+	<field name="adm_colaborador_col_barrio" class="java.lang.String"/>
+	<field name="adm_colaborador_col_talla_zapatos" class="java.lang.String"/>
+	<field name="adm_colaborador_col_camisa" class="java.lang.String"/>
+	<field name="adm_colaborador_col_pantalon" class="java.lang.String"/>
+	<field name="adm_colaborador_col_estatura" class="java.math.BigDecimal"/>
+	<field name="adm_colaborador_col_rh" class="java.lang.String"/>
+	<field name="adm_colaborador_col_ref_personal" class="java.lang.String"/>
+	<field name="adm_colaborador_col_fecha_vinculacion" class="java.sql.Date"/>
+	<field name="adm_colaborador_tcl_id" class="java.lang.Integer"/>
+	<field name="adm_colaborador_sex_id" class="java.lang.String"/>
+	<field name="adm_colaborador_foto" class="java.lang.String"/>
+	<field name="adm_colaborador_tct_id" class="java.lang.Integer"/>
+	<field name="adm_colaborador_col_email2" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="abe9edb7-aace-4961-8299-a1b280c00212" mode="Opaque" x="0" y="0" width="248" height="20" backcolor="#FF9933"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERSONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54ceecee-6732-4f35-977f-fc57f7717379" mode="Opaque" x="248" y="0" width="116" height="20" backcolor="#FF9933"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1f0fd1d7-dd08-44f4-8f56-46db67e59f4d" mode="Opaque" x="364" y="0" width="139" height="20" backcolor="#FF9933"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABILIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b6b3164b-aba6-43e1-841e-98dce9cd3682" mode="Opaque" x="503" y="0" width="153" height="20" backcolor="#FF9933"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIFORME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b6b3164b-aba6-43e1-841e-98dce9cd3682" mode="Opaque" x="656" y="0" width="166" height="20" backcolor="#FF9933"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CITACION]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d83fae26-3f96-4d63-975e-f460d5ea86e1" x="364" y="0" width="139" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcrespon_cxre_respon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f37eade5-103a-44e9-938e-a6c80aef24e9" x="503" y="0" width="153" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcuniforme_cxu_uniforme}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="65621c0a-1194-44cc-ac76-fe661e783e34" x="656" y="0" width="166" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pop_cxccitacion_cxci_citacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="833c2a48-4938-40ba-b273-69951c2c9850" x="248" y="0" width="116" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{pop_cxcrol_cxr_rol}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6f85ff73-090b-4533-ab57-4ad1233fb13a" x="0" y="0" width="108" height="20"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{adm_colaborador_col_nombre1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b5b602ae-69ad-4749-8040-c814ae605661" x="108" y="0" width="140" height="20"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{adm_colaborador_col_apellido1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

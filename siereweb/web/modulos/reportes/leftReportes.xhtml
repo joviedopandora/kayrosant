@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="navLogistica">
+        <ace:accordion collapsible="true" autoHeight="false" event="click" effect="fade" style="font-size: 11px;">
+            <ace:accordionPane title="Reportes">
+                <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                    <h:commandLink id="btnNav1"
+                                   rendered="#{reportesJSFBean.mostrarFactura}"
+                                   immediate="true"
+                                   value="Factura"
+                                   title="Facturas por periodo"
+                                   actionListener="#{reportesJSFBean.navLateral_ActionEvent}"
+                                   styleClass="#{reportesJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="reportesJSFBean"/>
+                        <f:attribute name="numPanel" value="1"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNav2"
+                                   immediate="true"
+                                    rendered="#{!reportesJSFBean.mostrarFactura}"
+                                   value="Remisiones"
+                                   title="Remisiones por periodo"
+                                   actionListener="#{reportesJSFBean.navLateral_ActionEvent}"
+                                   styleClass="#{reportesJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="reportesJSFBean"/>
+                        <f:attribute name="numPanel" value="2"/>
+                    </h:commandLink>
+  
+           
+            
+                 <h:commandLink id="btnNav3"
+                                   immediate="true"
+                                   value="Ventas"
+                                   title="Ventas por periodo"
+                                   actionListener="#{reportesJSFBean.navLateral_ActionEvent}"
+                                   styleClass="#{reportesJSFBean.numPanel == 3 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="reportesJSFBean"/>
+                        <f:attribute name="numPanel" value="3"/>
+                    </h:commandLink>
+                    <h:commandLink id="btnNav4"
+                                   immediate="true"
+                                   value="Registros Llamadas"
+                                   title="Resgitros Llamadas por periodo"
+                                   actionListener="#{reportesJSFBean.navLateral_ActionEvent}"
+                                   styleClass="#{reportesJSFBean.numPanel == 4 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="reportesJSFBean"/>
+                        <f:attribute name="numPanel" value="4"/>
+                    </h:commandLink>
+                    </h:panelGrid>
+            </ace:accordionPane>
+        </ace:accordion>
+    </ui:insert>
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccOrdenProd">
+        <h:panelGrid style="z-index: 15"
+                     columns="3">
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{inventarioJSFBean.numPanel == 1 ? true: false}"
+                             actionListener="#{inventarioJSFBean.guardarProducto_ActionEvent}"
+                             title="Grabar Producto">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{inventarioJSFBean.numPanel == 3 ? (inventarioJSFBean.verPanelEditarInvent): false}"
+                             actionListener="#{inventarioJSFBean.guardarTransaccionInventario_ActionEvent}"
+                             title="Grabar Transacción">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+             <h:commandButton styleClass="btnVolverStd"
+                             rendered="#{inventarioJSFBean.numPanel == 3 ? (inventarioJSFBean.verPanelEditarInvent): false}"
+                             actionListener="#{inventarioJSFBean.regresar_ActionEvent}"
+                             title="Regresar">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnNuevoStd"
+                             rendered="#{inventarioJSFBean.numPanel == 1 ? true: false}"
+                             actionListener="#{inventarioJSFBean.crearProducto_ActionEvent}"
+                             title="Nuevo Producto">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+        </h:panelGrid>
+    </ui:insert>
+</html>

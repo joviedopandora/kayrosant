@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml"> 
+        <ui:define name="top"> 
+            <!--Asignar insumos-->
+            <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 1 ? true : false}">
+                <!--
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnNuevoStd"                                                                                          
+                                     actionListener="#{compAprbSolsJSFBean.btnAsigProd_ActionEvent}"
+                                     title="Asignar elementos a la solicitud">
+                    </h:commandButton>
+                </h:panelGrid>
+                -->
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnCancelarStd"                                                                                           
+                                     actionListener="#{compAprbSolsJSFBean.btnRetProd_ActionEvent}"
+                                     title="Retirar elementos a la solicitud">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid columns="2" style="float: right;top: 3px;margin-top: 3px;left:850px;position: fixed;z-index: 15">
+                    <ace:textEntry value="#{compSolReqJSFBean.txtBuscaProd}" style="width: 200px"/>
+                    <h:commandButton styleClass="btnBuscarStd"
+                                     actionListener="#{compSolReqJSFBean.buscarGen_ActionEvent}"                                             
+                                     title="Buscar">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+            
+            <!--Consolidado de pedido-->
+            <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 2 ? true : false}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnGuardarStd"                                                                                           
+                                     actionListener="#{compAprbSolsJSFBean.btnGrabarConsolidadoRequisiciones_ActionEvent}"
+                                     title="Grabar conslidado de requisiciones">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnCancelarStd"                                                                                           
+                                     actionListener="#{compAprbSolsJSFBean.btnEliminarConsolidadoRequisiciones_ActionEvent}"
+                                     title="Cancelar conslidado de requisiciones">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+
+            <!--Orden de compra-->
+            <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 3 ? true : false}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton styleClass="btnGuardarStd"
+                                     actionListener="#{compAprbSolsJSFBean.btnGrabarConsolidadoCompras_ActionEvent}"
+                                     title="Grabar orden de compra">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <ice:outputResource resource="#{item.itemPDF}"
+                                        mimeType="application/pdf"
+                                        fileName="ordenCompra.pdf"
+                                        shared="false"
+                                        label=" "
+                                        type="button"
+                                        styleClass="btnInformePDF"/>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGrid columns="2"    style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnGenerarInforme" rendered="#{compAprbSolsJSFBean.numPanel == 4 ? true : false}"
+                                 title="Órdenes de compra"
+                                 actionListener="#{compAprbSolsJSFBean.btnGenInfOrdenCompra_ACtionEvent}"/>
+                <ice:outputResource resource="#{compAprbSolsJSFBean.jasperResourceZip}"
+                                    mimeType="application/zip"
+                                    fileName="Ordenes.zip"
+                                    shared="false"
+                                    label=" "
+                                    type="button"
+                                    styleClass="btnInformeEXCEL"/>
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:300px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnCerrarStd" rendered="#{compAprbSolsJSFBean.blnMostrarCerrarProceso}"                                                                                           
+                                 actionListener="#{compAprbSolsJSFBean.btnGrabarCerrarProceso_ActionEvent}"
+                                 title="Cerrar proceso">
+                </h:commandButton>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="left">
+            <ace:accordion collapsible="true" autoHeight="false" event="click"
+                           effect="fade" style="font-size: 11px;">
+                <ace:accordionPane title="Solicitud insumos">                    
+                    <h:panelGrid columns="1" rowClasses="separacionLateral"
+                                 rendered="#{principalJSFBean.mssfbl.sysSegtareaActual.sgtEstpaso}">
+                        <h:commandLink value="Asignar" immediate="true"                           
+                                       id="btnNavAsgIns"
+                                       actionListener="#{compAprbSolsJSFBean.navegacionLateral_ActionEvent}"     
+                                       styleClass="#{compAprbSolsJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                       title="Asignar insumos por solicitud">                      
+                            <f:attribute name="numPanel" value="1"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" rowClasses="altoElmLateral" rendered="#{principalJSFBean.mssfbl.sysSegtareaActual.sgtEstpaso}"> 
+                        <h:commandLink value="Consolidado" immediate="true"                           
+                                       id="btnConsIns"
+                                       actionListener="#{compAprbSolsJSFBean.navegacionLateral_ActionEvent}"                                     
+                                       styleClass="#{compAprbSolsJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                       title="Ver consolidado pedido">                      
+                            <f:attribute name="numPanel" value="2"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" rowClasses="altoElmLateral" rendered="#{principalJSFBean.mssfbl.sysSegtareaActual.sgtEstpaso}">
+                        <h:commandLink value="Orden compra" immediate="true"                           
+                                       id="btnOrdenCmpIns"
+                                       actionListener="#{compAprbSolsJSFBean.navegacionLateral_ActionEvent}"   
+                                       styleClass="#{compAprbSolsJSFBean.numPanel == 3 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                       title="Generar orden de compra por proveedor">                      
+                            <f:attribute name="numPanel" value="3"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                        <h:commandLink value="Consolidado orden compra" immediate="true"                           
+                                       id="btnOrdenCmpConsolidado"
+                                       actionListener="#{compAprbSolsJSFBean.navegacionLateral_ActionEvent}"                                     
+                                       styleClass="#{compAprbSolsJSFBean.numPanel == 4 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                       title="Ver registros de orden de compra generadas">                      
+                            <f:attribute name="numPanel" value="4"/>
+                        </h:commandLink>
+                    </h:panelGrid>                    
+                </ace:accordionPane>
+            </ace:accordion>
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <!--
+            <ui:include src="ExistenciaInv.xhtml"/>
+            -->
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">
+                <!--
+                <icecore:singleSubmit/>
+                <ace:dialog closable="true" 
+                            widgetVar="msgGrabExitoso"
+                            header="Grabación exitosa"
+                            modal="true"                                               
+                            width="250"
+                            position="center"
+                            draggable="true"
+                            zindex="100">
+                    <h:commandButton value="Aceptar" onclick="msgGrabExitoso.hide();return false;"/>
+                </ace:dialog>
+                -->
+                <h:panelGroup id="oppRevReq">
+                    <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 1 ? true : false}">
+                        <ui:include src="panelAsignarProdXReq.xhtml"/>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 2 ? true : false}">
+                        <ui:include src="ConsolPedFrag.xhtml"/>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 3 ? true : false}">                        
+                        <ui:include src="GenerarOrdendCmpFrag.xhtml"/>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{compAprbSolsJSFBean.numPanel == 4 ? true : false}">
+                        <ui:include src="ConsolidadoOrdenCompraFrag.xhtml"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

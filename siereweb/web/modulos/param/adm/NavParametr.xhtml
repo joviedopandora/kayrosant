@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="navParam">
+        <ace:accordion collapsible="true" autoHeight="false" event="click"
+                       effect="fade" style="font-size: 11px;">
+            <ace:accordionPane title="Cargo por usuario">
+                <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                    <h:commandLink  immediate="true"                           
+                                    id="btnNavUsr"
+                                    value="Cargo por usuario"
+                                    action="admUsu"
+                                    actionListener="#{admUsrJSFBean.btnNavUsr_Action}"
+                                    styleClass="#{admUsrJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'} "
+                                    title="Cargos por usuario">
+                        <f:attribute name="jsfBean" value="admUsrJSFBean"/>
+                        <f:attribute name="numPanel" value="1"/>
+                    </h:commandLink>
+                    <h:commandLink  immediate="true"                           
+                                    id="btnNavAdm"
+                                    value="Volver a parametrización"
+                                    action="admParam"
+                                    actionListener="#{admUsrJSFBean.btnNavUsr_Action}"
+                                    styleClass="#{admUsrJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                                    title="Parametrización">
+                        <f:attribute name="jsfBean" value="admUsrJSFBean"/>
+                        <f:attribute name="numPanel" value="2"/>
+                    </h:commandLink>            
+                </h:panelGrid>
+            </ace:accordionPane>
+        </ace:accordion>
+    </ui:insert>
+</html>
+

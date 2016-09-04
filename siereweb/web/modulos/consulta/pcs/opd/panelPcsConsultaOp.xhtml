@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="contenidoConsultaOProd">
+        <ace:confirmationDialog id="confirmDialog" 
+                                widgetVar="confirmDialog"
+                                message="#{pcsOrdenProduccionJSFBean.confirmation.message}"
+                                header="Confirmación"
+                                width="300"
+                                height="200"
+                                closeOnEscape="true"
+
+                                closable="true"
+                                position="center">
+            <h:panelGrid columns="2" styleClass="centeredPanelGrid">
+                <h:commandButton id="yes" value="Si" onclick="confirmDialog.hide();" actionListener="#{pcsOrdenProduccionJSFBean.confirmation.update}">
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+                <h:commandButton id="no" value="No" onclick="confirmDialog.hide();" >
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+            </h:panelGrid>
+        </ace:confirmationDialog>
+        <ace:panel header="ÓRDENES PRODUCCIÓN" style="font-size: large">
+
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="4"> Parametros de consulta. </th></tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Número de OP</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.idOp}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Número  OP.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Número Cotizacion</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.idVenta}"
+                            styleClass="inpunts inpuntsLong"
+                            title="ID de la venta.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Fecha OP</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <div styleClass="inputs">
+                            <ace:dateTimeEntry 
+                                value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.fechaCreacion}"
+                                renderAsPopup="true"
+                                styleClass="inputs inpuntsLong"
+                                immediate="true"
+
+                                pattern="dd/MM/yyyy">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@this"/>
+                            </ace:dateTimeEntry>
+                        </div>
+                    </td>
+                    <td style="width: 15%">
+                        <label>Documento Cliente</label>
+                    </td>
+                    <td style="width: 35%">
+
+                        <ace:textEntry
+                            value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.numeroDocumento}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Documento Cliente.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td style="width: 15%">
+                        <label>Nombre Cliente</label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <ace:textEntry
+                            value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.nombreCliente}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Nombre Cliente.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+
+                    <td style="width: 15%">
+                        <label>Nombre Evento </label>
+                    </td>
+                    <td style="width: 35%" >
+
+                        <ace:textEntry
+
+                            value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.tituloOp}"
+                            styleClass="inpunts inpuntsLong"
+                            title="Nombre Evento.">
+
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 15%">
+                        <label>Estado OP</label>
+                    </td>
+                    <td style="width: 100%"  colspan="3">
+
+                        <h:selectOneMenu  styleClass="inputs"
+
+                                          value="#{pcsOrdenProduccionJSFBean.consultaOPDTO.estadoOp}">
+                            <f:selectItem itemValue="#{null}" itemLabel="Todos" />
+                            <f:selectItems value="#{pcsOrdenProduccionJSFBean.listaEstadoOP}" var="out" 
+                                           itemValue="#{out.eopId}"  itemLabel="#{out.eopNombre}">
+
+                            </f:selectItems>
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+                    </td>
+
+                </tr>
+            </table>
+
+            <br />
+            <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaPopOrdenProduccion}"
+                           var="itemOpp"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="30"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(OPs {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                <ace:column headerText="Nº Cotizacion " style="width: 100px" >
+                    <h:outputText value="#{itemOpp.popOrdenprod.rgvtId.rgvtId}" style="font-size: large"/>
+                </ace:column>
+
+                <ace:column headerText="Nº OP" style="width: 100px" >
+                    <h:outputText value="#{itemOpp.popOrdenprod.oprId}" style="font-size: large"/>
+                </ace:column>
+
+                <ace:column headerText="Fecha creación OP" style="width: 100px" >
+                    <h:outputText value="#{itemOpp.popOrdenprod.fechacreacionop}" style="font-size: large">
+                        <f:convertDateTime pattern="yyyy/MM/dd" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+
+                <ace:column headerText="Fecha Evento" style="width: 100px" >
+                    <h:outputText value="#{itemOpp.popOrdenprod.oprFechaevtini}" style="font-size: large">
+                        <f:convertDateTime pattern="yyyy/MM/dd" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{itemOpp.popOrdenprod.rgvtId.clnId.identificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cliente" style="width: 200px"  >
+                    <h:outputText value="#{itemOpp.popOrdenprod.rgvtId.clnId.nombres}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemOpp.popOrdenprod.rgvtId.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>                       
+                <ace:column headerText="Nombre Evento" style="width: 100px">
+                    <h:outputText value="#{itemOpp.popOrdenprod.oprTitulo}">
+
+
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Estado OP" style="width: 150px">
+                    <h:outputText value="#{itemOpp.popOrdenprod.rfEstadoOP.eopNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Estado Despacho" style="width: 150px">
+                    <h:outputText value="#{itemOpp.popOrdenprod.eevId.eevNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Acciones"  >  
+                    <h:commandButton  title="Anular"
+                                      styleClass="btnCancelarStd"
+                                      rendered="#{itemOpp.showAnularButton}"
+                                      >
+                        <ace:ajax onComplete="confirmDialog.show();return false;" />
+                        <f:setPropertyActionListener value="#{itemOpp}" target="#{pcsOrdenProduccionJSFBean.confirmation.respuesta}" />
+                        <f:setPropertyActionListener value="Esta seguro de anular la OP # #{itemOpp.popOrdenprod.oprId}" target="#{pcsOrdenProduccionJSFBean.confirmation.message}" />
+                    </h:commandButton> 
+
+                    <h:commandButton  rendered="#{itemOpp.popOrdenprod.rfEstadoOP.eopNombre == 'ACTIVO'}" 
+                                      styleClass="btnEditarStd"
+                                      title="Editar OP"
+                                      actionListener="#{pcsOrdenProduccionJSFBean.editDtOrdenProd_ActionEvent}">
+                        <f:attribute value="#{itemOpp}" name="tabla" />
+                        <f:ajax execute="@this" render="@form" />
+                    </h:commandButton>
+                </ace:column>
+                <ace:column headerText="Reporte"  >
+                    <h:panelGrid columns="2" >
+
+                        <h:commandButton styleClass="btnGenerarInforme"
+                                         actionListener="#{pcsOrdenProduccionJSFBean.confirmation.generarReporte}"
+                                         title="Generar Reporte">  
+
+                            <f:attribute value="#{itemOpp}" name="tabla" />
+                            <f:ajax execute="@this" render="@form" />
+                        </h:commandButton>
+                        <ice:outputResource resource="#{itemOpp.resource}"
+                                            mimeType="application/pdf"
+                                            fileName="#{itemOpp.nameInforme}"
+                                            shared="false"
+                                            label=" "
+                                            type="button"
+                                            styleClass="btnInformePDF">
+                        </ice:outputResource>
+
+
+                    </h:panelGrid> 
+
+                </ace:column>
+                <ace:column headerText="log">
+                    <h:commandButton styleClass="btn-facebook"  title="Ver Log"
+                                     value="Log"
+                                     actionListener="#{pcsOrdenProduccionJSFBean.confirmation.loadLogs}"> 
+                        <f:attribute value="#{itemOpp}" name="tabla" />
+                        <ace:ajax execute="@this" render="@form"  onComplete="dialogSellogOp.show();"/>
+                    </h:commandButton>
+                </ace:column>
+
+
+            </ace:dataTable>        
+
+
+
+
+        </ace:panel>
+
+        <ace:dialog id="dialogSellogOp"
+                    header="Log"
+                    widgetVar="dialogSellogOp"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    width="1000"
+
+                    >
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Log  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+
+
+                            <ace:dataTable value="#{pcsOrdenProduccionJSFBean.confirmation.respuesta.logs}"
+                                           var="item"
+                                           id="tblog"
+                                           widgetVar="tblog"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="10"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Cotizaciones: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+                                <ace:column headerText="Estado"  styleClass="letraOutput textcolumred" >
+                                    <h:outputText value="#{item.estado.eopNombre}"/>
+                                </ace:column>
+
+                                <ace:column headerText="Fecha de Cambio"  sortBy="#{item.fecha}">
+                                    <h:outputText value="#{item.fecha}"
+
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy hh:mm a" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Estado"  styleClass="letraOutput textcolumred" >
+                                    <h:outputText value="#{item.userCambio.cpeId.colCedula.nombres}"/>
+                                </ace:column>
+
+
+
+
+
+
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </ace:dialog>
+    </ui:insert>
+</html>

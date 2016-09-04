@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="ContenidoListaColaboradores">
+        <ace:confirmationDialog id="confirmDialog" 
+                                widgetVar="confirmDialog"
+                                message="Estas Seguro de eliminar el colaborador de la OP"
+                                header="Confirmación"
+                                width="300"
+                                height="200"
+                                closeOnEscape="true"
+
+                                closable="true"
+                                position="center">
+            <h:panelGrid columns="2" styleClass="centeredPanelGrid">
+                <h:commandButton id="yes" value="Si" onclick="confirmDialog.hide();" actionListener="#{evaluacionJSFBean.eliminarColaborador}">
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+                <h:commandButton id="no" value="No" onclick="confirmDialog.hide();" >
+                    <f:ajax execute="@this" render="@form"/>
+                </h:commandButton>
+            </h:panelGrid>
+        </ace:confirmationDialog>
+        <ace:panel header="COLABORADORES" style="font-size: large" >
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="2"> Colaboradores </th></tr>
+
+                <tr><td><div style="width: 100%">
+                            <ace:dataTable value="#{evaluacionJSFBean.listaColaboradores}"
+                                           var="itemRgv"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="30"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Eventos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:columnGroup id="columnGroup" type="header">
+                                    <ace:row>
+                                        <ace:column  colspan="12" headerText="Información Pagos"/>
+                                    </ace:row>
+                                    <ace:row>
+                                        <ace:column id="headerIndice" headerText="Indice"/>
+                                        <ace:column id="generalInfo" colspan="3" headerText="Información General"/>
+                                        <ace:column id="eventoInfo" colspan="8" headerText="Información Evento"/>
+
+                                    </ace:row>
+                                    <ace:row>
+                                        <ace:column headerText=""/>
+                                        <ace:column   headerText="Nº Identificación"/>
+                                        <ace:column  headerText="Nombres"/>
+                                        <ace:column  headerText="Cargo Original"/>
+                                        <ace:column  headerText="Rol en el Evento"/>
+                                        <ace:column  headerText="Cargo en el Evento"/>
+                                        <ace:column  headerText="Calificación" />
+                                        <ace:column  headerText="Observación" />
+                                        <ace:column  headerText="Bonificación" />
+                                        <ace:column  headerText="Descuento" />
+                                        <ace:column  headerText="Pago" />
+                                        <ace:column  headerText="Retirar" />
+                                    </ace:row>
+
+
+                                </ace:columnGroup>
+                                <ace:column headerText="Indice" style="width: 30px">
+                                    <h:outputText value="#{itemRgv.inidceFila}"/>
+                                </ace:column>
+                                <ace:column headerText="Nº Identificación" style="width: 100px" >
+                                    <h:outputText value="#{itemRgv.popCxcevento.cxcId.cpeId.colCedula.colCedula}"/>
+                                </ace:column>
+
+                                <ace:column headerText="Nombres" style="width: 100px" >
+                                    <h:outputText value="#{itemRgv.popCxcevento.cxcId.cpeId.colCedula.nombres}"/>
+                                </ace:column>
+                                <ace:column headerText="Cargo Original" style="width: 100px" >
+                                    <h:outputText value="#{itemRgv.nombreCargo}"/>
+                                </ace:column>
+
+                                <ace:column headerText="Rol" style="width: 100px" >
+                                    <h:selectOneMenu  
+                                        rendered="#{evaluacionJSFBean.renderCargo}"
+
+                                        value="#{itemRgv.rolSeleccionado}" styleClass="inputs"
+                                        >
+                                        <f:selectItems value="#{evaluacionJSFBean.lstRoles}"/>
+                                        <f:ajax execute="@this" render="@this"/>
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{itemRgv.nombreRol}" 
+                                                  rendered="#{!evaluacionJSFBean.renderCargo}"
+                                                  styleClass="letraOutput textcolumleft"></h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Cargo Evento" style="width: 100px" >
+                                    <h:selectOneMenu  
+                                        rendered="#{evaluacionJSFBean.renderCargo}"
+                                        value="#{itemRgv.cargoSeleccionado}" styleClass="inputs"
+                                        >
+                                        <f:selectItems value="#{evaluacionJSFBean.lstCargos}"/>
+                                        <f:ajax execute="@this" render="@this"/>
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{itemRgv.nombreCargo}" 
+                                                  rendered="#{!evaluacionJSFBean.renderCargo}"
+                                                  styleClass="letraOutput textcolumleft"></h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Calificación" style="width: 100px" >
+                                    <h:selectOneMenu  
+                                        rendered="#{evaluacionJSFBean.renderCalificacion}"
+                                        valueChangeListener="#{evaluacionJSFBean.seleccionarEvaluacion}"
+                                        value="#{itemRgv.califacacionSeleccionado}" styleClass="inputs"
+                                        >
+                                        <f:selectItems value="#{evaluacionJSFBean.lstCalificacion}"/>
+                                        <f:ajax execute="@this" render="@form"/>
+                                        <f:attribute name="tabla"  value="#{itemRgv}" />
+                                    </h:selectOneMenu>
+                                    <h:outputText value="#{itemRgv.nombreEvaluacion}" 
+                                                  rendered="#{!evaluacionJSFBean.renderCalificacion}"
+                                                  styleClass="letraOutput textcolumleft"></h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Observación Calificación" style="width: 100px" >
+                                    <h:inputTextarea value="#{itemRgv.popCxcevento.cxeObservacion}" 
+                                                     rendered="#{evaluacionJSFBean.renderCalificacion}">
+
+                                        <f:ajax execute="@this" render="@this"/>
+                                    </h:inputTextarea>
+                                    <h:outputText value="#{itemRgv.popCxcevento.cxeObservacion}" 
+                                                  rendered="#{!evaluacionJSFBean.renderCalificacion}"
+                                                  styleClass="letraOutput textcolumleft"></h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Bonificación" style="width: 100px" >
+                                    <h:commandButton styleClass="btnNuevoadiccionar"
+                                                     onclick="dialogSelBonificacionColaboradores.show();"
+                                                     rendered="#{evaluacionJSFBean.renderBonificacion}"
+                                                     actionListener="#{evaluacionJSFBean.asociarBonifiacion}"
+                                                     title="Agregar Bonificación ">
+                                        <f:attribute name="tabla"  value="#{itemRgv}" />
+                                        <f:ajax execute="@this" render="@form" />
+                                    </h:commandButton>
+                                </ace:column>
+                                <ace:column headerText="Admin" style="width: 100px" >
+                                    <h:commandButton styleClass="btnNuevoadiccionar"
+                                                     onclick="dialogSelDescuentoColaboradores.show();"
+                                                     rendered="#{evaluacionJSFBean.renderAdministrativa}"
+                                                     actionListener="#{evaluacionJSFBean.asociarDescuento}"
+                                                     title="Agregar Evaluación Administrativa ">
+                                        <f:attribute name="tabla"  value="#{itemRgv}" />
+                                        <f:ajax execute="@this" render="@form" />
+                                    </h:commandButton>
+                                </ace:column>
+                                <ace:column style="width: 250px"  
+                                            >
+                                    <h:panelGrid columns="2" >
+                                        <h:outputText value="Básico: "></h:outputText>
+                                        <h:outputText value="#{itemRgv.valorBasico}" styleClass="letraOutput textcolumleft">
+                                            <f:convertNumber     type="currency"
+                                                                 currencySymbol="$"
+                                                                 groupingUsed="true"
+                                                                 minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                        </h:outputText>
+                                    </h:panelGrid>
+                                </ace:column>
+                                <ace:column  style="width: 250px" stacked="true" >
+                                    <h:panelGrid columns="2" >
+                                        <h:outputText value="+ Bonificación :"></h:outputText>
+                                        <h:outputText value="#{itemRgv.valorBonificacion}" styleClass="letraOutput textcolumleft">
+                                            <f:convertNumber     type="currency"
+                                                                 currencySymbol="$"
+                                                                 groupingUsed="true"
+                                                                 minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                        </h:outputText>
+
+                                    </h:panelGrid>
+                                </ace:column>
+                                <ace:column  style="width: 250px" stacked="true" >
+                                    <h:panelGrid columns="2" >
+                                        <h:outputText value="- Descuento"></h:outputText>
+                                        <h:outputText value="#{itemRgv.valorDescuento}" styleClass="letraOutput textcolumleft">
+                                            <f:convertNumber     type="currency"
+                                                                 currencySymbol="$"
+                                                                 groupingUsed="true"
+                                                                 minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                        </h:outputText>
+
+                                    </h:panelGrid>
+                                </ace:column>
+                                <ace:column  style="width: 250px" stacked="true" >
+                                    <h:panelGrid columns="2" >
+                                        <h:outputText value="Total : "></h:outputText>
+                                        <h:outputText value="#{itemRgv.valorPagoFinal}" styleClass="letraOutput textcolumleft">
+                                            <f:convertNumber     type="currency"
+                                                                 currencySymbol="$"
+                                                                 groupingUsed="true"
+                                                                 minFractionDigits="2"
+                                                                 maxFractionDigits="2"/>
+                                        </h:outputText>
+
+                                    </h:panelGrid>
+                                </ace:column>
+                                <ace:column  style="width: 100px" headerText="Anular" rendered="#{evaluacionJSFBean.renderEliminar}">
+                                    <h:commandButton  title="Anular"
+                                                      styleClass="btnCancelarStd"
+                                                     
+
+                                                      >
+                                        <ace:ajax onComplete="confirmDialog.show();return false;" />
+
+                                        <f:setPropertyActionListener value="#{itemRgv}" target="#{evaluacionJSFBean.tablaOrdenProduccionColaboradorAsociado}" />
+                                        
+
+
+                                    </h:commandButton>
+                                </ace:column>
+                            </ace:dataTable>
+                        </div></td></tr>
+
+            </table>
+        </ace:panel>
+
+
+    </ui:insert>
+
+</html>

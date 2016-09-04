@@ -1,0 +1,113 @@
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif; 
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+    color: #045491;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+label{
+    font-weight: 800;
+    font-size: 12px;
+    color: #040d09;
+
+}
+
+
+.menuS{
+/*url("#{resource[':images/masterpage/imag_superior.png']}")*/
+    background: transparent none 50% top repeat-x !important;
+    -moz-border-radius-bottomright: 0px !important;
+    -webkit-border-bottom-right-radius: 0px !important;
+    -khtml-border-bottom-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+
+    -moz-border-radius-bottomleft: 0px !important;
+    -webkit-border-bottom-left-radius: 0px !important;
+    -khtml-border-bottom-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+
+    -moz-border-radius-topright: 0px !important;
+    -webkit-border-top-right-radius: 0px !important;
+    -khtml-border-top-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+
+    -moz-border-radius-topleft: 0px !important;
+    -webkit-border-top-left-radius: 0px !important;
+    -khtml-border-top-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    color: #FF8000 !important;
+    
+    
+
+}
+.menuS:hover{
+/*url("#{resource[':images/masterpage/imag_superior.png']}")*/
+    background: transparent none 50% top repeat-x !important;
+    -moz-border-radius-bottomright: 0px !important;
+    -webkit-border-bottom-right-radius: 0px !important;
+    -khtml-border-bottom-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+
+    -moz-border-radius-bottomleft: 0px !important;
+    -webkit-border-bottom-left-radius: 0px !important;
+    -khtml-border-bottom-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+
+    -moz-border-radius-topright: 0px !important;
+    -webkit-border-top-right-radius: 0px !important;
+    -khtml-border-top-right-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+
+    -moz-border-radius-topleft: 0px !important;
+    -webkit-border-top-left-radius: 0px !important;
+    -khtml-border-top-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    
+    
+
+}
+.lateralOk{
+    border-color: #000000;
+    border-top: 1px;
+    border-bottom: 1px;
+    background: blue url("#{resource[':images/icons/Graph.png']}") 2200px top repeat-x !important;
+    width: 2000px;
+    height: 20px;
+    
+   
+   
+    
+}
+.lateralOk:hover{
+    border-color: #000000;
+    border-top: 1px;
+    border-bottom: 1px;
+     background:  #AFAFAF none 100% top repeat-x !important;
+     
+    padding: 30px;
+    
+    
+}
+

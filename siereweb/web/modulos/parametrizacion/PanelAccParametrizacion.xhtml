@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="PanelAccParametrizacion">
+        <h:panelGrid style="z-index: 15"
+                     columns="3">
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{parametrizacionJSFBean.numPanel == 2}"
+                             actionListener="#{parametrizacionJSFBean.guardar_ActionEvent}"
+                             title="Grabar Servicio">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnNuevoStd"
+                             rendered="#{parametrizacionJSFBean.numPanel == 1 }"
+                             actionListener="#{parametrizacionJSFBean.navLateral_ActionEvent}"
+                             title="Nuevo Servicio">
+                <f:attribute name="numPanel" value="2"/>
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnAgregarProducto"
+                             rendered="#{parametrizacionJSFBean.numPanel == 2}"
+                             actionListener="#{parametrizacionJSFBean.navLateral_ActionEvent}"
+                             title="Ir asociar producto"> 
+                <f:attribute name="numPanel" value="3"/>
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+
+
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{parametrizacionJSFBean.numPanel == 3 }"
+                             actionListener="#{parametrizacionJSFBean.guardarProductoXServicio_ActionEvent}"
+                             title="Grabar Productos asociados">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnNuevoStd" onclick="dialogPresentacion.show();"
+
+                             rendered="#{parametrizacionJSFBean.numPanel == 3 }"
+                             actionListener="#{parametrizacionJSFBean.mostrarProductos_ActionEvent}"
+                             title="Consulta Productos">
+
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+            <h:commandButton styleClass="btnNuevoStdHijo" 
+
+                             rendered="#{parametrizacionJSFBean.numPanel == 2 }"
+                             actionListener="#{parametrizacionJSFBean.navLateral_ActionEvent}"
+                             title="Asociar Servicios ">
+                <f:attribute name="numPanel" value="4"/>
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnNuevoStdHijo" onclick="dialogPresentacionServicios.show();"
+
+                             rendered="#{parametrizacionJSFBean.numPanel == 4}"
+                             actionListener="#{parametrizacionJSFBean.mostrarServicios_ActionEvent}"
+                             title="Consulta Servicios ">
+
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{parametrizacionJSFBean.numPanel == 4 }"
+                             actionListener="#{parametrizacionJSFBean.guardarServicioXServicio_ActionEvent}"
+                             title="Grabar Servicios asociados">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+
+
+            <ace:dialog 
+                header="Servicios Activos"
+                widgetVar="dlgConsultServi"
+                closable="true"
+                modal="false"
+                draggable="true"
+                showEffect="fade"
+                hideEffect="fade"
+                showHeader="true"
+                dialogPosition="center"
+                width="1200"
+                height="800">
+                <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                    <tr><th  class="thtablaFormulario" colspan="2"> Servicios </th></tr>
+                    <tr>
+                        <td style="width: 100%">
+                            <div style="width: 100%">
+                                <ace:dataTable value="#{parametrizacionJSFBean.lstServicios}"
+                                               var="itemInv"
+                                               rows="20"
+
+                                               alwaysExecuteContents="true"
+                                               paginator="true"
+                                               emptyMessage="No se encontraron datos"
+                                               paginatorPosition="bottom"
+                                               paginatorAlwaysVisible="true"
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+                                    <ace:column headerText="Abrir" >       
+                                        <h:commandButton styleClass="btnSeleccionOpen"
+                                                         title="Abrir Servicio"
+                                                         actionListener="#{parametrizacionJSFBean.rowDtServicio_ActionEvent}">
+                                            <f:attribute name="servicio" value="#{itemInv}"/>
+                                            <f:ajax execute="@this" render="@all" />
+                                        </h:commandButton>
+                                    </ace:column>
+
+                                    <ace:column headerText="ID"  sortBy="#{itemInv.vsrvId}"
+                                                filterBy="#{itemInv.vsrvId}" filterMatchMode="contains" >
+                                        <h:outputText value="#{itemInv.vsrvId}"
+
+                                                      styleClass="textcolumnjustify letraOutput"/>
+                                    </ace:column>
+
+
+                                    <ace:column headerText="Nombre"  sortBy="#{itemInv.vsrvNombre}"
+                                                filterBy="#{itemInv.vsrvNombre}" filterMatchMode="contains" >
+                                        <h:outputText value="#{itemInv.vsrvNombre}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </ace:column>
+                                    <ace:column headerText="Descripción" >
+                                        <h:outputText value="#{itemInv.vsrvDesc}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </ace:column>
+
+
+
+                                    <ace:column  id="name" headerText="Tipo" 
+                                                 filterBy="#{itemInv.tsrvId.tsrvNombre}" >
+                                        <h:outputText id="nameCell" value="#{itemInv.tsrvId.tsrvNombre}"/>
+                                    </ace:column>
+
+
+
+
+
+                                    <ace:column headerText="Estado" >
+                                        <h:outputText value="#{(itemInv.vsrvEst ? 'Activo' : 'Inactivo')}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </ace:column>               
+
+
+
+                                    <ace:column headerText="valor factura ($)" style="width: 100px">
+                                        <h:outputText value="#{itemInv.vsrvValunitcliente}"
+                                                      styleClass="textcolumright letraOutput">
+                                            <f:convertNumber pattern="#0.00"/>
+                                            <f:convertNumber groupingUsed="true"/>
+                                        </h:outputText>
+                                    </ace:column>
+
+                                </ace:dataTable>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </ace:dialog>
+            <ace:dialog id="dialogPresentacionServicios"
+                        header="Asociar Servicios"
+                        widgetVar="dialogPresentacionServicios"
+                        closable="true"
+                        modal="false"
+                        draggable="true"
+                        showEffect="fade"
+                        hideEffect="fade"
+                        width="1000"
+                        height="500"
+                        zindex="1500"
+                        closeOnEscape="true"
+                        relativePosition="center center"
+                        relativeTo="tablaServicosAsociados"
+                        position="center"
+                        >
+                <h:panelGroup>
+
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Servicios Activos </th></tr>
+                        <tr><th  class="thtablaFormulario" colspan="2">  <h:commandLink value="Asociar Servicios Seleccionados (click)"  actionListener="#{parametrizacionJSFBean.aceptarServicio_ActionEvent}"
+
+                                                                                        styleClass="btnNavLateralSel">
+                                    <f:ajax execute="@this" render="@form" />
+
+                                </h:commandLink> </th></tr>
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="width: 100%">
+                                    <ace:dataTable value="#{parametrizacionJSFBean.lstServiciosHijos}"
+                                                   var="itemPr"
+                                                   rows="10"
+
+                                                   alwaysExecuteContents="true"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <ace:column headerText="Seleccione" style="width: 100px" >
+                                            <h:selectBooleanCheckbox 
+                                                valueChangeListener="#{parametrizacionJSFBean.selServicio_ValueChangeEvent}" value="#{itemPr.seleccionado}">
+                                                <f:attribute name="servicio" value="#{itemPr}"/>
+                                                <f:ajax execute="@this" render="@this" />
+                                            </h:selectBooleanCheckbox>
+
+                                        </ace:column>
+                                      
+                                        
+                                        <ace:column headerText="ID" style="width: 100px" sortBy="#{itemPr.servicio.vsrvId}"
+                                                filterBy="#{itemPr.servicio.vsrvId}" filterMatchMode="contains" >
+                                        <h:outputText value="#{itemPr.servicio.vsrvId}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </ace:column>
+                                        
+<ace:column headerText="Nombre"  sortBy="#{itemPr.servicio.vsrvNombre}"
+                                                filterBy="#{itemPr.servicio.vsrvNombre}" filterMatchMode="contains" >
+                                        <h:outputText value="#{itemPr.servicio.vsrvNombre}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </ace:column>
+
+                                                 
+
+                                    </ace:dataTable>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+
+            </ace:dialog>
+            <ace:dialog id="dialogPresentacion"
+                        header="Asociar Producto"
+                        widgetVar="dialogPresentacion"
+                        closable="true"
+                        modal="false"
+                        draggable="true"
+                        showEffect="fade"
+                        hideEffect="fade"
+                        width="1000"
+                        height="500"
+                        zindex="1500"
+                        closeOnEscape="true"
+                        relativePosition="center center"
+                        relativeTo="tablaProdXServ"
+                        position="center"
+                        >
+                <h:panelGroup>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="4"> Consulta </th></tr>
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>ID </label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+                                <div>
+                                    <h:inputText value="#{parametrizacionJSFBean.idProducto}" 
+
+                                                 styleClass="inputs" >
+                                        <f:ajax execute="@this" render="@this" />
+                                        <f:convertNumber integerOnly="true" />
+                                    </h:inputText>
+                                </div>
+                            </td> 
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Nombre</label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+                                <div>
+                                    <h:inputText value="#{parametrizacionJSFBean.nombreProducto}" 
+                                                 styleClass="inputs" >
+                                        <f:converter converterId="convertMayusc"/>
+                                        <f:ajax execute="@this" render="@this"/>
+                                    </h:inputText>
+                                </div>
+                            </td>     
+                        </tr>
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Ubicación</label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+                                <div>
+                                    <h:inputText value="#{parametrizacionJSFBean.descProducto}" 
+
+                                                 styleClass="inputs" >
+                                        <f:ajax execute="@this" render="@this" />
+                                        <f:converter converterId="convertMayusc"/>
+                                    </h:inputText>
+                                </div>
+                            </td>     
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Categoría </label>
+                                </div>
+                            </td>
+
+                            <td style="width: 30%">
+
+                                <div>
+                                    <h:selectOneMenu  styleClass="inputs"
+
+                                                      value="#{parametrizacionJSFBean.categoria}"
+                                                      >
+                                        <f:selectItems value="#{parametrizacionJSFBean.lstCategorias}" />
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+
+
+
+
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        
+                        
+                        
+                        
+                        <tr>
+                            <td style="width: 20%" >
+
+                                <h:commandButton value="Asociar"
+                                                 styleClass="button"
+                                                 actionListener="#{parametrizacionJSFBean.aceptarProducto_ActionEvent}"
+                                                 onclick="dialogPresentacion.hide();"
+
+                                                 title="Asociar Productos">
+                                    <f:ajax execute="@this" render="@all"  />
+                                </h:commandButton>
+                            </td>  
+                            <td style="width: 30%" >
+                                <h:outputText value="Seleccionados: #{parametrizacionJSFBean.cantProdSel}" styleClass="letraOutput" />
+                            </td>
+                            <td style="width: 20%" >
+                                <h:outputText value="" styleClass="letraOutput" />
+                            </td>
+                            <td style="width: 30%" >
+                                <h:commandButton value="Buscar"
+                                                 styleClass="button"
+                                                 actionListener="#{parametrizacionJSFBean.buscarGen_ActionEvent}"
+
+                                                 title="Buscar Productos">
+                                    <f:ajax execute="@this" render="@form" />
+                                </h:commandButton>
+                            </td>  
+                        </tr>
+                    </table>
+                    <br></br>
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Productos Activos </th></tr>
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="width: 100%">
+                                    <ace:dataTable value="#{parametrizacionJSFBean.lstProductos}"
+                                                   var="itemPr"
+                                                   rows="10"
+
+                                                   alwaysExecuteContents="true"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <ace:column headerText="Seleccione" style="width: 100px" >
+                                            <h:selectBooleanCheckbox 
+                                                valueChangeListener="#{parametrizacionJSFBean.selProducto_ValueChangeEvent}" value="#{itemPr.seleccionado}">
+                                                <f:attribute name="producto" value="#{itemPr}"/>
+                                                <f:ajax execute="@this" render="@form" />
+                                            </h:selectBooleanCheckbox>
+
+                                        </ace:column>
+                                        <ace:column headerText="ID Procuto" style="width: 100px">
+                                            <h:outputText value="#{itemPr.producto.prdId}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+
+
+                                         <ace:column headerText="Nombre" >
+                                            <h:outputText value="#{itemPr.producto.prdNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+                                        
+
+                                                   
+
+                                    </ace:dataTable>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+
+            </ace:dialog>
+        </h:panelGrid>
+    </ui:insert>
+</html>

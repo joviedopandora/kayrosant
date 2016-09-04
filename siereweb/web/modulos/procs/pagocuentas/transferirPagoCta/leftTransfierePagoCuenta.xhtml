@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="navTrfPagoCuenta">
+        <ace:accordion collapsible="true" autoHeight="false" event="click" effect="fade" style="font-size: 11px;">
+            <ace:accordionPane title="General" >
+                <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                    <h:commandLink id="btnNavTrfPagCta"
+                                   immediate="true"
+                                   value="Pago cuenta"
+                                   actionListener="#{transfPagoCuentaJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{transfPagoCuentaJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'} ">
+                        <f:attribute name="jsfBean" value="transfPagoCuentaJSFBean"/>
+                        <f:attribute name="numPanel" value="1"/>
+                    </h:commandLink>
+                </h:panelGrid>
+            </ace:accordionPane>
+        </ace:accordion>
+    </ui:insert>
+</html>

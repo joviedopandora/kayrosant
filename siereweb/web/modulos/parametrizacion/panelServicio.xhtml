@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"> 
+    <ui:insert name="panelEntrada">
+        <ace:panel header="Servicio"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409" >
+                <tr><th class="thtablaFormulario" colspan="2"> <font color="FFFFFF">Crear/Editar Servicio</font> </th></tr>
+
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Nombre *</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText value="#{parametrizacionJSFBean.servNombre}" 
+                                         maxlength="500"
+                                         styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Descripción * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+                            <h:inputTextarea cols="155" rows="15" styleClass="inputs"  
+                                             value="#{parametrizacionJSFBean.servDesc}" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputTextarea>
+
+
+
+
+
+                        </div>
+
+                    </td>   
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Tipo * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"  requiredMessage="Campo obligatorio"
+                                              value="#{parametrizacionJSFBean.servTipoServicio}"
+                                              >
+                                <f:validateLongRange maximum="120" minimum="1"/>
+                                <f:selectItems value="#{parametrizacionJSFBean.lstTiposServicios}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Activo </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:selectBooleanCheckbox value="#{parametrizacionJSFBean.servEstado}" >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectBooleanCheckbox>
+                        </div>
+
+                    </td> 
+                </tr>
+                <tr>
+                    <td style="width: 20%"><div >
+                            <label>Fecha Creación</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+                        <div >
+                            <h:inputText value="#{parametrizacionJSFBean.servicio.vsrvFechacre}"  
+
+                                         readonly="true"
+                                         styleClass="inputs"
+                                         >
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <f:ajax execute="@this" render="@this"/>
+                            </h:inputText>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Costo a Maximus * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText   size="30" maxlength="100"   styleClass="inputs"   requiredMessage="Campo obligatorio"
+
+                                           value="#{parametrizacionJSFBean.servVlrEmpresa}">
+                                <f:ajax execute="@this" render="@this" />
+                                <f:convertNumber locale="es" pattern="#,##0" />
+
+
+                            </h:inputText>
+
+
+
+                        </div>
+
+                    </td>
+
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Valor clientes * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText   size="30" maxlength="100"   styleClass="inputs"
+
+                                           value="#{parametrizacionJSFBean.servVlrpublico}">
+                                <f:ajax execute="@this" render="@this" />
+                                <f:convertNumber locale="es" pattern="#,##0" />
+
+                            </h:inputText>
+
+
+
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>% Iva (0-100) * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText   size="30" maxlength="100"   styleClass="inputs"
+
+                                           value="#{parametrizacionJSFBean.porcentajeiva}">
+                                <f:ajax execute="@this" render="@this" />
+                                <f:convertNumber locale="es" pattern="#,##0" />
+
+                            </h:inputText>
+
+
+
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Archivo </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText value="#{parametrizacionJSFBean.servArchivo}" 
+                                         id="archivo" 
+                                         styleClass="inputs" >
+
+                            </h:inputText>
+                        </div>
+
+                    </td>     
+
+                </tr>
+                <tr>
+                    <td style="width: 100%" colspan="5">
+
+                        <div>
+                            <h:panelGrid columns="8">
+                                <ace:fileEntry id="file-entry"
+
+                                               fileEntryListener="#{parametrizacionJSFBean.fileEntryAction}" 
+                                               useOriginalFilename="true" 
+                                               immediate="true"
+
+                                               label ="Seleccionar PDF">
+
+                                </ace:fileEntry>
+                                <h:outputText value="..Seleccionar PDF" />
+                                <h:commandButton value="Archivo Cargado" type="submit"
+                                                 styleClass="btnSubirArchivo" />
+                            </h:panelGrid>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+
+                </tr>
+                <tr>
+                    <tr><td class="thtablaFormulario" colspan="2"> <font color="FFFFFF">Tipo cliente a los cuales aplica</font> </td></tr>
+
+                    <tr>
+                        <td colspan="2">
+                             <ace:dataTable value="#{parametrizacionJSFBean.listaServiciosPorTipoCliente}"
+                                   var="item"
+                                   rows="10"
+                                   id="tablaTipoCliente"
+                                   alwaysExecuteContents="true"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="false"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+ <ace:column headerText="Seleccione" style="width:  100px;" >       
+                            <h:selectBooleanCheckbox value="#{item.servtcEst}"
+                                                     >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectBooleanCheckbox>
+                        </ace:column>
+
+
+                        <ace:column headerText="Tipo Cliente"  >       
+                            <h:outputText value="#{item.vntRfTipocliente.tclNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                        </ace:column>
+                       
+                    </ace:dataTable>
+                        </td>
+                    </tr>
+                </tr>
+            </table>
+            <br></br>
+      
+
+        </ace:panel>
+
+
+
+
+
+
+
+    </ui:insert> 
+
+
+
+
+
+</html>

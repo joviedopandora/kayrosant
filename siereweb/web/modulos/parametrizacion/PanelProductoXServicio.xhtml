@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To cha<?nge this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="PanelParametrizacion">
+
+        <ace:panel header="Productos por Servicio"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409" >
+                <tr><th class="thtablaFormulario" colspan="2"> <font color="FFFFFF">Crear/Editar Servicio</font> </th></tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>ID </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText value="#{parametrizacionJSFBean.servicio.vsrvId}"  readonly="true" styleClass="inputs" >
+
+                            </h:inputText>
+                        </div>
+
+                    </td>  
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Nombre *</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText value="#{parametrizacionJSFBean.servNombre}" 
+                                         readonly="true"
+                                         styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Descripción * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+
+                            <h:inputText value="#{parametrizacionJSFBean.servDesc}" readonly="true" styleClass="inputs" >
+                                <f:ajax execute="@this" render="@this" />
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputText>
+
+
+
+
+                        </div>
+
+                    </td>   
+                </tr>
+
+                <tr>
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Tipo * </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+
+                        <div>
+                            <h:selectOneMenu  styleClass="inputs"
+                                              readonly="true"
+                                              value="#{parametrizacionJSFBean.servTipoServicio}"
+                                              >
+                                <f:selectItems value="#{parametrizacionJSFBean.lstTiposServicios}" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectOneMenu>
+
+
+
+
+                        </div>
+
+                    </td>     
+
+                </tr>
+                <tr>
+
+
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Activo </label>
+                        </div>
+                    </td>
+                    <td style="width: 100%">
+                        <h:inputText value="#{(parametrizacionJSFBean.servEstado ? 'ACTIVO' :'INACTIVO')}"  styleClass="inputs" readonly="true" >
+
+
+                        </h:inputText>
+
+
+
+                    </td> 
+                </tr>
+
+            </table>
+            <br></br>
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="2"> Productos </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <ace:dataTable value="#{parametrizacionJSFBean.lstProductosXServ}"
+                                           var="itemInv"
+                                           rows="20"
+                                           widgetVar="tablaProdXServ"
+                                           id="tablaProdXServ"
+                                           alwaysExecuteContents="true"
+                                           paginator="true"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText="ID Producto"  style="width: 100px;"  >
+                                    <h:outputText value="#{itemInv.prdId.prdId}"
+
+                                                  styleClass="textcolumnjustify letraOutput"/>
+                                </ace:column>
+
+
+                                <ace:column headerText="Nombre"  style="width: 700px;"  >
+                                    <h:outputText value="#{itemInv.prdId.prdNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+                                <ace:column headerText="Cantidad"  style="width: 100px;"  >
+                                    <h:inputText value="#{itemInv.prodxsrvCantidad}" 
+
+                                                 styleClass="inputs textcolumright" >
+                                        <f:ajax execute="@this" render="@this" />
+                                        <f:convertNumber integerOnly="true" />
+
+                                    </h:inputText>
+                                </ace:column>
+
+                                <ace:column headerText="Estado" style="width: 100px;">
+
+                                    <h:selectBooleanCheckbox value="#{itemInv.prodxsrvEst}" 
+                                                             rendered="#{itemInv.prodxsrvId != null}"
+                                                             valueChangeListener="#{parametrizacionJSFBean.cambioEstadoProductoXServ_ValueChangeEvent}">
+                                        <f:ajax execute="@this" render="@this"  />
+                                        <f:attribute name="prodXServ" value="#{itemInv}" />
+                                    </h:selectBooleanCheckbox>
+
+                                    <h:commandButton styleClass="btnTrashStd"
+                                                     rendered="#{itemInv.prodxsrvId == null}"
+                                                     actionListener="#{parametrizacionJSFBean.rowDtEliminarProductoXServ_ActionEvent}"
+                                                     title="Eliminar Producto">
+                                        <f:attribute name="prodxServ" value="#{itemInv}"/>
+                                    </h:commandButton>
+                                </ace:column>               
+
+                            </ace:dataTable>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br></br>
+         
+
+        </ace:panel>
+
+
+
+    </ui:insert>    
+</html>

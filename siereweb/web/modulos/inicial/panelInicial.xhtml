@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelEntrada">
+
+        <ace:panel header="Cambio Contraseña"  style="width: 100%" 
+                   styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="2"> Cambio Contraseña  </th></tr>
+             
+                <tr>
+                    <td style="width: 30%"> 
+                        <label>Nueva Contraseña *</label>
+                    </td>
+                    <td style="width: 100%">
+                     
+                            <h:inputSecret  value="#{interaccionJSFBean.strClave}"
+                                            redisplay="true"
+                                            maxlength="50" styleClass="inputs password" >
+                                <f:validateLength minimum="8" maximum="50" />
+                                <f:ajax execute="@this" render="@this" />
+                            </h:inputSecret>
+                      
+                    </td>     
+
+
+
+
+                </tr>
+                <tr>
+                    <td style="width: 30%"> 
+                        <label>Confirmar Contraseña * </label>
+                    </td>
+                    <td style="width: 100%">
+                      
+                            <h:inputSecret value="#{interaccionJSFBean.strClaveConfimar}" 
+                                           redisplay="true"
+                                           maxlength="50" styleClass="inputs password" >
+                                <f:validateLength minimum="8" maximum="50" />
+                                <f:ajax execute="@this" render="@this"  />
+                            </h:inputSecret>
+                     
+                    </td>     
+
+
+
+
+                </tr>
+            </table>
+
+
+        </ace:panel>
+
+
+    </ui:insert>    
+</html>

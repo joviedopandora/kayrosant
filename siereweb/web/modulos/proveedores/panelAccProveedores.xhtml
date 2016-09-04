@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccProveedores">
+        <h:panelGrid style="z-index: 15"
+                     columns="3">
+            <h:commandButton styleClass="btnEnviarCotizacion" >
+                             <f:ajax execute="@this" render="@all"/>
+            </h:commandButton>
+           <h:graphicImage 
+                id="img0" height="300px" width="300px" name="images/users/Actividades.jpg"   alt="Imagen Colaborador"/>
+        </h:panelGrid>
+    </ui:insert>
+</html>

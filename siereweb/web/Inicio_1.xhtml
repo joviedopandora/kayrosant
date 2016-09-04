@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <f:view contentType="text/html">
+        <h:head>
+            <title>SIEREE ::: SISTEMA DE INFORMACIÓN PARA EVENTOS Y RECREACIÓN VERSIÓN EMPRESARIAL</title>
+            <h:outputStylesheet name="css/default.css"/>
+            <h:outputStylesheet name="css/cssLayout.css"/>
+            <h:outputStylesheet name="css/formularios.css"/>
+            <h:outputStylesheet name="css/pandora.css"/>
+            <link rel="stylesheet" href="css/styles.css"/>
+            <script type="text/javascript" src="css/jquery.js"></script>
+            <script type="text/javascript" src="css/jquery.cycle.lite.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('#bg_containers').cycle({
+                        fx: 'fade',
+                        timeout: 2000
+                    });
+                });
+            </script>
+        </h:head>
+        <body>
+            <h:form>
+                <div id="bg_containers">
+                    <div class="bg1"></div>
+                    <!--div class="bg2"></div-->
+                </div>
+                <div id="contenedor">
+                    <!--div id="botones" class="bt-kids"-->
+                        
+                    <!--/div-->
+                    <div id="texto">
+                        <h1>Bienvenido a Maximus</h1>
+                        <p>"El cliente es el visitante más importante de nuestras instalaciones, El no depende de nosotros.Nosotros dependemos de él. Él no es una interrupción en nuestro trabajo.Él es el propósito de éste. Él no es un intruso en nuestro negoció. Él es parte del mismo. Nosotros no le hacemos un favor sirviendole. ÉL no hace un favor al brindarnos la oportunidad de servirle" </p>
+                       
+                    </div>
+                    <div id="login">
+                        <div class="form">
+                            <h:inputText  value="#{principalJSFBean.strUsuario}" styleClass="username"/>
+                            <h:inputSecret  value="#{principalJSFBean.strClave}" styleClass="password"/>
+                            <h:commandButton   id="btnIngresar"
+                                               action="#{principalJSFBean.btnIngresar_Action}"                                                              
+                                               title="Iniciar session"
+                                               styleClass="submit button"
+                                               value="Ingresar">
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </body>
+    </f:view>
+</html>

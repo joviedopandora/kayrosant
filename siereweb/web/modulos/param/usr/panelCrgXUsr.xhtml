@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="crgxusr">
+        <ace:panel header="Usuarios" rendered="#{!usuarioJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{usuarioJSFBean.lstTablaAdmColXEmp}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{usuarioJSFBean.rowDtColXEmp_ActionEvent}">
+                        <f:attribute name="tcxe" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Tipo doc" style="width: 50px">
+                    <h:outputText value="#{item.admColxemp.colCedula.tdcId.tdcId}"/>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{item.admColxemp.colCedula.colCedula}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Primer nombre" style="width: 100px">
+                    <h:outputText value="#{item.admColxemp.colCedula.colNombre1}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Segundo nombre" style="width: 100px">
+                    <h:outputText value="#{item.admColxemp.colCedula.colNombre2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Primer apellido" style="width: 100px">
+                    <h:outputText value="#{item.admColxemp.colCedula.colApellido1}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Segundo apellido" style="width: 100px">
+                    <h:outputText value="#{item.admColxemp.colCedula.colApellido2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="Cargos por usuario" rendered="#{usuarioJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Usuario: " 
+                               style="font-size: 12px;font-weight: bold"/>
+                <h:outputText value="#{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.tdcId.tdcId} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colCedula} - 
+                              #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colNombre1} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colNombre2} 
+                              #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colApellido1} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colApellido2}"
+                              style="font-size: 14px;font-weight: bold"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                <h:panelGroup id="pnlgTablaCargo">
+                    <h:outputLabel value="CARGOS" dir="top"
+                                   style="font-size: 12px;font-weight: bold"/>
+                    <ace:dataTable value="#{usuarioJSFBean.lstTablaAdmCargo}"
+                                   var="itemCrg"
+                                   rows="10"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText="" style="width: 50px">
+                            <h:selectBooleanCheckbox value="#{itemCrg.seleccionado}"/>
+                        </ace:column>
+                        <ace:column headerText="Código" style="width: 100px">
+                            <h:outputText value="#{itemCrg.admCargo.crgId}"/>
+                        </ace:column>
+                        <ace:column headerText="Nombre" style="width: 300px">
+                            <h:outputText value="#{itemCrg.admCargo.crgNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+                <h:panelGroup id="pnlgTablaCrgXUsr">
+                    <h:outputLabel value="CARGOS ASIGNADOS" dir="top"
+                                   style="font-size: 12px;font-weight: bold"/>
+                    <ace:dataTable value="#{usuarioJSFBean.lstTablaAdmCrgXCol}"
+                                   var="itemCxc"
+                                   rows="10"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <!--
+                        <ace:column headerText="" style="width: 50px">
+                            <h:selectBooleanCheckbox value="#{itemCxc.seleccionado}"/>
+                        </ace:column>
+                        -->
+                        <ace:column headerText="Código" style="width: 100px">
+                            <h:outputText value="#{itemCxc.admCrgxcol.crgId.crgId}"
+                                          styleClass="letraConTabla"/>
+                        </ace:column>
+                        <ace:column headerText="Nombre" style="width: 300px">
+                            <h:outputText value="#{itemCxc.admCrgxcol.crgId.crgNombre}"
+                                          styleClass="letraConTabla"/>
+                        </ace:column>
+                        <ace:column headerText="Estado" style="width: 50px">
+                            <h:selectBooleanCheckbox value="#{itemCxc.admCrgxcol.cxcEst}"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+        </ace:panel>
+    </ui:insert>
+</html>

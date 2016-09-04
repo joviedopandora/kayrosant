@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccFactura">
+        <h:panelGroup rendered="#{!pcsVentasJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="4" style="z-index: 15">
+               
+                <h:commandButton styleClass="btnGuardarStd"
+                                 actionListener="#{pcsVentasJSFBean.btnEditarFactura_ActionEvent}"
+                                 title="Grabar factura">  
+                    <f:ajax execute="@this" render="@all" />
+                </h:commandButton>
+                <ice:outputResource resource="#{pcsVentasJSFBean.jaspResource}"
+                                    mimeType="application/pdf"
+                                    fileName="F_#{pcsVentasJSFBean.factura == null ? '_' :(pcsVentasJSFBean.factura.vfctNumfactura== null ? '_' : pcsVentasJSFBean.factura.vfctNumfactura )}_#{(pcsVentasJSFBean.factura.rgvtId.clnId.clnAlias== null ? '_' : pcsVentasJSFBean.factura.rgvtId.clnId.clnAlias)}_#{(pcsVentasJSFBean.factura.rgvtId.vdeId.vdeObsr==null ? '_' :pcsVentasJSFBean.factura.rgvtId.vdeId.vdeObsr)}.pdf"
+                                    shared="false"
+                                    label=" "
+                                    type="button"
+                                    styleClass="btnInformePDF">
+                </ice:outputResource>
+                
+                <h:commandButton styleClass="btnVolverStd"
+                                 actionListener="#{pcsVentasJSFBean.btnRegresarFactura_ActionEvent}"
+                                 title="Regresar">
+                     <f:ajax execute="@this" render="@form" />
+                     <f:attribute name="numPanel" value="1" />
+                </h:commandButton>
+               
+                 
+                
+               
+            </h:panelGrid>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{pcsVentasJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="4" style="z-index: 15">
+                 <h:commandButton styleClass="btnGuardarStd"
+                                  actionListener="#{pcsVentasJSFBean.irFactura_ActionEvent}"
+                                 title="Ir a facturar">  
+                    <f:ajax execute="@this" render="@form" />
+                </h:commandButton>
+                 <h:commandButton styleClass="btnVolverStd"
+                                 actionListener="#{pcsVentasJSFBean.btnRegresarFactura_ActionEvent}"
+                                 title="Regresar">
+                     <f:ajax execute="@this" render="@all" />
+                     <f:attribute name="numPanel" value="2" />
+                                          
+
+                </h:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>

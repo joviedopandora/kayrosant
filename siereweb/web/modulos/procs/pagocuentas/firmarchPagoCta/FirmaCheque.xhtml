@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="firmaCheque">
+        <ace:panel header="Listado cheques" rendered="#{!firmaChequeJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{firmaChequeJSFBean.lstTablaFinFirmaCheque}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{firmaChequeJSFBean.rowDtFirmaCheque_ActionEvent}">
+                        <f:attribute name="tffc" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Fecha entrega" style="width: 100px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.ctaFechapago}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Número cheque" style="width: 150px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.chqNumcheque}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                  #{item.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.prvDigver}"/>
+                </ace:column>
+                <ace:column headerText="Pago" style="width: 150px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.solId.fxcId.fpgId.fpgNombre}"
+                                  styleClass="#{item.claseSel} textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor cheque ($)" style="width: 150px">
+                    <h:outputText value="#{item.finFirmacheque.chqId.solId.fxcId.fxcValor}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+                <!--
+                <ace:column headerText="Entregado" style=" width: 100px">
+                    <h:outputText value="#{item.finFirmacheque.fchFechaproceso}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                -->
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="Entregar cheque" rendered="#{firmaChequeJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="4">
+                <h:outputLabel value="Proveedor"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                              style="font-weight: 800"/>
+                <h:outputLabel value="NIT"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                              #{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.prvId.prvDigver}"                                  
+                              style="font-weight: 800"/>
+                <h:outputLabel value="Factura N°"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.solId.fxcId.apbId.ctaId.factId.factNumfact}"
+                              style="font-weight: 800"/>
+                <h:outputLabel value="Valor cheque"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.solId.fxcId.fxcValor}"
+                              style="font-weight: 800">
+                    <f:convertNumber type="currency" locale="es_CO"/>
+                </h:outputText>
+                <h:outputLabel value="N° Cheque"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.chqNumcheque}"
+                              style="font-weight: 800"/>
+                <h:outputLabel value="Comprobante de egreso"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.chqCompegreso}"
+                              style="font-weight: 800"/>
+                <h:outputLabel value="Banco"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.bncId.bncNombre}"
+                              style="font-weight: 800"/>
+                <h:outputLabel value="Cuenta"/>
+                <h:outputText value="#{firmaChequeJSFBean.tablaFinFirmaChequeSel.finFirmacheque.chqId.chqNumcuenta}"
+                              style="font-weight: 800"/>
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Observación"/>
+                <h:inputTextarea value="#{firmaChequeJSFBean.strFchObservacion}"
+                                 styleClass="textAreaGrande">
+                    <f:converter converterId="convertMayusc"/>
+                </h:inputTextarea>
+            </h:panelGrid>
+        </ace:panel>
+    </ui:insert>
+</html>

@@ -1,0 +1,5 @@
+Buen día ,${colaborador} 
+             Enviamos el PIN correspondiente al pago de tus servicios Lúdicos y/o Recreativos
+             ${nombreConsolidado} 
+             PIN :  ${pin} 
+             Saludo cordial Tesoreria.

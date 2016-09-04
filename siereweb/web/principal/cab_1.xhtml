@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="inclCab">
+        <h:panelGroup id="menuBar" >
+            <h:panelGroup style="float :left; margin-left: -6px;margin-top: -1px; position: fixed;">
+                <!--
+                <h:graphicImage name="images/LogoMaximus.jpeg"
+                                title="Maximus Producciones"
+                                style="float: left;top:1px; left: 1px;"
+                                height="46px"
+                                width="150px"/>
+                -->
+            </h:panelGroup>
+            <h:panelGrid columns="3" style="float :left; left: 190px; margin-top: 10px; position: fixed;">
+                <ace:menuBar styleClass="menuS" autoSubmenuDisplay="true" widgetVar="menuBarPrinc"
+                             model="#{principalJSFBean.menuModel}"
+                             effect="fade" effectDuration="200"  
+                             style=" z-index: 20;margin-top: -1px;border: 1px; left: 0px;top: -1px;">
+                </ace:menuBar>
+
+            </h:panelGrid>
+            <h:panelGroup style="float: right">
+
+
+                <h:panelGrid columns="3" style="background-color: transparent;float: left">
+
+                    <h:commandLink value="#{principalJSFBean.colxempLog.colCedula.colNombre1} #{principalJSFBean.colxempLog.colCedula.colNombre2}
+                                   "
+                                   style="background-color: transparent;color: white; font-size: 12px; font-weight: bold;
+                                   width: 400px; "
+                                   action="bandEntrada"
+                                   rendered="#{principalJSFBean.renderNavegacion}" 
+                                   title="Usuario"  actionListener="#{bandejaEntradaJSFBean.btnInicioBandEntrada}">
+                        <f:ajax execute="@this" render="@all" />
+                    </h:commandLink>
+                    <h:commandButton id="btnUsuarioMenu" styleClass="btnmenuUsuario"
+                                     style="float: right;  right: 2px;">
+                    </h:commandButton>
+                    <h:commandButton id="btnInicioBandEntrada" 
+                                     title="Ir a la página principal"
+                                     styleClass="btnInicioStd"
+                                     action="bandEntrada"
+                                     actionListener="#{bandejaEntradaJSFBean.btnInicioBandEntrada}">
+                        <f:ajax execute="@this" render="@all" />
+                    </h:commandButton>  
+                </h:panelGrid>
+
+
+
+                <ace:menu id="menu" effect="fade" effectDuration="300" position="dynamic"
+                          trigger="btnUsuarioMenu" my="right top" zindex="250000"
+                          at="right bottom" triggerEvent="click">
+                    
+                    <ace:menuItem value="Acerca de KAYYROS" icon="ui-icon"
+                                  styleClass="letraMenu" style="text-decoration: none"
+                                  actionListener="#{principalJSFBean.navRiesgos_ActionEvent}"
+                                  action="#{principalJSFBean.navMenu_Action}">
+                        <ace:ajax execute="@this" render="@all" />
+                        <f:attribute name="navegacion" value="acercaDe" />
+                    </ace:menuItem>
+                    
+                    <ace:menuItem value="Cambiar clave" icon="ui-icon"
+                                  styleClass="letraMenu" style="text-decoration: none"
+                                  actionListener="#{principalJSFBean.navRiesgos_ActionEvent}"
+                                  action="#{principalJSFBean.navMenu_Action}">
+                        <ace:ajax execute="@this" render="@all" />
+                        <f:attribute name="navegacion" value="cambiarClave" />
+                        <f:attribute name="jsfbean" value="interaccionJSFBean" />
+
+                    </ace:menuItem>
+                    <ace:menuItem value="Manual KAYYROS" icon="ui-icon" 
+                                  styleClass="letraMenu" style="text-decoration: none"
+                                  actionListener="#{principalJSFBean.navRiesgos_ActionEvent}"
+                                  action="#{principalJSFBean.navMenu_Action}">   
+                        <ace:ajax execute="@this" render="@all" />
+                        <f:attribute name="navegacion" value="manualApp" />
+                        <f:attribute name="jsfbean" value="bandejaEntradaJSFBean" />
+                    </ace:menuItem>
+                    <ace:menuItem value="Cerrar sesión" icon="ui-icon"
+                                  
+                                  styleClass="letraMenu" style="text-decoration: none"
+                                  actionListener="#{principalJSFBean.navRiesgos_ActionEvent}"
+                                  action="#{principalJSFBean.navMenu_Action}">
+                        <f:attribute name="navegacion" value="salir" />
+                        <f:attribute name="jsfbean" value="bandejaEntradaJSFBean" />
+                        <ace:ajax execute="@this" render="@all" />
+
+                    </ace:menuItem>
+                </ace:menu>
+            </h:panelGroup>
+
+
+
+        </h:panelGroup>
+        <script>
+            var $ = jQuery.noConflict();
+
+            function initMsg() {
+                $(document).ready(function () {
+                    setTimeout(function () {
+                        $("#masterForm\\:idmsg").fadeOut(1).fadeIn(900);
+                    }, 1);
+                });
+            }
+
+            function finMSg() {
+                $(document).ready(function () {
+                    // setTimeout( " $('#masterForm\\:idmsg').hide();",200 );
+                    setTimeout(function () {
+
+                        $("#masterForm\\:idmsg").fadeOut(800).fadeIn(800).fadeOut(500).fadeIn(500).fadeOut(300).fadeIn(100);
+                    }, 2000);
+                });
+            }
+
+            $(document).ready(function () {
+                initMsg();
+                finMSg();
+            });
+        </script>
+        <ace:messages id="idmsg" 
+                      for="menuBar"
+                      styleClass="styleLetraMsj mensajes" 
+                      showDetail="true"
+                      redisplay="false"
+                      showSummary="false"
+                      globalOnly="true"
+                      style="right: 20px; float: right; position: absolute; display: block; vertical-align: central; max-height: 500px; text-align: center; width: 350px;top: 80px; border: none;">
+        </ace:messages>   
+
+
+
+    </ui:insert>
+</html>

@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="Contenidofactura">
+
+        <p style="font-weight: bold;">FECHA FACTURA: <h:outputText value="#{pcsVentasJSFBean.factura.vfctFechafactura}" >
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+            </h:outputText></p>
+        <br></br>
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="2"> Cliente  </th></tr>
+            <tr>
+                <td  style="width: 30%"> 
+                    <div >
+                        <label>Nombre</label>
+                    </div>
+                </td>
+                <td  style="width: 70%"> 
+
+                    <div   >
+
+
+
+
+                        <h:inputText value="#{pcsVentasJSFBean.factura.factclNombres}" maxlength="100"  styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 30%">
+                    <div  >
+                        <label >CC/NIT</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div>
+
+                        <h:inputText   size="60" maxlength="60"  styleClass="inputs"
+                                       value="#{pcsVentasJSFBean.factura.factclIdentificacion}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div  >
+                        <label >E-mail</label>
+                    </div>
+                </td>
+
+                <td style="width: 70%">
+
+
+                    <div  >
+
+                        <h:inputText styleClass="inputs" maxlength="100"   
+                                     value="#{pcsVentasJSFBean.factura.factclEmail}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%"><div >
+                        <label>Telefono</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%"><div  >
+
+                        <h:inputText styleClass="inputs" maxlength="100" size="60" 
+                                     value="#{pcsVentasJSFBean.factura.factclFijo}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div>
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div  >
+                        <label >Celular</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%">
+
+                    <div >
+                        <h:inputText   styleClass="inputs" 
+                                       maxlength="100" size="60" 
+                                       value="#{pcsVentasJSFBean.factura.factclCelular}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>
+
+            <tr>
+                <td style="width: 30%"><div >
+                        <label >Forma  de pago</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%"><div >
+
+
+                        <h:inputText  styleClass="inputs" id="formaPago"
+                                      maxlength="200" size="60" 
+                                      value="#{pcsVentasJSFBean.factura.factclFormapago}"
+                                      required="true" requiredMessage="Orden de trabajo requeridad"
+                                      >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>
+            
+            
+            <tr>
+                <td style="width: 30%"><div >
+                        <label>Numero Dias Pago despues de Radicación</label>
+
+                    </div>
+                </td> 
+                <td style="width: 70%"><div >
+
+
+                        <h:inputText  styleClass="inputs" id="numeropago1"
+                                      maxlength="200" size="60" 
+                                      value="#{pcsVentasJSFBean.factura.vfctnumdiaspago}"
+                                      required="true" requiredMessage="Numero de dias de pago requerido"
+                                      >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>
+<!--            <tr>
+                <td style="width: 30%"><div  >
+                        <label >Orden de Trabajo N°</label>
+
+                    </div>
+                </td> 
+                <td style="width: 30%"><div >
+
+                        <h:inputText   styleClass="inputs"    maxlength="100" readonly="true"
+                                       value="#{pcsVentasJSFBean.factura.rgvtId.vdeId.vdeId}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>-->
+            
+            <tr>
+                <td style="width: 30%"><div  >
+                        <label >Orden de Trabajo Cliente N°</label>
+
+                    </div>
+                </td> 
+                <td style="width: 30%"><div >
+
+                       
+                        
+                          <h:inputText  styleClass="inputs" id="Ordentrabajo"
+                                      maxlength="200" size="60" 
+                                      value="#{pcsVentasJSFBean.factura.factsrOrdencliente}"
+                                      required="true" requiredMessage="Orden de Trabajo Cliente N°"
+                                      >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                    </div>
+
+                </td> 
+            </tr>
+            
+
+        </table>
+        <br></br>
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th    class="thtablaFormulario" colspan="2"> Servicio  </th></tr>
+
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label>Detalle</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div  >
+
+                        <h:inputText   styleClass="inputs" maxlength="100"
+                                       value="#{pcsVentasJSFBean.factura.factsrDetalle}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%" >
+                    <div >
+                        <label>Protagonista</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div >
+
+                        <h:inputText   styleClass="inputs"  maxlength="100"
+                                       value="#{pcsVentasJSFBean.factura.factdcObservacion}" required="true" requiredMessage="Protagonista es  requerido">
+                            <f:converter converterId="convertMayusc"/>
+                            <f:ajax execute="@this" render="@this" />
+                            
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+<tr>
+                <td style="width: 30%" >
+                    <div >
+                        <label>Quien Solicita</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div >
+
+                        <h:inputText   styleClass="inputs" id="protagonista" maxlength="100"
+                                       value="#{pcsVentasJSFBean.factura.factsrProtagonista}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label>Fecha de Creación</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div >
+                        <h:inputText styleClass="inputs" readonly="true"
+                                     value="#{pcsVentasJSFBean.factura.factsrFecha}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                        </h:inputText>
+
+
+
+                    </div>
+
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label>Dirección Evento</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div  >
+
+                        
+
+                        
+                          <h:inputText  styleClass="inputs" id="direccionevento"
+                                      maxlength="200" size="60" 
+                                      value="#{pcsVentasJSFBean.factura.factsrDireccionevento}"
+                                      required="true" requiredMessage="Dirección del Evento Requerida"
+                                      >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+                        
+                    </div> 
+                </td></tr>
+            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label>Motivo</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div >
+
+                        <h:inputText   styleClass="inputs"    maxlength="100" 
+                                       value="#{pcsVentasJSFBean.factura.factsrMotivo}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>
+
+
+<!--            <tr>
+                <td style="width: 30%">
+                    <div >
+                        <label>Hora</label>
+                    </div>
+                </td>
+                <td style="width: 70%"><div >
+
+                        <h:inputText  styleClass="inputs" maxlength="100" 
+                                      value="#{pcsVentasJSFBean.factura.factsrHora}">
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+                    </div> 
+                </td></tr>-->
+
+        </table>
+
+        <br></br>
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th    class="thtablaFormulario" colspan="2"> Descripción  </th></tr>
+
+            <tr><td style="width: 100%"><div >
+                        <h:inputTextarea cols="155" rows="3" styleClass="inputs"  
+                                         value="#{pcsVentasJSFBean.factura.factdcDescripcion}" >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputTextarea>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th  class="thtablaFormulario" colspan="2"> Fecha Variable </th></tr>
+
+            <tr><td style="width: 100%"><div >
+                        <h:inputTextarea cols="155" rows="3" styleClass="inputs"
+                                         value="#{pcsVentasJSFBean.factura.vfctObservacion}" >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputTextarea>
+                    </div></td></tr>
+
+        </table>
+        <br></br>
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="2"> Servicios </th></tr>
+
+            <tr><td><div style="width: 100%">
+                        <ace:dataTable value="#{pcsVentasJSFBean.lstDetalleXFact}"
+                                       var="itemRvf"
+                                       rows="5"
+                                       
+                                       paginator="true"
+                                       emptyMessage="No se encontraron registros"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                       
+                            <ace:column headerText="Servicio"  style="width: 200px">
+                                <h:outputText     styleClass="textcolumleft"
+                                               value="#{itemRvf.vdftServico}" >
+                                    
+                                </h:outputText>
+                            </ace:column>
+                            <ace:column headerText="Cantidad" style="width: 100px" >
+
+                                <h:outputText  value="#{itemRvf.vdftCantidad}" style="font-size: large" 
+                                               styleClass="textcolumcenter">
+                                </h:outputText>
+
+                            </ace:column>
+                            <ace:column headerText="Costo Unitario" style="width: 200px">
+                                <h:outputText value="#{itemRvf.vdftCostounitario}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column>
+                            <ace:column headerText="Costo Total" style="width: 100px">
+                                <h:outputText value="#{itemRvf.vdftCostototal}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                            
+                            <ace:column headerText="Cantidad facturada" style="width: 100px">
+                                <h:outputText value="#{itemRvf.vdftCantidad}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                            
+                             <ace:column headerText="Descuento" style="width: 100px">
+                                  <h:outputText value="#{itemRvf.vdftDescuento}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                            
+                            <ace:column headerText="IVA" style="width: 100px">
+                                <h:outputText value="#{itemRvf.vdftPorcentajeIva}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                            
+                             <ace:column headerText="Valor IVA" style="width: 100px">
+                                 <h:outputText value="#{itemRvf.vdftValorIva}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                           
+                             <ace:column headerText="Valor  facturado" style="width: 100px">
+                                 <h:outputText value="#{itemRvf.vdftSubtotal}" style="font-size: large"
+                                              styleClass="textcolumcenter">
+                                    <f:convertNumber locale="es" pattern="#,##0.00" />
+                                    <f:convertNumber groupingUsed="true"/>
+
+                                </h:outputText>
+                            </ace:column>
+                             
+                           
+                          
+                            
+                             
+                            
+                        
+
+             
+                            
+                            
+                            
+
+                        </ace:dataTable>
+                        
+                       
+                    
+                    </div></td></tr>
+
+         
+        </table>
+        <br></br>
+        
+        <table  width="100%" border="1" bordercolor="F7B409" >
+            <tr><th  class="thtablaFormulario" colspan="2"> Valores  </th></tr>
+
+        
+            <tr><td style="width: 30%"><label>Subtotal 1</label></td><td style="width: 70%">
+                    <h:inputText styleClass="inputs"
+                                 readonly="true"
+                                 value="#{pcsVentasJSFBean.factura.vfctSubtotal}">
+
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                        <f:convertNumber groupingUsed="true"/>
+                    </h:inputText>
+                </td></tr>
+                <tr><td style="width: 30%"><label>Descuento</label></td>
+                <td style="width: 70%">
+                    <h:inputText  readonly="true" size="30" maxlength="100" 
+                                   
+                                   styleClass="inputs"
+                                   valueChangeListener="#{pcsVentasJSFBean.cambioDescuento}"
+                                   value="#{pcsVentasJSFBean.factura.vfctDescuento}">
+                        <f:ajax execute="@this" render="@all"  />
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+
+                    </h:inputText>
+                </td></tr>
+            <tr>
+                <td style="width: 30%"><label>Sub Total 2</label></td>
+                <td style="width: 70%">
+                    <h:inputText  styleClass="inputs"  maxlength="100"  
+                                  readonly="true"
+                                  
+                                  value="#{pcsVentasJSFBean.valorVentaSubTotal}" >
+                        
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                    </h:inputText>
+                </td></tr>
+            <tr><td style="width: 30%"><label style="">IVA</label></td><td style="width: 70%">
+                    <h:inputText  styleClass="inputs"
+                                  readonly="true"
+                                  value="#{pcsVentasJSFBean.factura.vfctIva}">
+
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                        <f:convertNumber groupingUsed="true"/>
+                    </h:inputText>
+                </td></tr>
+            <tr><td style="width: 30%"><label>Total</label></td><td style="width: 70%">
+                    <h:inputText styleClass="inputs"
+                                 readonly="true"
+                                 value="#{pcsVentasJSFBean.factura.vfctValortotal}">
+
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                        <f:convertNumber groupingUsed="true"/>
+                    </h:inputText>
+                </td></tr>
+            <tr><td style="width: 30%"><label>Valor  Anticipo</label></td><td style="width: 70%">
+                    <h:inputText  styleClass="inputs"
+                                  readonly="true"
+                                  value="#{pcsVentasJSFBean.factura.vfctAnticipo}">
+
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                        <f:convertNumber groupingUsed="true"/>
+                    </h:inputText>
+                </td></tr>
+            <tr><td style="width: 30%"><label>Saldo</label></td><td style="width: 70%">
+                    <h:inputText  styleClass="inputs"
+                                  readonly="true"
+                                  value="#{pcsVentasJSFBean.factura.vfctSaldo}">
+                        <f:convertNumber locale="es" pattern="#,##0.00" />
+                        <f:convertNumber groupingUsed="true"/>
+                    </h:inputText>
+                </td></tr>
+
+        </table>
+
+    </ui:insert>
+
+</html>

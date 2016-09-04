@@ -1,0 +1,2199 @@
+/* 
+    Document   : formularios
+    Created on : 19/07/2012, 04:49:18 PM
+    Author     : breyner
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+variables generales del formulario
+*/
+.inpuntsLong{
+    width: 100%;
+}
+.hasDatepicker{
+   width: 100% !important; 
+}
+root { 
+    display: block;
+}
+
+.letraMenu{
+    font-style: normal;
+    font-weight: bold;
+    color: #FF8000;
+    text-decoration: underline;
+    z-index: 2;
+    font-size: 14px !important;
+}
+
+.letraMenuSubMenu{
+    font-style: normal;
+    font-weight: 800 !important;
+    color: #FF8000 !important;
+    text-decoration:none;
+    font-size: 17px !important;
+    z-index: 2;
+}
+
+.letraMenuSubMenu ul li a:hover{
+    color:#FF8000;
+}
+
+.clave{
+    width:160px;
+    height:16px;
+    padding-left:30px;
+    margin-bottom:10px;
+    display:block;
+    border:1px solid #bec1c5;
+    box-shadow:inset 0px 1px 4px rgba(0,0,0,.1);
+    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:10px;
+    font-weight:400;
+    color:#bfbfbf;
+    background:#fff  url("#{resource[':images/ColeccionIconos-Password.png']}") left no-repeat;
+}
+
+.username {
+    width:160px;
+    height:16px;
+    padding-left:30px;
+    margin-bottom:10px;
+    display:block;
+    border:1px solid #bec1c5;
+    box-shadow:inset 0px 1px 4px rgba(0,0,0,.1);
+    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:10px;
+    font-weight:400;
+    color:#bfbfbf;
+    background:#fff url("#{resource[':images/ColeccionIconos-Username.png']}")   left no-repeat !important;
+}
+
+.btnmenuUsuario{
+    background-image: url("#{resource[':images/ColeccionIconos-User-identity.png']}")   !important;
+    border: none;
+    width: 45px ;
+    height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnmenuUsuario:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-User-identity_Over.png']}")   !important;
+    border: none;
+    width: 45px;
+    height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.button {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    white-space: nowrap;
+    margin: 5px;
+    padding: 0;
+    background-image: url("#{resource[':images/button.png']}");
+    background-repeat: repeat-x;
+    background-position: 0 0;
+    border: 1px solid rgba(114,114,114,0.4);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+    -moz-box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+    -webkit-box-shadow: 0 1px 0px rgba(114,114,114,0.3);
+    background-color: #ce9141!important;
+    
+}
+
+.button:hover {
+    background-image: url("#{resource[':images/button.png']}");
+    background-position: 0 -30px;
+    background-color: #cabea1!important;
+    text-decoration: none;
+    border: 1px solid rgba(100,100,100,0.4);
+}
+
+.button:active { top: 1px; }
+
+.button span {
+    display: inline-block;
+    padding: 0 18px;
+    height: 29px;
+    line-height: 29px;
+    color: #FFF;
+    font-size: 13px;
+    font-weight: bold;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+}
+
+.btnInicioStd{
+    background-image: url("#{resource[':images/ColeccionIconos-User-home.png']}")   !important; 
+    /*background-image: url("#{resource[':images/icons/home.png']}")   !important;   */
+    border: none;
+    width: 45px;
+    height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnInicioStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-User-home_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnBuscarStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Buscar1.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnBuscarStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Buscar1_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+
+.btnadduser{
+    background-image: url("#{resource[':images/adduser.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+    .btnadduser:hover{
+    background-image: url("#{resource[':images/adduser.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+
+
+
+.red{
+    background-image: url("#{resource[':images/red.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.red:hover{
+    background-image: url("#{resource[':images/red.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+
+.yelow{
+    background-image: url("#{resource[':images/yelow.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.yelow:hover{
+    background-image: url("#{resource[':images/yelow.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+
+.green{
+    background-image: url("#{resource[':images/green.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.green:hover{
+    background-image: url("#{resource[':images/green.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.orange{
+    background-image: url("#{resource[':images/orange.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.orange:hover{
+    background-image: url("#{resource[':images/orange.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.opaque{
+    background-image: url("#{resource[':images/opaco.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.opaque:hover{
+    background-image: url("#{resource[':images/opaco.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+
+.btnGuardarStd{
+    /*background-image: url("#{resource[':images/ColeccionIconos-Guardar.png']}")   !important;*/
+    background-image: url("#{resource[':images/ColeccionIconos-Guardar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btnGuardarStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Guardar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnirop{
+    /*background-image: url("#{resource[':images/ColeccionIconos-Guardar.png']}")   !important;*/
+    background-image: url("#{resource[':images/evento.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btnirop:hover{
+    background-image: url("#{resource[':images/evento.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btncancelarop{
+    /*background-image: url("#{resource[':images/ColeccionIconos-Guardar.png']}")   !important;*/
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btncancelarop:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Agregar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Agregar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnNuevoStdHijo{
+    background-image: url("#{resource[':images/hijo.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnirop{
+    /*background-image: url("#{resource[':images/ColeccionIconos-Guardar.png']}")   !important;*/
+    background-image: url("#{resource[':images/evento.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btnirop:hover{
+    background-image: url("#{resource[':images/evento.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btncancelarop{
+    /*background-image: url("#{resource[':images/ColeccionIconos-Guardar.png']}")   !important;*/
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btncancelarop:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Agregar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Agregar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnNuevoStdHijo{
+    background-image: url("#{resource[':images/hijo.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoStdHijo:hover{
+    background-image: url("#{resource[':images/hijo.png']}")   !important;
+    border: none;   
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+
+
+.btncronograma{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btncronograma:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda.png']}")   !important;
+    border: none;   
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+.btnNuevoadiccionar{
+    background-image: url("#{resource[':images/agregar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNuevoadiccionar:hover{
+    background-image: url("#{resource[':images/agregar.png']}")   !important;
+    border: none;   
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+
+.btnAgregarProducto{
+    background-image: url("#{resource[':images/agregarproducto.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAgregarProducto:hover{
+    background-image: url("#{resource[':images/agregarproducto.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+
+.btnCerrarStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Cerrar.png']}")  !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnCerrarStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Cerrar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat; 
+    background-color: transparent !important;
+}
+
+.btnBurcarC{
+    background-image: url("#{resource[':images/buscarcotizaciones.png']}")  !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnBuscarC:hover{
+    background-image: url("#{resource[':images/buscarcotizaciones.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat; 
+    background-color: transparent !important;
+}
+
+.btnVolverStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Atras.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat; 
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVolverStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Atras_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat; 
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnCancelarStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar.png']}") !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnCancelarStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Cancelar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAnularFactura{
+    background-image: url("#{resource[':images/anulada.png']}") !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAnularFactura:hover{
+    background-image: url("#{resource[':images/anulada.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+.btnPendientePagoFactura{
+    background-image: url("#{resource[':images/pendiente.png']}") !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnPendientePagoFactura:hover{
+    background-image: url("#{resource[':images/pendiente.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnPagadoFactura{
+    background-image: url("#{resource[':images/pagada.png']}") !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnPagadoFactura:hover{
+    background-image: url("#{resource[':images/pagada.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+
+
+
+
+
+.btnBorrarStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Borrar.png']}") !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnBorrarStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Borrar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat; 
+    background-color: transparent !important;
+}
+
+.btnTrashStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Eliminar.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnTrashStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Eliminar_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAgendaStd{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAgendaStd:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda1_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnGenerarInforme{
+    background-image: url("#{resource[':images/ColeccionIconos-Informe.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnGenerarInforme:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Informe_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformeEXCEL{
+    background-image: url("#{resource[':images/ColeccionIconos-Excel.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformeEXCEL:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Excel_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformePDF{
+    background-image: url("#{resource[':images/ColeccionIconos-PDF.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformePDF:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-PDF_Over.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnAgregarStd{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-25.png']}") !important;
+    border: none;
+    width: 45px; height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnQuitarStd{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-25-1.png']}") !important;
+    border: none;
+    width: 45px; height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnCargarZipStd{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-07.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btnCargarZipStd:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-07.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+}
+
+.btnNuevoAut{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-02.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnNuevoAut:hover{
+
+
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-02.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnGuardarAut{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-05.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnGuardarAut:hover{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-05.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerDatoRCN{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-50.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerDatoRCN:hover{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-50.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnOK{
+    background-image: url("#{resource[':images/iconos/estandar/tick_32.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnBlok{
+    background-image: url("#{resource[':images/iconos/estandar/block_32.png']}")   !important;
+    border: none;
+    width: 45px ;height: 45px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnNavLateral{
+    color: #000000 !important;
+    font-weight : bold !important;
+    font-size: 14px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+}
+
+.btnNavLateral:hover{
+    color: #000000 !important;
+    font-weight : bold !important;
+    font-size: 14px !important;
+    font-family:   Arial, Helvetica, sans-serif; 
+
+    text-decoration: underline !important;
+}
+
+.btnNavLateralSel{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    font-size: 14px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+}
+
+.btnNavLateralSel:hover{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    font-size: 14px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+}
+
+a.dp-choose-date {
+    float: left;
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 5px 3px 0;
+    display: block;
+    text-indent: -2000px;
+    overflow: hidden;
+    background: url(calendar.png) no-repeat; 
+}
+a.dp-choose-date.dp-disabled {
+    background-position: 0 -20px;
+    cursor: default;
+}
+/* makes the input field shorter once the date picker code
+ * has run (to allow space for the calendar icon
+*/
+input.dp-applied {
+    width: 140px;
+    float: left;
+}
+
+
+.inputTextFecha{
+    color: #99ccff;
+
+}
+select{
+
+    border: 1px solid;
+    border-color: #d4ccb0; /*rgb(231, 143, 8); */
+
+    background-color: #459e00;
+    font-weight: bolder;
+
+    color: #cd5c0a;; 
+
+    font-size: 10px;
+    font-family: Lucida Sans,Arial,sans-serif;
+    margin: 0px;
+    outline: medium none;
+    padding: 2px;
+    border-top-right-radius: 6px;
+    border-top-left-radius:  6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    /* font: inherit;*/
+    text-transform:  uppercase;
+    height: 25px;
+
+}
+
+
+option{
+
+    background-color: #F7F9FC;
+    text-transform: uppercase;
+
+}
+
+.grafico{
+    width: 800px;
+}
+label
+{
+    font: normal 11px Arial, Sans-serif;
+    color: black;
+
+    font-weight: normal;
+
+
+}
+.ui-datatable tbody.ui-datatable-data > tr > td,.ui-datatable tbody.ui-datatable-data-empty > tr > td {
+    border-color: rgb(231, 143, 8) !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    padding:4px 10px;
+    /*text-align: center;*/
+}
+/**
+Alinear el contnido de una tabla
+*/
+.tablaAlnVer>tbody {
+    vertical-align: top !important;
+}
+/*thead{
+    text-align: center !important;
+}*/
+
+td span.textcolumleft{
+    text-align: left !important; float: left;
+}
+
+td span.textcolumred{
+   color: #CC0033; text-align: left !important; float: left;
+}
+td span.textcolumright{
+    text-align: right; float: right;
+}
+
+td span.textcolumnjustify{
+    text-align: left; float: left;
+
+}
+
+
+
+td a.textcolumvinculo{
+    color: #3366ff; font-weight: bold;
+}
+td a.textcolumvinculo:hover{
+    color: #cc0033;
+}
+
+.dataTableSel{
+    width: 50px !important;
+}
+
+.dataTableTxtCorto{
+    width: 70px !important;
+}
+
+.dateTableTxtMediano{
+    width: 150px !important;
+}
+
+.dataTableTxtLargo{
+    width: 250px !important;
+
+}
+
+.dataTableTexto{
+    width: 400px !important;
+
+}
+
+.pnlGrdMisInd{
+    width: 400px;
+}
+.claseGraficoMisInd{
+    font-size: 14px;
+    font-weight: bold;
+
+}
+.separacionLateral{
+
+    height: 30px !important;
+
+}
+
+alineacionVertGrid >tbody{
+
+    vertical-align: top !important;
+}
+
+.alineacionVertGridMedio >tbody{
+
+    vertical-align: middle !important;;
+}
+
+.alineacionVertGridBajo >tbody{
+    vertical-align: bottom !important;;
+}
+.textMediano{
+    height: 13px !important;
+    width: 137px !important;  
+}
+.textMedianoMed{
+    height: 13px;
+    width: 150px;  
+}
+.textGrande{
+    height: 13px;
+    width: 400px;  
+}
+.textGrandeAdm{
+    height: 13px;
+    width: 426px;  
+}
+
+.textAreaMediano{
+    width: 200px;
+    height: 60px;
+}
+
+.textAreaGrande{
+    width: 489px;
+    height: 60px;
+}
+.textAreaGrandeEvAdv{
+    width: 690px; height: 38px;
+}
+.textAreaGrandeConc{
+    width: 300px; height: 100px;
+
+}
+.textAreaPeq{
+    height: 40px;
+    width: 100px;  
+}
+
+.selectPeq{
+
+    width: 84px;  
+}
+.selectMediano{
+
+    width: 145px;  
+}
+.selectMedianoConc{
+
+    width: 195px;  
+}
+.selectGrande{
+
+    width: 300px; 
+}
+.outputText
+{
+    font: normal 12px/14px Arial, Sans-serif;
+    color: black;
+
+    font-weight: bold;
+}
+.outputTextNotLabel
+{
+    font: normal 12px/14px Arial, Sans-serif;
+    color: black;
+
+
+}
+.selMulmenu{
+    width: 200px !important; 
+    height: 60px !important;
+}
+.textPeq,.textMediano,.textGrande,.textGrandeAdm,.textMedianoMed,.textAreaMediano,.textAreaGrande,.textAreaPeq,.textAreaGrandeConc,
+.textAreaGrandeEvAdv,.selMulmenu
+{
+    /* background-color: #F7F9FC !important;
+ 
+    border: 1px solid rgb(174, 208, 234);
+    background: url("#{resource['ace-south-street:images/ui-bg_highlight-hard_100_f5f3e5_1x100.png']}") repeat-x scroll 50% 50% #312e25; 
+    font-weight: bold;
+  
+    color: #312e25; */
+    font-size: 11px;
+    font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+    margin: 0px;
+    outline: medium none;
+    padding: 4px;
+    border-top-right-radius: 6px;
+    border-top-left-radius:  6px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    font: inherit;
+    text-transform:  uppercase;
+}
+.textPeq{
+    /*height: 13px;*/
+    width: 80px;
+
+}
+.altoElmLateral{
+    height: 15px;
+
+}
+
+.colCabecera{
+    vertical-align: central;
+
+}
+
+
+.letraTitulosTabla{
+    font-size: 12px;
+    font-family:   Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: black;
+    font-style: italic;
+}
+
+/*
+.btnInicioStd{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-20.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInicioStd:hover{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-20.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+*/
+
+.colchoiceCabAud{
+    width : 350px;
+}
+
+.colchoiceCabAud2{
+    width : 500px;
+}
+
+.tablaGridColumn{
+    border-width:  1px;
+    border-color: #99ccff;
+    border-bottom-style:solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-style: solid;
+    background-repeat: repeat;
+    position: static;
+    padding: 0px;
+}
+
+
+.coltextArea{
+    width : 400px;
+    font-size: 10px;
+    height: 60px;
+    text-transform: uppercase;
+}
+
+/*
+.stylePanelHeader{
+    border: 1px solid #aed0ea; background: #deedf7 url("#{resource['ace-cupertino:images/ui-bg_highlight-soft_100_deedf7_1x100.png']}") 50% 50% repeat-x; color: #222222; font-weight: bold;    
+}*/
+
+.styleLetraMsj{
+
+    vertical-align: top;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    font-size: 20px;
+}
+.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+    background: rgba(255, 255, 240, 0.5);
+    border: 3px solid rgb(190, 212, 235);
+    border-right-color: #bed4eb;
+    border-left-color: #bed4eb;
+    border-bottom-color: #bed4eb;
+    border-top-color: #bed4eb;
+}
+
+.ui-state-error, .ui-widget-content .ui-state-error, .ui-widget-header .ui-state-error {
+    background: #CC0033;
+    border: 1px solid #CC0033;
+    color: #ffffff !important;
+    border-top-right-radius: 24px;
+    border-top-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    min-height: 40px;
+    line-height: 40px;
+}
+
+.styleLetraMsj2{
+
+
+    vertical-align: top;
+
+
+
+    font-size: 12px;
+    font-weight: bold;
+
+}
+.stylePanelGrid{
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+
+    border-right-color: #bed4eb;
+    border-left-color: #bed4eb;
+    border-bottom-color: #bed4eb;
+    border-top-color: #bed4eb;
+}
+
+.txtSumaSellado,.txtRestaSellado,.txtNeutroSellado,.txtBlackSellado{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.txtSumaSellado{
+    color: blue;
+}
+.txtRestaSellado{
+    color: red;
+}
+
+.txtNeutroSellado{
+    color: green;
+}
+
+.txtBlackSellado{
+    color: black;
+}
+
+.txtGrabadoSellado{
+    color: green;
+    font-size: 20px;
+    font-style: italic;
+}
+
+.txtTotalSellado{
+    color: black;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    background-color: aqua;
+    background-attachment: inherit;
+    background-position: inherit;
+}
+
+.labelSellado{
+    background: #3366ff;
+    text-align:left;
+    text-decoration: underline;
+    height: 40px;
+    border: #33ffff;
+    font-weight: 900;
+}
+.seleccione{
+
+    color: #3366ff ;
+    font-weight: bold ;
+
+
+    font-style: italic;
+}
+
+.glosaok{
+    color: #3366ff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.glosanok{
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btnCerrarCaso{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-02.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnCerrarCaso:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-02.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnAbrirCaso{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-07.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnAbrirCaso:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-07.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformeGrafico{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-26.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnInformeGrafico:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-26.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerDetalle{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-05.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerDetalle:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-05.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+.btnDesplegar{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-50.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnRecoger{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-50.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnAsociar{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon-16.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnAsociar:hover{
+    background-image: url("#{resource[':images/elyon/ColeccionIconosElyon_Over-16.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnVerDatosClinicos{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-35.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerDatosClinicos:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-35.png']}")   !important;
+    border: none;
+    width: 24px ;height: 24px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.cssPrioridadNotBaja{
+    font-size:10px !important;
+
+    color:black !important;
+}
+.cssPrioridadNotAlta{
+    font-size: 10px !important;
+
+    font-weight: bold !important;
+    color: green !important;
+}
+.cssPrioridadNotVencida{
+    font-size: 10px !important;
+
+    font-weight: bold !important;
+    color: red !important;
+
+}
+
+
+.selNavCentroControlProyecto{
+    color: #000000 !important;
+    font-weight : bold !important;
+    font-size: 12px !important;
+    font-family:   Arial, Helvetica, sans-serif; 
+
+
+}
+
+.selNavCentroControlProyecto:hover{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    font-size: 12px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+}
+
+.selNavCentroControlCarpeta{
+    color: #000000 !important;
+    font-weight : bold !important;
+    font-size: 10px !important;
+    font-family:   Arial, Helvetica, sans-serif; 
+
+
+}
+
+.selNavCentroControlCarpeta:hover{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    font-size: 10px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+}
+
+.selNavCentroControlItem{
+    color: #000000 !important;
+    font-weight : bold !important;
+    font-size: 9px !important;
+    font-family:   Arial, Helvetica, sans-serif; 
+
+
+}
+
+.selNavCentroControlItem:hover{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    font-size: 9px !important;
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+}
+
+
+.selNavCentroControlItemSel{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    /* font-size: 10px !important;*/
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+
+
+}
+
+.selNavCentroControlItemSel:hover{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    /* font-size: 10px !important;*/
+    font-family:   Arial, Helvetica, sans-serif;
+    text-decoration: underline !important;
+}
+
+.styloBotonGeneral{
+    border-width:thin;
+    text-align:left;
+    font-weight:bold;
+    font-size:11px;
+    font-family: Arial,Helvetica,sans-serif;
+    height: 18px;
+    width: 18px;
+}
+
+.btnVerTodosCCrtl{
+    background-image: url("#{resource[':images/iconos/estandar/bola_purpura.jpg']}")   !important;
+    border: none;
+    width: 18px ;height: 18px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnVerVencidosCCrtl{
+    background-image: url("#{resource[':images/iconos/estandar/bola-roja.gif']}")   !important;
+    border: none;
+    width: 18px ;height: 18px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnVerPendientesCCrtl{
+    background-image: url("#{resource[':images/iconos/estandar/bola-amarilla.gif']}")   !important;
+    border: none;
+    width: 18px ;height: 18px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnVerSolucionadosCCrtl{
+    background-image: url("#{resource[':images/iconos/estandar/bola-verde.gif']}")   !important;
+    border: none;
+    width: 18px ;height: 18px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+.btnVerSeleccionadoCCrtl{
+    background-image: url("#{resource[':images/iconos/estandar/bola-azul.gif']}")   !important;
+    border: none;
+    width: 18px ;height: 18px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnGenerarGeneral{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2-26.png']}")   !important;
+    border: none !important;
+    width: 24px ;height: 24px !important;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+
+}
+
+.btnGenerarGeneral:hover{
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-26.png']}")   !important;
+    border: none !important;
+    width: 24px ;height: 24px !important;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+
+
+
+
+
+
+
+}
+
+.filaProcesada{
+    color: #0c5c8f!important;     
+    font-size: 12px !important;
+    font-weight: bold !important;
+
+    /*
+     style="color:#CC0033; margin:8px;font-size: 15px; font-weight: bold;margin-left: 130px"
+    */
+}
+/*
+.ice-blockui-overlay {
+    position: absolute;
+    background-color: blue !important;
+    z-index: 28000;
+    opacity: 1500;
+    filter: alpha(opacity = 98000);
+    background-image: url("#{resource[':images/elyon/especificos/ColeccionIconosElyon2_Over-26.png']}")   !important;
+     background-repeat: repeat;
+    
+}
+*/
+
+
+
+
+
+.styleMensajeError{
+    color:#CC0033 !important;
+    margin:8px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    margin-left: 130px !important;
+}
+
+.styleMensajeAdvertencia{
+    color: #ffff33 !important; 
+    margin:8px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    margin-left: 130px !important;
+
+}
+
+.styleMensajeExito{
+    color: #33cc00  !important;
+    margin:8px !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    margin-left: 130px !important;
+    /*
+     style="color:#CC0033; margin:8px;font-size: 15px; font-weight: bold;margin-left: 130px"
+    */
+}
+
+.stylePushButton{
+    padding: 0px 0px;
+    font-size: 93%;
+    line-height: 2;
+    min-height: 2em;
+    margin: auto auto;
+    cursor : pointer;
+
+    display: block;
+    border: none;
+    margin: 0px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 11px;
+
+    margin: 0px 0px !important;
+    background-color: transparent !important;
+    margin: 0px 0px !important;
+    text-align: center;
+
+    color: transparent;
+    color: #0070a3; text-decoration: none;
+}
+/*
+ a {
+        font-family: "Arial Black", Gadget, sans-serif;
+        font-size: 14px;
+        color: #00C;
+}
+h1,h2,h3,h4,h5,h6 {
+        font-family: "Arial Black", Gadget, sans-serif;
+}
+    .page-header-fixed .tableizer-table tr td div h3 {
+        font-family: Arial Black, Gadget, sans-serif;
+}
+*/
+div.factura{
+    width:40px;height:15px;margin-left:auto; margin-right:auto; margin-top:15px;
+
+}
+
+.table.tableizer-table {
+    border: 1px solid #CCC; font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+} 
+.tableizer-table td {
+    padding: 4px;
+    margin: 3px;
+    border: 1px solid #ccc;
+}
+.tableizer-table th {
+    background-color: black; 
+    color: #FFF;
+    font-weight: bold;
+}
+
+
+.thtablaFormulario{
+    /* background-color:#e78f08;*/
+    background: #f6a828 url("/siereweb/javax.faces.resource/images/ui-bg_gloss-wave_35_f6a828_500x100.png.jsf?ln=ace-ui-lightness&v=3_3_0_130416") 50% 50% repeat-x;
+    color: #FFFFFF;
+    font-size: large;
+
+}
+.tablaFormulario{
+
+    /* border-color: #F7B409;
+     border: 2px;
+   background-color: #AAA;
+    
+     box-shadow: #F7B409;*/
+    width: 100%;
+
+}
+
+.letraOutput{
+    font-size: large;
+    font-size-adjust: initial;
+    font-weight: lighter;
+}
+
+.inputs{
+
+    background: white none 50% 50% repeat-x !important;
+
+    /* border: 1px solid #327e04 !important;*/
+    border: 1px solid #fbcb09 !important;
+    -moz-border-radius-bottomright: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -khtml-border-bottom-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+
+    -moz-border-radius-bottomleft: 6px;
+    -webkit-border-bottom-left-radius: 6px; 
+    -khtml-border-bottom-left-radius: 6px;
+    border-bottom-left-radius: 6px; 
+
+    -moz-border-radius-topright: 6px;
+    -webkit-border-top-right-radius: 6px;
+    -khtml-border-top-right-radius: 6px;
+    border-top-right-radius: 6px;
+
+    -moz-border-radius-topleft: 6px;
+    -webkit-border-top-left-radius: 6px;
+    -khtml-border-top-left-radius: 6px;
+    border-top-left-radius: 6px;
+    background-color:  white !important;
+    width: 99%;
+    /*color: #000000 !important; */
+
+    color: #1c94c4 !important;
+    padding: 0px !important; 
+    font-weight: lighter !important; 
+
+
+
+
+
+}
+.inputs:hover{
+    color: #c77405 !important;
+}
+
+.inputs:focus{
+    color: #c77405 !important;
+    background: #fdf3cb !important;
+    box-shadow: 1px 1px 1px #97874b;
+
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: large;
+    /*background: #459e00 none 50% 50% repeat-x;*/
+    /* background: white none 50% 50% repeat-x;*/
+
+    /*color: #5c3507 !important;*/
+}
+
+.ui-inputfield{
+    height: 25px !important;
+    padding: 0px !important;
+}
+.ui-widget input, .ui-widget select{
+
+}
+
+.ui-widget-content {
+    /* border: 1px solid #dfd9c3; */
+    /*background: #f5f3e5 url("/siereweb/javax.faces.resource/images/ui-bg_highlight-hard_100_f5f3e5_1x100.png.jsf?ln=ace-south-street&v=3_3_0_130416") 50% top repeat-x;*/
+    background: #f5f3e5 none 50% top repeat-x;
+    color: #312e25;
+}
+
+
+
+.botones{
+
+    border: none;
+    width: 45px ;
+    height: 45px;
+    /*width: 55px ;*/
+   /* height: 60px;
+     width:25%;
+     height: 20px;*/
+    background-size: 100% 100%;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnPendienteConfirmacion{
+    background-image: url("#{resource[':images/ColeccionIconos-Reloj.png']}")   !important;
+}
+.btnPendienteConfirmacion:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Reloj_Over.png']}")   !important;
+}
+
+.btnAgendar{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda.png']}")   !important;
+}
+.btnAgendar:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Agenda1_Over.png']}")   !important;
+}
+
+.btnPerdida{
+    background-image: url("#{resource[':images/llamadaperdida.png']}")   !important;
+}
+.btnPerdida:hover{
+    background-image: url("#{resource[':images/llamadaperdida.png']}")   !important;
+}
+
+.btnEnviarCotizacion{
+    background-image: url("#{resource[':images/mail.png']}")   !important;
+}
+.btnEnviarCotizacion:hover{
+    background-image: url("#{resource[':images/mail.png']}")   !important;
+}
+
+
+.ui-accordion-header a {
+    /* width: 20px !important;*/
+    padding-left: 1.2em !important;
+    font-size: 20px !important;
+}
+
+.btnActividades{
+      width: 120px;
+    height: 120px;
+    background-repeat: repeat;
+   /* background-size:  100%,100%;*/
+    background-image: url("#{resource[':images/ColeccionIconos-Actividades1.png']}")   !important;
+}
+.btnActividades:hover{
+    background-image: url("#{resource[':images/ColeccionIconos-Actividades1_Over.png']}")   !important;
+}
+
+.btnSubirArchivo{
+    border: none !important;
+    width: 20px ;height: 20px !important;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+    background-image: url("#{resource[':images/Attach.png']}")   !important;
+}
+.btnSubirArchivo:hover{
+    border: none !important;
+    width: 20px ;height: 20px !important;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+    background-image: url("#{resource[':images/Attach.png']}")   !important;
+}
+
+
+td span.textcolumncenter{
+    text-align: center; float: inside;
+
+}
+
+.textTableError{
+    color: #cc0033 !important;
+    font-weight : bold !important;
+    /*font-size: 14px !important;
+    font-family:   Arial, Helvetica, sans-serif;*/
+}
+
+.columnVisible{
+    display: block;
+
+}
+.columnNoVisible{
+    display: none;
+
+}
+
+.btnEditarStd{
+    background-image: url("#{resource[':images/editar.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnEditarStd{
+    background-image: url("#{resource[':images/editar.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnCorreoStd:hover{
+    background-image: url("#{resource[':images/mail.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.btnCorreoStd{
+    background-image: url("#{resource[':images/mail.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnSeleccionOpen:hover{
+    background-image: url("#{resource[':images/seleccion.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.btnSeleccionOpen{
+    background-image: url("#{resource[':images/seleccion.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+.btnNewCall:hover{
+    background-image: url("#{resource[':images/newcall.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.btnNewCall{
+    background-image: url("#{resource[':images/newcall.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.ice-checkboxbutton button {
+    height:15px;
+    width:15px;
+}
+
+.ice-checkboxbutton button.ui-state-hover {
+    background: url("#{resource[':images/checkGrey.png']}") no-repeat;
+    border:none;
+}
+
+.ice-checkboxbutton-checked {
+    background: url("#{resource[':images/check.png']}")  no-repeat;
+    border:none;
+}
+
+.ice-checkboxbutton-unchecked {
+    background: url("#{resource[':images/uncheck.png']}") no-repeat;
+}
+
+.ice-checkboxbutton .fa {
+    background: transparent;
+    visibility: hidden;
+}
+
+.btncheck:hover{
+    background-image: url("#{resource[':images/uncheck.png']}")   !important;
+    border: none !important;
+    width: 30px ;height: 30px !important;
+    background-size: 100% auto !important;
+    background-repeat: repeat !important;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.btncheck{
+    background-image: url("#{resource[':images/check.png']}")   !important;
+    border: none !important;
+    width: 30px ;height: 30px !important;
+    background-size: 100% auto !important;
+    background-repeat: repeat !important;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+.btnSeleccionOpen:hover{
+    background-image: url("#{resource[':images/seleccion.png']}")   !important;
+    border: none !important;
+    width: 30px ;height: 30px !important;
+    background-size: 100% auto !important;
+    background-repeat: repeat !important;
+    background-color:  transparent !important;
+    border: 0px !important;
+}
+.btnSeleccionOpen{
+    background-image: url("#{resource[':images/seleccion.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color: transparent !important;
+    border: 0px !important;
+}
+
+
+.btnNewCall:hover{
+    background-image: url("#{resource[':images/newcall.png']}")   !important;
+    border: none;
+    width: 30px ;height: 30px;
+    background-size: 100% auto;
+    background-repeat: repeat;
+    background-color:  transparent !important;
+    border: 0px !important;
+}

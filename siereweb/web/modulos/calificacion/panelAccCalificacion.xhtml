@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccOrdenProd">
+        <h:panelGrid style="z-index: 15" 
+                     columns="3">
+            
+             <h:commandButton styleClass="btnBuscarStd"
+                             rendered="#{evaluacionJSFBean.numPanel == 1}"
+                             actionListener="#{evaluacionJSFBean.buscarOp_ActionEvent}"
+                             title="Buscar Ordenes de producción pendientes.">
+                <f:ajax execute="@this" render="@form" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnadduser"
+                             rendered="#{evaluacionJSFBean.numPanel == 2 ? evaluacionJSFBean.renderCargo : false}"
+                             onclick="dialogSelCotizacionColaboradores.show();"
+                             title="Agregar Colaborador. ">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+            <h:commandButton styleClass="btnGuardarStd"
+                             rendered="#{evaluacionJSFBean.numPanel == 2}"
+                              actionListener="#{evaluacionJSFBean.grabarInicial_ActionEvent}"
+                             title="Grabar ">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+<!--
+
+            <h:commandButton styleClass="btnVolverStd"
+
+                             rendered="#{evaluacionJSFBean.numPanel == 2}"
+                             actionListener="#{evaluacionJSFBean.regresar_ActionEvent}"
+                             title="Regresar">
+                <f:ajax execute="@this" render="@all" />
+            </h:commandButton>
+-->
+
+
+        </h:panelGrid>
+         <ace:dialog id="dialogSelCotizacionColaboradores"
+                    header="Colaboradores"
+                    widgetVar="dialogSelCotizacionColaboradores"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    height="700"
+                    minHeight="400"
+                    
+                    width="1000">
+             <ui:include src="contenidoPopupAgregarColaboradores.xhtml" />
+         </ace:dialog>
+          <ace:dialog id="dialogSelBonificacionColaboradores"
+                    header="Bonificaciones"
+                    widgetVar="dialogSelBonificacionColaboradores"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    height="300"
+                    minHeight="300"
+                    
+                    width="1000">
+              <ui:include src="contenidoPopupAgregarBonificacion.xhtml" />
+         </ace:dialog>
+        <ace:dialog id="dialogSelDescuentoColaboradores"
+                    header="Calificación Admisnitrativa"
+                    widgetVar="dialogSelDescuentoColaboradores"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    height="300"
+                    minHeight="300"
+                    
+                    width="1000">
+            <ui:include src="contenidoPopupAgregarDescuento.xhtml" />
+         </ace:dialog>
+    </ui:insert>
+</html>

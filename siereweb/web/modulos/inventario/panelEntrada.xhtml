@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelEntrada">
+         <ace:panel header="Movimiento"  style="width: 100%" 
+                    styleClass="thtablaFormulario" >
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="4"> Consulta  </th></tr>
+            <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Código Barras </label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:inputText value="#{inventarioJSFBean.codigoConsulta}" 
+                                     maxlength="50" styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                        </h:inputText>
+
+
+
+
+                    </div>
+
+                </td>     
+
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>ID Producto</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:inputText value="#{inventarioJSFBean.idProducto}" 
+
+                                     styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                            <f:convertNumber integerOnly="true" />
+                        </h:inputText>
+
+
+
+
+                    </div>
+
+                </td>     
+
+
+            </tr>
+            <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Nombre Producto</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:inputText value="#{inventarioJSFBean.nombreConsulta}" 
+                                     maxlength="500"
+                                     styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputText>
+
+
+
+
+                    </div>
+
+                </td> 
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Marca  </label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+                        <h:selectOneMenu  styleClass="inputs"
+                                          value="#{inventarioJSFBean.marca}"
+                                          >
+                            <f:selectItems value="#{inventarioJSFBean.lstMarcasActivas}" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+
+
+
+
+                    </div>
+
+                </td>  
+            </tr>
+            <tr>
+
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Presentación </label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+                        <h:selectOneMenu  styleClass="inputs"
+                                          value="#{inventarioJSFBean.presentacion}"
+                                          >
+                            <f:selectItems value="#{inventarioJSFBean.lstPresentacionesActivas}" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+
+
+
+
+                    </div>
+
+                </td>     
+                <td style="width: 100%" colspan="2"> 
+                    <h:commandButton styleClass="btnBuscarStd"
+
+                                     actionListener="#{inventarioJSFBean.buscarGen_ActionEvent}"
+                                     title="Consultar">
+                        <f:ajax execute="@this" render="@all" />
+                    </h:commandButton>
+                    <h:commandButton styleClass="btnNuevoStd"
+
+                                     actionListener="#{inventarioJSFBean.limpiarConsulta_ActionEvent}"
+                                     title="Nueva Consulta">
+                        <f:ajax execute="@this" render="@all" />
+                    </h:commandButton>
+                </td>  
+            </tr>
+        </table>
+        <br></br>
+ <br></br>
+
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="2"> Inventario  </th></tr>
+            <tr>
+                <td style="width: 100%">
+                    <div style="width: 100%">
+<ace:panel>
+                                <h:panelGrid styleClass="centeredPanelGrid">
+                     <ace:dataExporter 
+                            styleClass="btnGenerarInforme"
+                            label=" "
+                            style=" 
+                            border: none;
+                            width: 45px ;height: 45px;
+                            background-size: 100% auto;
+                            background-repeat: repeat;
+                            background-color: transparent !important;
+                            border: 0px !important;"
+                            includeHeaders="true"
+                            pageOnly="false"
+                            type="xls"
+
+                            target="tablaColddd" fileName="Inventario"/>
+                </h:panelGrid>
+                                    </ace:panel>
+                        <ace:dataTable value="#{inventarioJSFBean.lstInventario}"
+                                       var="itemInv"
+                                       rows="20"
+                                       id="tablaColddd"
+                                       alwaysExecuteContents="true"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            
+                           
+                            <ace:column headerText="Código Barras" sortBy="#{itemInv.invCodigobarras}"
+                                        filterBy="#{itemInv.invCodigobarras}" filterMatchMode="contains">
+                                <h:outputText value="#{itemInv.invCodigobarras}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="ID Producto" >
+                                <h:outputText value="#{itemInv.prdId.prdId}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+                            <ace:column headerText="Nombre Producto"  sortBy="#{itemInv.prdId.prdNombre}"
+                                        filterBy="#{itemInv.prdId.prdNombre}" filterMatchMode="contains">
+                                <h:outputText value="#{itemInv.prdId.prdNombre}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Cantidad existente" >
+                                <h:outputText value="#{itemInv.invCant}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+                            <ace:column headerText="Marca" >
+                                <h:outputText value="#{itemInv.marId.marNombre}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Presentación" >
+                                <h:outputText value="#{itemInv.pspId.pspNombre}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Tipo" >
+                                <h:outputText value="#{itemInv.prdId.cpdId.cpdNombre}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>               
+
+
+                            <ace:column headerText="Ubicacion" >
+                                <h:outputText value="#{itemInv.prdId.prdDesc}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>  
+
+
+                        </ace:dataTable>
+                    </div>
+                </td>
+            </tr>
+        </table>
+</ace:panel>
+
+
+    </ui:insert>    
+</html>

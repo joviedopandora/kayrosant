@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="cliente">
+        <ace:panel header="Cliente">
+            <h:panelGrid columns="4" styleClass="tablaGrid">
+                <h:outputLabel value="Tipo Doc *"/>
+                <h:selectOneMenu styleClass="selectMediano"
+                                 value="#{clienteJSFBean.idTipoDoc}">
+                    <f:selectItems value="#{clienteJSFBean.lstTipoDoc}"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Documento *"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltDocumento}"
+                               styleClass="textMediano"
+                               readonly="#{clienteJSFBean.blnHabilitar}">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Nombres *"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltNombres}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Apellidos *"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltApellidos}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Dirección *"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltDireccion}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Teléfono *"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltTelefono}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Celular"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltCelular}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="E-mail"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltEmail}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Contacto"/>
+                <ace:textEntry value="#{clienteJSFBean.strCltContacto}"
+                               styleClass="textMediano">
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Estado"/>
+                <h:selectBooleanCheckbox value="#{clienteJSFBean.blnCltEstado}"/>                
+                <h:outputLabel value="Nuevo"/>
+                <h:selectBooleanCheckbox value="#{clienteJSFBean.blnCltNuevo}"/>
+                <h:outputLabel value="Tipo cliente *"/>
+                <h:selectOneMenu styleClass="selectMediano"
+                                 value="#{clienteJSFBean.idTipoCliente}">
+                    <f:selectItems value="#{clienteJSFBean.lstTipoCliente}"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="Usuarios registrados">
+            <ace:dataTable value="#{clienteJSFBean.lstTablaVntCliente}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{clienteJSFBean.rowDtCliente_ActionEvent}">
+                        <f:attribute name="tcs" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Tipo doc" style="width: 50px">
+                    <h:outputText value="#{item.vntCliente.tdcId.tdcId}"/>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnIdentificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Nombres" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnNombres}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Apellidos" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnApellidos}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Dirección" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.clnDiereccion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Teléfono" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnFijo}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Celular" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnCelular}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="E-mail" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.clnCorreoe}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Contacto" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.clnContacto}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{item.vntCliente.clnEstado}"/>
+                </ace:column>
+                <ace:column headerText="Nuevo" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{item.vntCliente.clnNuevo}"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.tclId.tclNombre}"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

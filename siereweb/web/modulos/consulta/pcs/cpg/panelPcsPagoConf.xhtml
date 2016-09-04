@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="pagosConf">
+        <ace:panel header="VENTAS CONFIRMADAS" rendered="#{!pcsConfirmaPagoJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{pcsConfirmaPagoJSFBean.lstTablaVntRegistroventa}"
+                           var="itemVcf"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>" 
+                                   actionListener="#{pcsConfirmaPagoJSFBean.rowDtRegVentaConfirmado_ActionEvent}">
+                        <f:attribute name="trvcs" value="#{itemVcf}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nº Venta" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.rgvtId}"/>
+                </ace:column>
+                <ace:column headerText="Fecha evento" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.vdeId.vdeFechaevt}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.clnId.tdcId.tdcId}. #{itemVcf.vntRegistroventa.clnId.clnIdentificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cliente" style="width: 200px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.clnId.clnNombres} #{itemVcf.vntRegistroventa.clnId.clnApellidos}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="valor factura($)" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.rgvtValorventa}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Anticipo" style="width: 100px">
+                    <h:outputText value="#{itemVcf.vntRegistroventa.rgvtValorpagado}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="PAGO O ANTICIPO DE VENTA REALIZADA" rendered="#{pcsConfirmaPagoJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="4">
+                <h:outputLabel value="Cliente"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnNombres}
+                              #{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnApellidos}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Documento"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tdcId.tdcId} - 
+                              #{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnIdentificacion}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Tipo cliente"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tclId.tclNombre}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Protagonista"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.dclnId.dclnNomb1}
+                              #{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.dclnId.dclnApe1}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Fecha"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeFechaevt}"
+                              style="font-weight: 800; font-size: 12px;">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                </h:outputText>
+                <h:outputLabel value="Hora"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeHorainicio}"
+                              style="font-weight: 800; font-size: 12px;">
+                    <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                </h:outputText>
+                <h:outputLabel value="Dirección"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeDireccionevt}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Teléfono"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnFijo}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Celular"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCelular}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Correo"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCorreoe}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Total"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="$"
+                                   style="font-weight: 800; font-size: 12px;"/>
+                    <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtValorventa}"
+                                  style="font-weight: 800; font-size: 12px;"/>
+                </h:panelGrid>
+                <h:outputLabel value="Forma pago"/>
+                <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.fpgId.fpgNombre}"
+                              style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel value="Anticipo"/>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="$"
+                                   style="font-weight: 800; font-size: 12px;"/>
+                    <h:outputText value="#{pcsConfirmaPagoJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtValorpagado}"
+                                  style="font-weight: 800; font-size: 12px;"/>
+                </h:panelGrid>
+            </h:panelGrid>
+            <ace:dataTable value="#{pcsConfirmaPagoJSFBean.lstTablaVntSrvXVenta}"
+                           var="itemSv"
+                           style="width: 500px"
+                           emptyMessage="No se encontraron datos">
+                <ace:column headerText="Servicio" style="width: 350px">
+                    <h:outputText value="#{itemSv.vntServxventa.vsrvId.vsrvNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cantidad" style="width: 50px">
+                    <h:outputText value="#{itemSv.vntServxventa.srvxventCantidad}"/>
+                </ace:column>
+                <ace:column headerText="Precio" style="width: 100px">
+                    <h:outputText value="#{itemSv.vntServxventa.srvxventPrecioventa}"
+                                  styleClass="textcolumright"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

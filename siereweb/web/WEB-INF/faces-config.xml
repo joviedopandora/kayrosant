@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <converter>
+        <converter-id>convertMayusc</converter-id>
+        <converter-class>utilidades.ConvertMayusc</converter-class>                       
+    </converter> 
+    <validator>
+        <validator-id>validarEmail</validator-id>
+        <validator-class>utilidades.ValidarEmail</validator-class>
+    </validator>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>ingresar</from-outcome>
+            <to-view-id>/modulos/entrada/Entrada.jsf</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>error</from-outcome>
+            <to-view-id>/Inicio.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>salir</from-outcome>
+            <to-view-id>/index.jsf</to-view-id>
+            <!--to-view-id>/Inicio.jsf</-->
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>bandEntrada</from-outcome>
+            <to-view-id>/modulos/entrada/Entrada.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admUsr</from-outcome>
+            <to-view-id>/modulos/param/usr/admUsuario.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admCrg</from-outcome>
+            <to-view-id>/modulos/param/crg/admCargo.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admClt</from-outcome>
+            <to-view-id>/modulos/param/clt/admCliente.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admCtn</from-outcome>    
+            <to-view-id>/modulos/consulta/pcs/ctn/pcsCotizacion.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admCpg</from-outcome>
+            <to-view-id>/modulos/consulta/pcs/cpg/pcsConfPago.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admVnt</from-outcome>
+            <to-view-id>/modulos/consulta/pcs/vnt/pcsVentas.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admOpd</from-outcome>
+            <to-view-id>/modulos/consulta/pcs/opd/pcsOrdenProd.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admDsp</from-outcome>
+            <to-view-id>/modulos/logistica/logistica.jsf</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>colaboradores</from-outcome>
+            <to-view-id>/modulos/colaboradores/colaboradores.jsf</to-view-id>
+        </navigation-case>
+        
+        
+        <navigation-case>
+            <from-outcome>reportes</from-outcome>
+            <to-view-id>/modulos/reportes/reportes.jsf</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>calificación</from-outcome>
+            <to-view-id>/modulos/calificacion/calificacion.jsf</to-view-id>
+        </navigation-case>  
+        
+        
+        <navigation-case>
+            <from-outcome>inventario</from-outcome>
+            <to-view-id>/modulos/inventario/inventario.jsf</to-view-id>
+        </navigation-case> 
+        
+        
+        <navigation-case>
+            <from-outcome>indicadores</from-outcome>
+            <to-view-id>/modulos/indicadores/indicadores.jsf</to-view-id>
+        </navigation-case>
+        
+         
+        
+        <navigation-case>
+            <from-outcome>cambiarClave</from-outcome>
+            <to-view-id>/modulos/inicial/cambioClave.jsf</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>parametrizacion</from-outcome>
+            <to-view-id>/modulos/parametrizacion/Parametrizacion.jsf</to-view-id>
+        </navigation-case>
+        
+        
+        <navigation-case>
+            <from-outcome>Proveedores</from-outcome>
+            <to-view-id>/modulos/proveedores/proveedores.jsf</to-view-id>
+        </navigation-case>
+        
+        
+        
+         <navigation-case>
+            <from-outcome>liquidacion</from-outcome>
+            <to-view-id>/modulos/liquidacion/liquidacion.jsf</to-view-id>
+        </navigation-case>
+        
+        
+         <navigation-case>
+            <from-outcome>acerca</from-outcome>
+            <to-view-id>/acerca/acercaDeKAYYROS.jsf</to-view-id>
+        </navigation-case> 
+        
+        <!--
+        <navigation-case>
+            <from-outcome>admDev</from-outcome>
+            <to-view-id>/modulos/consulta/pcs/</to-view-id>
+        </navigation-case>
+        -->
+    </navigation-rule>
+</faces-config>

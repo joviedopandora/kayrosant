@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelSeleccionServiciosProcesar">
+        <ace:panel header="SERVICIOS" style="font-size: large">
+            <h:panelGroup id="tablaServicioXVenta" rendered="#{!pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtActCronograma}" >
+                <ace:dataTable value="#{pcsVentasJSFBean.lstTablaServiciosPendientes}"
+                               style="font-size: large"
+                               var="itemSxv"
+
+
+                               paginator="true"
+                               alwaysExecuteContents="true"
+                               paginatorAlwaysVisible="true"
+                               rows="10"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="Servicios"/>
+
+
+                    </f:facet>
+
+                    <ace:column headerText="Acción" style="width: 250px"  rendered="#{!pcsVentasJSFBean.blnMostrarPanelRemision}">
+
+                        <h:selectOneRadio value="#{itemSxv.procesar}"  layout="lineDirection" title="P = procesar, A = Anular, N = No procesar" >
+                            <f:selectItem itemValue="P"  itemLabel="F"/>
+                            <f:selectItem itemValue="A" itemLabel="A"/>
+                            <f:selectItem itemValue="N" itemLabel="N" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneRadio>
+
+                    </ace:column>
+
+                    <ace:column headerText="Servicio" style="width: 250px" >
+                        <h:outputText value="#{itemSxv.vntServxventa.vsrvId.vsrvNombre}"/>
+                    </ace:column>
+
+
+                    <ace:column headerText="Precio total vendido" style="width: 150px">
+                        <h:outputText value="#{itemSxv.vntServxventa.srvxventValtotalclnt}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="% Descuento" style="width: 80px">
+                        <h:outputText value="#{itemSxv.vntServxventa.srvxventPorcentajeDesc}"
+                                      styleClass="textcolumncenter">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="Cantidad" style="width: 100px" >
+                        <h:outputText value="#{itemSxv.vntServxventa.srvxventCantidad}">
+                            <f:convertNumber integerOnly="true" />
+                        </h:outputText>
+
+                    </ace:column>      
+                    <ace:column headerText="Pendiente" style="width: 100px" >
+                        <h:outputText value="#{itemSxv.cantidadPendiente}">
+                            <f:convertNumber integerOnly="true" />
+                        </h:outputText>
+
+                    </ace:column>      
+                    <ace:column headerText="Facturar" style="width: 100px"  rendered="#{!pcsVentasJSFBean.blnMostrarPanelRemision}">
+                        <h:outputText value="No hay pendietes" rendered="#{!itemSxv.blnEditar}"/>
+                        <h:panelGrid id="panelTablaDesccuento" columns="1" rendered="#{itemSxv.blnEditar}">
+
+                            <h:inputText value="#{itemSxv.cantidadSeleccionada}"
+                                         validatorMessage="Cantidad debe ser menor o igual que #{itemSxv.cantidadPendiente}"
+                                         styleClass="textcolumright inputs" style="width: 60px;"
+                                         converterMessage="Cantidad a procesar debe ser entero"
+                                         onkeypress="if (event.which &lt; 48 || event.which &gt; 57) return false;"
+                                         id="inputDescxServ"    
+                                         valueChangeListener="#{pcsVentasJSFBean.cambioCantidadXServicio}"
+                                         >
+                                <f:convertNumber groupingUsed="false" integerOnly="true"/>
+                                <f:ajax render="@form panelTablaDesccuento" execute="@this"></f:ajax>
+                                <f:attribute name="tsxvs" value="#{itemSxv}"/>
+
+
+                            </h:inputText>
+                            <h:message for="inputDescxServ" showDetail="true" showSummary="false"  styleClass="mensaje styleMensajeError"  />
+
+
+                        </h:panelGrid>
+
+                    </ace:column>
+                    <ace:column headerText="Precio procesar" style="width: 200px">
+                        <h:outputText value="#{itemSxv.valorProcesado}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="Descuento" style="width: 200px">
+                        <h:outputText value="#{itemSxv.valorDescuento}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="Precio final" style="width: 200px">
+                        <h:outputText value="#{itemSxv.valorFinal}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                </ace:dataTable>
+
+            </h:panelGroup>
+            
+            <h:panelGroup id="tablaServicioXVentaCronograma" rendered="#{pcsVentasJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtActCronograma}" >
+<ace:dataTable value="#{pcsVentasJSFBean.lstTablaServiciosPendientes}"
+                               style="font-size: large"
+                               var="itemSxv"
+
+
+                               paginator="true"
+                               alwaysExecuteContents="true"
+                               paginatorAlwaysVisible="true"
+                               rows="10"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="Servicios"/>
+
+
+                    </f:facet>
+
+                    <ace:column headerText="Acción" style="width: 250px" >
+
+                        <h:selectOneRadio value="#{itemSxv.procesar}"
+                                          rendered="#{(itemSxv.cronogramaSel.cronogramaEstadoFactura ? (itemSxv.cronogramaSel.numeroFcatura==null ? true : false) : false)}"
+                                          layout="lineDirection" title="F = procesar, A = Anular, N = No procesar" >
+                            <f:selectItem itemValue="P"  itemLabel="F"/>
+                            <f:selectItem itemValue="A" itemLabel="A"/>
+                            <f:selectItem itemValue="N" itemLabel="N" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneRadio>
+                        <h:outputText value="#{itemSxv.cronogramaSel.numeroFcatura}"  />
+                    </ace:column>
+
+                    <ace:column headerText="Servicio" style="width: 250px" >
+                        <h:outputText value="#{itemSxv.vntServxventa.vsrvId.vsrvNombre}"/>
+                    </ace:column>
+
+
+                    <ace:column headerText="% Descuento" style="width: 80px">
+                        <h:outputText value="#{itemSxv.vntServxventa.srvxventPorcentajeDesc}"
+                                      styleClass="textcolumncenter">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                    <ace:column headerText="Cantidad" style="width: 100px" >
+                        <h:outputText value="1">
+                            <f:convertNumber integerOnly="true" />
+                        </h:outputText>
+
+                    </ace:column>      
+                    <ace:column headerText="Pendiente" style="width: 100px" >
+                        <h:outputText value="#{itemSxv.cantidadPendiente}">
+                            <f:convertNumber integerOnly="true" />
+                        </h:outputText>
+
+                    </ace:column>      
+                    
+                    <ace:column headerText="Descuento" style="width: 200px">
+                        <h:outputText value="#{itemSxv.valorDescuento}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+    <ace:column  headerText="COP">
+        <h:outputText  value="#{itemSxv.cronogramaSel.cronogramacop}" styleClass="textcolumright " />
+                        
+                </ace:column>
+                
+                 
+    <ace:column  headerText="Semana"  sortBy="#{itemSxv.cronogramaSel.cronogramaSemana}">
+                    <h:outputText  value="#{itemSxv.cronogramaSel.cronogramaSemana}" styleClass="textcolumright" />
+                       
+                </ace:column>
+                
+    <ace:column  headerText="Fecha" sortBy="#{itemSxv.cronogramaSel.cronogramaFecha}">
+                    <h:outputText value="#{itemSxv.cronogramaSel.cronogramaFecha}"
+                                                      
+                                                       styleClass="textcolumleft letraOutput" 
+                                                     >
+                        <f:convertDateTime pattern="dd/MM/yyyy"  />
+                    </h:outputText>
+                                          
+                </ace:column>
+                
+                <ace:column  headerText="Distribuidor" >
+                    <h:outputText  value="#{itemSxv.cronogramaSel.cronogramaDistribuidor}" styleClass="textcolumright" />
+                </ace:column>
+                    <ace:column headerText="Precio final" style="width: 200px">
+                        <h:outputText value="#{itemSxv.valorFinal}"
+                                      styleClass="textcolumright">
+                            <f:convertNumber groupingUsed="true"/>
+                        </h:outputText>
+
+                    </ace:column>
+                </ace:dataTable>
+
+
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

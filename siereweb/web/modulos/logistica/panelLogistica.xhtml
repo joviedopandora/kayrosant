@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="logistica">
+        <icecore:singleSubmit />
+        <ace:panel header="LOGISTICA  #{(logisticaJSFBean.numPanel ==1 ?'- SALIDAS' : (logisticaJSFBean.numPanel ==2 ?' - ENTRADAS':'') )}" rendered="#{!logisticaJSFBean.blnMostrarPanel}">
+            <h:selectOneRadio valueChangeListener="#{logisticaJSFBean.executeConsultaXFiltro}" rendered="#{logisticaJSFBean.numPanel ==3 ? true : false}" value="#{logisticaJSFBean.valorRadioconsulta}">
+                <f:selectItem itemValue="3" itemLabel="Todas" />
+                <f:selectItem itemValue="0" itemLabel="Sin Despachar" />
+                <f:selectItem itemValue="1" itemLabel="Despachado" />
+                <f:selectItem itemValue="2" itemLabel="Recibido" />
+
+
+            </h:selectOneRadio>
+            <ace:dataTable value="#{logisticaJSFBean.lstTablaPopOrdenProduccion}" style="font-size: large"
+                           var="itemLgt"
+                           paginator="true"
+                           alwaysExecuteContents="true"
+                           
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px" >
+                    <h:commandLink value=">>>" 
+                                   actionListener="#{logisticaJSFBean.rowDtOrdenProd_ActionEvent}">
+                        <f:ajax execute="@this" render="@all" />
+                        <f:attribute name="tpops" value="#{itemLgt}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Cotización N°" style="width: 100px" sortBy="#{itemLgt.popOrdenprod.rgvtId.rgvtId}"
+                             filterBy="#{itemLgt.popOrdenprod.rgvtId.rgvtId}" filterMatchMode="contains"
+                             
+                            groupBy="#{itemLgt.popOrdenprod.rgvtId.rgvtId}">
+                    <h:outputText value="#{itemLgt.popOrdenprod.rgvtId.rgvtId}" styleClass="textcolumncenter letraOutput"/>
+                   
+                </ace:column>
+                
+                <ace:column headerText="Orden producción N°" style="width: 100px" sortBy="#{itemLgt.popOrdenprod.oprId}"
+                   filterBy="#{itemLgt.popOrdenprod.oprId}" filterMatchMode="contains"
+                             
+                            groupBy="#{itemLgt.popOrdenprod.oprId}">
+                    <h:outputText value="#{itemLgt.popOrdenprod.oprId}" styleClass="textcolumncenter letraOutput"/>
+                   
+                </ace:column>
+                
+                 <ace:column headerText="Fecha evento" style="width: 100px" groupBy="#{itemLgt.popOrdenprod.oprFechaevtini}">
+                    <h:outputText value="#{itemLgt.popOrdenprod.oprFechaevtini}" styleClass="textcolumncenter letraOutput">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                  
+                </ace:column>
+                
+                   <ace:column headerText="Fecha Entrega OP a  LOgistica" style="width: 100px" groupBy="#{itemLgt.popOrdenprod.oprFechaproceso}">
+                       <h:outputText value="#{itemLgt.popOrdenprod.oprFechaproceso}" styleClass="textcolumncenter letraOutput">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" timeZone="GMT-5"/>
+                    </h:outputText>
+                  
+                </ace:column>
+                
+                
+                    
+              
+                
+                <ace:column headerText="Dirección del Evento" style="width: 100px">
+                    <h:outputText value="#{itemLgt.popOrdenprod.oprDireccionevento}"
+                                  styleClass="textcolumleft letraOutput"/>
+                </ace:column>
+                          
+                
+                <ace:column headerText="Cliente" style="width: 200px" groupBy="#{itemLgt.popOrdenprod.rgvtId.clnId.clnNombres}">
+                    <h:outputText value="#{itemLgt.popOrdenprod.rgvtId.clnId.clnNombres}"
+                                 styleClass="textcolumleft letraOutput"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemLgt.popOrdenprod.rgvtId.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft letraOutput"/>
+                </ace:column>
+                
+                <ace:column headerText="Estado" style="width: 100px">
+                    <h:outputText value="#{itemLgt.popOrdenprod.rfEstadoOP.eopDescripcion}"
+                                  styleClass="textcolumleft letraOutput"/>
+                </ace:column>
+                
+                
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="SERVICIOS POR ORDEN DE PRODUCCIÓN" rendered="#{logisticaJSFBean.blnMostrarPanel}" style="font-size: large">
+
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th class="thtablaFormulario" > 
+                       Venta N°  </th>
+                <th class="thtablaFormulario" > 
+                      OP N°  </th>
+                    <th class="thtablaFormulario" > 
+                     Documento</th>
+                    <th class="thtablaFormulario" > 
+                     Cliente</th>
+                    
+                    <th class="thtablaFormulario" > 
+                     Tipo Cliente</th>
+                     <th class="thtablaFormulario" > 
+                     Fecha Evento</th>
+                     <th class="thtablaFormulario" > 
+                     Hora Inicial</th>
+                     <th class="thtablaFormulario" > 
+                     Hora Final</th>
+                </tr>
+                
+                
+                  <tr>
+                   
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.rgvtId.rgvtId}"
+                                           styleClass="letraOutput"
+                                           />
+
+
+
+                        </div>
+
+                    </td>   
+                    
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.oprId}"
+                                           styleClass="letraOutput"
+                                           />
+
+
+
+                        </div>
+
+                    </td>  
+                   
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.rgvtId.clnId.identificacion}"
+                                           styleClass="letraOutput"
+                                           />
+
+
+
+                        </div>
+
+                    </td>    
+                 
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.rgvtId.clnId.nombres}"
+                                           styleClass="letraOutput"
+                                           />
+
+
+
+                        </div>
+
+                    </td>   
+                  
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.rgvtId.clnId.tclId.tclNombre}"
+                                           styleClass="letraOutput"
+                                           />
+
+
+
+                        </div>
+
+                    </td>    
+                    
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.rgvtId.vdeId.vdeFechaevt}"
+                                           styleClass="letraOutput"
+                                           >
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            </h:outputText>
+
+                        </div>
+
+                    </td> 
+
+                  
+                    <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.oprFechaevtini}"
+                                           styleClass="letraOutput"
+                                           >
+                                <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                            </h:outputText>
+
+                        </div>
+
+                    </td>  
+                    
+                      <td style="text-align: center;">
+
+                        <div>
+                            <h:outputText  value="#{logisticaJSFBean.popOrdenprodSel.oprFechaevtfin}"
+                                           styleClass="letraOutput"
+                                           >
+                                <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                            </h:outputText>
+
+                        </div>
+
+                    </td>    
+                </tr>
+            </table>
+
+            <br></br>
+            <br></br>
+            <ace:dataTable value="#{logisticaJSFBean.lstTablaPopServXOp}"
+                           var="itemSxo"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+
+
+
+
+
+
+                <ace:column headerText="Servicio Principal" style="width: 250px">
+                    <h:outputText value="#{itemSxo.popServxop.vsrvId.vsrvNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cantidad" style="width: 50px">
+
+                    <h:outputText value="#{itemSxo.popServxop.sxoCantsrv}"/>
+                </ace:column>
+               
+               
+            </ace:dataTable>
+            
+<!--            <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaPopOrdenProduccion}"
+                           var="itemr"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+
+
+
+
+
+
+                <ace:column headerText="Nombre de Personal" style="width: 250px">
+                    <h:outputText value="#{itemr.popOrdenprod.cxcId.cpeId.colCedula.colNombre1  }"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                
+               
+            </ace:dataTable>-->
+            
+            <ace:panel header="#{(logisticaJSFBean.numPanel==1 ? 'DESPACHO' : (logisticaJSFBean.numPanel==2 ? 'RECEPCIÓN' : 'TODOS ') )}DE EVENTO - ELEMENTOS">
+                
+              <ace:dataExporter 
+                            styleClass="btnGenerarInforme"
+                            label=" "
+                            style=" 
+                            border: none;
+                            width: 45px ;height: 45px;
+                            background-size: 100% auto;
+                            background-repeat: repeat;
+                            background-color: transparent !important;
+                            border: 0px !important;"
+                            includeHeaders="true"
+                            pageOnly="false"
+                            type="xls"
+
+                            target="cat" fileName="Categorias"/>
+              
+                <ace:dataTable value="#{logisticaJSFBean.lstTablaPopProdXServXOp}"
+                               var="itemPxs"
+                               rows="15"
+                               alwaysExecuteContents="true"
+                                id="cat"
+                               emptyMessage="No se encontraron datos"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Despachos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                  
+                    
+                    <ace:column headerText="Servicio"  sortBy="#{itemPxs.popProdxservxop.servicioAsociadoDesc}"
+                                            >
+                                    <h:outputText value="#{itemPxs.popProdxservxop.servicioAsociadoDesc}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+                    
+                   
+                    <ace:column headerText="Categoria" style="width: 300px"  sortBy="#{itemPxs.popProdxservxop.prdId.cpdId.cpdDesc}">
+                        <h:outputText value="#{itemPxs.popProdxservxop.prdId.cpdId.cpdDesc}"
+                                      styleClass="textcolumleft"/>   
+                    </ace:column>
+                    
+                    <ace:column headerText="Producto" style="width: 300px">
+                        <h:outputText value="#{itemPxs.popProdxservxop.prdId.prdNombre}"
+                                      styleClass="textcolumleft"/>   
+                    </ace:column>
+                    
+                   
+                    
+                    <ace:column  style="width: 250px">
+                        <f:facet name="header">
+                            <h:outputText value="Cantidad OP"/>
+
+                        </f:facet>
+                        <h:outputText value="#{itemPxs.popProdxservxop.pxsoCantprod}"/>
+                    </ace:column> 
+                    <ace:column headerText="Cantidad Salida">
+                        <h:inputText value="#{itemPxs.cantSalida}" 
+                                     rendered="#{logisticaJSFBean.numPanel == 1 ? true : false}"
+                                     style="width: 65px; height: 20px; font-size: large" />
+                        <h:outputText value="#{itemPxs.popProdxservxop.pxsoCantsalida}"
+                                      rendered="#{logisticaJSFBean.numPanel == 1 ? false : true}" />
+
+                    </ace:column>
+
+                    <ace:column headerText="Cantidad Recepcion" style="width: 250px" rendered="#{logisticaJSFBean.numPanel == 1 ? false : true}">
+                        <h:inputText value="#{itemPxs.cantEntrada}"
+
+
+                                     rendered="#{logisticaJSFBean.numPanel == 2 ? true : false}"
+                                     style="width: 75px; height: 15px">
+
+                        </h:inputText>
+
+                        <h:outputText value="#{itemPxs.popProdxservxop.pxsoCantentrada}"
+                                      rendered="#{logisticaJSFBean.numPanel == 2 ? false : true}" />
+
+                    </ace:column>
+
+                    <ace:column headerText="Estado Producto Salida" style="width: 250px" rendered="#{logisticaJSFBean.numPanel == 1 ? true : false}">
+                        <h:selectBooleanCheckbox value="#{itemPxs.estSalida}"/>
+
+                    </ace:column>
+                    <ace:column headerText="Estado Producto Recibido" style="width: 250px" rendered="#{logisticaJSFBean.numPanel == 2 ? true : false}">
+                        <h:selectBooleanCheckbox value="#{itemPxs.estEntrada}"/>
+                    </ace:column>
+                    <ace:column headerText="Observación" style="width: 300px" rendered="#{logisticaJSFBean.numPanel == 1 ? true : false}">
+                        <h:inputTextarea value="#{itemPxs.observSalida}"
+                                         style=" width: 500px; height: 25px; font-size: large"/>
+                    </ace:column>
+                    <ace:column headerText="Observación" style="width: 300px" rendered="#{logisticaJSFBean.numPanel == 2 ? true : false}">
+                        <h:inputTextarea value="#{itemPxs.observEntrada}" 
+                                         style=" width: 500px; height: 25px; font-size: large"/>
+                    </ace:column>
+                </ace:dataTable>
+            </ace:panel>
+        </ace:panel>      
+    </ui:insert>    
+</html>

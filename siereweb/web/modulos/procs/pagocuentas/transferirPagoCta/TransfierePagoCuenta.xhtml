@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="transfierePagoCuenta">
+        <ace:panel header="Transferencia pago" rendered="#{!transfPagoCuentaJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{transfPagoCuentaJSFBean.lstTablaFinTransferencia}"
+                           var="item"
+                           rows="20"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{transfPagoCuentaJSFBean.rowDtTransferenciaPago_ActionEvent}">
+                        <f:attribute name="tfts" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Fecha agenda" style="width: 100px">
+                    <h:outputText value="#{item.finTransferencia.cpgId.cpgFechaproceso}"
+                                  styleClass="#{item.claseSel}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                                  styleClass="#{item.claseSel} textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                  #{item.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.prvDigver}"
+                                  styleClass="#{item.claseSel} textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor total ($)" style="width: 150px">
+                    <h:outputText value="#{item.finTransferencia.cpgId.fxcId.fxcValor}"
+                                  styleClass="#{item.claseSel} textcolumright">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="Registrar transferencia" rendered="#{transfPagoCuentaJSFBean.blnMostrarPanel}">
+            <h:panelGroup>
+                <h:panelGrid columns="4" styleClass="tablaGrid">
+                    <h:outputLabel value="Fecha"/>
+                    <h:outputText value="#{transfPagoCuentaJSFBean.datFechaProcesoTransferencia}"
+                                  style="font-weight: 800"
+                                  title="Formato (dd/MM/yyyy)">                        
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                    <h:outputLabel value="Número transferencia"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{transfPagoCuentaJSFBean.strFinNumTransaccion}"/>
+                    <h:outputLabel value="Proveedor"/>
+                    <h:outputText style="font-weight: 800"
+                                 value="#{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"/>
+                    <h:outputLabel value="NIT"/>
+                    <h:outputText style="font-weight: 800"
+                                 value="#{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                 #{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.fxcId.apbId.ctaId.factId.prvId.prvDigver}"/>
+                    <h:outputLabel value="Banco origen *"/>
+                    <h:selectOneMenu styleClass="selectGrande"
+                                     value="#{transfPagoCuentaJSFBean.idBancoOrigen}">
+                        <f:selectItems value="#{transfPagoCuentaJSFBean.lstBanco}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Cuenta origen *"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{transfPagoCuentaJSFBean.strFinNumCuentaOrigen}"/>                    
+                    <h:outputLabel value="Banco destino *"/>
+                    <h:selectOneMenu styleClass="selectGrande"
+                                     value="#{transfPagoCuentaJSFBean.idBancoDestino}">
+                        <f:selectItems value="#{transfPagoCuentaJSFBean.lstBanco}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Cuenta destino *"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{transfPagoCuentaJSFBean.strFinNumCuentaDestino}"/>
+                    <h:outputLabel value="Concepto"/>                   
+                    <h:inputTextarea styleClass="textAreaGrande"
+                                     value="#{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.cpgConcepto}"
+                                     readonly="true"/>                  
+                    <h:outputLabel value="Valor total ($)"/>
+                    <h:outputText style="font-weight: 800"
+                                 value="#{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.fxcId.fxcValor}">
+                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                    </h:outputText>
+                    <h:outputLabel value="Fecha pago"/>
+                    <h:outputText style="font-weight: 800"
+                                  value="#{transfPagoCuentaJSFBean.tablaFinTransferenciaSel.finTransferencia.cpgId.cpgFechapago}"                                  
+                                  title="Formato (dd/MM/yyyy)">                        
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

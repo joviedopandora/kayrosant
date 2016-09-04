@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="nomina">
+        <ace:panel header="Pendientes de liquidar"  style="width: 100%" styleClass="thtablaFormulario" >
+
+
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="6"> Datos Generales de la Liquidación</th></tr>
+
+                <tr>
+                    <td >
+                        <div >
+                            <label> Nombre nómina:</label>
+                        </div>
+                    </td>
+                    <td  >
+                        <h:outputText value="#{liquidacionJSFBean.pgLiquidacionconsolidado.nombreLiquidaconso}" 
+
+
+                                      >
+
+
+                        </h:outputText>
+                    </td>
+
+                    <td >
+                        <div >
+                            <label> Fecha Inicial </label>
+                        </div>
+                    </td>
+                    <td  >
+                        <h:outputText value="#{liquidacionJSFBean.pgLiquidacionconsolidado.fechaiLiquidaconso}" 
+
+
+                                      >
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+
+                        </h:outputText>
+                    </td>
+
+                    <td >
+                        <div >
+                            <label> Fecha Final </label>
+                        </div>
+                    </td>
+                    <td  >
+                        <h:outputText value="#{liquidacionJSFBean.pgLiquidacionconsolidado.fechafLiquidaconso}" 
+
+
+                                      >
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+
+                        </h:outputText>
+                    </td>
+
+
+
+                </tr>
+
+            </table>
+            <br />
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" > Eventos a liquidar por colaborador</th></tr>
+
+                <tr>
+                    <td style="width: 100%">
+                        <ace:dataTable value="#{liquidacionJSFBean.lstNominaXColaboradores}" style="font-size: large"
+                                       var="itemLgt"
+                                       paginator="true"
+                                       alwaysExecuteContents="true"
+
+                                       paginatorAlwaysVisible="true"
+                                       rows="30"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                       currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                            <ace:column headerText="Colaborador°" 
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.popCxcevento.cxcId.cpeId.colCedula.nombres}"
+                                        filterBy="#{itemLgt.popCxcevento.cxcId.cpeId.colCedula.nombres}"
+                                        filterMatchMode="contains">
+                                <h:outputText value="#{itemLgt.popCxcevento.cxcId.cpeId.colCedula.nombres}" styleClass="textcolumncenter letraOutput"/>
+
+                            </ace:column>
+
+
+
+
+                            <ace:column headerText="Cargo" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.admCargo.crgNombre}"
+                                              styleClass="textcolumncenter letraOutput">
+
+                                </h:outputText>
+                            </ace:column>   
+
+
+                            <ace:column headerText="Nombre del Evento" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.oprId.oprTitulo}"
+                                              styleClass="textcolumncenter letraOutput">
+
+                                </h:outputText>
+                            </ace:column>   
+                            <ace:column headerText="N° OP" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.oprId.oprId}"
+                                              styleClass="textcolumncenter letraOutput">
+
+                                </h:outputText>
+                            </ace:column>  
+
+                            <ace:column headerText="Fecha Evento"  styleClass="textcolumleft letraOutput"  sortBy="#{itemLgt.popCxcevento.oprId.oprFechaevtini}">
+
+                                <h:outputText value="#{itemLgt.popCxcevento.oprId.oprFechaevtini}">
+                                    <f:convertDateTime pattern="EE-dd-M-yyyy-W"  timeZone="GMT-5"/>
+                                </h:outputText>
+                            </ace:column>
+
+                            <ace:column headerText="Calificacion" 
+
+
+                                        style="width: 200px;"
+                                        groupBy="#{itemLgt.popCxcevento.evalCalificacion.calificacionDesc}">
+                                <h:outputText value="#{itemLgt.popCxcevento.evalCalificacion.calificacionDesc}" styleClass="textcolumncenter letraOutput"/>                
+                            </ace:column>
+
+
+
+                            <ace:column headerText="Valor a Pagar ($)" style="width: 200px">
+                                <h:outputText value="#{itemLgt.valorTotalApgar}"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber pattern="#0.00"/>
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column> 
+
+
+
+
+
+                            <ace:column headerText="Liquidar" style="width: 50px" >
+                                <h:selectBooleanCheckbox  value="#{itemLgt.selecciona}" 
+                                                          valueChangeListener="#{itemLgt.editarSelColLiquida_ValueChangeEvent}">
+                                    <f:attribute name="tabla" value="#{itemLgt}"/>
+                                    <f:ajax execute="@this" render="@form" 
+                                            listener="#{liquidacionJSFBean.editarSelColLiquida_AjaxBehaviorEvent}" />
+
+                                </h:selectBooleanCheckbox>
+                            </ace:column>
+
+
+
+
+                            <ace:column headerText="Valor Basico ($)" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.cxeValorPagar}"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber pattern="#0.00"/>
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column>   
+
+
+                            <ace:column headerText="Valor Bonificación ($)" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.cxeValorBonificacion}"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber pattern="#0.00"/>
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column> 
+
+                            <ace:column headerText="Valor Descuento ($)" style="width: 200px">
+                                <h:outputText value="#{itemLgt.popCxcevento.cxeValorDescuento}"
+                                              styleClass="textcolumright letraOutput">
+                                    <f:convertNumber pattern="#0.00"/>
+                                    <f:convertNumber groupingUsed="true"/>
+                                </h:outputText>
+                            </ace:column> 
+
+
+
+
+
+
+
+
+
+                        </ace:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </ace:panel>
+    </ui:insert>    
+</html>

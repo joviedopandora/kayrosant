@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAddCliente">
+        <!--
+        rendered="#{!manejoClienteJSFBean.blnMostrarPanel}"
+        -->
+        <h:panelGrid columns="2">
+            <ace:panel header="Datos cliente" style="width: 595px">
+                <h:panelGrid columns="4">
+                    <h:outputLabel value="Tipo doc *"/>
+                    <ace:comboBox  value="#{manejoClienteJSFBean.idTipoDoc}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstTipoDoc}" />
+                    </ace:comboBox>
+                   
+                    <h:outputLabel value="Nº documento *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltDocumento}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Nombres *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltNombres}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Apellidos *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltApellidos}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Sexo *"/>
+                    <ace:comboBox   value="#{manejoClienteJSFBean.idSexo}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstSexo}"/>
+                    </ace:comboBox>
+                  
+                    <h:outputLabel value="Nº Hijos "/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.intCltNumHijos}"
+                                   styleClass="textPeq">
+                    </ace:textEntry>
+                    <h:outputLabel value="Fecha Nacimiento"/>
+                    <ace:maskedEntry mask="99/99/9999" value="#{manejoClienteJSFBean.datCltFechaNac}"
+                                     style="width: 120px">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </ace:maskedEntry>
+                    <h:outputLabel value="Dirección *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltDireccion}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Fijo"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltTelFijo}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Celular *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltCelular}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Correo"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltCorreo}"
+                                   styleClass="textMediano">
+                    </ace:textEntry>
+                    <h:outputLabel value="Contacto"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strCltContacto}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Tipo cliente *"/>
+                    <h:selectOneMenu styleClass="selectMedianoConc"
+                                     value="#{manejoClienteJSFBean.idTipoCliente}"
+                                     valueChangeListener="#{manejoClienteJSFBean.selTipoCliente_ActionEvent}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstTipoCliente}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Act. económica *"/>
+                    <ace:comboBox 
+                                     value="#{manejoClienteJSFBean.idActEco}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstActividadEconomica}"/>
+                    </ace:comboBox 
+                </h:panelGrid>
+            </ace:panel>
+            <ace:panel header="Detalle" style="width: 595px; height: 209px">
+                <!--
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Cliente"/>
+                    <h:outputText value="#{manejoClienteJSFBean.tablaVntClienteSel.vntCliente.clnNombres}  #{manejoClienteJSFBean.tablaVntClienteSel.vntCliente.clnApellidos}"
+                                  style="font-weight: 800"/>
+                </h:panelGrid>
+                -->
+                <h:panelGrid columns="4">
+                    <h:outputLabel value="Primer Nombre *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strDetNombre1}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Segundo Nombre"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strDetNombre2}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Primer Apellido *"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strDetApellido1}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Segundo Apellido"/>
+                    <ace:textEntry value="#{manejoClienteJSFBean.strDetApellido2}"
+                                   styleClass="textMediano">
+                        <f:converter converterId="convertMayusc"/>
+                    </ace:textEntry>
+                    <h:outputLabel value="Sexo"/>
+                    <ace:comboBox  styleClass="selectMedianoConc"
+                                     value="#{manejoClienteJSFBean.idSexoDet}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstSexoDet}"/>
+                    </ace:comboBox>
+                    <ace:comboBox value="Parentesco *"/>
+                    <h:selectOneMenu styleClass="selectMedianoConc"
+                                     value="#{manejoClienteJSFBean.idParentesco}">
+                        <f:selectItems value="#{manejoClienteJSFBean.lstParentesco}"/>
+                    </ace:comboBox>
+                    <h:outputLabel value="Fecha nacimiento"/>
+                    <ace:maskedEntry mask="99/99/9999" value="#{manejoClienteJSFBean.datDetFechaNac}" 
+                                     style="width: 120px">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </ace:maskedEntry>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                    <h:outputLabel/>
+                    <h:commandButton styleClass="btnNuevoStd"
+                                     actionListener="#{manejoClienteJSFBean.btnGrabarDetalleCliente_ActionEvent}"
+                                     title="Agregar detalle cliente">
+                    </h:commandButton>
+                </h:panelGrid>
+            </ace:panel>            
+        </h:panelGrid>
+        <ace:panel header="Datos del detalle" style="width: 1202px">
+            <ace:dataTable value="#{manejoClienteJSFBean.lstTablaVntDetalleCliente}"
+                           var="itemDet"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{manejoClienteJSFBean.rowDtDetalleCliente_ActionEvent}">
+                        <f:attribute name="tvdcs" value="#{itemDet}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nombres y apellidos" style="width: 250px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnNomb1} #{itemDet.vntDetallecliente.dclnNomb2}
+                                  #{itemDet.vntDetallecliente.dclnApe1} #{itemDet.vntDetallecliente.dclnApe2}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Sexo" style="width: 50px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.sexId.sexId}"/>
+                </ace:column>
+                <ace:column headerText="Parentesco" style="width: 100px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.prtId.prtNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Nacimiento" style="width: 100px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnFechanace}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Edad" style="width: 50px">
+                    <h:outputText value="#{itemDet.edad}"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <!--
+        <ace:panel header="Clientes" rendered="#{!manejoClienteJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{manejoClienteJSFBean.lstTablaVntCliente}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText="Detalle">
+                    <h:commandLink styleClass="btnVerDatoRCN" value=">>>"
+                                   actionListener="#{manejoClienteJSFBean.rowDtMostrarDetalle_ActionEvent}">
+                        <f:attribute name="tvcs" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Tipo doc" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.tdcId.tdcId}"/>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnIdentificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Nombres" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnNombres}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Apellidos" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnApellidos}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Genero" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.sexId.sexDesc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Nro. Hijos" style="width: 50px">
+                    <h:outputText value="#{item.vntCliente.clnNumhijos}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Dirección" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnDiereccion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Fijo" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnFijo}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Celular" style="width: 100px">
+                    <h:outputText value="#{item.vntCliente.clnCelular}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Correo" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.clnCorreoe}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Contacto" style="width: 250px">
+                    <h:outputText value="#{item.vntCliente.clnContacto}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 150px">
+                    <h:outputText value="#{item.vntCliente.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        -->
+    </ui:insert>
+</html>

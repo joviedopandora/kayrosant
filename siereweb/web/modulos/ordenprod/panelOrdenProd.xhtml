@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="ordenProd">
+        <ace:panel header="ORDEN DE PRODUCCIÓN" rendered="#{!ordenProduccionJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaPopOrdenProduccion}" style="font-size: large"
+                           var="itemOp"
+                           paginator="true"
+                            alwaysExecuteContents="true"
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                
+                <f:facet name="header">
+                    <h:outputText value="Orden producción"/>
+                </f:facet>
+               
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>" 
+                                   actionListener="#{ordenProduccionJSFBean.rowDtOrdenProd_ActionEvent} ">
+                        <f:attribute name="tops" value="#{itemOp}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nº Venta" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.rgvtId}"/>
+                </ace:column>
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.tdcId.tdcId}. 
+                                  #{itemOp.popOrdenprod.rgvtId.clnId.clnIdentificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cliente" style="width: 200px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.clnNombres} 
+                                  #{itemOp.popOrdenprod.rgvtId.clnId.clnApellidos}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>                       
+                <ace:column headerText="Valor factura($)" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.rgvtValorventa}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="ORDEN DE PRODUCCIÓN" rendered="#{ordenProduccionJSFBean.blnMostrarPanel}">            
+            <h:panelGrid columns="17">
+                <h:outputLabel value="Identificación -->" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputText styleClass="outputText" 
+                              value="#{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.tdcId.tdcId}. 
+                              #{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnIdentificacion}"/>
+                <h:outputLabel/>
+                <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel/>
+                <h:outputLabel value="Cliente -->" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputText styleClass="outputText" 
+                              value="#{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnNombres} 
+                              #{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnApellidos}"/>
+                <h:outputLabel/>
+                <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel/>
+                <h:outputLabel value="Tipo -->" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputText styleClass="outputText" 
+                              value="#{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.tclId.tclNombre}"/>
+                <h:outputLabel/>
+                <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                <h:outputLabel/>
+                <h:outputLabel value="Venta N° -->" style="font-weight: 800; font-size: 12px"/>
+                <h:outputText styleClass="outputText"
+                              value="#{ordenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.rgvtId}"/>
+            </h:panelGrid>
+            <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaPopServXOp}"
+                           var="itemSxo"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{ordenProduccionJSFBean.rowDtServXOrdenProd_ActionEvent}">
+                        <f:attribute name="tsxos" value="#{itemSxo}"/>
+                    </h:commandLink>
+                </ace:column>
+                
+                <ace:column headerText="Servcio" style="width: 250px">
+                    <h:outputText value="#{itemSxo.popServxop.vsrvId.vsrvNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cantidad" style="width: 50px">
+                    <h:outputText value="#{itemSxo.popServxop.sxoCantsrv}"/>
+                </ace:column>
+                <ace:column headerText="Fecha" style="width: 100px">
+                    <h:outputText value="#{itemSxo.popServxop.oprId.rgvtId.vdeId.vdeFechaevt}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Hora inicio" style="width: 75px">
+                    <h:outputText value="#{itemSxo.popServxop.oprId.oprFechaevtini}">
+                        <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Hora final" style="width: 75px">
+                    <h:outputText value="#{itemSxo.popServxop.oprId.oprFechaevtfin}">
+                        <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                        <!--<f:convertDateTime type="time" timeStyle="short" timeZone="GTM-5" locale="es_CO"/>-->
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+            <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                <h:panelGroup id="pnlgTablaProducto">
+                    <h:outputLabel value="PRODUCTOS" dir="top"
+                                    style="font-size: 12px;font-weight: bold"/>
+                    <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaPopProdXServXOp}"
+                                   var="itemPrd"
+                                   emptyMessage="No se encontraron registros">
+                          
+                        <ace:column headerText="" style="width: 50px">
+                            <h:selectBooleanCheckbox value="#{itemPrd.seleccionado}"/>
+                        </ace:column>
+                        
+                        <ace:column headerText="Producto" style="width: 150px">
+                            <h:outputText value="#{itemPrd.popProdxservxop.prdId.prdNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad" style="width: 50px">
+                            <h:outputText value="#{itemPrd.popProdxservxop.pxsoCantprod}"/>
+                        </ace:column>
+                       
+                        <ace:column headerText="Última salida" style="width: 100px">
+                            <h:outputText value="#{itemInv.invent.invFechaegreso}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </ace:column>
+                        
+                    </ace:dataTable>
+                </h:panelGroup>
+                <h:panelGroup id="pnlgTablaUsuario">
+                    <h:outputLabel value="COLABORADORES" dir="top"
+                                   style="font-size: large"/>
+                    <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaAdmCrgXCol}"
+                                   var="itemCxc"
+                                   rows="10"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText="" style="width: 50px">
+                            <h:selectBooleanCheckbox value="#{itemCxc.seleccionado}"/>
+                        </ace:column>
+                        <ace:column headerText="Código" style="width: 100px">
+                            <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colCedula}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Nombre" style="width: 300px">
+                            <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
+                                          #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
+                                          #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
+                                          #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+                <h:commandButton value="Agregar producto"
+                                 actionListener="#{ordenProduccionJSFBean.btnAgregarProductosVarios_ActionEvent}"/>
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="PRODUCTOS VARIOS" rendered="#{ordenProduccionJSFBean.blnMostrarProductos}">
+            <ace:dataTable value="#{ordenProduccionJSFBean.lstTablaProducto}"                           
+                           var="itemPv"
+                           style="width: 425px"
+                           rows="30"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText="Producto" style="width: 300px">
+                    <h:outputText value="#{itemPv.invProducto.prdNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cantidad" style="width: 75px">
+                    <h:inputText styleClass="textPeq"
+                                 value="#{itemPv.cantProds}"/>
+                </ace:column>
+                <ace:column style="width: 50px">
+                    <h:commandButton styleClass="btnGuardarStd"
+                                     actionListener="#{ordenProduccionJSFBean.btnAgregarProducto_ActionEvent}">
+                        <f:attribute name="tps" value="#{itemPv}"/>
+                    </h:commandButton>
+                </ace:column>
+            </ace:dataTable>
+
+        </ace:panel>
+    </ui:insert>
+</html>

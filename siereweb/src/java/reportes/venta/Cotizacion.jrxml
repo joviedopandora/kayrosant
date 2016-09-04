@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cotizacion" pageWidth="702" pageHeight="1085" columnWidth="702" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7c19f3c5-0102-45b1-9508-b3a1735ec190">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="j_Cotizacion" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\breyner.robles\\Documents\\NetBeansProjects\\pandora\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rutalogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\breyner.robles\\Documents\\NetBeansProjects\\pandora\\sieree\\siereweb\\src\\java\\reportes\\venta\\logos\\maximus.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+  vnt_cliente.cln_nombres,
+vnt_cliente.tcl_id,
+    vnt_cliente.cln_contacto,
+    rf_parentezco.prt_nombre,
+    vnt_registroventa.rgvt_valorventa,
+    vnt_registroventa.rgvt_id,
+    vnt_registroventa.rgvt_fechacre,
+    rf_motivoevento.mte_id,
+    rf_motivoevento.mte_nombre,
+    vnt_detevento.vde_numero_dias,
+    vnt_detevento.vde_nombrescontacto AS vnt_detevento_vde_nombrescontacto,
+    vnt_detevento.vde_apellidoscontacto AS vnt_detevento_vde_apellidoscontacto,
+    vnt_detallecliente.dcln_nombres AS vnt_detallecliente_dcln_nombres,
+    rf_cargocontacto.cargo_id AS rf_cargocontacto_cargo_id,
+    rf_cargocontacto.cargo_desc AS rf_cargocontacto_cargo_desc,
+    rf_cargocontacto.cargo_est AS rf_cargocontacto_cargo_est,
+    rf_cargocontacto.ind_verison AS rf_cargocontacto_ind_verison,
+CASE WHEN     COALESCE(vnt_registroventa.rgvt_descuento,0) = 0 THEN NULL
+ELSE 
+    (COALESCE(vnt_registroventa.rgvt_descuento,0)/
+    (COALESCE(vnt_registroventa.rgvt_valorventa,0)))*100 END AS vnt_registroventa_rgvt_descuento,vnt_registroventa.rgvt_descuento,
++COALESCE(vnt_registroventa.rgvt_valorventa,0)-COALESCE(vnt_registroventa.rgvt_descuento,0)  subtotal,
+CASE WHEN COALESCE(vnt_registroventa.rgvt_descuento,0) = 0 then true else false end presentar 
+
+FROM
+    vnt_registroventa vnt_registroventa INNER JOIN vnt_cliente vnt_cliente ON vnt_registroventa.cln_id = vnt_cliente.cln_id
+     INNER JOIN vnt_detevento vnt_detevento ON vnt_registroventa.rgvt_id = vnt_detevento.rgvt_id
+     INNER JOIN rf_motivoevento rf_motivoevento ON vnt_detevento.mte_id = rf_motivoevento.mte_id
+     INNER JOIN vnt_detallecliente vnt_detallecliente ON vnt_detevento.dcln_id = vnt_detallecliente.dcln_id
+     LEFT JOIN rf_parentezco rf_parentezco ON vnt_detallecliente.prt_id = rf_parentezco.prt_id
+     LEFT JOIN rf_cargocontacto rf_cargocontacto ON vnt_detallecliente.cargo_id = rf_cargocontacto.cargo_id
+WHERE
+    vnt_registroventa.rgvt_id =  $P{j_Cotizacion}]]>
+	</queryString>
+	<field name="cln_nombres" class="java.lang.String"/>
+	<field name="tcl_id" class="java.lang.Integer"/>
+	<field name="cln_contacto" class="java.lang.String"/>
+	<field name="prt_nombre" class="java.lang.String"/>
+	<field name="rgvt_valorventa" class="java.math.BigDecimal"/>
+	<field name="rgvt_id" class="java.lang.Long"/>
+	<field name="rgvt_fechacre" class="java.sql.Timestamp"/>
+	<field name="mte_id" class="java.lang.Integer"/>
+	<field name="mte_nombre" class="java.lang.String"/>
+	<field name="vde_numero_dias" class="java.lang.Integer"/>
+	<field name="vnt_detevento_vde_nombrescontacto" class="java.lang.String"/>
+	<field name="vnt_detevento_vde_apellidoscontacto" class="java.lang.String"/>
+	<field name="vnt_detallecliente_dcln_nombres" class="java.lang.String"/>
+	<field name="rf_cargocontacto_cargo_id" class="java.lang.Integer"/>
+	<field name="rf_cargocontacto_cargo_desc" class="java.lang.String"/>
+	<field name="rf_cargocontacto_cargo_est" class="java.lang.Boolean"/>
+	<field name="rf_cargocontacto_ind_verison" class="java.lang.Integer"/>
+	<field name="vnt_registroventa_rgvt_descuento" class="java.math.BigDecimal"/>
+	<field name="rgvt_descuento" class="java.math.BigDecimal"/>
+	<field name="subtotal" class="java.math.BigDecimal"/>
+	<field name="presentar" class="java.lang.Boolean"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="300" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="106" width="60" height="20" uuid="5e9dc477-0c0d-4d94-8f39-810f3ecb06f8"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Bogotá,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="146" width="682" height="20" uuid="4cbacb8a-cf6e-422c-aac9-f7fef60cb230"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Señor(es)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="240" width="682" height="20" uuid="5dd10884-6335-48d9-b9c3-25a3c248e15a"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Asunto: COTIZACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="260" width="682" height="20" uuid="bc6ada23-d6a8-40a0-9d3e-59b60b2057e1"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Cordial Saludo, atendiendo su amable solicitud me permito cotizar la propuesta según requerimiento.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="568" y="126" width="116" height="20" forecolor="#FF3333" uuid="a4b54c12-cb09-4cbb-ba49-cf334af94988"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<leftPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+					<rightPen lineWidth="0.75" lineStyle="Double" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="568" y="106" width="116" height="20" uuid="82b8c648-304a-408c-b7af-21599564e8ca"/>
+				<box>
+					<pen lineWidth="0.75"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COTIZACION N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="2" y="166" width="682" height="20" uuid="3d10073b-e91b-4b09-814c-2e100028e068"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cln_nombres}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isLazy="true" onErrorType="Blank">
+				<reportElement x="0" y="0" width="684" height="106" uuid="31054112-ca33-450f-a769-c7753fe1795d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<imageExpression><![CDATA[$P{rutalogo}]]></imageExpression>
+			</image>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="62" y="106" width="506" height="20" uuid="bc26c9c3-566b-45f6-bf98-7791df1c02b0"/>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_fechacre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="106" width="684" height="0" uuid="dad3773b-2445-4f77-9394-da8912a79766"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="1" y="280" width="366" height="20" backcolor="#FF9900" uuid="60598403-03f6-48f8-aa7f-ffa604bab367"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mte_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement mode="Transparent" x="2" y="186" width="682" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="bc49fdce-27bb-4c2e-8b38-4fdda3ec0dda">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnt_detallecliente_dcln_nombres}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="2" y="206" width="682" height="34" forecolor="#000000" backcolor="#FFFFFF" uuid="5bd589e0-37b8-4d06-8c53-3479b276529e">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rf_cargocontacto_cargo_desc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="126" width="566" height="20" uuid="4f6dadc1-ec1c-4126-afdc-dc596eeb1f0b"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<line>
+				<reportElement x="684" y="106" width="1" height="194" uuid="6f1abc55-9cdf-46a5-92cf-c4e644770199"/>
+			</line>
+			<line>
+				<reportElement x="1" y="106" width="1" height="174" uuid="96881923-3b30-4cbb-afdf-323aba5088fc"/>
+			</line>
+			<textField>
+				<reportElement mode="Opaque" x="389" y="280" width="18" height="20" backcolor="#FF9900" uuid="7e6c0984-8c30-4c6d-9c30-463f5ea4f1b3">
+					<printWhenExpression><![CDATA[$F{vde_numero_dias} != 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vde_numero_dias}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="367" y="280" width="22" height="20" backcolor="#FF9900" uuid="16880739-4ec7-4710-9bd1-ef49bd8a2ae1">
+					<printWhenExpression><![CDATA[$F{vde_numero_dias} != 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[X]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="407" y="280" width="277" height="20" backcolor="#FF9900" uuid="a14eadeb-40fe-4063-b087-0315f92be416">
+					<printWhenExpression><![CDATA[$F{vde_numero_dias} != 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="40">
+			<subreport>
+				<reportElement x="0" y="0" width="658" height="40" uuid="b3b2f66d-2773-41ba-ad30-0525f56da6a2"/>
+				<subreportParameter name="c_Venta">
+					<subreportParameterExpression><![CDATA[$F{rgvt_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + ($F{presentar} ? "SubRepCotizacion_1.jasper": "SubRepCotizacion.jasper")]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="202" splitType="Stretch"/>
+	</columnFooter>
+	<lastPageFooter>
+		<band height="391">
+			<staticText>
+				<reportElement x="2" y="138" width="682" height="23" uuid="2e1ec565-9f25-4009-98a0-13e0b01dd109">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Es necesario contar con previa orden de compra para reservar el dia del evento, en esta deben estar detalladas las fechas y horarios.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="286" width="682" height="15" uuid="72821aac-1c54-4bee-b29e-ddfd59d5440f"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Atentamente,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="301" width="682" height="14" uuid="6af6a187-dbad-48dc-a000-d6c07598bec5"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Jose Mario Guzmán ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="315" width="682" height="16" uuid="d27db916-3a99-4a85-9a32-2ab0e8806eef"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Gerente Comercial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="331" width="682" height="20" uuid="da0c9c31-b358-416f-b910-90b7a3aee2c6"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Máximus Producciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="351" width="682" height="20" uuid="ec284e65-8c4c-4a41-a24c-4688009e6aff"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Contacto: 4871617 ext 104 - 3212089000]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="371" width="682" height="20" uuid="31799a6e-a8a1-4fe1-a16f-2e77c5129aa2"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Correo: info@maximusproducciones.com.co]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="197" width="682" height="35" forecolor="#000000" backcolor="#FFFFFF" uuid="72821aac-1c54-4bee-b29e-ddfd59d5440f">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[ Tener en cuenta que si requiere de polizas para el respaldo del contrato, estas deben ser asumidas por el cliente. en caso de haber  otorgado un descuento el valor de las mismas se pagara con dicho item(descuento)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="93" width="682" height="45" uuid="096cf445-21ef-43e1-ac43-a6f9fda0a011"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12"/>
+				</textElement>
+				<text><![CDATA[Máximus Producciones no se hace responsable por factores climáticos, inconvenientes de orden publico (alcaldía, policía) o imprevistos ajenos a la empresa que llegaren a afectar el desarrollo del evento, en caso de presentarse el cliente deberá pagar el evento en su totalidad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="73" width="682" height="20" uuid="63fc2ff2-99d2-411d-bbf0-4cccfabaf779"/>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="161" width="682" height="20" uuid="37780d3d-2077-42dd-bd8e-19725be5fe51">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial Narrow" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Los valores anteriores no incluyen Iva, por favor incrementar el 16% al costo total del evento.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="453" y="0" width="115" height="20" backcolor="#CCCCCC" uuid="925e4db6-019c-4b6c-9f36-9dca7a430519"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="0" width="451" height="40" uuid="34901307-323a-469c-88aa-63e8d83c90cf">
+					<printWhenExpression><![CDATA[$F{vnt_registroventa_rgvt_descuento} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="10"/>
+				</textElement>
+				<text><![CDATA[EL DESCUENTO SOLO APLICA PARA EL PAQUETE COMPLETO CON TODOS LOS ITEMS PROPUESTOS. AL ELIMINAR ALGUNO DE ESTOS EL % DE DESCUENTO DISMINUIRÁ PROPORCIONALMENTE ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="453" y="40" width="115" height="20" backcolor="#FF9900" uuid="66c7fc8b-0827-463b-8bdc-2d8dd4fdf3ad"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="181" width="682" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="b7222a84-e174-41dd-a566-e8a7bde52da6">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 2]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[La cancelación del evento con menos de 24 horas obliga al cliente al pago de un NO SHOW con porcentaje entre  50% y 80% del total del Evento]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="568" y="20" width="116" height="20" uuid="c83bbdc1-c0c2-4382-842d-fe32731bec40">
+					<printWhenExpression><![CDATA[$F{vnt_registroventa_rgvt_descuento} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_descuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.00" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="516" y="20" width="29" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="649dd5e4-8e0e-4444-9878-7b06a20ff139"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnt_registroventa_rgvt_descuento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="545" y="20" width="23" height="20" uuid="925e4db6-019c-4b6c-9f36-9dca7a430519">
+					<printWhenExpression><![CDATA[$F{vnt_registroventa_rgvt_descuento} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="20" width="0" height="20" uuid="9df52c63-7b29-4420-bcb6-40a94e455833"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="568" y="40" width="116" height="20" forecolor="#000000" backcolor="#FF9900" uuid="0b87cf1e-ca0c-44f9-8e6f-f4e6a60b1df7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="568" y="0" width="116" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="0b87cf1e-ca0c-44f9-8e6f-f4e6a60b1df7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="11" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_valorventa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="232" width="682" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="72821aac-1c54-4bee-b29e-ddfd59d5440f">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Forma de pago 50% para reservar y 50% el día del evento antes de empezar previa verificación del montaje.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="2" y="247" width="682" height="39" forecolor="#000000" backcolor="#FFFFFF" uuid="72821aac-1c54-4bee-b29e-ddfd59d5440f">
+					<printWhenExpression><![CDATA[$F{tcl_id} != 1]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Arial Narrow" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Bancolombia cta 46778577089 - ahorros Diana Guzmán, favor enviar a info@maximusproducciones.com.co su consignación escaneada para confirmar reserva]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="60" width="453" height="1" uuid="d4c046d3-9719-4847-a1d4-c1e4c8ee73e0"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="0" width="1" height="58" uuid="72717ee7-ed0a-45c6-ae45-51922b567795"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="684" y="22" width="1" height="18" uuid="898c1cd5-bfb8-4e0f-9f60-0e522d8252b1"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="453" y="22" width="1" height="18" uuid="28e938ef-b6bd-4221-86ec-26cb0df2f9b7"/>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="685" y="68" width="2" height="323" uuid="3a89ad48-3538-4f4e-9c71-8ef3664aeff5"/>
+			</line>
+			<line>
+				<reportElement x="0" y="68" width="1" height="323" uuid="56c29710-ef0a-4085-88ad-dc5aa10c1772"/>
+			</line>
+			<line>
+				<reportElement x="2" y="67" width="682" height="1" uuid="049ed5fb-b12f-4277-867c-f982708aa77d"/>
+			</line>
+			<staticText>
+				<reportElement x="454" y="20" width="62" height="20" uuid="925e4db6-019c-4b6c-9f36-9dca7a430519">
+					<printWhenExpression><![CDATA[$F{vnt_registroventa_rgvt_descuento} != null]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Dto. Promedio]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

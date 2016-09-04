@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelVenta">
+        <h:panelGrid columns="17" >
+            <h:outputLabel value="Identificación -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.tdcId.tdcId}. 
+                          #{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnIdentificacion}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Cliente -->" style="font-weight: 800; font-size: 12px;" />
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnNombres} 
+                          #{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnApellidos}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Tipo -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.tclId.tclNombre}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Venta N° -->" style="font-weight: 800; font-size: 12px"/>
+            <h:outputText styleClass="outputText"
+                          />
+        </h:panelGrid>
+        <ace:panel header="VENTA">            
+            <h:panelGrid columns="1">                
+                <ace:dataTable value="#{gestionVentaJSFBean.lstTablaVntServicios}"
+                               var="item"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               rows="10"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="PRODUCTOS Y SERVICIOS"/>
+                    </f:facet>
+                    <ace:column style="width: 50px">
+                        <f:facet name="header">
+                            <h:selectBooleanCheckbox valueChangeListener="#{gestionVentaJSFBean.selTodoServicio_ValueChange}">
+                                <f:ajax execute="@this" render="@all"/>
+                            </h:selectBooleanCheckbox>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                    </ace:column>
+                    <ace:column headerText="Servicio" style="width: 200px">
+                        <h:outputText value="#{item.vntServicio.vsrvNombre}"/>
+                    </ace:column>
+                    <ace:column headerText="Detalle" style="width: 350px">
+                        <h:outputText value="#{item.vntServicio.vsrvDesc}"/>
+                    </ace:column>
+                    <ace:column headerText="Tipo" style="width: 150px">
+                        <h:outputText value="#{item.vntServicio.tsrvId.tsrvNombre}"/>
+                    </ace:column>
+                    <ace:column headerText="Precio empresa" style="width: 150px">
+                        <h:outputText value="#{item.vntServicio.vsrvValunitempresa}"/>
+                    </ace:column>
+                    <ace:column headerText="Precio cliente"  style="width: 150px">
+                        <h:outputText value="#{item.vntServicio.vsrvValunitcliente}"/>
+                    </ace:column>
+                    <ace:column headerText="Cantidad" style="width: 60px">
+                        <ace:textEntry value="#{item.cantidadSrv}" style="width: 50px; " >
+                            <f:convertNumber integerOnly="true" />
+                            <f:validateLongRange minimum="0" maximum="500000"/>
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </ace:column>
+                    <ace:column headerText="Precio venta" style="width: 150px" stacked="false">
+                        <ace:textEntry value="#{item.bigdPrecioCliente}" >
+                            <f:convertNumber pattern="#0.00"/>
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </ace:column>
+                </ace:dataTable>
+                <ace:dataTable value="#{gestionVentaJSFBean.lstTablaSrvXVentas}"
+                               var="item"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               rows="10"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="SERVICIOS VENDIDOS"/>
+                    </f:facet>
+
+
+
+
+
+                    <ace:column style="width: 50px">
+                        <f:facet name="header">
+                            <h:selectBooleanCheckbox valueChangeListener="#{gestionVentaJSFBean.selTodoRegVenta_ValueChange}">
+                                <f:ajax execute="@this" render="@all"/>
+                            </h:selectBooleanCheckbox>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                    </ace:column>
+                    <ace:column headerText="Servicio" style="width: 250px">
+                        <h:outputText value="#{item.vntServxventa.vsrvId.vsrvNombre}"/>
+                    </ace:column>
+                    <!--
+                    <ace:column headerText="Precio empresa" style="width: 150px">
+                        <h:outputText value="#{item.vntServxventa.vsrvId.vsrvValunitempresa}">
+                            <f:convertNumber pattern="#0.00"/>
+                        </h:outputText>
+                    </ace:column>      
+                    -->
+                    <ace:column headerText="Precio vendido" style="width: 150px">
+                        <h:outputText value="#{item.vntServxventa.srvxventPrecioventa}">
+                            <f:convertNumber pattern="#0.00"/>
+                        </h:outputText>
+                    </ace:column>                    
+                    <ace:column headerText="Cantidad" style="width: 100px">
+                        <h:outputText value="#{item.vntServxventa.srvxventCantidad}">
+                            <f:convertNumber integerOnly="true" />
+                        </h:outputText>
+                        <f:facet name="footer">
+                            <h:outputText value="Total"/>
+                        </f:facet>
+                    </ace:column>      
+                    <ace:column headerText="Precio total vendido" style="width: 150px">
+                        <h:outputText value="#{item.vntServxventa.srvxventValtotalclnt}">
+                            <f:convertNumber pattern="#0.00"/>
+                        </h:outputText>
+
+
+                    </ace:column>   
+                </ace:dataTable>
+
+                <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                    <tr><th  class="thtablaFormulario" colspan="2"> Descuentos  </th></tr>
+                    <tr>
+                        <td style="width: 30%">
+                            <label>Sub Total</label> 
+
+                        </td>
+                        <td style="width: 70%">
+                            <h:inputText
+                                readonly="true"
+                                value="#{pcsCotizacionJSFBean.valorTotalVenta}"
+
+                                styleClass="inputs"
+
+                                >
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+
+                            </h:inputText>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%">
+                            <label>% de Descuento</label> 
+
+                        </td>
+                        <td style="width: 70%">
+                            <h:inputText
+                                value="#{pcsCotizacionJSFBean.valoDescVenta}"
+                                styleClass="inputs"
+                                maxlength="3"
+                                valueChangeListener="#{pcsCotizacionJSFBean.cambioDescuento}"
+                                onkeypress="if (event.which & lt; 48 || event.which & gt; 57) return false;"
+                                >
+
+                                <f:ajax execute="@this" render="@this sumaTotal"/>  
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+                            </h:inputText>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%">
+                            <label>Total</label> 
+
+                        </td>
+                        <td style="width: 70%">
+                            <h:inputText  styleClass="inputs"
+                                          readonly="true"
+                                          id="sumaTotal" 
+                                          value="#{pcsCotizacionJSFBean.vntRegistroventa.rgvtValorventa}" >
+                                <f:convertNumber locale="es" pattern="#,##0.00" groupingUsed="true"/>
+
+                            </h:inputText>
+
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+
+                            <h:commandButton id="submitAceptarCerrarVenta" actionListener="#{pcsCotizacionJSFBean.btnCerrarVenta_ActionEvent}" value="Aceptar" class="wrapper button"/> 
+
+                        </td> 
+                        <td >
+
+                            <h:commandButton id="submitCancelarCerrarVenta" value="Cancelar" onclick="dialogDescuento.hide();" class="wrapper button"/> 
+
+                        </td> 
+                    </tr>
+                </table>
+
+
+
+            </h:panelGrid>
+        </ace:panel>
+    </ui:insert>
+</html>

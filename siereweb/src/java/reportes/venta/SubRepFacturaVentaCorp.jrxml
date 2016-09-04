@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRepFacturaVentaCorp" pageWidth="624" pageHeight="50" orientation="Landscape" columnWidth="624" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1af8b3b5-ae6f-489e-a94f-fac0b1d4828c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="p_FacturaVentaCorp" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+vdft_id, vdft_estado, vfct_id, factdc_porcentajeiva,
+       factdc_valoriva, factdc_subtotal, factdc_anticipo, factdc_saldo,
+       vdft_servico, vdft_cantidad, vdft_costounitario, vdft_costototal,
+       vdft_descuento, vdft_subtotal, vsrv_id,CASE WHEN vdft_costototal > 0 THEN (COALESCE(vdft_descuento,0)*100)/vdft_costototal
+       ELSE 0 END porcdes,
+       COALESCE(vdft_costototal,0)-COALESCE(vdft_descuento,0) vlrmenosdcto
+   FROM vnt_detallefact where vfct_id=  $P{p_FacturaVentaCorp}]]>
+	</queryString>
+	<field name="vdft_id" class="java.lang.Long"/>
+	<field name="vdft_estado" class="java.lang.Boolean"/>
+	<field name="vfct_id" class="java.lang.Long"/>
+	<field name="factdc_porcentajeiva" class="java.math.BigDecimal"/>
+	<field name="factdc_valoriva" class="java.math.BigDecimal"/>
+	<field name="factdc_subtotal" class="java.math.BigDecimal"/>
+	<field name="factdc_anticipo" class="java.math.BigDecimal"/>
+	<field name="factdc_saldo" class="java.math.BigDecimal"/>
+	<field name="vdft_servico" class="java.lang.String"/>
+	<field name="vdft_cantidad" class="java.lang.Integer"/>
+	<field name="vdft_costounitario" class="java.math.BigDecimal"/>
+	<field name="vdft_costototal" class="java.math.BigDecimal"/>
+	<field name="vdft_descuento" class="java.math.BigDecimal"/>
+	<field name="vdft_subtotal" class="java.math.BigDecimal"/>
+	<field name="vsrv_id" class="java.lang.Long"/>
+	<field name="porcdes" class="java.math.BigDecimal"/>
+	<field name="vlrmenosdcto" class="java.math.BigDecimal"/>
+	<title>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7193b709-bd87-4a5f-a9d7-74acc42c35fd" mode="Opaque" x="0" y="0" width="624" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.5" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COSTOS DETALLADOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="06f0e7f3-c0e9-442b-b97d-cef57fa834b8" mode="Opaque" x="24" y="20" width="237" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be8608ff-88ad-4cb3-92fb-0d3bb3fe95b3" mode="Opaque" x="559" y="20" width="65" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fe5d0a7-6fbb-47ac-b1fb-a4aec3499b59" mode="Opaque" x="287" y="20" width="69" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CST UNITARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="162d40c5-b1dc-451b-9afb-73b5ab94f679" mode="Opaque" x="261" y="20" width="26" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CTD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="06f0e7f3-c0e9-442b-b97d-cef57fa834b8" mode="Opaque" x="0" y="20" width="24" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fe5d0a7-6fbb-47ac-b1fb-a4aec3499b59" mode="Opaque" x="356" y="20" width="40" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[%DTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fe5d0a7-6fbb-47ac-b1fb-a4aec3499b59" mode="Opaque" x="396" y="20" width="71" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COSTO CON DTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fe5d0a7-6fbb-47ac-b1fb-a4aec3499b59" mode="Opaque" x="467" y="20" width="29" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[% IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fe5d0a7-6fbb-47ac-b1fb-a4aec3499b59" mode="Opaque" x="496" y="20" width="63" height="15" backcolor="#CCCCCC"/>
+				<box leftPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="26611002-f408-4227-b3f2-133691a35221" positionType="Float" stretchType="RelativeToTallestObject" x="24" y="0" width="237" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdft_servico}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="f0eb4907-5bec-433c-990f-0eebcfd50de7" stretchType="RelativeToBandHeight" x="261" y="0" width="26" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdft_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="038cab89-1329-46c3-86ba-453a408397e6" stretchType="RelativeToBandHeight" x="287" y="0" width="69" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdft_costounitario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="bd664934-f400-4874-932f-dd7b1be13987" stretchType="RelativeToBandHeight" x="559" y="0" width="65" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdft_subtotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6cae1bdd-5484-4535-b3e6-b45c99b117d7" positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="24" height="15"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vsrv_id}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="11bd525e-2fed-4d1b-9cb7-362c967d680f" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="496" y="0" width="63" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factdc_valoriva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="11bd525e-2fed-4d1b-9cb7-362c967d680f" positionType="Float" stretchType="RelativeToTallestObject" x="467" y="0" width="29" height="15"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{factdc_porcentajeiva}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="038cab89-1329-46c3-86ba-453a408397e6" positionType="Float" stretchType="RelativeToTallestObject" x="396" y="0" width="71" height="15"/>
+				<box leftPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vlrmenosdcto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="11bd525e-2fed-4d1b-9cb7-362c967d680f" positionType="Float" stretchType="RelativeToTallestObject" x="356" y="0" width="40" height="15"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{porcdes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        
+        <!--Proceso venta-->
+        <navigation-case>
+            <from-outcome>inicioVenta</from-outcome>
+            <to-view-id>/modulos/venta/Venta.jsf</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>vntConfVenta</from-outcome>
+            <to-view-id>/modulos/venta/ConfirmarVenta.jsf</to-view-id>
+        </navigation-case>
+        <!--Fin proceso venta-->
+        <!--Proceso orden producción-->
+        <navigation-case>
+            <from-outcome>ordenProd</from-outcome>
+            <to-view-id>/modulos/ordenprod/OrdenProd.jsf</to-view-id>
+        </navigation-case>
+        <!--Fin proceso orden producción-->
+        <!--Proceso logística-->
+        <navigation-case>
+            <from-outcome>logDespacho</from-outcome>
+            <to-view-id>/modulos/logistica/logistica.jsf</to-view-id>
+        </navigation-case>
+        <!--Fin proceso logística-->
+        <!--Proceso compra-->
+        <navigation-case>
+            <from-outcome>comp_solreq</from-outcome>
+            <to-view-id>/modulos/procs/compras/SolicitudIns.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>comp_revsols</from-outcome>
+            <to-view-id>/modulos/procs/compras/RevisarReq.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>comp_rcppedido</from-outcome>
+            <to-view-id>/modulos/procs/compras/RecepcionPedido.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>admEvalsgc</from-outcome>
+            <to-view-id>/modulos/evaluacionsgc/IndicadoresXEval.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>admCalfsgc</from-outcome>
+            <to-view-id>/modulos/evaluacionsgc/Calificacion.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>comp_EntPedido</from-outcome>
+            <to-view-id>/modulos/procs/compras/EntregaPedido.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>compRecepcionPedido</from-outcome>
+            <to-view-id>/modulos/procs/compras/RecepcionEntregaPedido.jsf</to-view-id>
+        </navigation-case>        
+        <navigation-case>
+            <from-outcome>cmpFactura</from-outcome>
+            <to-view-id>/modulos/procs/compras/factura/facturaCompra.jsf</to-view-id>
+        </navigation-case>
+        
+          <navigation-case>
+            <from-outcome>admDsp</from-outcome>
+             <to-view-id>/modulos/logistica/logistica.jsf</to-view-id>
+        </navigation-case>
+         
+         <navigation-case>
+            <from-outcome>colaboradores</from-outcome>
+             <to-view-id>/modulos/colaboradores/colaboradores.jsf</to-view-id>
+        </navigation-case>
+        
+          <navigation-case>
+            <from-outcome>liquidacion</from-outcome>
+             <to-view-id>/modulos/liquidacion/liquidacion.jsf</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-outcome>acerca</from-outcome>
+            <to-view-id>/acerca/acercaDeKAYYROS.jsf</to-view-id>
+        </navigation-case>
+        
+        <!--Fin proceso compra-->
+    </navigation-rule>
+</faces-config>

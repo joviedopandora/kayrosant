@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+  <ui:insert name="InclBandEntrSolicitudes">
+        <ace:panel header="Solicitudes">
+            <h:panelGroup id="frmContSolicitud">
+                <h:panelGrid columns="1" styleClass="alturaTablaStd">
+                    <ace:dataTable id="dtSolPasosInic"
+                                   value="#{bandejaEntradaJSFBean.lstTablaSysPasos}"
+                                   var="item"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText=">>>" style="width: 50px">
+                            <h:commandLink value=">>>"
+                                           actionListener="#{bandejaEntradaJSFBean.accionXTareaXPaso_ActionEvent}"
+                                           action="#{bandejaEntradaJSFBean.accionXTareaXPaso_Action}">
+                                <f:attribute name="navegacion" value="#{item.sysPropaso.spsReglanav}"/>
+                                <f:attribute name="beanpaso" value="#{item.sysPropaso.spsJsfbean}"/>
+                                <f:attribute name="paso" value="#{item}"/>
+                            </h:commandLink>
+                        </ace:column>
+                        <ace:column headerText="Solicitud" style="width: 350px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysPropaso.spsNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Proceso" style="width: 350px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysPropaso.sprId.sprNombre}"
+                                          styleClass="textcolumleft"/> 
+                        </ace:column>
+                        <ace:column headerText="Vigencia (días)" style="width: 100px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.sysPropaso.spsVigencia}"
+                                          styleClass="letraConTabla"/> 
+                        </ace:column>
+                        <ace:column headerText="Fecha final" style="width: 100px"
+                                    styleClass="letraTitColTabla">
+                            <h:outputText value="#{item.fechaFinPaso}"
+                                          styleClass="letraConTabla">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText> 
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

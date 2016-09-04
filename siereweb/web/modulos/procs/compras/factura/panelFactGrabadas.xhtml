@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:icecore="http://www.icefaces.org/icefaces/core"
+        xmlns:ace="http://www.icefaces.org/icefaces/components"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelFactGrabadas">
+        <ace:panel header="Facturas grabadas">
+            <h:panelGroup >
+                <h:panelGroup>
+                    <ace:dataTable value="#{facturaJSFBean.lstTablaDetalleFactura}"
+                                   var="item"
+                                   rows="10"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <f:facet name="header">
+                            <h:outputText value="Facturas generadas"/>
+                        </f:facet>
+                        <ace:column headerText="Num. Factura" style="width: 60px" groupBy="#{item.cmpDetallefact.factId.factId}">
+                            <h:outputText value="#{item.cmpDetallefact.factId.factNumfact}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Proveedor" style="width: 200px" groupBy="#{item.cmpDetallefact.factId.prvId.provRazonsoc}">
+                            <h:outputText value="#{item.cmpDetallefact.factId.prvId.provRazonsoc}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="NIT" style="width: 150px" groupBy="#{item.cmpDetallefact.factId.prvId.prvNit}">
+                            <h:outputText value="#{item.cmpDetallefact.factId.prvId.prvNit} - 
+                                          #{item.cmpDetallefact.factId.prvId.prvDigver}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Valor factura ($)" style="width: 150px" groupBy="#{item.cmpDetallefact.factId.factPrevalorbruto}">
+                            <h:outputText value="#{item.cmpDetallefact.factId.factValorbruto}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber pattern="#0.00"/>
+                            </h:outputText>
+                        </ace:column>
+                        <!--
+                        <ace:column headerText="Producto" style="width: 150px">
+                            <h:outputText value="#{item.cmpDetallefact.ccmId.prdId.prdNombre}"
+                                          styleClass="textcolumleft">                                
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Marca" style="width: 150px">
+                            <h:outputText value="#{item.cmpDetallefact.ccmId.marId.marNombre}"
+                                          styleClass="textcolumleft">                                
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Presentación" style="width: 150px">
+                            <h:outputText value="#{item.cmpDetallefact.ccmId.pspId.pspNombre}"
+                                          styleClass="textcolumleft">                                
+                            </h:outputText>
+                        </ace:column>                        
+                        <ace:column headerText="Cantidad" style="width: 150px">
+                            <h:outputText value="#{item.cmpDetallefact.detfCantrecibida}"
+                                          styleClass="textcolumright">                                
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Precio unitario" style="width: 150px">
+                            <h:outputText value="#{item.cmpDetallefact.detfValorunitario}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </ace:column>                        
+                        <ace:column headerText="Precio total" style="width: 150px">
+                            <h:outputText value="#{item.bdValorTotalDetFact}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                            <f:facet name="footer">
+                                <h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText value="Total:"/>
+                                        <h:outputText value="#{facturaJSFBean.bdTotalValorDetFact}">
+                                    <f:convertNumber pattern="#,##0.00"/>
+                                </h:outputText>
+                                    </h:panelGrid>
+                                </h:panelGroup>                                
+                            </f:facet>
+                        </ace:column>
+                        -->
+                    </ace:dataTable>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

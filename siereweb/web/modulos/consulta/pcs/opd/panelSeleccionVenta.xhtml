@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="consVenta">
+        <ace:panel header="VENTAS" style="font-size: large">
+            <h:panelGroup >
+                <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaVntRegistroventa}"
+                               var="itemRgv"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               rows="30"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <ace:column headerText="Ir" style="width: 50px">
+                        <h:commandButton styleClass="btnSeleccionOpen"
+
+                                         actionListener="#{pcsOrdenProduccionJSFBean.rowDtRegistroVentaSelServicios_ActionEvent}">
+                            <f:attribute name="trvs" value="#{itemRgv}"/>
+                        </h:commandButton>
+                    </ace:column>
+                    <ace:column headerText="Nº Venta"  styleClass="textcolumleft letraOutput" sortBy="#{itemRgv.vntRegistroventa.rgvtId}"
+                                filterBy="#{itemRgv.vntRegistroventa.rgvtId}" filterMatchMode="contains">
+                        <h:outputText value="#{itemRgv.vntRegistroventa.rgvtId}"/>
+                    </ace:column>
+
+                    <ace:column headerText="NIT" style="width: 100px">
+                        <h:outputText value="#{itemRgv.vntRegistroventa.clnId.identificacion}"
+                                      styleClass="textcolumleft letraOutput"/>
+                    </ace:column>
+
+
+                    <ace:column headerText="Cliente"  styleClass="textcolumleft letraOutput" sortBy="#{itemRgv.vntRegistroventa.clnId.nombres}"
+                                filterBy="#{itemRgv.vntRegistroventa.clnId.nombres}" filterMatchMode="contains">
+                        <h:outputText value="#{itemRgv.vntRegistroventa.clnId.nombres}"/>
+                    </ace:column>
+                    <ace:column headerText="Nombre Evento"  styleClass="textcolumleft letraOutput" sortBy="#{itemRgv.vntRegistroventa.vdeId.vdeObsr}"
+                                filterBy="#{itemRgv.vntRegistroventa.vdeId.vdeObsr}" filterMatchMode="contains">
+                        <h:outputText value="#{itemRgv.vntRegistroventa.vdeId.vdeObsr}"/>
+                    </ace:column>
+
+
+                    <ace:column headerText="Fecha Evento OP"  styleClass="textcolumleft letraOutput"  sortBy="#{itemRgv.vntRegistroventa.vdeId.vdeFechaevt}">
+
+                        <h:outputText value="#{itemRgv.vntRegistroventa.vdeId.vdeFechaevt}">
+                            <f:convertDateTime pattern="EE-dd-M-yyyy-W"  timeZone="GMT-5"/>
+                        </h:outputText>
+                    </ace:column>
+
+
+
+
+
+                </ace:dataTable>
+            </h:panelGroup>                
+        </ace:panel>
+    </ui:insert>
+</html>

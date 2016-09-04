@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="ExistInv">
+        <ace:dialog id="modalPnlExistInv" closable="true"
+                    widgetVar="dlgInventario"
+                    width="460"
+                    showEffect="fade"
+                    hideEffect="fade"
+                    header="Inventario del producto"
+                    closeOnEscape="true"
+                    draggable="true"
+                    modal="true"                                               
+                    resizable="false">
+            <h:outputLabel value="Existencia inventario por producto" dir="top"/>
+            <ace:dataTable value="#{compAprbSolsJSFBean.lstTablaInvenXProd}" var="itemInv"
+                           emptyMessage="No existe en inventario"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                           paginatorPosition="bottom"
+                           currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column style="width: 40px">
+                    <f:facet name="header">
+                        <h:outputText value="Lote" styleClass="letraTitColTabla"
+                                      title="Lote"/>
+                    </f:facet>
+                    <h:outputText value="#{itemInv.invent.invId}"
+                                  styleClass="letraConTabla"/>
+                </ace:column>
+                <ace:column style="width: 180px">
+                    <f:facet name="header">
+                        <h:outputText value="Marca" styleClass="letraTitColTabla"
+                                      title="Marca"/>
+                    </f:facet>
+                    <h:outputText value="#{itemInv.invent.marId.marNombre}"
+                                  styleClass="letraConTabla"/>
+                </ace:column>
+                <ace:column style="width: 180px">
+                    <f:facet name="header">
+                        <h:outputText value="Presentación" styleClass="letraTitColTabla"
+                                      title="Marca"/>
+                    </f:facet>
+                    <h:outputText value="#{itemInv.invent.pspId.pspNombre}"
+                                  styleClass="letraConTabla"/>
+                </ace:column>
+                <ace:column style="width: 50px">
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad" styleClass="letraTitColTabla"
+                                      title="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{itemInv.invent.invCant}"
+                                  styleClass="letraConTabla"
+                                  style="float: right;position: relative"/>
+                </ace:column>
+                <f:facet name="footer">
+                    <h:panelGroup>
+                        <h:outputText value="Total:"/>  
+                        <h:outputText value="#{compAprbSolsJSFBean.tablaProdXReqSel.cantProdInv}"
+                                      style="float: right;position: relative"/>  
+                    </h:panelGroup>
+                </f:facet>
+            </ace:dataTable>
+        </ace:dialog>
+    </ui:insert>
+</html>

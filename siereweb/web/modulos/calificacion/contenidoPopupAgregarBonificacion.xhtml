@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="ContenidoListaBonifiacionAsociar">
+
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="2"> Bonificaciones </th></tr>
+ <tr>
+                <td > <h:commandButton 
+                        style="text-align: center"
+                       
+                        onclick="dialogSelBonificacionColaboradores.hide();"
+                        actionListener="#{evaluacionJSFBean.agregarBonifiacion}"
+                        styleClass="btnGuardarStd" title="Aceptar">
+
+
+                        <f:ajax execute="@this" render="@form"/>
+                    </h:commandButton> </td>
+                <td><h:commandButton 
+                      
+                        onclick="dialogSelBonificacionColaboradores.hide();"
+
+                        styleClass="btnCancelarStd" title="Cancelar">
+
+
+                        <f:ajax execute="@this" render="@form"/>
+                    </h:commandButton> </td>
+            </tr>
+            <tr><td colspan="2"><div style="width: 100%">
+                        <ace:dataTable value="#{evaluacionJSFBean.lstBonificacion}" 
+                                       style="font-size: large;"
+                                       var="itemCxc"
+                                       scrollable="true"
+                                       scrollHeight="800"
+
+                                       rows="20"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron registros"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <ace:column headerText="" style="width: 50px">
+                                <h:selectBooleanCheckbox value="#{itemCxc.seleccionado}">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:selectBooleanCheckbox>
+
+                            </ace:column>
+                            <ace:column headerText="Bonificación"   >
+                                <h:outputText value="#{itemCxc.bonificacion.bonificacionNombre}" styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Valor" style="width: 150px">
+                                <h:outputText value="#{itemCxc.bonificacion.bonificacionValor}"
+                                              styleClass="textcolumleft letraOutput">
+                                    <f:convertNumber     type="currency"
+                                                         currencySymbol="$"
+                                                         groupingUsed="true"
+                                                         minFractionDigits="0"
+                                                         maxFractionDigits="0"/>
+                                </h:outputText>
+                            </ace:column>
+
+
+                        </ace:dataTable>
+                    </div></td></tr>
+           
+
+        </table>
+
+
+
+    </ui:insert>
+
+</html>

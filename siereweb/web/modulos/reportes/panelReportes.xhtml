@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelReportes">
+        <ace:panel header="reportes"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> #{reportesJSFBean.strReporte} </th></tr>
+
+                <tr>
+                    <td style="width: 35%">
+                        <div >
+                            <label> Fecha Inicial *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 100%">
+                        <ace:dateTimeEntry value="#{reportesJSFBean.fechaInicial}" 
+
+                                           styleClass="inputs"
+                                           pattern="dd/MM/yyyy"
+                                           renderAsPopup="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            <ace:ajax execute="@this" render="@this" />
+                        </ace:dateTimeEntry>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 35%">
+                        <div >
+                            <label> Fecha Final *</label>
+                        </div>
+                    </td>
+                    <td  style="width: 100%">
+                        <ace:dateTimeEntry value="#{reportesJSFBean.fechaFinal}" 
+
+                                           styleClass="inputs"
+                                           pattern="dd/MM/yyyy"
+                                           renderAsPopup="true">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            <ace:ajax execute="@this" render="@this" />
+                        </ace:dateTimeEntry>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 50%">
+                        <div >
+                            <h:commandButton styleClass="btnGenerarInforme"
+                                             actionListener="#{reportesJSFBean.generarInforme_ActionEvent}"
+                                             title="Generar reporte">  
+                                <f:ajax execute="@this" render="@all" />
+                            </h:commandButton>
+                        </div>
+                    </td>
+                    <td style="width: 35%">
+                        <div >
+                            <ice:outputResource resource="#{reportesJSFBean.jaspResource}"
+                                                mimeType="application/vnd.ms-excel"
+                                                fileName="#{reportesJSFBean.strReporte}.xls"
+                                                shared="false"
+                                                label=" "
+                                                type="button"
+                                                styleClass="btnInformeEXCEL">
+                            </ice:outputResource>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+        </ace:panel>
+    </ui:insert>    
+</html>

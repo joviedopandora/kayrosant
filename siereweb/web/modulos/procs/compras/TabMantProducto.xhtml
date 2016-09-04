@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:icecore="http://www.icefaces.org/icefaces/core"
+        xmlns:ace="http://www.icefaces.org/icefaces/components"
+        xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="invProd">
+        <h:panelGroup id="mantProducto">
+            <h:panelGrid columns="1">
+                <h:panelGroup>
+                </h:panelGroup>                
+                <ace:dataTable id="dtMantProducto"                             
+                             var="item"                                                 
+                             scrollable="true"
+                             scrollHeight="350"          
+                             emptyMessage="No se encontraron datos"
+                             paginator="true"
+                             rows="10"  
+                             paginatorAlwaysVisible="false"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                             paginatorPosition="bottom"
+                             currentPageReportTemplate="(Procesos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="Productos" styleClass="letraTituloTabla"/>
+                    </f:facet>
+                    <ace:column style="width: 150px">
+                        <f:facet name="header">
+                            <h:outputText value="Id producto" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.invProducto.prdId}"
+                                      styleClass="letraConTabla"/>            
+                    </ace:column>
+                    <ace:column style="width: 200px"> 
+                        <f:facet name="header">
+                            <h:outputText value="Nombre producto" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.invProducto.prdNombre}"
+                                      styleClass="letraConTabla"/> 
+                    </ace:column>
+                    <ace:column  style="width: 350px">  
+                        <f:facet name="header">
+                            <h:outputText value="Descripción producto" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:outputText value="#{item.invProducto.prdDesc}"
+                                      styleClass="letraConTabla"/>    
+                    </ace:column>
+                    <ace:column style="width: 100px">    
+                        <f:facet name="header">
+                            <h:outputText value="Especial" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.invProducto.prdEsp}" >
+                            
+                        </h:selectBooleanCheckbox>
+                    </ace:column>
+                    <ace:column style="width: 100px">    
+                        <f:facet name="header">
+                            <h:outputText value="Ocacional" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.invProducto.prdOcasnl}" >
+                            
+                        </h:selectBooleanCheckbox>
+                    </ace:column>
+                    <ace:column style="width: 100px">    
+                        <f:facet name="header">
+                            <h:outputText value="Único" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.invProducto.prdUnico}" >
+                            
+                        </h:selectBooleanCheckbox>
+                    </ace:column>
+                    <ace:column style="width: 100px">    
+                        <f:facet name="header">
+                            <h:outputText value="Estado" styleClass="letraTitColTabla"/>
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{item.invProducto.prdEst}" >                            
+                        </h:selectBooleanCheckbox>
+                    </ace:column>                    
+                </ace:dataTable>
+                
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>

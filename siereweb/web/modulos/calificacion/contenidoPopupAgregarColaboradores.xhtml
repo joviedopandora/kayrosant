@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="ContenidoListaColaboradoresAsociar">
+
+
+        <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="2"> Colaboradores </th></tr>
+            <tr><th   class="thtablaFormulario" colspan="2"> 
+
+
+                    <h:commandButton 
+                        style="text-align: right"
+                        value=""
+                        onclick="dialogSelCotizacionColaboradores.hide();"
+                        actionListener="#{evaluacionJSFBean.asociarColaboradores}"
+                        styleClass="btnNuevoadiccionar" title="Adicionar Colaborador">
+
+
+                        <f:ajax execute="@this" render="@form"/>
+                    </h:commandButton>
+
+
+
+
+
+                </th></tr>
+            <tr><td><div style="width: 100%">
+                        <ace:dataTable value="#{evaluacionJSFBean.lstTablaAdmCrgXCol}" 
+                                       style="font-size: large;"
+                                       var="itemCxc"
+                                       scrollable="true"
+                                       scrollHeight="800"
+                                       rows="20"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron registros"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <ace:column headerText="" style="width: 50px">
+                               
+                                <h:selectBooleanCheckbox valueChangeListener="#{itemCxc.seleccionarAdmCrgXCol}">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:selectBooleanCheckbox>
+
+                            </ace:column>
+
+
+                            <ace:column id="chassis2" headerText="Cargo" sortBy="#{itemCxc.admCrgxcol.crgId.crgNombre}"
+                                        styleClass="textcolumleft letraOutput">
+                                <h:outputText id="chassisCell2" value="#{itemCxc.admCrgxcol.crgId.crgNombre}"/>
+
+                            </ace:column>
+
+                            <ace:column headerText="Cedula" style="width: 100px"
+                                        filterBy="#{itemCxc.admCrgxcol.cpeId.colCedula.colCedula}" filterMatchMode="contains" >
+                                <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colCedula}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column id="chassis1" headerText="Nombre" sortBy="#{itemCxc.admCrgxcol.cpeId.colCedula.nombres}"
+                                        filterBy="#{itemCxc.admCrgxcol.cpeId.colCedula.nombres}" filterMatchMode="contains" styleClass="textcolumleft letraOutput">
+                                <h:outputText id="chassisCell" value="#{itemCxc.admCrgxcol.cpeId.colCedula.nombres}"/>
+
+                            </ace:column>
+
+                            <ace:column id="chassis3" headerText="Estado" sortBy="#{itemCxc.admCrgxcol.cpeId.colCedula.estadoColaborador.descEstadocolaborador}"
+                                        styleClass="textcolumleft letraOutput">
+                                <h:outputText id="chassisCell3" value="#{itemCxc.admCrgxcol.cpeId.colCedula.estadoColaborador.descEstadocolaborador}"/>
+
+                            </ace:column>
+                        </ace:dataTable>
+                    </div></td></tr>
+
+        </table>
+
+
+
+    </ui:insert>
+
+</html>

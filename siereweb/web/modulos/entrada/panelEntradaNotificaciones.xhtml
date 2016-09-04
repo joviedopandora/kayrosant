@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="contPrincipalNotificaciones">
+        <ace:panel header="Alertas" style="font-size: large" >
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="2"> Notificaciones </th></tr>
+
+                <tr><td><div style="width: 100%">
+                            <ace:dataTable value="#{bandejaEntradaJSFBean.lstNotificaciones}"
+                                           var="itemRgv"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="30"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Eventos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                                <ace:column headerText="Fecha Evento" style="width: 200px">
+                                    <h:outputText value="#{itemRgv.notificacion.notFechaevento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Motivo" style="width: 100%" >
+                                    <h:outputText value="#{itemRgv.notificacion.notDescipcion}"
+                                                  styleClass="textcolumleft"/>
+                                </ace:column>
+
+                                <ace:column headerText="Acciones"  style="width: 300px">
+                                    <h:panelGrid columns="3">
+                                        <h:commandButton value="Aceptar"
+                                                         styleClass="button"
+                                                         actionListener="#{bandejaEntradaJSFBean.accionNotificacion_ActionEvent}"
+
+                                                         title="Aceptar">
+                                            <f:attribute name="tabla" value="#{itemRgv}"/>
+                                            <f:attribute name="accion" value="2"/>
+                                            <f:ajax execute="@this" render="@all" />
+                                        </h:commandButton>
+                                        <h:commandButton value="Posponer"
+                                                         styleClass="button"
+
+                                                         actionListener="#{bandejaEntradaJSFBean.accionNotificacion_ActionEvent}"
+                                                         title="Posponer">
+                                            <f:attribute name="tabla" value="#{itemRgv}"/>
+                                            <f:attribute name="accion" value="4"/>
+                                            <f:ajax execute="@this" render="@all" />
+                                        </h:commandButton>
+                                        <h:commandButton value="Cancelar"
+                                                         styleClass="button"
+                                                         actionListener="#{bandejaEntradaJSFBean.accionNotificacion_ActionEvent}"
+
+                                                         title="Cancelar">
+                                            <f:attribute name="tabla" value="#{itemRgv}"/>
+                                            <f:attribute name="accion" value="3"/>
+                                            <f:ajax execute="@this" render="@all" />
+                                        </h:commandButton>
+                                    </h:panelGrid>
+                                </ace:column>
+
+                            </ace:dataTable>
+                        </div></td></tr>
+
+            </table>
+        </ace:panel>
+    </ui:insert>
+</html>

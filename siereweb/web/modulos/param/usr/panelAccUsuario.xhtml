@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccUsuario">
+        <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 1 ? true : false}">
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnGuardarStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnGrabarUsuario_ActionEvent}"
+                                 title="Grabar usuario">
+                </h:commandButton>            
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnNuevoStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnNuevoUsuario_ActionEvent}"
+                                 title="Cancelar">
+                </h:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
+        <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 2 ? true : false}">
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15"
+                         rendered="#{usuarioJSFBean.blnMostrarPanel}">
+                <h:commandButton styleClass="btnNuevoStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnAgregarCrgXUsr_ActionEvent}"
+                                 title="Agregar cargo">
+                </h:commandButton>            
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15"
+                         rendered="#{usuarioJSFBean.blnMostrarPanel}">
+                <h:commandButton styleClass="btnVolverStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnVolverCrgXUsr_ActionEvent}"
+                                 title="Regresar">
+                </h:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <body>
+        <ui:composition template="/principal/templateGreen.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+            <ui:define name="accion">
+                <ui:include src="panelAccIndicadores.xhtml" />
+            </ui:define>
+
+            <ui:define name="left">
+
+                <!--ui:include src="leftIndicadores.xhtml" / -->
+
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup rendered="#{inventarioJSFBean.numPanel==1 ? true : false}">
+                    <ui:include src="PanelIndicadores.xhtml" />
+                </h:panelGroup> 
+
+               
+
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

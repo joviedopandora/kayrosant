@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml">
+
+        <ui:define name="top">
+            <h:panelGroup rendered="#{admUsrJSFBean.mostrarTablaUsr}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton title="Volver a parametrización"  
+                                     styleClass="btnVolverStd">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!admUsrJSFBean.mostrarTablaUsr}">
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                    <h:commandButton id="btnAgregar" value=""                                               
+                                     title="Asociar cargo" actionListener="#{admUsrJSFBean.btnGrabarCrgXUsu_ActionEvent}"                                     
+                                     styleClass="btnNuevoStd">
+                    </h:commandButton>
+                </h:panelGrid>
+                <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                    <h:commandButton title="Volver"  
+                                     styleClass="btnVolverStd" actionListener="#{admUsrJSFBean.btnVolver_ActionEvent}">
+                    </h:commandButton>
+                </h:panelGrid>
+            </h:panelGroup>
+        </ui:define>
+
+        <ui:define name="left">
+            <ui:include src="NavParametr.xhtml"/> 
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">
+                <h:outputText value="Usuario seleccionado: "
+                              style="font-size: 12px;font-weight: bold"
+                              rendered="#{!admUsrJSFBean.mostrarTablaUsr}"/>
+                <h:outputText value="C.C. #{admUsrJSFBean.tablaColXEmp.admColxemp.colCedula.colCedula} - 
+                              #{admUsrJSFBean.tablaColXEmp.admColxemp.colCedula.colNombres} 
+                              #{admUsrJSFBean.tablaColXEmp.admColxemp.colCedula.colApellido}"
+                              style="font-size: 14px;font-weight: bold"
+                              rendered="#{!admUsrJSFBean.mostrarTablaUsr}"/>
+                <ace:panel header="Usuarios" rendered="#{admUsrJSFBean.mostrarTablaUsr}">
+                    <h:panelGrid columns="1" styleClass="tablaAlnVer">
+                        <h:panelGroup id="pnlgUsuario"> 
+                            <ace:dataTable id="dtUsuarios"
+                                           value="#{admUsrJSFBean.lstTablaColXEmp}"
+                                           var="item"                                      
+                                           height="350"
+                                           emptyMessage="No se encontraron datos"
+                                           paginator="true"   
+                                           rows="10"  
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                                           paginatorPosition="bottom"
+                                           currentPageReportTemplate="(Usuarios: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText="Identificación" style="width: 150px"
+                                            styleClass="letraTitColTabla">
+                                    <h:commandLink value="#{item.admColxemp.colCedula.colCedula}"
+                                                   styleClass="letraConTabla"
+                                                   actionListener="#{admUsrJSFBean.dtColaborador_RowSel}">
+                                        <f:attribute name="itemSel" value="#{item}"/>
+                                    </h:commandLink>
+                                </ace:column>
+                                <ace:column headerText="Apellidos" style="width: 300px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.admColxemp.colCedula.colApellido}"
+                                                  styleClass="letraConTabla"/>
+                                </ace:column>
+                                <ace:column headerText="Nombres" style="width: 300px"
+                                            styleClass="letraTitColTabla">
+                                    <h:outputText value="#{item.admColxemp.colCedula.colNombres}"
+                                                  styleClass="letraConTabla"/>
+                                </ace:column>
+                            </ace:dataTable>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </ace:panel>
+
+                <ace:panel header="Asignar cargo a usuario" rendered="#{!admUsrJSFBean.mostrarTablaUsr}">
+                    <h:panelGroup>
+                        <h:panelGrid columns="2" rendered="#{admUsrJSFBean.blnMostrarCrgXCol}"
+                                     styleClass="tablaAlnVer">
+                            <h:panelGroup id="pnlgTablaCargo">
+                                <h:outputLabel value="Cargo" dir="top"/>
+                                <ace:dataTable id="dtCargos"
+                                               value="#{admUsrJSFBean.lstTablaCargo}"
+                                               var="item"
+                                               emptyMessage="No se encontraron datos"
+                                               paginator="true"   
+                                               rows="10"  
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                                               paginatorPosition="bottom"
+                                               currentPageReportTemplate="(Cargos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                    <ace:column headerText="" style="width: 50px">
+                                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                    </ace:column>
+                                    <ace:column headerText="Id Cargo" style="width: 100px"
+                                                styleClass="letraTitColTabla">
+                                        <h:outputText value="#{item.admCargo.crgId}"
+                                                      styleClass="textcolumleft letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column headerText="Nombre" style="width: 300px"
+                                                styleClass="letraTitColTabla">
+                                        <h:outputText value="#{item.admCargo.crgNombre}"
+                                                      styleClass="textcolumleft letraConTabla"/>
+                                    </ace:column>
+                                </ace:dataTable>
+                            </h:panelGroup>
+                            <h:panelGroup id="pnlgTablaCrgXUsr">
+                                <h:outputLabel value="Cargo por usuario" dir="top"/>
+                                <ace:dataTable id="dtCrgXUsu"
+                                               value="#{admUsrJSFBean.lstTablaCrgXCol}"
+                                               var="item"
+                                               emptyMessage="No se encontraron datos"
+                                               paginator="true"   
+                                               rows="10"  
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                       
+                                               paginatorPosition="bottom"
+                                               currentPageReportTemplate="(Cargos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                    <ace:column headerText="" style="width: 50px">
+                                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                    </ace:column>
+                                    <ace:column headerText="Id Cargo" style="width: 100px"
+                                                styleClass="letraTitColTabla">
+                                        <h:outputText value="#{item.admCrgxcol.crgId.crgId}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column headerText="Nombre" style="width: 300px"
+                                                styleClass="letraTitColTabla">
+                                        <h:outputText value="#{item.admCrgxcol.crgId.crgNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column headerText="Estado" style="width: 50px"
+                                                styleClass="letraTitColTabla">
+                                        <h:selectBooleanCheckbox value="#{item.admCrgxcol.cxcEst}"/>
+                                    </ace:column>
+                                </ace:dataTable>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

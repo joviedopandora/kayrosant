@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelEntrada">
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="4"> Registro de Inventario  </th></tr>
+            <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Código *</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+                    <div>
+
+                        <h:inputText value="#{inventarioJSFBean.inventenatio.invCodigobarras}" 
+                                     maxlength="50"
+                                     styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputText>
+                    </div>
+
+
+                </td>     
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>ID Producto </label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+                        <h:outputText value="#{(inventarioJSFBean.inventenatio.prdId == null ? '' : inventarioJSFBean.inventenatio.prdId.prdId)}" 
+                                      styleClass="letraOutput" >
+
+                        </h:outputText>
+                    </div>
+
+                </td>     
+
+
+            </tr>
+  <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Nombre </label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+                        <h:outputText value="#{(inventarioJSFBean.inventenatio.prdId == null ? '' : inventarioJSFBean.inventenatio.prdId.prdNombre)}" 
+                                      styleClass="letraOutput" >
+
+                        </h:outputText>
+                    </div>
+
+                </td>     
+
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Marca *</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:outputText value="#{(inventarioJSFBean.inventenatio.marId == null ? '' : inventarioJSFBean.inventenatio.marId.marNombre)}" 
+                                      styleClass="letraOutput"
+                                      rendered="#{inventarioJSFBean.inventenatio.invId == null ? false : true}">
+
+                        </h:outputText>
+
+                        <h:selectOneMenu  styleClass="inputs"
+                                          rendered="#{inventarioJSFBean.inventenatio.invId == null ? true : false}"
+                                          value="#{inventarioJSFBean.marca}"
+                                          >
+                            <f:selectItems value="#{inventarioJSFBean.lstMarcasActivasXProducto}" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+
+
+                    </div>
+
+                </td> 
+
+
+
+                
+
+            </tr>
+            <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Presentación *</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:outputText value="#{(inventarioJSFBean.inventenatio.pspId == null ? '' : inventarioJSFBean.inventenatio.pspId.pspNombre)}" 
+                                      styleClass="letraOutput"
+                                      rendered="#{inventarioJSFBean.inventenatio.invId == null ? false : true}">
+
+                        </h:outputText>
+
+                        <h:selectOneMenu  styleClass="inputs"
+                                          rendered="#{inventarioJSFBean.inventenatio.invId == null ? true : false}"
+                                          value="#{inventarioJSFBean.presentacion}"
+                                          >
+                            <f:selectItems value="#{inventarioJSFBean.lstPresentacionesActivasXProducto}" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+
+
+                    </div>
+                </td>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Cantidad Actual</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:outputText value="#{inventarioJSFBean.inventenatio.invCant}" 
+                                      styleClass="letraOutput" >
+
+                        </h:outputText>
+
+
+
+
+                    </div>
+
+                </td> 
+
+            </tr>
+        </table>
+        <br></br>
+        <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+            <tr><th   class="thtablaFormulario" colspan="6"> Movimiento </th></tr>
+            <tr>
+                <td style="width: 20%" > 
+                    <div> 
+                        <label>Tipo Transacción *</label>
+                    </div>
+                </td>
+                <td style="width:100%" colspan="3">
+
+
+
+                    <div>
+                        <h:selectOneMenu  styleClass="inputs"
+                                          value="#{inventarioJSFBean.tipoTransac}"
+                                          >
+                            <f:selectItems value="#{inventarioJSFBean.lstTipoTransaccion}" />
+                            <f:ajax execute="@this" render="@this" />
+                        </h:selectOneMenu>
+                    </div>
+
+
+                </td>     
+            </tr>
+            <tr>
+                <td style="width: 20%"> 
+                    <div> 
+                        <label>Cantidad *</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+                        <h:inputText value="#{inventarioJSFBean.cantidadMovimiento}"  styleClass="inputs" >
+                            <f:ajax execute="@this" render="@this" />
+                            <f:convertNumber integerOnly="true" />
+                        </h:inputText>
+                    </div>
+
+                </td>     
+                <td style="width: 10%"> 
+                    <div> 
+                        <label>Soporte de Movimiento *</label>
+                    </div>
+                </td>
+                <td style="width: 30%">
+
+                    <div>
+
+                        <h:inputText value="#{inventarioJSFBean.kardes}"  
+                                     styleClass="inputs" maxlength="20" >
+                            <f:ajax execute="@this" render="@this" />
+                            <f:converter converterId="convertMayusc"/>
+                        </h:inputText>
+
+
+
+                    </div>
+
+
+
+                </td> 
+            </tr>
+        </table>
+        <br></br>
+
+    </ui:insert>    
+</html>

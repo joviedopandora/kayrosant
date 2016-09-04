@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelDetEvento">
+        <h:panelGrid columns="17" >
+            <h:outputLabel value="Identificación -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.tdcId.tdcId}. 
+                          #{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnIdentificacion}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Cliente -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnNombres} 
+                          #{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.clnApellidos}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Tipo -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" value="#{gestionVentaJSFBean.tablaVntClienteSel.vntCliente.tclId.tclNombre}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Venta N° -->" style="font-weight: 800; font-size: 12px"/>
+            <h:outputText styleClass="outputText"
+                          />
+        </h:panelGrid>
+        <h:panelGrid columns="7" >
+            <h:outputLabel value="Homenajeado -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntDetalleclienteSel.vntDetallecliente.dclnNomb1} 
+                          #{gestionVentaJSFBean.tablaVntDetalleclienteSel.vntDetallecliente.dclnNomb2}
+                          #{gestionVentaJSFBean.tablaVntDetalleclienteSel.vntDetallecliente.dclnApe1} 
+                          #{gestionVentaJSFBean.tablaVntDetalleclienteSel.vntDetallecliente.dclnApe2}"/>
+            <h:outputLabel/>
+            <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputLabel/>
+            <h:outputLabel value="Parentesco -->" style="font-weight: 800; font-size: 12px;"/>
+            <h:outputText styleClass="outputText" 
+                          value="#{gestionVentaJSFBean.tablaVntDetalleclienteSel.vntDetallecliente.prtId.prtNombre}"/>
+        </h:panelGrid>
+        <ace:panel header="Detalle evento">
+            <h:panelGrid columns="4">
+                <h:outputLabel value="Departamento *" />
+                <h:selectOneMenu styleClass="selectMedianoConc"
+                                 value="#{gestionVentaJSFBean.depId}"
+                                 valueChangeListener="#{gestionVentaJSFBean.ddlDep_ValueChangeEvent}">
+                    <f:selectItems value="#{appBean.lstItemsDepartamento}"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Ciudad *" />
+                <h:selectOneMenu styleClass="selectMedianoConc"
+                                 value="#{gestionVentaJSFBean.ciuId}">
+                    <f:selectItems value="#{gestionVentaJSFBean.lstItemsCiudadXDep}"/>                    
+                </h:selectOneMenu>
+                <h:outputLabel value="Nombres del Cliente *"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevNombres}" style="width: 200px"/>
+                <h:outputLabel value="Apellidos del Cliente *"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevApellidos}" style="width: 200px"/>
+                <h:outputLabel value="Motivo *"/>
+                <h:selectOneMenu styleClass="selectMedianoConc"
+                                 value="#{gestionVentaJSFBean.idMotivoEvento}">
+                    <f:selectItems value="#{gestionVentaJSFBean.lstMotivoEvento}"/>
+                </h:selectOneMenu>
+                <h:outputLabel value="Dirección evento *"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevDireccion}" style="width: 200px"/>
+                <h:outputLabel value="Fecha evento"/>
+                <ace:maskedEntry mask="99/99/9999" value="#{gestionVentaJSFBean.datDevFecha}" style="width: 100px">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                </ace:maskedEntry>                
+                <h:outputLabel value="Hora inicio/final *"/>
+                <h:panelGrid columns="3">
+                    <ace:maskedEntry mask="99:99" value="#{gestionVentaJSFBean.datDevHoraInicio}" style="width: 50px">
+                        <f:convertDateTime pattern="HH:mm" timeZone="GMT-5"/>
+                    </ace:maskedEntry>
+                    <h:outputLabel value="-"/>
+                    <ace:maskedEntry mask="99:99" value="#{gestionVentaJSFBean.datDevHoraFinal}" style="width: 50px">
+                        <f:convertDateTime pattern="HH:mm" timeZone="GMT-5"/>
+                    </ace:maskedEntry>
+                </h:panelGrid>
+                <h:outputLabel value="Tel. Fijo 1"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevTelefono1}" style="width: 100px"/>
+                <h:outputLabel value="Tel. Fijo 2"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevTelefono2}" style="width: 100px"/>
+                <h:outputLabel value="Celular 1 *"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevCelular1}" style="width: 100px"/>
+                <h:outputLabel value="Celular 2"/>
+                <ace:textEntry value="#{gestionVentaJSFBean.strDevCelular2}" style="width: 100px"/>
+                <h:outputLabel value="Observación"/>
+                <h:inputTextarea value="#{gestionVentaJSFBean.strDevObservacion}" style="width: 350px; height: 60px"/>
+            </h:panelGrid>
+        </ace:panel>
+    </ui:insert>
+</html>

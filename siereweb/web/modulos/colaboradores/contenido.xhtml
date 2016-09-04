@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+
+    <ui:insert name="Contenidofactura">
+
+        <ace:panel header="COLABORADORES"  style="width: 100%" styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="2"> NUESTROS COLABORADORES </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <ace:dataExporter 
+                            styleClass="btnGenerarInforme"
+                            label=" "
+                            style=" 
+                            border: none;
+                            width: 45px ;height: 45px;
+                            background-size: 100% auto;
+                            background-repeat: repeat;
+                            background-color: transparent !important;
+                            border: 0px !important;"
+                            includeHeaders="true"
+                            pageOnly="false"
+                            type="xls"
+
+                            target="tablaCol" fileName="colaboradores"/>
+
+                        <ace:dataTable value="#{colaboradorJSFBean.lstTablaColaboradores}"
+                                       var="itemclb"
+                                       rows="20"
+                                       alwaysExecuteContents="true"
+                                       id="tablaCol"
+                                       paginator="true"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorAlwaysVisible="true"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                       currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+
+
+                            <ace:column headerText=">>>" >
+                                <h:commandLink value=">>>"
+                                               rendered="#{itemclb.admColaborador.colCedula  != null}"
+                                               actionListener="#{colaboradorJSFBean.rowDtDetalleColaborador_ActionEvent}">
+                                    <f:attribute name="itemcolaborador" value="#{itemclb}"/>
+                                    <f:ajax execute="@this" render="@all" />
+                                </h:commandLink>
+                            </ace:column>
+
+
+
+
+
+                            <ace:column id="colCedula" headerText="Documento">
+
+                                <h:outputText value="#{itemclb.admColaborador.colCedula}" 
+
+                                              styleClass="textcolumleft letraOutput"/>
+
+                            </ace:column>
+
+
+                            <ace:column headerText="Nombre 1"  sortBy="#{itemclb.admColaborador.colNombre1}"
+                                        filterBy="#{itemclb.admColaborador.colNombre1}" filterMatchMode="contains" >
+                                <h:outputText value="#{itemclb.admColaborador.colNombre1}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+                            <ace:column headerText=" 2 Nombre" >
+                                <h:outputText value="#{itemclb.admColaborador.colNombre2}"
+
+
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+
+                            <ace:column headerText="Apellido1"  sortBy="#{itemclb.admColaborador.colApellido1}"
+                                        filterBy="#{itemclb.admColaborador.colApellido1}" filterMatchMode="contains" >
+                                <h:outputText value="#{itemclb.admColaborador.colApellido1}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+
+                            <ace:column headerText="apellido2" >
+                                <h:outputText value="#{itemclb.admColaborador.colApellido2}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Estado" >
+                                <h:outputText value="#{itemclb.admColaborador.estadoColaborador.descEstadocolaborador}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Celular" >
+                                <h:outputText value="#{itemclb.admColaborador.colCelular}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                            <ace:column headerText="Antiguedad" >
+                                <h:outputText value="#{itemclb.admColaborador.idAntiguedad.descAntiguedad}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+
+
+                            <ace:column headerText="EPS" >
+                                <h:outputText value="#{itemclb.admColaborador.colEps}"
+                                              styleClass="textcolumleft letraOutput"/>
+                            </ace:column>
+
+                        </ace:dataTable>
+
+                    </td>
+                </tr>
+            </table>
+        </ace:panel>
+
+
+
+
+
+
+
+
+
+    </ui:insert>
+
+</html>

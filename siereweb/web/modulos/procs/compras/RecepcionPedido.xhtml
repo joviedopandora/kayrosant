@@ -1,0 +1,307 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:composition template="/principal/masterpage.xhtml">
+        <ui:define name="top">
+
+        </ui:define>
+
+        <ui:define name="left">
+            <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                <h:commandLink value="Orden compra" immediate="true"                           
+                               id="btnOrdenCmpIns"
+                               actionListener="#{movimientoInvJSFBean.navegacionLateral_ActionEvent}"                                  
+                               styleClass="#{movimientoInvJSFBean.numPanel == 0 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                               title="Generar orden de compra por proveedor">                      
+                    <f:attribute name="numPanel" value="0"/>
+                </h:commandLink>
+            </h:panelGrid>
+            <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                <h:commandLink value="Cargar inventario" immediate="true"                           
+                               id="btnNavAsgInv"
+                               actionListener="#{movimientoInvJSFBean.navegacionLateral_ActionEvent}"                                  
+                               styleClass="#{movimientoInvJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                               title="Recibir insumos">                      
+                    <f:attribute name="numPanel" value="1"/>
+                </h:commandLink>
+            </h:panelGrid>
+            <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                <h:commandLink value="Consolidado" immediate="true"                           
+                               id="btnConsIns"
+                               actionListener="#{movimientoInvJSFBean.navegacionLateral_ActionEvent}"                                  
+                               styleClass="#{movimientoInvJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}"
+                               title="Ver consolidado inventario">                      
+                    <f:attribute name="numPanel" value="2"/>
+                </h:commandLink>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <icecore:singleSubmit/>
+            <h:panelGroup id="oppRevReq">
+                <h:panelGroup  rendered="#{movimientoInvJSFBean.numPanel == 1 ? true : false}">
+                    <h:panelGroup id="pnlgConslSols" style="vertical-align: top">
+                        <h:panelGrid columns="2">
+                            <h:panelGroup style="position: relative;float: left;"
+                                          styleClass="bordePanelDt">
+                                <ace:dataTable id="dtResSolicitudes" value="#{compAprbSolsJSFBean.lstTablaReqComps}"
+                                               var="item"                                               
+                                               emptyMessage="No se encontraron datos"
+                                               paginator="true"
+                                               selectionMode="single"
+                                               scrollable="true"
+                                               scrollHeight="250"
+                                               rows="10"  
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                       
+                                               paginatorPosition="bottom"
+                                               currentPageReportTemplate="(Solicitudes: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                    <f:facet name="header">
+                                        <h:outputText value="Solicitudes abiertas"  styleClass="letraTitColTabla"/>
+                                    </f:facet>
+                                    <ace:column style="width: 40px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Id" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:commandLink value="#{item.cmpRequiscomp.crqId}"                                              
+                                                       styleClass="letraConTabla"
+                                                       actionListener="#{compAprbSolsJSFBean.dtResSolicitudes_RowSel}">
+                                            <f:attribute name="itemSel" value="#{item}"/>
+                                        </h:commandLink>
+                                    </ace:column>
+                                    <ace:column style="width: 90px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Fecha" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpRequiscomp.crqFproc}"  styleClass="letraConTabla">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </ace:column>
+                                    <ace:column style="width: 160px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombres solicitante" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpRequiscomp.cxcId.cpeId.colCedula.colNombres} 
+                                                      #{item.cmpRequiscomp.cxcId.cpeId.colCedula.colApellido}"  styleClass="letraConTabla"/>       
+                                    </ace:column>
+                                    <ace:column style="width: 90px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Zonal" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpRequiscomp.cxcId.cpeId.copId.copNombre}" styleClass="letraConTabla"/>
+                                    </ace:column>
+                                </ace:dataTable>
+                            </h:panelGroup>
+                            <h:panelGroup style="position: relative;float: left;margin-left: 1px"
+                                          styleClass="bordePanelDt">
+                                <ace:dataTable id="dtProdXReqInv" value="#{compAprbSolsJSFBean.lstTablaProdSel}"
+                                               var="item"                                        
+                                               emptyMessage="No se encontraron datos"
+                                               paginator="true"
+                                               selectionMode="single"
+                                               scrollable="true"
+                                               scrollHeight="250"
+                                               rows="10"  
+                                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"                                       
+                                               paginatorPosition="bottom"
+                                               currentPageReportTemplate="(Productos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                    <f:facet name="header">
+                                        <h:outputText value="Productos por solicitud"  styleClass="letraTitColTabla"/>
+                                    </f:facet>
+                                    <ace:column style="width: 160px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Nombre producto" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:commandLink value="#{item.cmpProdxreq.prdId.prdNombre}"
+                                                       styleClass="letraConTabla #{item.estiloFila}"
+                                                       action="#{compAprbSolsJSFBean.dtProdXReqInv_RowSel}">
+                                            <f:attribute name="itemSel" value="#{item}"/>
+                                        </h:commandLink>
+                                    </ace:column>
+                                    <ace:column style="width: 170px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Desc. Producto" styleClass="letraTitColTabla"
+                                                          title="Descripción producto"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpProdxreq.prdId.prdDesc}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 105px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Presentación" styleClass="letraTitColTabla"
+                                                          title="Presentación producto"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpProdxreq.pspId.pspNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 80px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cantidad" styleClass="letraTitColTabla"
+                                                          title="Cantidad solicitada"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpProdxreq.pxrCantsol}"
+                                                      styleClass="letraConTabla" style="position: relative;float: right"
+                                                      title="Cantidad solicitada" />
+                                    </ace:column>
+                                    <ace:column style="width:90px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Rechazar" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox value="#{item.cmpProdxreq.pxrRechaza}"                                                              
+                                                                 valueChangeListener="#{compAprbSolsJSFBean.dtdtProdXReqInvChkRechzr}" >
+
+                                            <f:attribute name="tablaProdXReqSel" value="#{item}"/>
+                                        </h:selectBooleanCheckbox>
+                                    </ace:column>
+                                </ace:dataTable>
+                              
+                            </h:panelGroup> 
+                        </h:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup id="pnlgPordXReq" style="position:relative;float: left;margin-top: 2px; margin-left: 3px !important">
+                        <h:panelGrid columns="6"  style="position: relative;float: left; margin-top: 2px;">
+                            <f:facet name="header">
+                                <h:outputText value="Asignar insumos por solicitud"
+                                              styleClass="letraTitColTabla"/>
+                            </f:facet>
+                            <h:outputText value="Presentación*" styleClass="letraTitColTabla"/>
+                            <h:selectOneMenu id="ddlPresXProd" value="#{compAprbSolsJSFBean.intInvPspIdSel}"
+                                             style="width: 260px">
+                                <f:selectItem itemValue="-1" itemLabel="Seleccione>>"/>
+                                <f:selectItems value="#{compAprbSolsJSFBean.lstPresentprods}" var="item"
+                                               itemValue="#{item.pspId}" itemLabel="#{item.pspNombre}"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Marca*" styleClass="letraTitColTabla"/>
+                            <h:selectOneMenu id="ddlMarca" value="#{compAprbSolsJSFBean.intInvMarIdSel}"
+                                             style="width: 260px">
+                                <f:selectItem itemValue="-1" itemLabel="Seleccione>>"/>
+                                <f:selectItems value="#{compAprbSolsJSFBean.lstInvMarcas}"
+                                               var="itemMrc" itemValue="#{itemMrc.marId}"
+                                               itemLabel="#{itemMrc.marNombre}"/>
+                            </h:selectOneMenu>
+                            <h:outputText value="Cantidad*" styleClass="letraTitColTabla"/>
+                            <h:inputText value="#{compAprbSolsJSFBean.intCantAprob}"
+                                         style="width: 240px"/>
+                        </h:panelGrid>
+                        <h:panelGroup>
+                            <h:panelGrid columns="2" columnClasses="colpanlelGrid" style="margin-left: -3px;vertical-align: top !important;">
+                                <ace:dataTable value="#{compAprbSolsJSFBean.lstTablaProdAprobs}" var="item"
+                                               emptyMessage="No hay asignación" id="dtProdAprovXReq" style="vertical-align: top !important;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Productos asignados por solicitud"
+                                                      styleClass="letraTitColTabla"/>
+                                    </f:facet>
+                                    <ace:column>
+                                        <f:facet name="header">
+                                            <h:selectBooleanCheckbox value="#{compAprbSolsJSFBean.blnSelTodoprodAprov}" 
+                                                                     valueChangeListener="#{compAprbSolsJSFBean.dtProdAprovXReq_ValueChange}">
+
+                                            </h:selectBooleanCheckbox>
+                                        </f:facet>
+                                        <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                                    </ace:column>
+                                    <ace:column style="width: 150px">
+                                        <f:facet name="header">
+
+                                            <h:outputText value="Producto" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpPxraprob.pxrId.prdId.prdNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 150px">
+                                        <f:facet name="header">
+
+                                            <h:outputText value="Marca" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpPxraprob.marId.marNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 150px">
+                                        <f:facet name="header">
+
+                                            <h:outputText value="Presentación" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpPxraprob.pspId.pspNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 80px">
+                                        <f:facet name="header">
+
+                                            <h:outputText value="Cantidad" styleClass="letraTitColTabla"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.cmpPxraprob.cantAprob}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                </ace:dataTable>
+                                <ace:dataTable value="#{compAprbSolsJSFBean.lstTablaInvenXProd}" var="itemInv"
+                                               emptyMessage="No existe en inventario"
+                                               style="position: relative;float: left;">
+                                    <f:facet name="header">
+                                        <h:outputText value="Existencia inventario por producto" styleClass="letraTitColTabla"
+                                                      title="Existencia en inventario del producto"/>
+                                    </f:facet>
+                                    <ace:column style="width: 40px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Lote" styleClass="letraTitColTabla"
+                                                          title="Lote"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemInv.invent.invId}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 180px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Marca" styleClass="letraTitColTabla"
+                                                          title="Marca"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemInv.invent.marId.marNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 180px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Presentación" styleClass="letraTitColTabla"
+                                                          title="Marca"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemInv.invent.pspId.pspNombre}"
+                                                      styleClass="letraConTabla"/>
+                                    </ace:column>
+                                    <ace:column style="width: 50px">
+                                        <f:facet name="header">
+                                            <h:outputText value="Cantidad" styleClass="letraTitColTabla"
+                                                          title="Cantidad"/>
+                                        </f:facet>
+                                        <h:outputText value="#{itemInv.invent.invCant}"
+                                                      styleClass="letraConTabla"
+                                                      style="float: right;position: relative"/>
+                                    </ace:column>
+                                    <f:facet name="footer">
+                                        <h:panelGroup>
+                                            <h:outputText value="Total:"/>  
+                                            <h:outputText value="#{compAprbSolsJSFBean.tablaProdXReqSel.cantProdInv}"
+                                                          style="float: right;position: relative"/>  
+                                        </h:panelGroup>
+                                    </f:facet>
+                                </ace:dataTable>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{movimientoInvJSFBean.numPanel == 2 ? true : false}">
+                    <ui:include src="ConsolPedFrag.xhtml"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{movimientoInvJSFBean.numPanel == 0 ? true : false}">
+                    <ui:include src="GenerarOrdendCmpFrag.xhtml"/>
+                </h:panelGroup>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

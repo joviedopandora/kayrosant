@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+  
+      <ui:composition template="/principal/masterpage.xhtml">
+
+            <ui:define name="top">
+                
+            </ui:define>
+
+            <ui:define name="left">
+                 <ui:include src="NavParametr.xhtml"/>   
+            </ui:define>
+
+            <ui:define name="right">
+                
+            </ui:define>
+
+            <ui:define name="content">
+                   <h:panelGroup id="mantSede">
+                    <h:panelGrid columns="1">
+                        <h:panelGroup>                    
+                        </h:panelGroup>
+                        <ace:dataTable id="dtMantSede"
+                                       var="item"                             
+                                       selectionMode="single"
+                                       scrollable="true"
+                                       scrollHeight="180"
+                                       emptyMessage="No se encontraron datos"
+                                       paginator="true"
+                                       rows="10"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                       rowsPerPageTemplate="3,6,9 "
+                                       paginatorPosition="bottom"
+                                       currentPageReportTemplate="(Procesos: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                            <f:facet name="header">
+                                <h:outputText value="Sedes"/>
+                            </f:facet>
+                            <ace:column style="width: 50px">
+                                <f:facet name="header">
+                                    <h:outputText value="Id Sede" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.sedId}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 200px">
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre sede" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.sedNombre}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 250px">
+                                <f:facet name="header">
+                                    <h:outputText value="Descripción sede" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.sedDesc}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 250px">
+                                <f:facet name="header">
+                                    <h:outputText value="Dirección sede" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.sedDireccion}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 100px">
+                                <f:facet name="header">
+                                    <h:outputText value="Teléfono sede" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.sedTelefono}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 100px">
+                                <f:facet name="header">
+                                    <h:outputText value="Principal" styleClass="letraTitColTabla"/>
+                                </f:facet>
+
+                            </ace:column>
+                            <ace:column style="width: 250px">
+                                <f:facet name="header">
+                                    <h:outputText value="Empresa" styleClass="letraTitColTabla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.admSede.AdmEmpresa.empNombre}"
+                                              styleClass="letraConTabla"/>
+                            </ace:column>
+                            <ace:column style="width: 100px">
+                                <f:facet name="header">
+                                    <h:outputText value="Estado" styleClass="letraTitColTabla"/>
+                                </f:facet>
+
+                            </ace:column>
+                        </ace:dataTable>
+                    </h:panelGrid>
+                </h:panelGroup>
+                <h:panelGroup id="pnlDatosSede">
+                    <h:panelGrid columns="2">
+                        <f:facet name="header">
+                            <h:outputText value="Datos de la sede"/>
+                        </f:facet>
+                        <h:outputLabel for="txtIdSed" value="Id sede *"/>
+                        <h:inputText id="txtIdSed"
+                                     required="false"
+                                     styleClass="txtNombreDato"/>
+                        <h:outputLabel for="txtNombreSed" value="Nombre sede *"/>
+                        <h:inputText id="txtNombreSed"
+                                     required="false"
+                                     styleClass="txtNombreDato"/>
+                        <h:outputLabel for="txtDescSed" value="Descripción sede"/>
+                        <h:inputTextarea id="txtDescSed"
+                                         required="false"
+                                         styleClass="txtNombreDato"/>
+                        <h:outputLabel for="txtDireccionSed" value="Dirección sede"/>
+                        <h:inputText id="txtDireccionSed"
+                                     required="false"
+                                     styleClass="txtNombreDato"/>
+                        <h:outputLabel for="txtTelefonoSed" value="Teléfono sede"/>
+                        <h:inputText id="txtTelefonoSed"
+                                     required="false"
+                                     styleClass="txtNombreDato"/>
+
+                        <h:outputLabel for="sbcbPrincipal" value="Principal"/>
+                        <h:selectBooleanCheckbox id="sbcbEstado"
+                                                 required="false"
+                                                 label="Principal"/>
+                        <h:outputLabel for="sbcbEstado" value="Estado sede"/>
+                        <h:selectBooleanCheckbox id="sbcbEstado"
+                                                 required="false"
+                                                 label="Estado sede"/>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </ui:define>
+
+        </ui:composition>
+  
+
+</html>

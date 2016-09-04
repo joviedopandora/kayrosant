@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <body>
+        <ui:composition template="/principal/masterpage.xhtml">
+            <ui:define name="top">
+                <!--
+                <h:panelGroup rendered="#{confVentaJSFBean.numPanel == 2 ? false : true}">
+                    <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                        <h:commandButton styleClass="btnCerrarStd"
+                                         actionListener="#{confVentaJSFBean.btnCerrarConfPago_ActionEvent}"
+                                         title="Cerrar venta">
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:panelGroup>
+                -->
+                <h:panelGroup rendered="#{confVentaJSFBean.numPanel == 2 ? true : false}">
+                    <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                        <h:commandButton styleClass="btnNuevoStd"
+                                         actionListener="#{confVentaJSFBean.btnConfPago_ActionEvent}"
+                                         title="Actualizar venta">
+                        </h:commandButton>
+                    </h:panelGrid>
+                    <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                        <h:commandButton styleClass="btnVolverStd"
+                                         actionListener="#{confVentaJSFBean.btnVolverPago_ActionEvent}"
+                                         title="Volver">
+                        </h:commandButton>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </ui:define>
+
+            <ui:define name="left">
+                <ace:accordion collapsible="true" autoHeight="false" event="click"
+                               effect="fade" style="font-size: 11px;">
+                    <ace:accordionPane title="Venta">
+                        <h:panelGrid columns="1" rowClasses="separacionLateral">
+                            <h:commandLink value="Órdenes" immediate="false"                                                              
+                                           title="Órdenes pendientes de pago"
+                                           actionListener="#{confVentaJSFBean.navLateral_ActionEvent}"                           
+                                           styleClass="#{confVentaJSFBean.numPanel == 1 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                                <f:attribute name="jsfBean" value="gestionVentaJSFBean"/>
+                                <f:attribute name="numPanel" value="1"/>
+                            </h:commandLink>
+                            <!--
+                            <h:commandLink value="Pago" immediate="false"                                                              
+                                           title="Realizar pago o anticipo"
+                                           actionListener="#{confVentaJSFBean.navLateral_ActionEvent}"                           
+                                           styleClass="#{confVentaJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                                <f:attribute name="jsfBean" value="gestionVentaJSFBean"/>
+                                <f:attribute name="numPanel" value="2"/>
+                            </h:commandLink>
+                            -->
+                        </h:panelGrid>
+                    </ace:accordionPane>
+                </ace:accordion>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup rendered="#{confVentaJSFBean.numPanel == 1 ? true : false}">
+                    <ace:panel header="VENTAS CERRADAS">
+                        <ace:dataTable value="#{confVentaJSFBean.lstTablaVntRegistroventas}"
+                                       var="item"
+                                       paginator="true"
+                                       paginatorAlwaysVisible="true"
+                                       rows="10"
+                                       emptyMessage="No se encontraron datos"
+                                       paginatorPosition="bottom"
+                                       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                       currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                            <!--
+                            <f:facet name="header">
+                                <h:outputText value="VENTAS PENDIENTES PAGO"/>
+                            </f:facet>
+                            -->
+                            <ace:column headerText=">>>" style="width: 50px">
+                                <h:commandLink value=">>>" 
+                                               actionListener="#{confVentaJSFBean.rowDtRegventaPagar_ActionEvent}">
+                                    <f:attribute name="tablaVntRegistroventaSel" value="#{item}"/>
+                                </h:commandLink>
+                            </ace:column>
+                            <ace:column headerText="Nº Venta" style="width: 100px">
+                                <h:outputText value="#{item.vntRegistroventa.rgvtId}"/>
+                            </ace:column>
+                            <ace:column headerText="Documento" style="width: 100px">
+                                <h:outputText value="#{item.vntRegistroventa.clnId.tdcId.tdcId}. #{item.vntRegistroventa.clnId.clnIdentificacion}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Cliente" style="width: 200px">
+                                <h:outputText value="#{item.vntRegistroventa.clnId.clnNombres} #{item.vntRegistroventa.clnId.clnApellidos}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Tipo cliente" style="width: 100px">
+                                <h:outputText value="#{item.vntRegistroventa.clnId.tclId.tclNombre}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <!--
+                            <ace:column headerText="Pagado" style="width: 50px">
+                                <h:selectBooleanCheckbox value="#{item.seleccionado}"/>
+                            </ace:column>                            
+                            <ace:column style="width: 300px">
+                                <f:facet name="header">
+                                    <h:outputText value="#{item.vntRegistroventa.clnId.tclId.tclId == 1 ? 'Transacción' : 'Orden servicio'}"/>
+                                </f:facet>
+                                <ace:textEntry value="#{item.vntRegistroventa.rgvtTransacbanco}"
+                                               rendered="#{item.vntRegistroventa.clnId.tclId.tclId == 1 ? true : false}">                                      
+                                </ace:textEntry>
+                                <ace:textEntry value="#{item.vntRegistroventa.rgvtNumordenejec}"
+                                               rendered="#{item.vntRegistroventa.clnId.tclId.tclId == 2 ? true : false}">                                      
+                                </ace:textEntry>
+                            </ace:column>
+                            -->
+                            <ace:column headerText="valor factura($)" style="width: 100px">
+                                <h:outputText value="#{item.vntRegistroventa.rgvtValorventa}"
+                                              styleClass="textcolumright">
+                                    <f:convertNumber pattern="#0.00"/>
+                                </h:outputText>
+                            </ace:column>
+                        </ace:dataTable>
+                    </ace:panel>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{confVentaJSFBean.numPanel == 2 ? true : false}">
+                    <h:panelGrid columns="17" >
+                        <h:outputLabel value="Identificación -->" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputText styleClass="outputText" 
+                                      value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tdcId.tdcId}. 
+                                      #{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnIdentificacion}"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="Cliente -->" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputText styleClass="outputText" 
+                                      value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnNombres} 
+                                      #{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnApellidos}"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="Tipo -->" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputText styleClass="outputText" value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tclId.tclNombre}"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="//" style="font-weight: 800; font-size: 12px;"/>
+                        <h:outputLabel/>
+                        <h:outputLabel value="Venta N° -->" style="font-weight: 800; font-size: 12px"/>
+                        <h:outputText styleClass="outputText" value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtId}"/>
+                    </h:panelGrid>
+                    <ace:panel header="REALZAR PAGO O ANTICIPO">
+                        <h:panelGrid columns="4">
+                            <h:outputLabel value="Cliente"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnNombres}
+                                          #{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnApellidos}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Documento"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tdcId.tdcId} - 
+                                          #{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnIdentificacion}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Tipo cliente"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.tclId.tclNombre}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Protagonista"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.dclnId.dclnNomb1}
+                                          #{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.dclnId.dclnApe1}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Fecha"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeFechaevt}"
+                                          style="font-weight: 800; font-size: 12px;">
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                            </h:outputText>
+                            <h:outputLabel value="Hora"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeHorainicio}"
+                                          style="font-weight: 800; font-size: 12px;">
+                                <f:convertDateTime pattern="hh:mm a" timeZone="GMT-5"/>
+                            </h:outputText>
+                            <h:outputLabel value="Dirección"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.vdeId.vdeDireccionevt}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Teléfono"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnFijo}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Celular"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCelular}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Correo"/>
+                            <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.clnId.clnCorreoe}"
+                                          style="font-weight: 800; font-size: 12px;"/>
+                            <h:outputLabel value="Total"/>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="$"
+                                               style="font-weight: 800; font-size: 12px;"/>
+                                <h:outputText value="#{confVentaJSFBean.tablaVntRegistroventaSel.vntRegistroventa.rgvtValorventa}"
+                                              style="font-weight: 800; font-size: 12px;"/>
+                            </h:panelGrid>
+                            <h:outputLabel value="Forma pago *"/>
+                            <h:selectOneMenu styleClass="selectMediano"
+                                             value="#{confVentaJSFBean.idFormaPago}">
+                                <f:selectItems value="#{confVentaJSFBean.lstFormaPago}"/>
+                            </h:selectOneMenu>
+                            <h:outputLabel value="Valor *"/>
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="$"
+                                               style="font-weight: 800; font-size: 12px;"/>
+                                <ace:textEntry value="#{confVentaJSFBean.bdValorPago}"
+                                               style="font-weight: 800; font-size: 12px;"/>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <ace:dataTable value="#{confVentaJSFBean.lstTablaVntSrvXVenta}"
+                                       var="itemSxv"
+                                       style="width: 500px"
+                                       emptyMessage="No se encontraron datos">
+                            <ace:column headerText="Servicio" style="width: 350px">
+                                <h:outputText value="#{itemSxv.vntServxventa.vsrvId.vsrvNombre}"
+                                              styleClass="textcolumleft"/>
+                            </ace:column>
+                            <ace:column headerText="Cantidad" style="width: 50px">
+                                <h:outputText value="#{itemSxv.vntServxventa.srvxventCantidad}"/>
+                            </ace:column>
+                            <ace:column headerText="Precio" style="width: 100px">
+                                <h:outputText value="#{itemSxv.vntServxventa.srvxventPrecioventa}"
+                                              styleClass="textcolumright"/>
+                            </ace:column>
+                        </ace:dataTable>
+                    </ace:panel>
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

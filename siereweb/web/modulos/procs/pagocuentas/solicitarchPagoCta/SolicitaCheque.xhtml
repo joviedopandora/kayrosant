@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="solicitaCheque">
+        <ace:panel header="Solicitud de cheque" rendered="#{!solicitudChequeJSFBean.blnMostrarPanel}">            
+            <ace:dataTable value="#{solicitudChequeJSFBean.lstTablaFinSolicitudCheque}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{solicitudChequeJSFBean.rowDtSolicitudCheque_ActionEvent}">
+                        <f:attribute name="tfsc" value="#{item}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Fecha pago" style="width: 100px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.ctaFechapago}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                  #{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvDigver}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor total" style="width: 150px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.fxcValor}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <ace:panel header="Generar cheque" rendered="#{solicitudChequeJSFBean.blnMostrarPanel}">
+            <h:panelGroup>
+                <h:panelGrid columns="4" styleClass="tablaGrid">
+                    <!--
+                    <h:outputLabel value="Fecha"/>
+                    <h:outputText value="#{solicitudChequeJSFBean.datFechaProceso}"
+                                  style="font-weight: 800">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                    -->
+                    <h:outputLabel value="Proveedor"/>
+                    <h:outputText value="#{solicitudChequeJSFBean.tablaFinSolicitudChequeSel.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                                  style="font-weight: 800"/>
+                    <h:outputLabel value="NIT"/>
+                    <h:outputText value="#{solicitudChequeJSFBean.tablaFinSolicitudChequeSel.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                  #{solicitudChequeJSFBean.tablaFinSolicitudChequeSel.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvDigver}"                                  
+                                  style="font-weight: 800"/>
+                    <h:outputLabel value="Factura N°"/>
+                    <h:outputText value="#{solicitudChequeJSFBean.tablaFinSolicitudChequeSel.finSolicitudcheque.fxcId.apbId.ctaId.factId.factNumfact}"
+                                  style="font-weight: 800"/>
+                    <h:outputLabel value="Valor total"/>
+                    <h:outputText value="#{solicitudChequeJSFBean.tablaFinSolicitudChequeSel.finSolicitudcheque.fxcId.fxcValor}"
+                                  style="font-weight: 800">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                    <h:outputLabel value="Número cheque *"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{solicitudChequeJSFBean.strFinNumCheque}"/>
+                    <h:outputLabel value="Comprobante de egreso *"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{solicitudChequeJSFBean.strFinCompEgreso}"/>
+                    <h:outputLabel value="Banco *"/>
+                    <h:selectOneMenu styleClass="selectMediano"
+                                     value="#{solicitudChequeJSFBean.idBanco}">
+                        <f:selectItems value="#{solicitudChequeJSFBean.lstBanco}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="Número cuenta *"/>
+                    <h:inputText styleClass="textMediano"
+                                 value="#{solicitudChequeJSFBean.strFinNumCuenta}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Concepto *"/>
+                    <h:inputTextarea styleClass="textAreaGrande"
+                                     value="#{solicitudChequeJSFBean.strFinConceptoCheque}">
+                        <f:converter converterId="convertMayusc"/>
+                    </h:inputTextarea>                    
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

@@ -1,0 +1,1012 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RemisionVentaKids" pageWidth="890" pageHeight="900" columnWidth="890" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isFloatColumnFooter="true" isIgnorePagination="true" uuid="17ebc1e7-1404-457c-a63c-1b5b85e43f09">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="289"/>
+	<property name="ireport.y" value="381"/>
+	<parameter name="p_FacturaVentaKids" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:/Users/Javier/Documents/javier/maximus/SIEREE/siereweb/src/java/reportes/venta/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="rutalogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\Javier\\Documents\\javier\\maximus\\SIEREE\\siereweb\\src\\java\\reportes\\venta\\logos\\maximus_kids.jpg"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     COALESCE(vnt_remision.vrms_saldo,0)-COALESCE(vnt_remision.vrms_descuento,0)Saldillo,
+     COALESCE(vnt_remision.vrms_valortotal,0)+COALESCE(vnt_remision.vrms_descuento,0)SubTotal1,
+     vnt_remision."vrms_numremision",
+     vnt_remision."vrms_anticipo",
+     vnt_remision."vrms_valortotal",
+     vnt_remision."vrms_observacion",
+     vnt_remision."vrms_fecharemision",
+     vnt_remision."vrms_fechaproceso",
+     vnt_remision."vrms_detalle",
+     vnt_remision."vrms_protagonista",
+     vnt_remision."vrms_fecha",
+     vnt_remision."vrms_direccionevento",
+     vnt_remision."vrms_motivo",
+     vnt_remision."vrms_hora",
+     vnt_remision."vrmscl_nombres",
+     vnt_remision."vrmscl_tipodocuemento",
+     vnt_remision."vrmscl_identificacion",
+     vnt_remision."vrmscl_diereccion",
+     vnt_remision."vrmscl_celular",
+     vnt_remision."vrmscl_fijo",
+     vnt_remision."vrmscl_email",
+     vnt_remision."vrms_saldo",
+     vnt_remision."vrms_descuento",
+     vnt_detallerem."vdrm_servico",
+     vnt_detallerem."vdrm_cantidad",
+     vnt_detallerem."vdrm_costounitario",
+     vnt_detallerem."vdrm_costototal",
+     vnt_detallerem."vdrm_subservico",
+     vnt_detallerem."vdrm_especificaciones",
+     vnt_detallerem."vsrv_id",
+     vnt_registroventa."rgvt_id",
+     vnt_registroventa."rgvt_idordenprod",
+     vnt_detevento."vde_obsr" AS vnt_detevento_vde_obsr,
+     vnt_detallecliente."dcln_id" AS vnt_detallecliente_dcln_id,
+     vnt_detallecliente."dcln_nombres" AS vnt_detallecliente_dcln_nombres,
+     vnt_servicio."vsrv_id" AS vnt_servicio_vsrv_id,
+     vnt_servicio."vsrv_nombre" AS vnt_servicio_vsrv_nombre,
+     vnt_servicio."vsrv_desc" AS vnt_servicio_vsrv_desc,
+     vnt_servicio."vsrv_valunitempresa" AS vnt_servicio_vsrv_valunitempresa,
+     vnt_servicio."vsrv_valunitcliente" AS vnt_servicio_vsrv_valunitcliente,
+     vnt_servicio."vsrv_est" AS vnt_servicio_vsrv_est,
+     vnt_servicio."vsrv_fechacre" AS vnt_servicio_vsrv_fechacre,
+     vnt_servicio."vsrv_obsr" AS vnt_servicio_vsrv_obsr,
+     vnt_servicio."tsrv_id" AS vnt_servicio_tsrv_id,
+     vnt_servicio."vsrv_tiempo" AS vnt_servicio_vsrv_tiempo,
+     vnt_servicio."vsrv_archivo" AS vnt_servicio_vsrv_archivo,
+     vnt_servicio."vsrv_porcentajeiva" AS vnt_servicio_vsrv_porcentajeiva,
+     vnt_servicio."vsrv_valoriva" AS vnt_servicio_vsrv_valoriva,
+     vnt_detallecliente."dcln_direccion" AS vnt_detallecliente_dcln_direccion,
+     vnt_detevento."vde_fechaevt" AS vnt_detevento_vde_fechaevt,
+     vnt_detevento."vde_direccionevt" AS vnt_detevento_vde_direccionevt,
+     vnt_detevento."vde_horainicio" AS vnt_detevento_vde_horainicio,
+     vnt_detevento."vde_horafinal" AS vnt_detevento_vde_horafinal
+FROM
+     "vnt_remision" vnt_remision INNER JOIN "vnt_detallerem" vnt_detallerem ON vnt_remision."vrms_id" = vnt_detallerem."vrms_id"
+     INNER JOIN "vnt_registroventa" vnt_registroventa ON vnt_remision."rgvt_id" = vnt_registroventa."rgvt_id"
+     INNER JOIN "public"."vnt_detevento" vnt_detevento ON vnt_registroventa."rgvt_id" = vnt_detevento."rgvt_id"
+     INNER JOIN "public"."vnt_detallecliente" vnt_detallecliente ON vnt_detevento."dcln_id" = vnt_detallecliente."dcln_id"
+     INNER JOIN "public"."vnt_servicio" vnt_servicio ON vnt_detallerem."vsrv_id" = vnt_servicio."vsrv_id"
+WHERE
+     vnt_remision.vrms_id = $P{p_FacturaVentaKids}]]>
+	</queryString>
+	<field name="saldillo" class="java.math.BigDecimal"/>
+	<field name="subtotal1" class="java.math.BigDecimal"/>
+	<field name="vrms_numremision" class="java.lang.String"/>
+	<field name="vrms_anticipo" class="java.math.BigDecimal"/>
+	<field name="vrms_valortotal" class="java.math.BigDecimal"/>
+	<field name="vrms_observacion" class="java.lang.String"/>
+	<field name="vrms_fecharemision" class="java.sql.Date"/>
+	<field name="vrms_fechaproceso" class="java.sql.Timestamp"/>
+	<field name="vrms_detalle" class="java.lang.String"/>
+	<field name="vrms_protagonista" class="java.lang.String"/>
+	<field name="vrms_fecha" class="java.sql.Date"/>
+	<field name="vrms_direccionevento" class="java.lang.String"/>
+	<field name="vrms_motivo" class="java.lang.String"/>
+	<field name="vrms_hora" class="java.lang.String"/>
+	<field name="vrmscl_nombres" class="java.lang.String"/>
+	<field name="vrmscl_tipodocuemento" class="java.lang.String"/>
+	<field name="vrmscl_identificacion" class="java.lang.String"/>
+	<field name="vrmscl_diereccion" class="java.lang.String"/>
+	<field name="vrmscl_celular" class="java.lang.String"/>
+	<field name="vrmscl_fijo" class="java.lang.String"/>
+	<field name="vrmscl_email" class="java.lang.String"/>
+	<field name="vrms_saldo" class="java.math.BigDecimal"/>
+	<field name="vrms_descuento" class="java.math.BigDecimal"/>
+	<field name="vdrm_servico" class="java.lang.String"/>
+	<field name="vdrm_cantidad" class="java.lang.Integer"/>
+	<field name="vdrm_costounitario" class="java.math.BigDecimal"/>
+	<field name="vdrm_costototal" class="java.math.BigDecimal"/>
+	<field name="vdrm_subservico" class="java.lang.String"/>
+	<field name="vdrm_especificaciones" class="java.lang.String"/>
+	<field name="vsrv_id" class="java.lang.Long"/>
+	<field name="rgvt_id" class="java.lang.Long"/>
+	<field name="rgvt_idordenprod" class="java.lang.Long"/>
+	<field name="vnt_detevento_vde_obsr" class="java.lang.String"/>
+	<field name="vnt_detallecliente_dcln_id" class="java.lang.Long"/>
+	<field name="vnt_detallecliente_dcln_nombres" class="java.lang.String"/>
+	<field name="vnt_servicio_vsrv_id" class="java.lang.Long"/>
+	<field name="vnt_servicio_vsrv_nombre" class="java.lang.String"/>
+	<field name="vnt_servicio_vsrv_desc" class="java.lang.String"/>
+	<field name="vnt_servicio_vsrv_valunitempresa" class="java.math.BigDecimal"/>
+	<field name="vnt_servicio_vsrv_valunitcliente" class="java.math.BigDecimal"/>
+	<field name="vnt_servicio_vsrv_est" class="java.lang.Boolean"/>
+	<field name="vnt_servicio_vsrv_fechacre" class="java.sql.Timestamp"/>
+	<field name="vnt_servicio_vsrv_obsr" class="java.lang.String"/>
+	<field name="vnt_servicio_tsrv_id" class="java.lang.Integer"/>
+	<field name="vnt_servicio_vsrv_tiempo" class="org.postgresql.util.PGInterval"/>
+	<field name="vnt_servicio_vsrv_archivo" class="java.lang.String"/>
+	<field name="vnt_servicio_vsrv_porcentajeiva" class="java.math.BigDecimal"/>
+	<field name="vnt_servicio_vsrv_valoriva" class="java.math.BigDecimal"/>
+	<field name="vnt_detallecliente_dcln_direccion" class="java.lang.String"/>
+	<field name="vnt_detevento_vde_fechaevt" class="java.sql.Date"/>
+	<field name="vnt_detevento_vde_direccionevt" class="java.lang.String"/>
+	<field name="vnt_detevento_vde_horainicio" class="java.sql.Time"/>
+	<field name="vnt_detevento_vde_horafinal" class="java.sql.Time"/>
+	<title>
+		<band height="382" splitType="Stretch">
+			<staticText>
+				<reportElement x="726" y="72" width="142" height="29" forecolor="#000000" uuid="64fc597b-7663-48f4-86fe-79c5fc1c773c"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ORDEN N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="172" width="178" height="20" uuid="b18ece7b-17d8-4afa-b43f-e8fd0719c0d2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre  del Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="192" width="178" height="20" uuid="7ec0acef-e8d7-4042-a050-14dc72d6f168"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección-Barrio Domicilio]]></text>
+			</staticText>
+			<image scaleImage="FillFrame">
+				<reportElement x="232" y="38" width="333" height="92" uuid="ba535d19-55b7-4d0c-af67-8284bb2246f8"/>
+				<imageExpression><![CDATA[$P{rutalogo}]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="196" y="172" width="244" height="20" uuid="4b882560-15f4-49b0-a40a-1199b4ad8fd7"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrmscl_nombres}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="726" y="101" width="142" height="29" forecolor="#FF0000" uuid="59c2ae54-8e84-45ee-b4ad-79da5d59757b"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrms_numremision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="440" y="192" width="178" height="20" uuid="c8ec1b9b-7d5f-4d94-8cd2-a33888824d3e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cotizacion #:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="618" y="192" width="250" height="20" forecolor="#CC0000" uuid="950c073f-90c0-4ed8-ab95-473e857ccd7a"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="440" y="212" width="178" height="20" uuid="85b152f6-b860-49e1-a725-b126068fa171"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero OP:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="618" y="212" width="250" height="20" forecolor="#CC0000" uuid="39ecbfc3-21d8-4eaa-987f-47b974b4e765"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement>
+					<font size="14" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rgvt_idordenprod}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="152" width="178" height="20" uuid="53b12f6a-9671-49bd-8c07-a3e9f4e906c9"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha  de  Elaboración ]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="196" y="152" width="244" height="20" uuid="46aee662-8b2c-4c12-9bf7-a6a9ae587e05"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrms_fechaproceso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="18" y="132" width="850" height="20" backcolor="#FF9933" uuid="d9a22ebf-7c61-4620-9bd5-2afb25088020"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATOS  DEL CLIENTE]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="618" y="152" width="250" height="20" uuid="44dc2850-1163-4567-8280-d11dea9ab45b"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrmscl_identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="440" y="152" width="178" height="20" uuid="dd1c027d-8982-4523-bc4b-232830d60b0d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cedula]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="196" y="192" width="244" height="20" uuid="39ca9105-6a9c-42da-8c90-dcd68625d265"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrmscl_diereccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="212" width="178" height="20" uuid="1e8ea2e4-d213-455b-93dc-97ae7e55417f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telefono Fijo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="196" y="212" width="244" height="20" uuid="af0dd438-ece9-4e0d-b642-22eb356dc15a"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrmscl_fijo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="440" y="172" width="178" height="20" uuid="9760f1d5-23cb-4afb-8505-92511661c663"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Celular 1]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="618" y="172" width="250" height="20" uuid="24e73804-c4f0-4b46-9e8f-3277f67925c2"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrmscl_celular}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="18" y="307" width="850" height="25" backcolor="#FF9933" uuid="18a2bc74-cf00-4ceb-9b74-b178ee128208"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN  DEL SERVICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="332" width="378" height="50" uuid="915adc38-8ec2-473e-8fdc-0bc081e61ad6"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="332" width="72" height="50" uuid="1028e389-24e2-4dc1-a020-5b7120ce8c17"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="332" width="200" height="50" uuid="6933a419-2086-4a56-9e13-e1137dd05691"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Especificaciones Técnicas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="332" width="100" height="50" uuid="694e29da-0978-4ca8-9f57-8ddb7cb5194f"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo Unitario]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="768" y="332" width="100" height="50" uuid="fa1534b7-d28a-42fe-8549-ece22a672855"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo Total]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="27" width="849" height="1" uuid="5aa1c0e4-c91a-48a3-beaf-12fbea2490a4"/>
+			</line>
+			<line>
+				<reportElement x="868" y="28" width="1" height="44" uuid="4fe5b24d-f983-4fae-8a84-ab57b9557e6d"/>
+			</line>
+			<line>
+				<reportElement x="18" y="28" width="1" height="102" uuid="036790a6-700b-449a-8cbb-c80b5ee670c4"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="40">
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="396" y="0" width="72" height="40" uuid="fe352b81-f6a9-4ed6-9193-73c27a249403"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdrm_cantidad}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="468" y="0" width="200" height="40" uuid="8716be47-5f8a-45e3-bd42-e3d659e699d0"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdrm_servico}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="668" y="0" width="100" height="40" uuid="aac03b6d-bded-4d4a-9197-7eb9df382f01"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdrm_costounitario}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="768" y="0" width="100" height="40" uuid="d6461be6-fb01-4810-9b80-79502a4a015d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdrm_costototal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="18" y="0" width="122" height="40" isPrintWhenDetailOverflows="true" uuid="4b0367fb-4fbe-4f5a-9069-d72e56f54615"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vdrm_servico}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="140" y="1" width="256" height="39" isPrintWhenDetailOverflows="true" uuid="4b0367fb-4fbe-4f5a-9069-d72e56f54615"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vnt_servicio_vsrv_desc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="458">
+			<staticText>
+				<reportElement x="18" y="0" width="55" height="20" uuid="0f7341e4-17c7-4c4b-b0ed-d433c7e20b26"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Nota:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="18" y="103" width="850" height="20" backcolor="#FF9933" uuid="952fcb11-e66b-47eb-ad5a-ad715ec3c09e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLES  DEL SERVICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="183" width="195" height="20" uuid="f89dd02b-9d98-4093-a273-1ef8b8259d67"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre del Festejado(a)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="123" width="195" height="20" uuid="44ff1b1b-23a8-4be0-a9ad-6de8ed4b9e54"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Fiesta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="143" width="195" height="20" uuid="b8f700ec-71e8-4d07-ab36-9faec3cb6ff9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección-Barrio  Evento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="382" width="864" height="18" uuid="99d8ce2e-f956-4cce-9d33-523fe33457a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Cll 67B # 62 -42 J.J Vargas Teléfonos 4871617 Ext: 104 Celular 321 2089000 Bogotá - Colombia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="0" width="595" height="20" uuid="8c00719b-5ccb-48bd-8fdd-a8a0ce323f0f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No se devuelve dinero bajo ninguna circunstancia Déspues de 6 meses no se responde por anticipos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="362" width="436" height="20" uuid="f3f42272-7b91-4c3b-91a0-19718016916b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre  del vendedor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="362" width="414" height="20" uuid="71afc66b-d7d6-41a0-b3ee-ec6980305ebd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Firma  del Comprador]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="213" y="183" width="255" height="20" uuid="d86ea6ac-01f8-4eba-8b85-cac58a4c6302"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vnt_detallecliente_dcln_nombres}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="213" y="203" width="655" height="20" uuid="2cf38d9b-7163-49c5-89d7-cf9a4cefac8b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vrms_motivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="213" y="143" width="655" height="20" uuid="dea53e4f-beed-4bb0-a104-c77502d31429"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vnt_detevento_vde_direccionevt}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="213" y="123" width="332" height="20" uuid="a77da6b6-b496-4dbc-ae4b-0fa5cde1961c"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vnt_detevento_vde_fechaevt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="668" y="37" width="100" height="22" forecolor="#CC0000" uuid="c253659d-7a28-4ca4-b3b4-993c6a6e3e53"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[SubTotal 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="59" width="100" height="22" forecolor="#CC0000" uuid="ce5eedd7-daf5-4024-8140-4eb5224710de"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Anticipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="81" width="100" height="22" forecolor="#CC0000" uuid="2d77e14c-359a-4662-8003-3c44042fe278"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Saldo]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="768" y="36" width="100" height="22" uuid="27b282d5-abed-411e-9d68-79291a4a3b54"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrms_valortotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="768" y="59" width="100" height="22" uuid="2cd61844-987c-48a3-9d14-f7ec8c4f4969"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrms_anticipo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement x="769" y="81" width="99" height="22" uuid="78f72d47-2dcc-4aad-9690-cf38cf787017"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{saldillo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="21" width="650" height="20" uuid="67c50df1-99e6-4e81-8c4a-9d85d3177163"/>
+				<box>
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[No nos hacemos responsables por fallas eléctricas, cortes de agua condisiones climáticas o cualquier falla en general no dependa de nuestra empresa. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="42" width="650" height="20" forecolor="#CC0000" uuid="da23cfc3-00b2-49b4-9e21-40cd4c695368"/>
+				<box>
+					<leftPen lineWidth="0.75" lineColor="#000000"/>
+					<bottomPen lineWidth="0.75" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[EL SALDO DEBE SER CANCELADO EN SU TOTALIDAD AL COMENZAR LA FIESTA PREVIA VERIFICACIÓN DE MONTAJE]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="18" y="318" width="436" height="44" uuid="fb90b1c0-4f8c-496e-b9bf-ece9b4d3781d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="454" y="318" width="414" height="44" uuid="c00d8f11-fdaf-4c41-a6f7-2c0aa8996813"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="468" y="183" width="114" height="20" uuid="6eeb8a82-ae11-406a-a010-df13d6f73fbe"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="203" width="195" height="20" uuid="b8f700ec-71e8-4d07-ab36-9faec3cb6ff9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Motivo de la Celebración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="223" width="195" height="20" uuid="b8f700ec-71e8-4d07-ab36-9faec3cb6ff9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Coordinador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="163" width="195" height="20" uuid="b8f700ec-71e8-4d07-ab36-9faec3cb6ff9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Locación, club, salón, etc.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="18" y="247" width="850" height="20" backcolor="#FF9933" uuid="952fcb11-e66b-47eb-ad5a-ad715ec3c09e"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES GENERALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="582" y="183" width="286" height="20" uuid="dcadcdd5-1136-472b-b554-41a4402e683e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="164" width="655" height="19" uuid="dcadcdd5-1136-472b-b554-41a4402e683e"/>
+				<box>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="224" width="655" height="19" uuid="dcadcdd5-1136-472b-b554-41a4402e683e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="267" width="850" height="51" uuid="dcadcdd5-1136-472b-b554-41a4402e683e"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="668" y="18" width="100" height="18" forecolor="#CC0000" uuid="c253659d-7a28-4ca4-b3b4-993c6a6e3e53"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Descuento]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="768" y="18" width="100" height="17" forecolor="#000000" backcolor="#FFFFFF" uuid="03eb12c8-736c-4240-8408-0a3bdbbc87f8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vrms_descuento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="400" width="863" height="18" uuid="99d8ce2e-f956-4cce-9d33-523fe33457a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fecha Última Modificación 25 de noviembre de 2014 versión 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="545" y="124" width="123" height="19" uuid="b8f700ec-71e8-4d07-ab36-9faec3cb6ff9"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Inicio-Final]]></text>
+			</staticText>
+			<textField pattern="h.mm a">
+				<reportElement x="668" y="124" width="100" height="19" uuid="dea53e4f-beed-4bb0-a104-c77502d31429"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vnt_detevento_vde_horainicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="668" y="0" width="100" height="18" forecolor="#CC0000" uuid="c253659d-7a28-4ca4-b3b4-993c6a6e3e53"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.75" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[SubTotal 1]]></text>
+			</staticText>
+			<textField pattern="¤ #,##0" isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="768" y="0" width="100" height="18" forecolor="#000000" backcolor="#FFFFFF" uuid="03eb12c8-736c-4240-8408-0a3bdbbc87f8"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{subtotal1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement x="769" y="124" width="99" height="19" uuid="dea53e4f-beed-4bb0-a104-c77502d31429"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{vnt_detevento_vde_horafinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+</jasperReport>

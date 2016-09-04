@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:icecore="http://www.icefaces.org/icefaces/core"
+       xmlns:ace="http://www.icefaces.org/icefaces/components"
+       xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="genOrdenCmp">
+        <ace:panel header="Orden de compra">
+            <h:panelGrid columns="2" styleClass="tablaAlnVer">
+                <h:panelGroup id="pnlgTablaProdAsig">
+                    <ace:dataTable id="dtOrdCom"
+                                   var="item"
+                                   value="#{compAprbSolsJSFBean.lstConsPedidos}"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <f:facet name="header">
+                            <h:outputText value="Productos asignados"/>
+                        </f:facet>
+                        <ace:column headerText=">>>" styleClass="letraTitColTabla" style="width:50px">
+                            <h:commandLink value=">>>" 
+                                           actionListener="#{compAprbSolsJSFBean.dtProdAprXProv_RowSel}"
+                                           styleClass="textcolumleft #{item.claseSel}" >
+                                <f:attribute name="itemConsPedido" value="#{item}"/>
+                            </h:commandLink>                   
+                        </ace:column>
+                        <ace:column headerText="Producto" styleClass="letraTitColTabla" style="width:250px">
+                            <h:outputText value="#{item.cmpConspedido.prdId.prdNombre}"                                                
+                                          styleClass="textcolumleft #{item.claseSel}"/>                                    
+                        </ace:column>
+                        <ace:column headerText="Marca" styleClass="letraTitColTabla" style="width:150px">
+                            <h:outputText value="#{item.cmpConspedido.marId.marNombre}"
+                                          styleClass="textcolumleft #{item.claseSel}" />
+                        </ace:column>
+                        <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width:150px">
+                            <h:outputText value="#{item.cmpConspedido.pspId.pspNombre}"
+                                          styleClass="textcolumleft #{item.claseSel}"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad" styleClass="letraTitColTablaNumerico" style="width:50px">
+                            <h:outputText value="#{item.cmpConspedido.ccpCantcomprar}"
+                                          styleClass="textcolumright #{item.claseSel}"/>
+                        </ace:column>
+                    </ace:dataTable>
+                </h:panelGroup>
+                <h:panelGroup id="pnlgTablaProv">
+                    <ace:dataTable id="dtProdXProv"
+                                   var="item"
+                                   value="#{compAprbSolsJSFBean.lstTablaProdxProv}"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">                            
+                        <f:facet name="header">
+                            <h:outputText value="Proveedores"/>
+                        </f:facet>
+                        <ace:column headerText="Proveedor" styleClass="letraTitColTabla" style="width:300px">
+                            <h:outputText value="#{item.invProdxprov.prvId.provRazonsoc}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Precio ($)" styleClass="letraTitColTabla" style="width:80px">
+                            <h:outputText value="#{item.invProdxprov.pxvPrecioact}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber type="currency" locale="es_CO"/>
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Cantidad *" styleClass="letraTitColTabla" style="width:60px">
+                            <ace:textEntry value="#{item.cantidad}" 
+                                           style="width:30px;text-align: right"/>
+                            <!--
+                            <h:outputText value="#{item.cantidad}"
+                                          rendered="#{!compAprbSolsJSFBean.blnMostrarItemCantidadSelecionada}"
+                                          styleClass="letraConTabla">
+                            </h:outputText>
+                            -->
+                            <!--
+                            <h:selectOneMenu value="#{item.cantidad}"
+                                             style=" width: 60px"
+                                             rendered="#{compAprbSolsJSFBean.blnMostrarItemCantidadSelecionada}"
+                                             styleClass="letraConTabla">
+                                <f:selectItems value="#{compAprbSolsJSFBean.lstItemsCantidadSolicitada}"/>
+                            </h:selectOneMenu>
+                            -->
+                        </ace:column>                        
+                    </ace:dataTable>
+                </h:panelGroup>
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="Detalle compra por proveedor">
+            <h:panelGroup id="frmConsOrdComp">
+                <h:panelGrid columns="1" styleClass="alturaTablaStd">
+                    <ace:dataTable id="dtOrdCompra"
+                                   var="item"
+                                   value="#{compAprbSolsJSFBean.lstConsComps}"
+                                   paginator="true"
+                                   paginatorAlwaysVisible="true"
+                                   rows="10"
+                                   emptyMessage="No se encontraron datos"
+                                   paginatorPosition="bottom"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText="Producto" styleClass="letraTitColTabla" style="width: 250px">
+                            <h:outputText value="#{item.cmpConsolcompra.prdId.prdNombre}" 
+                                          styleClass="textcolumleft">
+                            </h:outputText>                   
+                        </ace:column>
+                        <ace:column headerText="Marca" styleClass="letraTitColTabla" style="width: 150px">
+                            <h:outputText value="#{item.cmpConsolcompra.marId.marNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Presentación" styleClass="letraTitColTabla" style="width: 150px">
+                            <h:outputText value="#{item.cmpConsolcompra.pspId.pspNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Proveedor" styleClass="letraTitColTabla" style="width: 300px">
+                            <h:outputText value="#{item.cmpConsolcompra.prvId.provRazonsoc}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad total" styleClass="letraTitColTablaNumerico" style="width: 50px">
+                            <h:outputText value="#{item.cmpConsolcompra.ccmCant}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber/>
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Valor unitario" styleClass="letraTitColTablaNumerico" style="width: 50px">
+                            <h:outputText value="#{item.cmpConsolcompra.ccmPrecio}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber type="currency" locale="es_CO"/>
+                            </h:outputText>
+                        </ace:column>
+                        <ace:column headerText="Valor total" styleClass="letraTitColTablaNumerico" style="width: 50px">
+                            <h:outputText value="#{item.cmpConsolcompra.ccmPrecio * item.cmpConsolcompra.ccmCant}"
+                                          styleClass="textcolumright">
+                                <f:convertNumber type="currency" locale="es_CO"/>
+                            </h:outputText>
+                        </ace:column>
+                    </ace:dataTable>  
+                </h:panelGrid>
+            </h:panelGroup>
+        </ace:panel>
+    </ui:insert>
+</html>

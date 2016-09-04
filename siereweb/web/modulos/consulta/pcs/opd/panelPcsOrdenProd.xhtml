@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="ordenProd">
+        <ace:panel header="ÓRDENES DE PRODUCCIÓN" rendered="#{!pcsOrdenProduccionJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaPopOrdenProduccion}" style="font-size: large"
+                           var="itemOp"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="10"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Ordenes: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>" 
+                                   actionListener="#{pcsOrdenProduccionJSFBean.rowDtOrdenProd_ActionEvent}">
+                        <f:attribute name="tops" value="#{itemOp}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nº Venta" style="width: 100px" groupBy="#{itemOp.popOrdenprod.rgvtId.rgvtId}">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.rgvtId}"/>
+                </ace:column>
+<!--                <ace:column headerText="Fecha evento" style="width: 100px" groupBy="#{itemOp.popOrdenprod.rgvtId.vdeId.vdeFechaevt}">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.vdeId.vdeFechaevt}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>-->
+                <ace:column headerText="Nit" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.identificacion}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Cliente" style="width: 200px" groupBy="#{itemOp.popOrdenprod.rgvtId.clnId.clnNombres}">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.clnNombres}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>                       
+                <ace:column headerText="Valor factura($)" style="width: 100px">
+                    <h:outputText value="#{itemOp.popOrdenprod.rgvtId.rgvtValorventa}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 150px">
+                    <h:outputText value="#{itemOp.popOrdenprod.eevId.eevNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+            </ace:dataTable>        
+        </ace:panel>
+        <ace:panel header="ORDEN DE PRODUCCIÓN" rendered="#{pcsOrdenProduccionJSFBean.blnMostrarPanel}"> 
+
+            <ui:include src="contenidoOrdenProd.xhtml" />
+
+        </ace:panel>
+        
+    </ui:insert>
+</html>

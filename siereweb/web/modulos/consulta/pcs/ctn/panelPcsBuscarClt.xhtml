@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelCotizacion">
+        <ace:panel header="BUSCAR CLIENTE" >
+
+            <h:panelGrid columns="4" border="0" cellpadding="0" cellspacing="0"  >
+                <ace:textEntry value="#{pcsCotizacionJSFBean.strBuscarCln}"
+                               style="width: 250px" 
+                               styleClass="inpunts"
+                               title="Digite el número de identificación o nombre del cliente">
+                    <f:converter converterId="convertMayusc"/>
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:textEntry>
+                <h:commandButton styleClass="btnBuscarStd"
+                                 actionListener="#{pcsCotizacionJSFBean.buscarGen_ActionEvent}"
+                                 title="Buscar">
+                </h:commandButton>
+                <h:commandButton styleClass="btnNuevoStd"
+                                 actionListener="#{pcsCotizacionJSFBean.btnNuevoCliente_ActionEvent}"
+                                 title="Agregar nuevo cliente">
+                </h:commandButton>
+                
+                <h:commandButton value="Nueva llamada"
+                                 styleClass="btnNewCall"
+                                 actionListener="#{pcsCotizacionJSFBean.btnNuevoLamada_ActionEvent}"
+                                 title="Nueva Llamada¡¡">
+                </h:commandButton>
+            </h:panelGrid>
+            <h:panelGrid columns="1" border="0" cellpadding="0" width="100%">
+                <ace:dataTable value="#{pcsCotizacionJSFBean.lstTablaVntCliente}"
+                               var="itemClt"
+                               paginator="true"
+                               paginatorAlwaysVisible="true"
+                               rows="20"
+                               emptyMessage="No se encontraron datos"
+                               paginatorPosition="bottom"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                               currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <ace:column headerText="crear/Editar" style="width: 50px">
+                        <h:commandButton styleClass="btnEditarStd"
+                                       title="Crear/Editar"
+                                     
+                                       
+                                       actionListener="#{pcsCotizacionJSFBean.rowDtSelCliente_ActionEvent}">
+                            <f:attribute name="tcs" value="#{itemClt}"/>
+                            <f:ajax execute="@this" render="@all" />
+                        </h:commandButton>
+                    </ace:column>
+                    
+                     <ace:column headerText=">>>" style="width: 50px">
+                        <h:commandButton styleClass="btnCorreoStd"
+                                         title="Correo"
+                                       actionListener="#{pcsCotizacionJSFBean.rowDtSelClienteLLamada_ActionEvent}">
+                            <f:attribute name="tcs" value="#{itemClt}"/>
+                            <f:ajax execute="@this" render="@all" />
+                        </h:commandButton>
+                    </ace:column>
+                    
+                    <ace:column headerText="Documento" style="font-size: large;width: 100px;">
+                        <h:outputText value="#{itemClt.vntCliente.tdcId.tdcId} - #{itemClt.vntCliente.clnIdentificacion}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Nombres" style="font-size: large;width: 100%">
+                        <h:outputText value="#{itemClt.vntCliente.clnNombres}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                     <ace:column headerText="Alias"  style="font-size: large;width: 100%" rendered="#{pcsCotizacionJSFBean.esNit}">
+                         <h:outputText value="#{itemClt.vntCliente.clnAlias}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Celular" style="font-size: large"
+                                styleClass="letraTitColTablargb(181,215,235)"  >
+                        <h:outputText value="#{itemClt.vntCliente.clnCelular}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Correo-e" style="font-size: large"
+                                >
+                        <h:outputText value="#{itemClt.vntCliente.clnCorreoe}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                    <ace:column headerText="Tipo cliente" style="font-size: large"
+                                >
+                        <h:outputText value="#{itemClt.vntCliente.tclId.tclNombre}"
+                                      styleClass="textcolumleft"/>
+                    </ace:column>
+                   
+                </ace:dataTable>
+            </h:panelGrid>
+        </ace:panel>
+    </ui:insert>
+</html>

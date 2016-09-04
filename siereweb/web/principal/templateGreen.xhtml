@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <f:view contentType="text/html">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <link href="./../resources/css/default.css" rel="stylesheet" type="text/css" />
+            <link href="./../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+            <link href="./../resources/css/style.css" rel="stylesheet" type="text/css" />
+            <h:outputStylesheet name="css/default.css" />
+            <h:outputStylesheet name="css/cssLayout.css"/>
+            <h:outputStylesheet name="css/formularios.css"/>
+            <h:outputStylesheet name="css/style.css"/>
+            <title>#{principalJSFBean.strTituloPag}</title>
+            <script language="JavaScript" type="text/javascript">
+                function recargar() {
+                    var navegador = navigator.appName;
+                    if (navegador === "Microsoft Internet Explorer") {
+                        window.location.reload(true);
+                    } else {
+                        document.location.reload();
+                    }
+                }
+            </script>
+        </h:head>
+
+        <h:body >
+            <!--icecore:config messagePersistence="false" /-->
+            <h:form id="masterForm">
+
+                <div id="header-container" >
+
+                    <header class="wrapper">
+                        <div id="logo" class="#{principalJSFBean.imagenLogo}" >
+                           
+                        </div>
+                        <div>  
+                            <ui:include src="cab_1.xhtml"/>
+                            <ui:insert name="cabTop"></ui:insert></div>
+                        <!--start navigation -->
+                        <nav></nav>
+
+                    </header>
+                </div>
+                <div id="nav" class="wrapper">
+                    <ui:insert name="accion"></ui:insert>
+                </div>
+                <div id="lateral" >
+
+                    <ui:insert name="left"></ui:insert>
+
+
+                </div>
+                <div class="contenedor_principal">
+
+                    <div id="centro"  >
+                        <ui:insert name="content"></ui:insert>
+
+                        <br></br>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <!--start footer -->
+
+                <!--end footer -->
+
+            </h:form>
+        </h:body>
+    </f:view>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelAccRevPagoCuenta">
+        <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15" 
+                     rendered="#{revisaPagoCuentaJSFBean.blnCerrarProceso}">
+            <h:commandButton styleClass="btnCerrarStd"                                                                                           
+                             actionListener="#{revisaPagoCuentaJSFBean.btnCerrarRevisionFact_ActionEvent}"
+                             title="Cerrar aprobación">
+            </h:commandButton>
+        </h:panelGrid>
+        <h:panelGroup rendered="#{revisaPagoCuentaJSFBean.blnMostrarPanel}">
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnGuardarStd"                                                              
+                                 actionListener="#{revisaPagoCuentaJSFBean.btnGrabarRevisaPagoCuenta_ActionEvent}"
+                                 title="Grabar pago de cuenta revisada">
+                </h:commandButton>            
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnVolverStd"                                                              
+                                 actionListener="#{revisaPagoCuentaJSFBean.btnVolverRevisaPagoCuenta_ActionEvent}"
+                                 title="Regresar">
+                </h:commandButton>            
+            </h:panelGrid>
+        </h:panelGroup>
+    </ui:insert>
+</html>

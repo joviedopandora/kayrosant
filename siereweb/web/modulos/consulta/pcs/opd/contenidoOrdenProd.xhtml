@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <ui:insert name="ContenidoOP">
+
+        <ace:accordion collapsible="true"  >
+            <ace:accordionPane  title="Datos Cliente" >
+                <div class="form-group">
+
+
+                    <div class="input-group">
+                        <h1 align="left"><font face="arial">N° de Venta: </font>
+                            <h:outputText  value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.rgvtId}"
+
+                                           styleClass="textcolumleft letraOutput"/> </h1>  
+                    </div>
+
+                    <div class="input-group">
+                        <h1 align="left"><font face="arial">N° OP: </font>
+                            <h:outputText  value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprId}"
+
+                                           styleClass="textcolumleft letraOutput"/> </h1>  
+                    </div>
+
+
+
+
+                </div> 
+                <br></br>
+
+                <table class="tablaFormulario"  border="2" bordercolor="F7B409">
+                    <tr><th  class="thtablaFormulario" colspan="4"> DATOS CLIENTE </th></tr>
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label >NIT</label>
+                            </div>
+                        </td>
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+
+                                <div class="input-group">
+                                    <h:outputText styleClass="textcolumleft letraOutput" value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.identificacion}"
+                                                  />
+
+
+                                </div>
+                            </div> 
+                        </td></tr>
+
+
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label>Nombres Cliente</label>
+                            </div>
+                        </td>
+                        <td style="width: 30%" colspan="3">
+
+                            <div class="form-group">
+
+                                <span class="input-group">
+                                    <h:outputText value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnNombres}"
+                                                  styleClass="textcolumleft letraOutput"   />
+
+
+                                </span>
+
+                            </div>
+
+                        </td>     
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%" ><div class="form-group">
+                                <label >Departamento</label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <h:selectOneMenu  styleClass="inputs"
+                                                      valueChangeListener="#{pcsOrdenProduccionJSFBean.selDepartamento_ValueChangeEvent}"
+                                                      value="#{pcsOrdenProduccionJSFBean.opDepartamento}"
+                                                      >
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstDepartamentos}" />
+                                        <f:ajax execute="@this" render="@this selectCiudad" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </div>
+                        </td> 
+
+                        <td style="width: 20%"><div class="form-group">
+                                <label >Municipio </label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <h:selectOneMenu  styleClass="inputs" id="selectCiudad"
+                                                      value="#{pcsOrdenProduccionJSFBean.opCiudad}"
+                                                      >
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstCiudades}" />
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+
+
+
+
+
+
+
+
+
+
+
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label>Orden de Compra</label>
+                            </div>
+                        </td>
+                        <td style="width: 30%" colspan="3">
+                            <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprOc}"
+
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@all" />
+                            </ace:textEntry>
+
+
+                        </td>     
+                    </tr>
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label>Titulo OP</label>
+                            </div>
+                        </td>
+                        <td style="width: 30%" colspan="3">
+                            <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprTitulo}"
+
+                                           styleClass="inputs">
+                                <f:converter converterId="convertMayusc"/>
+                                <ace:ajax execute="@this" render="@all" />
+                            </ace:textEntry>
+
+
+                        </td>     
+                    </tr>
+
+
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label>Teléfono</label>
+                            </div>
+                        </td>
+                        <td style="width: 30%" colspan="3">
+
+                            <div class="form-group">
+
+                                <span class="input-group">
+                                    <h:outputText value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnFijo}"
+                                                  styleClass="textcolumleft letraOutput"   />
+
+
+                                </span>
+
+                            </div>
+
+                        </td>     
+                    </tr>
+
+
+                    <tr>
+                        <td style="width: 20%"><div class="form-group">
+                                <label >Celular</label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+                                <div class="input-group">
+                                    <h:outputText value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.clnId.clnCelular}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+
+                    <br> </br>
+
+                    <tr>
+                        <td style="width: 20%"><div class="form-group">
+                                <label>Nombre Evento</label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+                                <div class="input-group">
+
+
+
+                                    <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.rgvtId.vdeId.vdeObsr}"
+
+                                                   styleClass="inputs">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@all" />
+                                    </ace:textEntry>
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%" ><div class="form-group">
+                                <label>Dirección del evento</label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprDireccionevento}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+                            </div>
+                        </td> 
+                    </tr>
+
+
+                    <tr>
+                        <td style="width: 20%" ><div class="form-group">
+                                <label>Indicación para llegada</label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%" colspan="3" ><div class="form-group">
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprIndicacionllegada}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@all" />
+                                </ace:textEntry>
+
+                            </div>
+                        </td> 
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%" ><div class="form-group">
+                                <label >Fecha Evento Inicial </label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechaevtini}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+
+                        <td style="width: 20%"><div class="form-group">
+                                <label >Fecha Evento Final </label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechaevtfin}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style="width: 20%" >
+                            <div >
+                                <label >Contacto Evento</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprContactoevento}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+
+                            </div>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style="width: 20%">
+                            <div >
+                                <label >Teléfono o celular  de contacto</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div >
+
+
+                                <div >
+                                    <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprCelularcontacto}"
+
+                                                   styleClass="inputs">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:textEntry>
+
+                                </div>
+                            </div> 
+                        </td></tr>
+                    <tr style="width: 20%">
+                        <td >
+                            <div class="form-group">
+                                <label >Area Contacto</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprAreacontacto}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+
+
+                            </div> 
+                        </td></tr>
+
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label >Cargo</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprCargocontacto}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+
+
+                            </div> 
+                        </td></tr>
+                    <tr>
+                        <td style="width: 20%"><div class="form-group">
+                                <label >Fecha de Entrega Logistica </label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechaproceso}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label >Fecha y Hora Citacion Maximus</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechacitaini}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style="width: 20%">
+                            <div class="form-group">
+                                <label >Fecha y hora  de  salida  de maximus  </label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechasal}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+                    </tr>
+
+                    <tr style="width: 20%">
+                        <td >
+                            <div class="form-group">
+                                <label >Fecha y hora Montaje</label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%"><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechamonini}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+                        <td style="width: 20%"><div class="form-group">
+                                <label >Fecha y hora Desmontaje </label>
+
+                            </div>
+                        </td> 
+                        <td style="width: 30%" ><div class="form-group">
+
+                                <div class="input-group">
+                                    <ace:dateTimeEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprFechamonfin}"
+                                                       locale="es"
+                                                       styleClass="textcolumleft letraOutput" pattern="yyyy/MM/dd HH:mm" renderAsPopup="true">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </div>
+                        </td> 
+
+                    </tr>
+
+                    <tr style="width: 20%">
+                        <td >
+                            <div class="form-group">
+                                <label >Transporte </label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"> <div class="form-group">
+
+
+                                <ace:textEntry value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprTransporte}"
+
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+                            </div> 
+                        </td></tr>
+
+
+                    <tr style="width: 20%">
+                        <td >
+                            <div class="form-group">
+                                <label >Nombre del evento + Observaciones </label>
+                            </div>
+                        </td>
+
+                        <td style="width: 30%" colspan="3"> <div class="form-group">
+
+
+                                <h:inputTextarea cols="50" rows="5" styleClass="inputs" 
+
+                                                 value="#{pcsOrdenProduccionJSFBean.tablaPopOrdenProduccionSel.popOrdenprod.oprDescripcion}">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </h:inputTextarea>
+                            </div> 
+                        </td></tr>
+
+
+                    <tr>
+
+
+
+
+
+
+                    </tr>
+
+
+                </table>
+            </ace:accordionPane>
+
+
+
+            <ace:accordionPane  title="SERVICIOS">
+                <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+
+
+
+                    <tr><td  valing="top" >
+
+                            <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaPopProdXServXOp}" 
+                                           style="font-size: large;"
+                                           var="itemPrd"
+
+                                           rows="30"
+
+                                           paginator="true"
+                                           emptyMessage="No se encontraron registros"
+                                           paginatorPosition="bottom"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+                                <ace:column headerText="# Servicios" style="width: 50px" groupBy="#{itemPrd.popProdxservxop.sxoId.vsrvId.vsrvNombre}">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.sxoId.sxoCantsrv}"
+                                                  styleClass="textcolumncenter letraOutput"/>
+                                </ace:column>
+                                <ace:column headerText="SERVICIO" style="width: 150px"   groupBy="#{itemPrd.popProdxservxop.sxoId.vsrvId.vsrvNombre}">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.sxoId.vsrvId.vsrvNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+
+                                <ace:column headerText="SUBS-SERVICIO" style="width: 150px"   groupBy="#{itemPrd.popProdxservxop.servicioAsociadoDesc}">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.servicioAsociadoDesc}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+                                <ace:column headerText="Activo" style="width: 150px">
+                                    <h:selectBooleanCheckbox value="#{itemPrd.popProdxservxop.pxsoEstado}">
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectBooleanCheckbox>
+                                </ace:column>
+
+                                <ace:column headerText="Producto" style="width: 150px">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.prdId.prdNombre}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+                                <ace:column headerText="Cantidad" style="width: 50px">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.pxsoCantprod}"/>
+                                </ace:column>
+
+                            </ace:dataTable>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+
+
+            </ace:accordionPane>
+            <ace:accordionPane  title="COLABORADORES">
+                <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                    <tr>
+
+
+
+                        <td  valing="top">
+                            <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaAdmCrgXCol}" 
+                                           style="font-size: large;"
+                                           var="itemCxc"
+
+                                           rows="10"
+
+                                           paginator="true"
+                                           emptyMessage="No se encontraron registros"
+                                           paginatorPosition="bottom"
+                                           paginatorAlwaysVisible="true"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                <ace:column headerText="" style="width: 50px">
+                                    <h:selectBooleanCheckbox value="#{itemCxc.selecciona}" valueChangeListener="#{itemCxc.seleccionarAdmCrgXCol}">
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectBooleanCheckbox>
+
+                                </ace:column>
+
+
+
+                                <ace:column headerText="Nombre Cargo"  styleClass="textcolumleft letraOutput" 
+                                            
+                                            sortBy="#{itemCxc.admCrgxcol.crgId.crgNombre}"
+                                            >
+                                    <h:outputText value="#{itemCxc.admCrgxcol.crgId.crgNombre}"/>
+                                </ace:column>
+
+                                <ace:column headerText="Cedula" style="width: 100px" filterBy="#{itemCxc.admCrgxcol.cpeId.colCedula.colCedula}" filterMatchMode="contains">
+                                    <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colCedula}"
+                                                  styleClass="textcolumleft letraOutput"/>
+                                </ace:column>
+
+
+
+
+                                <ace:column headerText="Nombre"  styleClass="textcolumleft letraOutput" sortBy="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}"
+                                            
+                                            filterBy="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}" filterMatchMode="contains"
+                                            >
+                                    <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
+                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}"/>
+                                </ace:column>
+
+
+
+                                <ace:column headerText="Rol" style="width: 100px">
+                                    <h:selectOneMenu id="selectRol"  value="#{itemCxc.rolSeleccionado}"  styleClass="inputs"  >
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstRoles}" />
+                                        <f:ajax execute="@this" render="@this" />
+
+                                    </h:selectOneMenu>
+                                </ace:column>
+
+                                <ace:column headerText="Uniforme" style="width: 100px">
+                                    <h:selectOneMenu id="selectUniforme"  value="#{itemCxc.uniformeSeleccionado}"  styleClass="inputs" >
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstUniformes}" />
+                                        <ace:ajax execute="@this" render="@this" />
+
+                                    </h:selectOneMenu>                   
+                                </ace:column>
+
+
+
+                                <ace:column headerText="Responsabilidad" style="width: 100px" >
+                                    <h:selectOneMenu id="selectResponsabilidad"  value="#{itemCxc.respondableSeleccionado}"  styleClass="inputs" >
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstResponsable}" />
+                                        <ace:ajax execute="@this" render="@this" />
+
+                                    </h:selectOneMenu>                
+                                </ace:column>
+
+                                <ace:column headerText="Citacion" style="width: 100px">
+                                    <h:selectOneMenu id="selectCitacion"  value="#{itemCxc.citacionSeleccionado}"   styleClass="inputs">
+                                        <f:selectItems value="#{pcsOrdenProduccionJSFBean.lstCitacion}" />
+                                        <ace:ajax execute="@this" render="@this" />
+
+                                    </h:selectOneMenu>                
+                                </ace:column>
+
+
+                            </ace:dataTable>
+                        </td>
+                    </tr>
+
+
+                </table>
+                <br></br>
+            </ace:accordionPane>  
+            <ace:accordionPane title="AGREGAR" >
+                <h:commandButton value="Agregar producto"
+                                 class="wrapper button"
+                                 actionListener="#{pcsOrdenProduccionJSFBean.btnAgregarProductosVarios_ActionEvent}">
+                    <f:ajax execute="@this" render="@all" />
+                </h:commandButton>
+
+                <br></br>
+                <h:panelGroup rendered="#{pcsOrdenProduccionJSFBean.blnMostrarProductos}">
+                    <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario"> Otros Productos </th></tr>
+                        <div class="form-body">
+                            <div class="form-group"></div></div>
+                        <tr><td><div class="form-group">
+
+                                    <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaProducto}"                           
+                                                   var="itemPv"
+
+                                                   rows="30"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron registros"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+                                        <ace:column headerText="Producto"  sortBy="#{itemPv.invProducto.prdNombre}"
+                                                    filterBy="#{itemPv.invProducto.prdNombre}" filterMatchMode="contains"  style="width: 300px">
+                                            <h:outputText value="#{itemPv.invProducto.prdNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+
+                                        <ace:column headerText="Cantidad" style="width: 75px">
+                                            <h:inputText styleClass="inputs"
+                                                         value="#{itemPv.cantProds}">
+                                                <f:ajax execute="@this" render="@this" />
+                                                <f:convertNumber integerOnly="true" />
+                                                <f:validateLongRange minimum="0" />
+                                            </h:inputText>
+                                        </ace:column>
+                                        <ace:column style="width: 50px">
+                                            <h:commandButton styleClass="btnGuardarStd"
+                                                             actionListener="#{pcsOrdenProduccionJSFBean.btnAgregarProducto_ActionEvent}">
+                                                <f:attribute name="tps" value="#{itemPv}"/>
+                                            </h:commandButton>
+                                        </ace:column>
+                                    </ace:dataTable>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                    </table>
+                </h:panelGroup>
+            </ace:accordionPane>    
+
+        </ace:accordion>
+    </ui:insert>
+
+</html>

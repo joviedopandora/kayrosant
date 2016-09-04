@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+
+    <ui:insert name="panelCliente">
+        <ace:panel header="REGISTRO CORREO"  style="font-size: large;width: 100%;">
+            <ace:accordion id="accordion" collapsible="true" autoHeight="true">
+                <ace:accordionPane id="toDoList01" title="Datos Cliente">
+                    <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="4"> DATOS CLIENTE  </th></tr>
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label>Tipo Doc *</label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <h:selectOneMenu  styleClass="inputs"
+                                                      valueChangeListener="#{pcsCotizacionJSFBean.selTipoDoc_ValueChangeEvent}"
+                                                      value="#{pcsCotizacionJSFBean.idTipoDoc}" 
+                                                      >
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstTipoDocumento}" />
+                                        <f:ajax execute="@this" render="@form" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+                            <td style="width: 15%"><div >
+                                    <label>Nº documento *</label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strCltDocumento}"
+                                                   valueChangeListener="#{pcsCotizacionJSFBean.cambioDocumento_ValueChangeEvent}"
+                                                   styleClass="inputs">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@all" />
+                                    </ace:textEntry>
+                                </div>
+                            </td> 
+                        </tr>
+
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label>Nombres *</label>
+                                </div>
+                            </td>
+                            <td style="width: 35%" >
+                                <div >
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strCltNombres}"
+
+                                                   styleClass="inputs">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:textEntry>
+                                </div>
+                            </td>
+                            <td >   <div >
+                                    <label> <h:outputText value="Alias"  
+                                                          rendered="#{pcsCotizacionJSFBean.esNit}"/></label>
+                                </div>
+                            </td>
+                            <td  style="width: 35%" >
+                                <div class="maximus-imput-text">
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strCltAlias}"
+                                                   styleClass="inputs" maxlength="50" 
+                                                   rendered="#{pcsCotizacionJSFBean.esNit}">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@all" />
+                                    </ace:textEntry>
+                                </div>
+                            </td>
+
+                        </tr>    
+
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label><h:outputText value="Sexo *"  rendered="#{!pcsCotizacionJSFBean.esNit}"/></label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div>
+
+                                    <h:selectOneMenu 
+                                        rendered="#{!pcsCotizacionJSFBean.esNit}"
+                                        value="#{pcsCotizacionJSFBean.idSexo}"  styleClass="inputs" >
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstSexo}"/>
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+
+
+
+                        </tr>
+
+                        <tr>
+
+                            <td style="width: 15%"><div >
+                                    <label><h:outputText value="Fecha Nacimiento" rendered="#{!pcsCotizacionJSFBean.esNit}" />
+                                        <h:outputText value="Fecha Creación" rendered="#{pcsCotizacionJSFBean.esNit}" />
+                                    </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <ace:dateTimeEntry value="#{pcsCotizacionJSFBean.datCltFechaNac}"
+                                                       styleClass="inputs"
+                                                       pattern="dd/MM/yyyy"
+                                                       renderAsPopup="true">
+
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:dateTimeEntry>
+                                </div>
+                            </td>  
+
+                            <td style="width: 15%"><div >
+                                    <label>Dirección </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strCltDireccion}"
+
+                                                   styleClass="inputs">
+                                        <f:converter converterId="convertMayusc"/>
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:textEntry>
+                                </div>
+                            </td>  
+
+                        </tr>
+
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label>Fijo </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <ace:maskedEntry   styleClass="inputs" value="#{pcsCotizacionJSFBean.strCltTelefono}"  mask="999-9999" >
+                                        <ace:ajax execute="@this" render="mobilePhoneOutput"/>
+                                    </ace:maskedEntry>
+                                </div>
+                            </td> 
+                            <td style="width: 15%"><div >
+                                    <label>Celular </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+
+                                    <ace:maskedEntry 
+                                        styleClass="inputs"
+                                        value="#{pcsCotizacionJSFBean.strCltCelular}" mask="(999) 999-9999" >
+                                        <ace:ajax execute="@this" render="mobilePhoneOutput"/>           
+                                        <f:converter converterId="convertMayusc"/>
+                                    </ace:maskedEntry>
+                                </div>
+                            </td> 
+
+                        </tr>
+
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label>Correo</label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <div >
+                                    <ace:textEntry    
+                                        value="#{pcsCotizacionJSFBean.strCltCorreo}"  styleClass="inputs">
+                                        <ace:ajax execute="@this" render="@this" />
+                                    </ace:textEntry>
+
+
+                                </div>
+                            </td> 
+
+                            <td style="width: 15%"><div >
+                                    <label>Vendedor </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <ace:textEntry value="#{pcsCotizacionJSFBean.strCltContacto}"
+                                               styleClass="inputs">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+                            </td> 
+
+                        </tr>
+
+                        <tr>
+                            <td style="width: 15%"><div >
+                                    <label>Tipo cliente *</label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <h:selectOneMenu  styleClass="inputs"
+                                                  disabled="true"
+                                                  value="#{pcsCotizacionJSFBean.idTipoCliente}">
+                                    <f:selectItems value="#{pcsCotizacionJSFBean.lstTipoCliente}"/>
+                                    <f:ajax execute="@this" render="@this" />
+
+                                </h:selectOneMenu>
+                            </td> 
+
+                            <td style="width: 15%"><div >
+                                    <label>Act. económica </label>
+                                </div>
+                            </td>
+                            <td style="width: 35%">
+                                <h:selectOneMenu styleClass="inputs" 
+                                                 value="#{pcsCotizacionJSFBean.idActEconomica}">
+                                    <f:selectItems value="#{pcsCotizacionJSFBean.lstActividadEconomica}"/>
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:selectOneMenu>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td style="width: 20%"><div >
+                                    <label>Como Supo de Nosotros? *</label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+                                <div >
+
+                                    <h:selectOneMenu  styleClass="inputs"
+
+                                                      value="#{pcsCotizacionJSFBean.comoNosConoce}" >
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstComoContacto}" />
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td>
+
+                            <td style="width: 20%"><div >
+                                    <label>Motivo Evento </label>
+                                </div>
+                            </td>
+                            <td style="width: 30%">
+                                <div>
+
+                                    <h:selectOneMenu 
+
+                                        value="#{pcsCotizacionJSFBean.idMotivoEventoLLamada}"  styleClass="inputs" >
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstMotivoEvento}"/>
+                                        <f:ajax execute="@this" render="@this" />
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+
+                        </tr>
+
+                    </table> 
+                    <br></br>
+
+                    <table    class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="4"> #{pcsCotizacionJSFBean.esNit ? 'Agregar Nuevo Contacto' : 'Homenajeado'} </th></tr>
+                        <tr>
+                            <td><div >
+                                    <label>Nombres *</label>
+                                </div>
+                            </td>
+                            <td colspan="3">
+                                <div>
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strDetNombre1}" 
+                                                   styleClass="inputs"
+                                                   >
+                                        <ace:ajax execute="@this" render="@this"/>           
+                                        <f:converter converterId="convertMayusc"/>
+                                    </ace:textEntry>
+                                </div>
+                            </td> 
+
+
+                        </tr>
+                        <tr>
+                            <td><div >
+                                    <label>Sexo </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                    <h:selectOneMenu 
+                                        value="#{pcsCotizacionJSFBean.idSexoDetClt}" 
+                                        styleClass="inputs"
+                                        >
+                                        <f:ajax execute="@this" render="@this"/>           
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstSexoDetClt}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+
+
+                            <td><div >
+                                    <label><h:outputText value="Parentesco *" rendered="#{!pcsCotizacionJSFBean.esNit}" />
+                                        <h:outputText value="Area  *" rendered="#{pcsCotizacionJSFBean.esNit}" />
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                    <h:selectOneMenu 
+                                        value="#{pcsCotizacionJSFBean.idParentesco}"  
+                                        styleClass="inputs"
+                                        >
+                                        <f:ajax execute="@this" render="@this"/>           
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstParentesco}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+                        </tr>
+
+
+                        <tr>
+                            <td><div >
+                                    <label><h:outputText value="Fecha de Nacimiento *" rendered="#{!pcsCotizacionJSFBean.esNit}" />
+                                        <h:outputText value="Fecha Cumpleaños *" rendered="#{pcsCotizacionJSFBean.esNit}" />
+                                    </label>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                    <ace:dateTimeEntry value="#{pcsCotizacionJSFBean.datDetFechaNac}"  
+                                                       renderAsPopup="true"
+                                                       pattern="dd/MM/yyyy"
+                                                       styleClass="inputs"
+                                                       >
+                                        <ace:ajax execute="@this" render="@this"/>           
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+
+                                    </ace:dateTimeEntry>
+
+
+
+
+
+                                </div>
+                            </td> 
+                            <td><div >
+                                    <label><h:outputText value="Cuantos años Cumple *" rendered="#{!pcsCotizacionJSFBean.esNit}" />
+                                        <h:outputText value="Dirección *" rendered="#{pcsCotizacionJSFBean.esNit}" />
+                                    </label>
+                                </div>
+                            </td>
+                            <td >
+                                <div>
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strDetDireccion}" 
+                                                   styleClass="inputs"
+                                                   >
+                                        <ace:ajax execute="@this" render="@this"/>           
+                                        <f:converter converterId="convertMayusc"/>
+                                    </ace:textEntry>
+                                </div>
+                            </td> 
+                        </tr>
+                        <!-- nuevos campos -->
+                        <tr>
+                            <td><div >
+                                    <label><h:outputText value="Telefono + Ext" rendered="#{pcsCotizacionJSFBean.esNit}"/>
+
+                                    </label>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                    <ace:maskedEntry id="workPhoneInput" value="#{pcsCotizacionJSFBean.detCelular}" mask=" 999-9999? x99999"
+
+                                                     indicatorPosition="right"
+                                                     rendered="#{pcsCotizacionJSFBean.esNit}">
+                                        <ace:ajax execute="@this" render="@this workPhoneOutput"/>
+                                        <ace:ajax event="blur" execute="@this" render="@all"/>
+                                    </ace:maskedEntry>
+
+
+
+
+                                </div>
+                            </td> 
+                            <td><div >
+                                    <label><h:outputText value="Celular" rendered="#{pcsCotizacionJSFBean.esNit}"/>
+
+                                    </label>
+                                </div>
+                            </td>
+                            <td >
+                                <div>
+
+                                    <h:inputText
+                                        value="#{pcsCotizacionJSFBean.detExtension}"
+                                        styleClass="inputs"
+                                        maxlength="10"
+                                        rendered="#{pcsCotizacionJSFBean.esNit}">
+
+                                        <f:ajax execute="@this" render="@this"/>   
+                                    </h:inputText>
+                                </div>
+                            </td> 
+
+                        </tr>
+                        <tr>
+                            <td><div >
+                                    <label><h:outputText value="Correo" rendered="#{pcsCotizacionJSFBean.esNit}"/>
+
+                                    </label>
+                                </div>
+                            </td>
+                            <td >
+                                <div>
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.strDetCorreo}" 
+                                                   styleClass="inputs"
+                                                   rendered="#{pcsCotizacionJSFBean.esNit}">
+                                        <ace:ajax execute="@this" render="@this"/>           
+                                        <f:validator validatorId="validarEmail" />
+                                    </ace:textEntry>
+                                </div>
+                            </td> 
+                            <td><div >
+                                    <label><h:outputText value="Cargo" rendered="#{pcsCotizacionJSFBean.esNit}"/>
+
+                                    </label>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+
+                                    <h:selectOneMenu 
+                                        value="#{pcsCotizacionJSFBean.detCargo}"  
+                                        styleClass="inputs"
+                                        rendered="#{pcsCotizacionJSFBean.esNit}">
+                                        <f:ajax execute="@this" render="@this"/>           
+                                        <f:selectItems value="#{pcsCotizacionJSFBean.lstCargosContacto}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                            </td> 
+
+                        </tr>   
+
+                        <tr>
+                            <td><div >
+                                    <label><h:outputText value="Observación"/>
+
+                                    </label>
+                                </div>
+                            </td>
+                            <td colspan="3">
+                                <div>
+
+                                    <ace:textEntry value="#{pcsCotizacionJSFBean.registroLlamadaObservacion}" 
+                                                   styleClass="inputs"
+                                                   >
+                                        <ace:ajax execute="@this" render="@this"/>           
+                                        <f:converter converterId="convertMayusc"/>
+                                    </ace:textEntry>
+
+                                </div>
+                            </td> 
+
+
+                        </tr>        
+
+                        <tr>
+
+                            <td colspan="4">
+                                <div>
+                                    <h:commandButton styleClass="btnNuevoStd"
+                                                     actionListener="#{pcsCotizacionJSFBean.btnGrabarDetalleCliente_ActionEvent}"
+                                                     title="Agregar detalle cliente">
+                                        <f:ajax execute="@this" render="@all" />
+
+                                    </h:commandButton>  
+                                </div>
+
+
+                            </td>
+                        </tr>    
+
+                    </table>
+                </ace:accordionPane>
+
+                <ace:accordionPane id="toDoList" title="Datos Contacto" >
+
+                    <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2">   #{pcsCotizacionJSFBean.esNit ? 'Datos Contacto' : 'Datos Homenajeado'}
+                            </th></tr>
+                        <tr>
+
+                            <td><h:panelGrid columns="2">
+                                    <label>Envíar correo a contacto principal</label>
+                                    <h:selectBooleanCheckbox id="checkBoxSeleccionePrincipal" value="#{pcsCotizacionJSFBean.blnEnviarCorreoAPrincipal}">
+                                        <f:ajax execute="@this" render="@this"/>
+                                    </h:selectBooleanCheckbox> 
+                                </h:panelGrid></td></tr>
+                        <tr><td><div >
+                                    <ace:dataTable value="#{pcsCotizacionJSFBean.lstTablaVntDetalleCliente}"
+                                                   var="itemDet"
+                                                   rows="10"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron registros"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                        <ace:column headerText="Seleccione" style="width: 50px">
+                                            <h:selectBooleanCheckbox id="checkBoxSeleccione" 
+                                                                     value="#{itemDet.seleccionado}"
+                                                                     rendered="#{itemDet.vntDetallecliente.dclnEmail!= null}">
+                                                <f:ajax execute="@this" render="@this"/>
+                                            </h:selectBooleanCheckbox>
+
+                                        </ace:column>
+
+                                        <ace:column headerText="Nombres" style="width: 250px">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnNombres}"
+                                                          styleClass="textcolumleft"/>
+                                        </ace:column>
+
+                                        <ace:column headerText="#{pcsCotizacionJSFBean.esNit ?'Dirección' :'Cumpleaños #'}" style="width: 100px">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnDireccion}}"
+                                                          styleClass="textcolumleft"/>
+                                        </ace:column>
+
+
+                                        <ace:column headerText="Celular" style="width: 100px" rendered="#{pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnCelular}"/>
+                                        </ace:column>
+                                        <ace:column headerText="Extensión" style="width: 50px" rendered="#{pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnExtension}"/>
+                                        </ace:column>
+                                        <ace:column headerText="Correo" style="width: 250px" rendered="#{pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnEmail}"/>
+                                        </ace:column>
+                                        <ace:column headerText="Sexo" style="width: 50px" rendered="#{!pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{(itemDet.vntDetallecliente.sexId == null ?' ' :  itemDet.vntDetallecliente.sexId.sexId)}"/>
+                                        </ace:column>
+                                        <ace:column headerText="#{pcsCotizacionJSFBean.esNit ?'Area' :'Parentesco'}" style="width: 100px">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.prtId.prtNombre}"
+                                                          styleClass="textcolumleft"/>
+                                        </ace:column>
+                                        <ace:column  headerText="#{pcsCotizacionJSFBean.esNit ?'Nacimiento' :'Nacimiento'}" style="width: 100px">
+                                            <h:outputText value="#{itemDet.vntDetallecliente.dclnFechanace}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                            </h:outputText>
+                                        </ace:column>
+                                        <ace:column headerText="Edad" style="width: 50px" rendered="#{!pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{itemDet.edad}"/>
+                                        </ace:column>
+                                        <ace:column  headerText="Cargo" style="width: 200px" rendered="#{pcsCotizacionJSFBean.esNit}">
+                                            <h:outputText value="#{(itemDet.vntDetallecliente.rfCargocontacto == null ? '' : itemDet.vntDetallecliente.rfCargocontacto.cargoDesc)}">
+
+                                            </h:outputText>
+                                        </ace:column>
+                                        <ace:column headerText="Ver Cotizaciones" style="width: 50px" >
+                                            <h:commandButton styleClass="btnBuscarStd" title="Consultar Cotizaciones"
+                                                             onclick="dialogCotizacion.show();" 
+                                                             actionListener="#{pcsCotizacionJSFBean.buscarCotizacionXDetalleCliente_ActionEvent}"
+                                                             >
+                                                <f:ajax execute="@this" render="@all" />
+                                                <f:attribute  name="detalleCliente" value="#{itemDet}" />
+                                            </h:commandButton> 
+                                        </ace:column>
+                                    </ace:dataTable>
+                                </div></td></tr>
+
+                    </table>
+                </ace:accordionPane>
+
+                <!-- 
+                               <ace:accordionPane id="toDoList5" title="Envío de Correo PDF">
+               
+                                   <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                                       <tr><th  class="thtablaFormulario" colspan="6"> Envío de PDF  </th></tr>
+                                       <tr>
+                                           <td style="width: 15%"><div >
+                                                   <label>Homenajeado </label>
+                                               </div>
+                                           </td>
+                                           <td style="width: 30%">
+                                               <ace:textEntry value="#{pcsCotizacionJSFBean.homenajeadoLLamada}"
+                                                              styleClass="inputs" maxlength="150">
+               
+                                                   <ace:ajax execute="@this" render="@this" />
+                                               </ace:textEntry>
+                                           </td>
+               
+                                           <td style="width: 10%" rowspan="4">
+                                               <div style="width:20%">
+                                                   <h:commandButton styleClass="botones btnActividades"
+               
+                                                                    onclick="sampleDialog.show();" 
+                                                                    actionListener="#{pcsCotizacionJSFBean.buscarServiciosXEdadYSexo}"
+                                                                    title="Ver Servicios activos">
+                                                       <f:ajax execute="@this" render="@all" />
+                                                   </h:commandButton>
+               
+                                               </div>
+                                           </td> 
+                                       </tr>
+                                       <tr>
+                                           <td style="width: 10%"><div >
+                                                   <label>Edad </label>
+                                               </div>
+                                           </td>
+                                           <td style="width: 30%">
+                                               <ace:textEntry value="#{pcsCotizacionJSFBean.edad}"
+                                                              styleClass="inputs">
+                                                   <f:convertNumber integerOnly="true" />
+                                                   <f:validateLongRange minimum="0" maximum="150"  />
+                                                   <ace:ajax execute="@this" render="@this" />
+                                               </ace:textEntry>
+                                           </td> 
+                                       </tr>
+                                       <tr>
+               
+                                           <td style="width: 15%"><div >
+                                                   <label>Sexo </label>
+                                               </div>
+                                           </td>
+                                           <td style="width: 30%">
+                                               <div>
+               
+                                                   <h:selectOneMenu 
+               
+                                                       value="#{pcsCotizacionJSFBean.idSexoHomenajeado}"  styleClass="inputs" >
+                                                       <f:selectItems value="#{pcsCotizacionJSFBean.lstSexo}"/>
+                                                       <f:ajax execute="@this" render="@this" />
+                                                   </h:selectOneMenu>
+                                               </div>
+                                           </td> 
+               
+                                       </tr>
+                                       <tr>
+               
+                                           <td style="width: 15%"><div >
+                                                   <label>Fecha Evento </label>
+                                               </div>
+                                           </td>
+                                           <td style="width: 30%">
+                                               <ace:dateTimeEntry value="#{pcsCotizacionJSFBean.fechaEventoLLamada}"
+                                                                  styleClass="inputs"
+                                                                  pattern="dd/MM/yyyy"
+                                                                  renderAsPopup="true">
+               
+                                                   <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                                   <ace:ajax execute="@this" render="@this" />
+                                               </ace:dateTimeEntry>
+               
+                                           </td> 
+               
+               
+                                       </tr>
+               
+               
+               
+               
+                                   </table>         
+                               </ace:accordionPane>
+                -->
+                <ace:accordionPane id="toDoList6" title="Envio de Correo Excel">
+
+                    <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="6"> Excel  </th></tr>
+
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Archivo Cotización Manual</label>
+                                </div>
+                            </td>
+                            <td style="width: 100%" colspan="4">
+
+                                <div>
+                                    <h:panelGrid  columns="1"> 
+                                        <h:panelGrid  columns="3"> 
+                                            <ace:fileEntry id="file-entry"
+                                                           fileEntryListener="#{pcsCotizacionJSFBean.fileEntryAction}" 
+                                                           immediate="true" useOriginalFilename="true" 
+
+
+                                                           label ="Seleccione Excel de Cotizacion">
+
+                                            </ace:fileEntry>
+                                            <h:outputText value="" />
+                                            <h:commandButton value=" " type="submit"
+                                                             styleClass="btnSubirArchivo" style="background-size: 27px;height: 30px !important;background-repeat: no-repeat;"/>
+
+
+
+                                        </h:panelGrid>
+                                        <h:outputText value="#{pcsCotizacionJSFBean.nombreaAchivoSeleccionado}"/>  
+                                    </h:panelGrid>
+
+
+                                </div>
+
+                            </td>  
+
+                        </tr>
+                        <tr>
+                            <td style="width: 20%"> 
+                                <div> 
+                                    <label>Asunto Cotización Manual</label>
+                                </div>
+                            </td>
+                            <td style="width: 100%" colspan="4">
+                                <ace:textEntry value="#{pcsCotizacionJSFBean.asuntoMensajeExcel}"
+                                               styleClass="inputs" maxlength="100">
+                                    <f:converter converterId="convertMayusc"/>
+                                    <ace:ajax execute="@this" render="@this" />
+                                </ace:textEntry>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%" itemLabel="Red"> 
+                                <div>  
+                                    <label>Mensaje Cotización Manual</label>
+                                </div>
+                            </td>
+                            <td style="width: 100%" colspan="4">
+
+
+                                <h:inputTextarea value="#{pcsCotizacionJSFBean.mensajeExcel}"  cols="300" rows="40" styleClass="inputs" style="height: 100px;">
+                                    <f:ajax execute="@this" render="@this" />
+                                </h:inputTextarea>
+
+
+                            </td>   
+                        </tr>
+
+
+
+
+                    </table>   
+
+
+                </ace:accordionPane>
+                <ace:accordionPane id="toDoList3" title="Detalle LLamada">
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Registro  </th></tr>
+
+                        <tr><td><div >
+                                    <ace:dataTable value="#{pcsCotizacionJSFBean.lstVntRegistroLlamada}"
+                                                   var="item"
+                                                   paginator="true"
+                                                   paginatorAlwaysVisible="true"
+                                                   rows="10"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                                   currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+                                        <ace:column headerText="fecha Proceso" >
+                                            <h:outputText value="#{item.regllamFechaproceso}"
+
+                                                          styleClass="letraOutput textcolumleft">
+                                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss a" timeZone="GMT-5" />
+                                            </h:outputText>
+                                        </ace:column>
+                                        <!--
+                                        <ace:column headerText="Edad" >
+                                            <h:outputText value="#{item.regllamEdad}"
+                                                          styleClass="letraOutput textcolumleft"/>
+                                        </ace:column>
+                                        <ace:column headerText="Sexo" style="font-size: large">
+                                            <h:outputText value="#{(item.rfSexo == null ? '' : item.rfSexo.sexDesc)}"
+                                                          styleClass="letraOutput textcolumleft"/>
+                                        </ace:column>
+                                        /-->
+                                        <ace:column headerText="Correo Enviado" >
+
+                                            <h:outputText value="#{item.rfTipocierrellamada.tipocierreNombre}"
+                                                          styleClass="letraOutput textcolumleft"/>
+                                        </ace:column>
+                                        <ace:column headerText="Observación" 
+                                                    >
+                                            <h:outputText value="#{item.regllamObservacion}"
+                                                          styleClass="letraOutput textcolumleft"/>
+                                        </ace:column>
+
+
+                                    </ace:dataTable>
+                                </div></td></tr>
+
+                    </table>
+
+                </ace:accordionPane>
+            </ace:accordion>
+
+        </ace:panel>            
+        <ace:dialog id="dialog"
+                    header="Servicios Activos"
+                    widgetVar="sampleDialog"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    width="800">
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Servicios  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <ace:dataTable value="#{pcsCotizacionJSFBean.lstServiciosXParametros}"
+                                           var="item"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="5"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+                                <ace:column style="width: 50px"  >
+                                    <f:facet name="header">
+                                        <h:selectBooleanCheckbox valueChangeListener="#{pcsCotizacionJSFBean.selTodoServicioLLamadas_ValueChange}">
+                                            <f:ajax execute="@this" render="@all"/>
+                                        </h:selectBooleanCheckbox>
+                                    </f:facet>
+                                    <h:selectBooleanCheckbox value="#{item.seleccionado}" valueChangeListener="#{pcsCotizacionJSFBean.selServicio_ValueChange}" > 
+                                        <f:ajax execute="@this" render="@all"/>
+                                        <f:attribute name="tsxvs" value="#{item}" />
+                                    </h:selectBooleanCheckbox>
+                                </ace:column>
+                                <ace:column headerText="Nombre"  style="width: 100px;" sortBy="#{item.vntServicio.vsrvNombre}"
+                                            filterBy="#{item.vntServicio.vsrvNombre}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.vntServicio.vsrvNombre}"
+
+                                                  styleClass="letraOutput textcolumleft">
+
+                                    </h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Descripción"  style="width: 600px;" sortBy="#{item.vntServicio.vsrvDesc}"
+                                            filterBy="#{item.vntServicio.vsrvDesc}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.vntServicio.vsrvDesc}"
+
+                                                  styleClass="letraOutput textcolumleft"/>
+                                </ace:column>
+
+
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <h:commandButton id="submitAceptar" value="Aceptar" onclick="sampleDialog.hide();" class="wrapper button"/> 
+                        </div>
+                    </td>                </tr>
+            </table>
+
+
+        </ace:dialog>
+
+
+
+
+        <ace:dialog id="dialogCotizacion"
+                    header="Cotizaciones"
+                    widgetVar="dialogCotizacion"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    width="1000">
+
+
+            <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th  class="thtablaFormulario" colspan="4"> Cotizaciones  </th></tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <ace:dataTable value="#{pcsCotizacionJSFBean.lstVentasXDetalle}"
+                                           var="item"
+                                           id="tblCotizaciones"
+                                           widgetVar="tblCotizaciones"
+                                           paginator="true"
+                                           paginatorAlwaysVisible="true"
+                                           rows="5"
+                                           emptyMessage="No se encontraron datos"
+                                           paginatorPosition="bottom"
+                                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                                           currentPageReportTemplate="(Cotizaciones: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+                                <ace:column headerText="# Cotización"  style="width: 100px;" >
+                                    <h:outputText value="#{item.detevento.rgvtId.rgvtId}"
+
+                                                  styleClass="letraOutput textcolumred">
+
+                                    </h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Fecha Venta"  >
+                                    <h:outputText value="#{item.detevento.rgvtId.rgvtFechacre}"
+
+                                                  styleClass="letraOutput textcolumleft">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                    </h:outputText>
+                                </ace:column>
+
+                                <ace:column headerText="Nombre Archivo"  >
+                                    <h:outputText value="#{item.nombreArchivo}"
+
+                                                  styleClass="letraOutput textcolumleft">
+
+                                    </h:outputText>
+                                </ace:column>
+                                <ace:column headerText="Reporte"  >
+                                    <h:panelGrid columns="2" >
+
+                                        <h:commandButton styleClass="btnGenerarInforme"
+                                                         actionListener="#{pcsCotizacionJSFBean.generarReporteCotizacionXventa_ActionEvent}"
+                                                         title="Generar Reporte">  
+                                            <f:ajax execute="@this" render="@all" />
+                                            <f:attribute name="tabla" value="#{item}" />
+                                        </h:commandButton>
+                                        <ice:outputResource resource="#{item.jaspResource}"
+                                                            mimeType="application/vnd.ms-excel"
+                                                            fileName="#{item.nombreArchivo}"
+                                                            shared="false"
+                                                            label=" "
+                                                            type="button"
+                                                            styleClass="btnInformeEXCEL">
+                                        </ice:outputResource>
+
+
+
+
+
+
+
+                                    </h:panelGrid> 
+
+                                </ace:column>
+
+                                 <ace:column headerText="Cronograma">
+                                    <h:selectBooleanCheckbox value="#{item.detevento.rgvtId.rgvtActCronograma}"
+                                                             valueChangeListener="#{pcsCotizacionJSFBean.activarGeneracionCronograma_actionEvent}"
+                                                             disabled="#{item.detevento.rgvtId.rgvtActCronograma}"
+                                                             styleClass="letraOutput textcolumleft">
+                                        <f:ajax execute="@this" render="@this" />
+                                        <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                    </h:selectBooleanCheckbox>
+                                </ace:column>
+                                <ace:column headerText="Autorizar "  >  
+                                    <h:panelGrid columns="4" id="panelAct" >
+                                        <h:commandButton styleClass="#{item.detevento.rgvtId.rgvtEstados == 1 ? 'red' : 'opaque'}" title="Anular"
+
+                                                         actionListener="#{pcsCotizacionJSFBean.anularGeneracionOrdenProducion_actionEvent}"
+                                                         >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                        </h:commandButton> 
+
+
+                                        <h:commandButton 
+                                            styleClass="#{item.detevento.rgvtId.rgvtEstados == 2 ? 'yelow' : 'opaque'}" 
+                                            title="Espera"
+
+                                            actionListener="#{pcsCotizacionJSFBean.inactivarGeneracionOrdenProducion_actionEvent}"
+                                            >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                        </h:commandButton> 
+
+                                        <h:commandButton  title="Factura"
+                                                          styleClass="#{(item.detevento.rgvtId.rgvtEstados == 3 || item.detevento.rgvtId.rgvtEstados == 5 ) ? 'green' : 'opaque'}" 
+                                                          actionListener="#{pcsCotizacionJSFBean.activarGeneracionOrdenProducion_actionEvent}"
+                                                          >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                            <f:attribute name="estado" value="3" />
+                                        </h:commandButton> 
+
+                                        <h:commandButton styleClass="#{(item.detevento.rgvtId.rgvtEstados == 4 || item.detevento.rgvtId.rgvtEstados == 5 )? 'orange' : 'opaque'}" title="Orden Producion"
+
+                                                         actionListener="#{pcsCotizacionJSFBean.activarGeneracionOrdenProducion_actionEvent}"
+                                                         >
+                                            <f:ajax execute="@this" render="panelAct" />
+                                            <f:attribute name="venta" value="#{item.detevento.rgvtId}" />
+                                            <f:attribute name="estado" value="4" />
+                                        </h:commandButton> 
+
+                                    </h:panelGrid>
+                                </ace:column>
+
+                            </ace:dataTable>
+                        </div>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 100%">
+                        <div style="width: 100%">
+                            <h:commandButton id="submit" value="Aceptar" onclick="dialogCotizacion.hide();" class="wrapper button"/> 
+                        </div>
+                    </td>                </tr>
+            </table>
+
+
+        </ace:dialog>
+
+
+
+    </ui:insert>
+</html>

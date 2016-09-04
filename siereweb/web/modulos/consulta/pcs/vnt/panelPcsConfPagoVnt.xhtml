@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="confPagos">
+        <ace:panel header="PAGOS POR CONFIRMAR" style="font-size: large" rendered="#{!pcsVentasJSFBean.blnMostrarPanel}">
+            <ace:dataTable value="#{pcsVentasJSFBean.lstTablaVntRegistroventa}"
+                           var="itemRgv"
+                           paginator="true"
+                           paginatorAlwaysVisible="true"
+                           rows="30"
+                           emptyMessage="No se encontraron datos"
+                           paginatorPosition="bottom"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
+                           currentPageReportTemplate="(Tareas: {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>" 
+                                   actionListener="#{pcsVentasJSFBean.rowDtRegistroVenta_ActionEvent}">
+                        <f:attribute name="trvs" value="#{itemRgv}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nº Venta" styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}" sortBy="#{itemRgv.vntRegistroventa.rgvtId}"
+                            filterBy="#{itemRgv.vntRegistroventa.rgvtId}" filterMatchMode="contains">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.rgvtId}"/>
+                </ace:column>
+                <ace:column headerText="Fecha evento" styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}" 
+                            groupBy="#{itemRgv.vntRegistroventa.vdeId.vdeFechaevt}">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.vdeId.vdeFechaevt}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+                  
+                                 <ace:column headerText="Evento" style="width: 100px" sortBy="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}"
+                            filterBy="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}" filterMatchMode="contains">
+                    <h:outputText value="#{itemRvf.vntRegistroventa.vdeId.vdeObsr}"/>
+                </ace:column>
+                        
+                <ace:column headerText="Documento" style="width: 100px">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.identificacion}"
+                                  styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}"/>
+                </ace:column>
+                <ace:column headerText="Cliente" style="width: 200px" groupBy="#{itemRgv.vntRegistroventa.clnId.nombres}">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.nombres}" 
+                                  styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}"/>
+                </ace:column>
+                <ace:column headerText="Tipo cliente" style="width: 100px">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.clnId.tclId.tclNombre}"
+                                  styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}"/>
+                </ace:column>
+                <ace:column headerText="Valor Factura ($)" style="width: 100px">
+                    <h:outputText rendered="#{(itemRgv.vntRegistroventa.rgvtVlrfactura == null ? true :false)}"
+                        value="#{itemRgv.vntRegistroventa.rgvtValorventa }"
+                                  styleClass="textcolumright letraOutput #{itemRgv.estiloFila}">
+                            <f:convertNumber locale="es" pattern="#,##0.00" />
+                          <f:convertNumber groupingUsed="true"/>
+                    </h:outputText>
+                     <h:outputText rendered="#{(itemRgv.vntRegistroventa.rgvtVlrfactura == null ? false :true)}"
+                        value="#{itemRgv.vntRegistroventa.rgvtVlrfactura}"
+                                  styleClass="textcolumright letraOutput #{itemRgv.estiloFila}">
+                         <f:convertNumber locale="es" pattern="#,##0" />
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 100px">
+                    <h:outputText value="#{itemRgv.vntRegistroventa.estrvntId.estrvntNombre}"
+                                  styleClass="textcolumleft letraOutput #{itemRgv.estiloFila}"/>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+        <h:panelGroup rendered="#{pcsVentasJSFBean.blnMostrarPanel}">
+                
+            <ace:panel header="REALZAR PAGO O ANTICIPO">
+             <ui:include src="contenidoPagos.xhtml"/>
+            </ace:panel>
+        </h:panelGroup>
+    </ui:insert>
+</html>

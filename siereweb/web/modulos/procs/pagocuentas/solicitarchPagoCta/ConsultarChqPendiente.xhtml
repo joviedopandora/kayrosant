@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="consultarChqPendiente">
+        <ace:panel header="Solicitud de cheque pendiente">
+            <ace:dataTable value="#{solicitudChequeJSFBean.lstTablaFinSolicitudCheque}"
+                           var="item"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText="Fecha pago" style="width: 100px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.ctaFechapago}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Proveedor" style="width: 300px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.provRazonsoc}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="NIT" style="width: 250px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvNit} - 
+                                  #{item.finSolicitudcheque.fxcId.apbId.ctaId.factId.prvId.prvDigver}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Valor total" style="width: 150px">
+                    <h:outputText value="#{item.finSolicitudcheque.fxcId.fxcValor}"
+                                  styleClass="textcolumright">
+                        <f:convertNumber type="currency" locale="es_CO"/>
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

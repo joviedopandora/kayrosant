@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <body>
+        <ui:composition template="/principal/templateGreen.xhtml">
+            <ui:define name="top">
+
+            </ui:define>
+            <ui:define name="accion">
+                <ui:include src="PanelAccParametrizacion.xhtml" />
+            </ui:define>
+
+            <ui:define name="left">
+
+                <ui:include src="leftParametrizacion.xhtml" />
+
+            </ui:define>
+
+            <ui:define name="content">
+
+                <h:panelGroup rendered="#{parametrizacionJSFBean.numPanel==1 ? true : false}">
+                    <ui:include src="PanelConsulta.xhtml" />
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{parametrizacionJSFBean.numPanel==2 ? true : false}">
+                    <ui:include src="panelServicio.xhtml" />
+                </h:panelGroup> 
+                <h:panelGroup rendered="#{parametrizacionJSFBean.numPanel==3 ? true : false}">
+                    <ui:include src="PanelProductoXServicio.xhtml" />
+                </h:panelGroup> 
+                 <h:panelGroup rendered="#{parametrizacionJSFBean.numPanel==4 ? true : false}">
+                     <ui:include src="PanelServicioHijo.xhtml" />
+                </h:panelGroup> 
+                
+                 <h:panelGroup rendered="#{parametrizacionJSFBean.numPanel==5 ? true : false}">
+                     <ui:include src="Cronograma.xhtml"/>
+                </h:panelGroup> 
+                
+                <ace:dialog 
+                    header="Servicios Activos"
+                    widgetVar="dlgConsultServi"
+                    closable="true"
+                    modal="false"
+                    draggable="true"
+                    showEffect="clip"
+                    hideEffect="fade"
+                    showHeader="true"
+                    dialogPosition="center"
+                    width="1200"
+                    height="800">
+                    <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                        <tr><th  class="thtablaFormulario" colspan="2"> Servicios </th></tr>
+                        <tr>
+                            <td style="width: 100%">
+                                <div style="width: 100%">
+                                    <ace:dataTable value="#{parametrizacionJSFBean.lstServicios}"
+                                                   var="itemInv"
+                                                   rows="20"
+
+                                                   alwaysExecuteContents="true"
+                                                   paginator="true"
+                                                   emptyMessage="No se encontraron datos"
+                                                   paginatorPosition="bottom"
+                                                   paginatorAlwaysVisible="true"
+                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+
+
+
+                                        <ace:column headerText="Abrir" >       
+                                            <h:commandButton styleClass="btnSeleccionOpen"
+                                                             title="Abrir Servicio"
+                                                             actionListener="#{parametrizacionJSFBean.rowDtServicio_ActionEvent}">
+                                                <f:attribute name="servicio" value="#{itemInv}"/>
+                                                <f:ajax execute="@this" render="@all" />
+                                            </h:commandButton>
+                                        </ace:column>
+
+                                        <ace:column headerText="ID"  sortBy="#{itemInv.vsrvId}"
+                                                    filterBy="#{itemInv.vsrvId}" filterMatchMode="contains" >
+                                            <h:outputText value="#{itemInv.vsrvId}"
+
+                                                          styleClass="textcolumnjustify letraOutput"/>
+                                        </ace:column>
+
+
+                                        <ace:column headerText="Nombre"  sortBy="#{itemInv.vsrvNombre}"
+                                                    filterBy="#{itemInv.vsrvNombre}" filterMatchMode="contains" >
+                                            <h:outputText value="#{itemInv.vsrvNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+                                        <ace:column headerText="Descripción" >
+                                            <h:outputText value="#{itemInv.vsrvDesc}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+
+
+
+                                        <ace:column  id="name" headerText="Tipo" 
+                                                     filterBy="#{itemInv.tsrvId.tsrvNombre}" >
+                                            <h:outputText id="nameCell" value="#{itemInv.tsrvId.tsrvNombre}"/>
+                                        </ace:column>
+
+
+
+
+
+                                        <ace:column headerText="Estado" >
+                                            <h:outputText value="#{(itemInv.vsrvEst ? 'Activo' : 'Inactivo')}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>               
+
+                                             
+
+                                        <ace:column headerText="valor factura ($)" style="width: 100px">
+                                         <h:outputText value="#{itemInv.vsrvValunitcliente}"
+                                          styleClass="textcolumright letraOutput">
+                                <f:convertNumber pattern="#0.00"/>
+                                <f:convertNumber groupingUsed="true"/>
+                            </h:outputText>
+                                   </ace:column>
+                                        
+                                    </ace:dataTable>
+
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </ace:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:composition template="/principal/masterpage.xhtml">
+        <ui:define name="top">          
+            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+                <h:commandButton styleClass="btnGuardarStd"                                                                                          
+                                 actionListener="#{recepcionPedidoJSFBean.btnGrabarRecepcionPedido_ActionEvent}"
+                                 title="Grabar recepción de pedido">
+                </h:commandButton>
+            </h:panelGrid>
+        </ui:define>
+
+        <ui:define name="left">
+
+        </ui:define>
+
+        <ui:define name="right">
+
+        </ui:define>
+
+        <ui:define name="content">
+            <h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">
+                <icecore:singleSubmit/>
+                <ace:panel header="Recepción de pedidos">
+                    <ace:dataTable value="#{recepcionPedidoJSFBean.lstTablaEntregaPedido}"
+                                   var="item"
+                                   rows="10"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                        <ace:column headerText="Producto" style="width: 200px">
+                            <h:outputText value="#{item.cmpEntregapedido.drmId.praId.pxrId.prdId.prdNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Presentación" style="width: 200px">
+                            <h:outputText value="#{item.cmpEntregapedido.drmId.praId.pspId.pspNombre}"
+                                          styleClass="textcolumleft"/>
+                        </ace:column>
+                        <ace:column headerText="Cantidad" style="width: 80px">
+                            <h:outputText value="#{item.cmpEntregapedido.drmId.praId.cantAprob}"/>
+                        </ace:column>
+                        <ace:column headerText="Observación" style="width: 400px">
+                            <h:inputTextarea value="#{item.strObservacion}"
+                                             styleClass="textAreaGrande"
+                                             style="height: 50px">
+                                <f:converter converterId="convertMayusc"/>
+                            </h:inputTextarea>
+                        </ace:column>
+                        <ace:column headerText="Cantidad" style="width: 80px">
+                            <h:inputText value="#{item.intCantRecibida}"
+                                         styleClass="textPeq"
+                                         style="text-align: right">
+                                <f:convertNumber integerOnly="true"/>
+                            </h:inputText>
+                        </ace:column>
+                        <ace:column headerText="Recibido" style="width: 80px">
+                            <h:selectBooleanCheckbox value="#{item.seleccionado}">
+                                <f:ajax execute="@this" render="@this"/>
+                            </h:selectBooleanCheckbox>
+                        </ace:column>
+                    </ace:dataTable>
+                </ace:panel>
+            </h:panelGroup>
+        </ui:define>
+    </ui:composition>
+</html>

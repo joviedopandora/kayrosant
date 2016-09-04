@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="794" pageHeight="802" columnWidth="794" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e8168b43-8797-4685-ad43-ca90fb5b2df4">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="parameter1" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT
+     SUM(pxso_cantprod)pxso_cantprod,
+     inv_producto."prd_nombre",
+     vnt_servicio."vsrv_nombre",
+     inv_catprod."cpd_nombre",
+     pop_prodxservxop."vsrv_id" AS pop_prodxservxop_vsrv_id,
+     pop_prodxservxop."vsrv_desc" AS pop_prodxservxop_vsrv_desc
+FROM
+     "pop_ordenprod" o INNER JOIN "vnt_detevento" d ON o."rgvt_id" = d."rgvt_id"
+     INNER JOIN "rf_motivoevento" m ON d."mte_id" = m."mte_id"
+     INNER JOIN "pop_servxop" pop_servxop ON o."opr_id" = pop_servxop."opr_id"
+     INNER JOIN "pop_prodxservxop" pop_prodxservxop ON pop_servxop."sxo_id" = pop_prodxservxop."sxo_id"
+     INNER JOIN "public"."vnt_servicio" vnt_servicio ON pop_servxop."vsrv_id" = vnt_servicio."vsrv_id"
+     INNER JOIN "inv_producto" inv_producto ON pop_prodxservxop."prd_id" = inv_producto."prd_id"
+     INNER JOIN "public"."inv_catprod" inv_catprod ON inv_producto."cpd_id" = inv_catprod."cpd_id"
+WHERE
+     o.opr_id = $P{parameter1}
+     and pxso_estado = true
+GROUP BY
+     o.opr_id,
+     inv_producto.prd_nombre,
+     vsrv_nombre,
+     inv_catprod.cpd_id,
+pop_prodxservxop.vsrv_id,
+pop_prodxservxop.vsrv_desc
+
+ORDER BY
+     pop_prodxservxop.vsrv_desc ASC,
+     cpd_nombre ASC]]>
+	</queryString>
+	<field name="pxso_cantprod" class="java.lang.Long"/>
+	<field name="prd_nombre" class="java.lang.String"/>
+	<field name="vsrv_nombre" class="java.lang.String"/>
+	<field name="cpd_nombre" class="java.lang.String"/>
+	<field name="pop_prodxservxop_vsrv_id" class="java.lang.Long"/>
+	<field name="pop_prodxservxop_vsrv_desc" class="java.lang.String"/>
+	<title>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="041e36d5-3c9c-477e-8aff-b4ebf8d06ada" mode="Opaque" x="667" y="0" width="42" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b408e801-14ed-40f5-b5a4-df45a5f31d7e" mode="Opaque" x="709" y="0" width="43" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OK. COORD. SALIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da969bde-4253-4304-bad8-8bb9e63d0524" mode="Opaque" x="299" y="0" width="98" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da969bde-4253-4304-bad8-8bb9e63d0524" mode="Opaque" x="0" y="0" width="122" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMBO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="706fb2a2-1a62-4984-9690-7809a0081896" mode="Opaque" x="752" y="0" width="42" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OK. COORD EN EVENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da969bde-4253-4304-bad8-8bb9e63d0524" mode="Opaque" x="397" y="0" width="270" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da969bde-4253-4304-bad8-8bb9e63d0524" mode="Opaque" x="122" y="0" width="177" height="21" backcolor="#FFFF00"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVICIO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="a32e92b5-e57c-4bc0-bbd1-f83837bfe7fd" mode="Opaque" x="1" y="0" width="121" height="20" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a32e92b5-e57c-4bc0-bbd1-f83837bfe7fd" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" mode="Opaque" x="14" y="0" width="108" height="20" backcolor="#CCCCCC"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vsrv_nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="99583927-17b1-4eab-811b-6e05f52381c4" stretchType="RelativeToTallestObject" mode="Transparent" x="299" y="0" width="98" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cpd_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c26bf3ce-ba27-42f1-a7b0-194dfc3ade34" x="667" y="0" width="42" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pxso_cantprod}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3956ff79-3aab-48fc-992c-dffc9ddc7e8c" x="709" y="0" width="43" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA["]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3956ff79-3aab-48fc-992c-dffc9ddc7e8c" x="752" y="0" width="42" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA["]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="35934e52-b27b-4004-8064-866ff88ce57f" x="397" y="0" width="270" height="20"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{prd_nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a32e92b5-e57c-4bc0-bbd1-f83837bfe7fd" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" mode="Opaque" x="122" y="0" width="177" height="20" backcolor="#FFFFFF"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pop_prodxservxop_vsrv_desc}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

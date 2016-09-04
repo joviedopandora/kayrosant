@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To cha<?nge this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="panelIndicadores">
+        <ace:panel header="Indicadores"  style="width: 100%" 
+                   id="panel" widgetVar="panel"
+                   styleClass="thtablaFormulario" >
+            <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                <tr><th   class="thtablaFormulario" colspan="2" > Parametros  </th></tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Fecha Incial *</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%"> 
+                        <div> 
+                            <ace:dateTimeEntry value="#{indicadoresJSFBean.fechaInicial}"
+                                               styleClass="inputs"
+                                               pattern="dd/MM/yyyy"
+                                               valueChangeListener="#{indicadoresJSFBean.cambioFecha_valueChangeEvent}"
+                                               renderAsPopup="true">
+
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@all" />
+                            </ace:dateTimeEntry>
+                        </div>    
+                    </td>    
+                </tr>
+                <tr>
+                    <td style="width: 20%"> 
+                        <div> 
+                            <label>Fecha Final *</label>
+                        </div>
+                    </td>
+                    <td style="width: 100%"> 
+                        <div> 
+                            <ace:dateTimeEntry value="#{indicadoresJSFBean.fechaFinal}"
+                                               styleClass="inputs"
+                                               pattern="dd/MM/yyyy"
+                                               valueChangeListener="#{indicadoresJSFBean.cambioFecha_valueChangeEvent}"
+                                               renderAsPopup="true">
+
+                                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                                <ace:ajax execute="@this" render="@all" />
+                            </ace:dateTimeEntry>
+                        </div>    
+                    </td>    
+                </tr>
+            </table>
+            <br></br>
+            <h:panelGroup rendered="#{indicadoresJSFBean.renderGrafic}" >
+                <table class="tablaFormulario"  border="1" bordercolor="F7B409">
+                    <tr><th   class="thtablaFormulario" > Gráficos  </th></tr>
+                    <tr>
+                        <td style="width: 110%"> 
+                            <div style="width: 100%"> 
+                                <ace:chart id="chartR"
+                                           
+                                           title="Indicador Ventas  día"
+                                           style="width: 100%"
+                                           animated="true"                       
+                                           stackSeries="false"                      
+                                           legend="true"
+                                           legendLocation="NW"
+                                           highlighter="true"
+                                           highlighterAxes="Y"
+                                           highlighterShowMarker="false"                  
+                                           widgetVar="chartR" 
+                                           value="#{indicadoresJSFBean.lstMisIndGrafico1}"
+                                           xAxis="#{indicadoresJSFBean.axis}"
+                                           cursor="false"
+                                           zoom="true"
+                                           showTooltip="true">
+                                    <ace:ajax execute="@this" render="@all" />
+                                </ace:chart>
+
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 110%"> 
+                            <div style="width: 100%"> 
+                                <ace:chart id="chartRr"
+                                           title="Indicador Registro Llamada  día"
+                                           style="width: 100%"
+                                           animated="true"                       
+                                           stackSeries="false"                      
+                                           legend="true"
+
+                                           legendLocation="NW"
+                                           highlighter="true"
+                                           highlighterAxes="Y"
+
+                                           highlighterShowMarker="false"                  
+                                           widgetVar="chartRr" 
+                                           value="#{indicadoresJSFBean.lstMisIndGraficollamda}"
+                                           xAxis="#{indicadoresJSFBean.axisLlamada}"
+                                           cursor="false"
+                                           zoom="true"
+                                           showTooltip="true">
+                                    <ace:ajax execute="@this" render="@all"   />
+                                </ace:chart>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </h:panelGroup>
+
+
+
+
+
+
+
+        </ace:panel>
+
+
+
+    </ui:insert>    
+</html>
