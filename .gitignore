@@ -3,3 +3,7 @@
 /sieree-ejb/dist/
 /build/
 /siereweb/dist/
+/nbproject/private/
+/siereweb/nbproject/private/
+/sieree-ejb/nbproject/private/
+/dist/

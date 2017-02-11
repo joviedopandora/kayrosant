@@ -5,9 +5,8 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="syspandora"/>
-        <property name="User" value="postgres"/>
-        <property name="Password" value="pandora"/>
-        <property name="URL" value="jdbc:postgresql://localhost:5432/syspandora"/>
+        <property name="User" value="auditoria"/>
+        <property name="Password" value="auditoria"/>        
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="jdbcSysPandora" object-type="user" pool-name="post-gre-sql_syspandora_postgresPool"/>
