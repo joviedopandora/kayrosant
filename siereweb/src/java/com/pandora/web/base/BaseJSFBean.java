@@ -41,9 +41,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.el.ELContext;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.ViewHandler;
 import javax.faces.component.EditableValueHolder;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIViewRoot;
@@ -52,6 +50,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -76,8 +77,12 @@ import utilidades.EnFormatDate;
 public abstract class BaseJSFBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constantes">
-
-    @Resource(name = "jdbcSysPandora")
+    
+//    private DataSource getJdbcProcAud() throws NamingException {
+//        Context c = new InitialContext();
+//        return (DataSource) c.lookup("java:comp/env/jdbcProcAud");
+//    }
+    @Resource(name ="jdbcSysPandora" )
     protected DataSource jdbcProcAud;
     private String ruta_recursos = "/WEB-INF/classes/";
     protected com.icesoft.faces.context.Resource jasperResourceExcel;
@@ -154,8 +159,6 @@ public abstract class BaseJSFBean implements Serializable {
     }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Funciones comunes">
-
-   
 
     public String getHoraFromDate(Date pFecIni) {
         SimpleDateFormat sd = new SimpleDateFormat("HH:mm");
@@ -464,8 +467,8 @@ public abstract class BaseJSFBean implements Serializable {
                     lstRerirar.add(object);
                 }
 
-            } catch (SecurityException | NoSuchMethodException | IllegalAccessException |
-                    IllegalArgumentException | InvocationTargetException ex) {
+            } catch (SecurityException | NoSuchMethodException | IllegalAccessException
+                    | IllegalArgumentException | InvocationTargetException ex) {
                 Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
             }
 
@@ -498,8 +501,8 @@ public abstract class BaseJSFBean implements Serializable {
                     Object[] objParamClase = {"seleccione"};
                     setClaseSel.invoke(object, objParamClase);
 
-                } catch (IllegalAccessException | NoSuchMethodException | SecurityException |
-                        IllegalArgumentException | InvocationTargetException ex) {
+                } catch (IllegalAccessException | NoSuchMethodException | SecurityException
+                        | IllegalArgumentException | InvocationTargetException ex) {
                     Logger.getLogger(BaseJSFBean.class.getName()).log(Level.WARNING, null, ex);
                 }
 
@@ -518,8 +521,8 @@ public abstract class BaseJSFBean implements Serializable {
                     Object[] objParamClase = {""};
                     setClaseSel.invoke(object, objParamClase);
 
-                } catch (IllegalAccessException | IllegalArgumentException |
-                        InvocationTargetException | NoSuchMethodException | SecurityException ex) {
+                } catch (IllegalAccessException | IllegalArgumentException
+                        | InvocationTargetException | NoSuchMethodException | SecurityException ex) {
                     Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
@@ -545,8 +548,8 @@ public abstract class BaseJSFBean implements Serializable {
 
                 metodo.invoke(object, objParam);
 
-            } catch (IllegalAccessException | NoSuchMethodException | SecurityException |
-                    IllegalArgumentException | InvocationTargetException ex) {
+            } catch (IllegalAccessException | NoSuchMethodException | SecurityException
+                    | IllegalArgumentException | InvocationTargetException ex) {
                 Logger.getLogger(BaseJSFBean.class.getName()).log(Level.WARNING, null, ex);
             }
 
@@ -618,7 +621,7 @@ public abstract class BaseJSFBean implements Serializable {
         message.setSummary(resumenMsg);
         message.setSeverity(pSeverity);
         facesContext.addMessage(null, message);
-       // JavascriptContext.addJavascriptCall(facesContext, "myNotificacionBar.show();");
+        // JavascriptContext.addJavascriptCall(facesContext, "myNotificacionBar.show();");
 
     }
     //</editor-fold>
@@ -662,12 +665,13 @@ public abstract class BaseJSFBean implements Serializable {
             }
         }
     }
-    public String convertDateToStringFormat(Date date,EnFormatDate formatDate){
-        if(date == null){
+
+    public String convertDateToStringFormat(Date date, EnFormatDate formatDate) {
+        if (date == null) {
             return "";
         }
-      SimpleDateFormat sd = new SimpleDateFormat(formatDate.getFormat());
-      return sd.format(date);
+        SimpleDateFormat sd = new SimpleDateFormat(formatDate.getFormat());
+        return sd.format(date);
     }
     //<editor-fold defaultstate="collapsed" desc="Propiedades">
 
@@ -789,8 +793,8 @@ public abstract class BaseJSFBean implements Serializable {
     public void setRuta_recursos(String ruta_recursos) {
         this.ruta_recursos = ruta_recursos;
     }
-    
-     /**
+
+    /**
      * Lee el contenido textual desde un stream de entrada
      *
      * @param input Stream de entrada
@@ -809,4 +813,5 @@ public abstract class BaseJSFBean implements Serializable {
         }
         return sw.toString();
     }
+
 }

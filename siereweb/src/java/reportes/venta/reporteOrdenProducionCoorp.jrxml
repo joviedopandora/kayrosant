@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenProducionCoorp" pageWidth="884" pageHeight="1150" columnWidth="824" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="35506cbc-035e-4281-b2ac-1452397a0ead">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="329"/>
+	<property name="ireport.y" value="335"/>
 	<parameter name="p_idorden" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[61L]]></defaultValueExpression>
 	</parameter>
@@ -741,11 +741,11 @@ WHERE
 				<textFieldExpression><![CDATA[$F{opr_fechaevtini}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="358" y="40" width="100" height="20" uuid="b1f188d5-741e-4325-8e9c-33ecf7519c82"/>
+				<reportElement x="339" y="40" width="152" height="20" uuid="b1f188d5-741e-4325-8e9c-33ecf7519c82"/>
 				<textElement>
-					<font size="8"/>
+					<font size="10"/>
 				</textElement>
-				<text><![CDATA[CRISTIAN ESPINOSA]]></text>
+				<text><![CDATA[GUSTAVO SANDOVAL JIMENEZ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="80" width="156" height="20" uuid="6462cf29-4060-4358-9b7b-707b6657b6a4"/>

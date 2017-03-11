@@ -87,9 +87,8 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>Inicio.jsf</welcome-file>
-    </welcome-file-list>  
+    </welcome-file-list>
     <resource-ref>
-        <description>jdbc:postgresql://localhost:5432/syspandora</description>
         <res-ref-name>jdbcSysPandora</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
