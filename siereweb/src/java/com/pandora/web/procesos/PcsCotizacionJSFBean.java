@@ -900,6 +900,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 List<VntServxventa> lstVntServxventasGrabar = new ArrayList<>();
                 int cantidad = 0;
                 for (TablaVntSrvXVenta vs : lstTablaVntSrvXVenta) {
+                   
                     cantidad += vs.getVntServxventa().getSrvxventCantidad();
                     vs.getVntServxventa().setSrvxventaProcesada(0);
                     vs.getVntServxventa().setSrvxventaProcesadaOP(0);

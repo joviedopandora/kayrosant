@@ -306,6 +306,7 @@ public class PcsOrdenProduccionSFBean {
     public List<VntProdxsrv> getLstVntProdxsrvXServicio(Long pVsrvId) {
         Query q = em.createNamedQuery("VntProdxsrv.pxsXServicio");
         q.setParameter("vsrvId", pVsrvId);
+        q.setParameter("prodxsrvEst", Boolean.TRUE);
         return q.getResultList();
     }
 

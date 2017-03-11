@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VntProdxsrv.findByProdxsrvEst", query = "SELECT v FROM VntProdxsrv v WHERE v.prodxsrvEst = :prodxsrvEst"),
     @NamedQuery(name = "VntProdxsrv.findByIndversion", query = "SELECT v FROM VntProdxsrv v WHERE v.indversion = :indversion"),
     //Cargar lista de productos por servicio
-    @NamedQuery(name = "VntProdxsrv.pxsXServicio", query = "SELECT v FROM VntProdxsrv v JOIN v.vsrvId s WHERE s.vsrvId = :vsrvId ORDER BY v.prdId.prdNombre")
+    @NamedQuery(name = "VntProdxsrv.pxsXServicio", query = "SELECT v FROM VntProdxsrv v JOIN v.vsrvId s WHERE s.vsrvId = :vsrvId AND v.prodxsrvEst = :prodxsrvEst ORDER BY v.prdId.prdNombre")
 })
 public class VntProdxsrv implements Serializable {
 
