@@ -17,7 +17,9 @@ and open the template in the editor.
         <ace:panel header="Servicios"  style="width: 100%" styleClass="thtablaFormulario" >
             <h:panelGrid columns="2">
                 <h:outputText value="Estado"/>
-                <ace:checkboxButton value="#{parametrizacionJSFBean.blnSrvEst}"
+                <ace:checkboxButton styleClass="inputs"
+                                    label="Filtrar Servicios Activos/Inactivos"
+                                    value="#{parametrizacionJSFBean.blnSrvEst}"
                                     valueChangeListener="#{parametrizacionJSFBean.filtrarXEstado_VCE}">
                     <ace:ajax execute="@this" render="@form"/>
                 </ace:checkboxButton>

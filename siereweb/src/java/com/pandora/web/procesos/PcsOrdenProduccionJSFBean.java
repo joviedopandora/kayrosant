@@ -434,7 +434,9 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 PopProdxservxop pxsxo = new PopProdxservxop();
                 pxsxo.setPrdId(vpxs.getPrdId());
                 pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
-                pxsxo.setPxsoEstado(Boolean.TRUE);
+                //  jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
+                //  pxsxo.setPxsoEstado(Boolean.TRUE);    //
+                pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
                 pxsxo.setPxsoEstadosalida(Boolean.FALSE);
                 pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
                 pxsxo.setSxoId(ps);
@@ -458,7 +460,9 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                     PopProdxservxop pxsxo = new PopProdxservxop();
                     pxsxo.setPrdId(vpxs.getPrdId());
                     pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
-                    pxsxo.setPxsoEstado(Boolean.TRUE);
+                    // jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
+                    // pxsxo.setPxsoEstado(Boolean.TRUE);   //
+                    pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
                     pxsxo.setPxsoEstadosalida(Boolean.FALSE);
                     pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
                     pxsxo.setSxoId(ps);

@@ -40,7 +40,7 @@ WHERE
 	<title>
 		<band height="29" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="48c34a3d-202e-4346-a8de-3c1df0ce6915" mode="Opaque" x="0" y="0" width="68" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="0" y="0" width="68" height="29" backcolor="#CCCCCC" uuid="48c34a3d-202e-4346-a8de-3c1df0ce6915"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -48,12 +48,12 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CANT]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="227a7eb9-52d1-4cff-bb1c-53058832c548" mode="Opaque" x="68" y="0" width="357" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="68" y="0" width="357" height="29" backcolor="#CCCCCC" uuid="227a7eb9-52d1-4cff-bb1c-53058832c548"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -61,12 +61,12 @@ WHERE
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SERVICIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="833e4d8b-21fa-41f7-9d6f-71871366202e" mode="Opaque" x="425" y="0" width="69" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="425" y="0" width="69" height="29" backcolor="#CCCCCC" uuid="833e4d8b-21fa-41f7-9d6f-71871366202e"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -74,12 +74,12 @@ WHERE
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[C. UNITARIO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1" mode="Opaque" x="609" y="0" width="74" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="609" y="0" width="74" height="29" backcolor="#CCCCCC" uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -87,12 +87,12 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
-				<text><![CDATA[C. TOTAL SIN DESCUETO]]></text>
+				<text><![CDATA[C. TOTAL CON DESCUENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1" mode="Opaque" x="494" y="0" width="41" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="494" y="0" width="41" height="29" backcolor="#CCCCCC" uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -100,12 +100,12 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DTO %]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1" mode="Opaque" x="535" y="0" width="74" height="29" backcolor="#CCCCCC"/>
+				<reportElement mode="Opaque" x="535" y="0" width="74" height="29" backcolor="#CCCCCC" uuid="0a491ee9-c4da-4ac5-a75c-b486c8ca38c1"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -113,7 +113,7 @@ WHERE
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="true"/>
+					<font size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[C. UNITARIO CON DTO.]]></text>
 			</staticText>
@@ -122,7 +122,7 @@ WHERE
 	<detail>
 		<band height="29" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="9eaa6cd5-f329-43e7-a857-3bbf6a8691af" stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="28"/>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="68" height="28" uuid="9eaa6cd5-f329-43e7-a857-3bbf6a8691af"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
@@ -131,7 +131,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{srvxvent_cantidad}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="28e6bd83-818a-48f6-a626-a999370624f4" stretchType="RelativeToBandHeight" x="68" y="0" width="99" height="28"/>
+				<reportElement stretchType="RelativeToBandHeight" x="68" y="0" width="99" height="28" uuid="28e6bd83-818a-48f6-a626-a999370624f4"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -144,7 +144,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{vsrv_nombre}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0" isBlankWhenNull="true">
-				<reportElement uuid="0691eb59-2b46-4027-a2ef-d8b6fea2f38a" stretchType="RelativeToBandHeight" x="425" y="0" width="69" height="28"/>
+				<reportElement stretchType="RelativeToBandHeight" x="425" y="0" width="69" height="28" uuid="0691eb59-2b46-4027-a2ef-d8b6fea2f38a"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -155,17 +155,17 @@ WHERE
 				<textFieldExpression><![CDATA[$F{srvxvent_precioventa}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" pattern="¤ #,##0" isBlankWhenNull="true">
-				<reportElement uuid="380b28b0-5c19-4f5d-8258-913ca4070038" stretchType="RelativeToBandHeight" x="609" y="0" width="74" height="28"/>
+				<reportElement stretchType="RelativeToBandHeight" x="609" y="0" width="74" height="28" uuid="380b28b0-5c19-4f5d-8258-913ca4070038"/>
 				<box>
 					<leftPen lineWidth="0.75"/>
 					<bottomPen lineWidth="0.75"/>
 					<rightPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{srvxvent_valtotalclnt}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{costodescuento}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement uuid="89cc1918-897e-4f38-a644-ce66417dfbef" stretchType="RelativeToBandHeight" x="167" y="0" width="258" height="28"/>
+				<reportElement stretchType="RelativeToBandHeight" x="167" y="0" width="258" height="28" uuid="89cc1918-897e-4f38-a644-ce66417dfbef"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.0"/>
@@ -176,7 +176,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{vsrv_desc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###0" isBlankWhenNull="true">
-				<reportElement uuid="7de0c9cf-0528-4f48-a4c5-3c6c31be7653" stretchType="RelativeToBandHeight" mode="Transparent" x="494" y="0" width="41" height="28" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="494" y="0" width="41" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="7de0c9cf-0528-4f48-a4c5-3c6c31be7653"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>
@@ -190,7 +190,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{vnt_servxventa_srvxvent_porcentajedesc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0" isBlankWhenNull="true">
-				<reportElement uuid="7de0c9cf-0528-4f48-a4c5-3c6c31be7653" stretchType="RelativeToBandHeight" mode="Transparent" x="535" y="0" width="74" height="28" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="535" y="0" width="74" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="7de0c9cf-0528-4f48-a4c5-3c6c31be7653"/>
 				<box>
 					<topPen lineWidth="0.75"/>
 					<leftPen lineWidth="0.75"/>

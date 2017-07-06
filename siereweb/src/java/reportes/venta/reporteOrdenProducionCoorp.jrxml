@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOrdenProducionCoorp" pageWidth="884" pageHeight="1150" columnWidth="824" leftMargin="30" rightMargin="30" topMargin="30" bottomMargin="30" uuid="35506cbc-035e-4281-b2ac-1452397a0ead">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="335"/>
+	<property name="ireport.x" value="188"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="p_idorden" class="java.lang.Long">
 		<defaultValueExpression><![CDATA[61L]]></defaultValueExpression>
 	</parameter>
@@ -611,7 +611,7 @@ WHERE
 				</textElement>
 				<text><![CDATA[FECHA DE ENTREGA  DE LOGISTICA]]></text>
 			</staticText>
-			<textField pattern="dd/MMMMM/yyyy" isBlankWhenNull="true">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="0" y="40" width="269" height="20" uuid="253fb253-0fb5-44f2-b0fd-36d763ce74a6"/>
 				<box>
 					<leftPen lineWidth="1.0"/>
@@ -636,7 +636,7 @@ WHERE
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="548" y="40" width="276" height="20" uuid="b31a5f19-27b2-444d-82ce-a79182b45847"/>
+				<reportElement mode="Opaque" x="557" y="40" width="267" height="20" uuid="b31a5f19-27b2-444d-82ce-a79182b45847"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
@@ -704,7 +704,7 @@ WHERE
 					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[_______________________________]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Transparent" x="270" y="40" width="277" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5527836d-400b-4e8e-b806-a675da3d5cda"/>
@@ -719,7 +719,7 @@ WHERE
 					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[_______________________________]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Transparent" x="547" y="80" width="277" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="c04f6838-2d75-44d3-b8bd-9fc7af898aaf"/>
@@ -736,23 +736,23 @@ WHERE
 				</textElement>
 				<text><![CDATA[_______________________________]]></text>
 			</staticText>
-			<textField pattern="EEE, d MMM yyyy HH:mm:ss " isBlankWhenNull="true">
+			<textField pattern="HH:mm ,EEE,d MMM yyyy" isBlankWhenNull="true">
 				<reportElement x="339" y="86" width="178" height="14" uuid="33da356b-538d-499d-b22d-6a903b8c0c18"/>
 				<textFieldExpression><![CDATA[$F{opr_fechaevtini}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="339" y="40" width="152" height="20" uuid="b1f188d5-741e-4325-8e9c-33ecf7519c82"/>
+				<reportElement x="346" y="40" width="144" height="20" uuid="b1f188d5-741e-4325-8e9c-33ecf7519c82"/>
 				<textElement>
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[GUSTAVO SANDOVAL JIMENEZ]]></text>
+				<text><![CDATA[HEIMAR RAUL GAMBOA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="71" y="80" width="156" height="20" uuid="6462cf29-4060-4358-9b7b-707b6657b6a4"/>
 				<text><![CDATA[CAMILO ALEMAN SOGAMOSO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="269" y="60" width="277" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f5f23ec3-7e55-48eb-9096-bc88d5c3d9cc"/>
+				<reportElement mode="Transparent" x="270" y="60" width="276" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="f5f23ec3-7e55-48eb-9096-bc88d5c3d9cc"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -767,7 +767,7 @@ WHERE
 				<text><![CDATA[FECHA DEL EVENTO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Transparent" x="269" y="80" width="277" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5527836d-400b-4e8e-b806-a675da3d5cda"/>
+				<reportElement mode="Transparent" x="270" y="80" width="276" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="5527836d-400b-4e8e-b806-a675da3d5cda"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="0.0"/>
@@ -779,7 +779,7 @@ WHERE
 					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[_______________________________]]></text>
+				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="101" width="85" height="18" uuid="78c5b07f-901c-4415-8c99-95a22848ed35"/>
@@ -811,7 +811,7 @@ WHERE
 				<text><![CDATA[FIRMAS RESPONSABLES]]></text>
 			</staticText>
 			<textField pattern="HH:mm ,EEE,d MMM yyyy">
-				<reportElement x="548" y="40" width="275" height="20" uuid="e78af769-a498-4e87-8b1f-bc89b494706c"/>
+				<reportElement x="547" y="40" width="277" height="20" uuid="e78af769-a498-4e87-8b1f-bc89b494706c"/>
 				<box>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>

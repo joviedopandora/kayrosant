@@ -173,14 +173,14 @@ WHERE
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Resolución DIAN Nº 320001275295]]></text>
+				<text><![CDATA[Aut. de Numeración Nº 18762003443573]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="385" y="157" width="233" height="15" uuid="056a7b32-e15f-4438-a136-cdc3cfb2792c"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Fecha de expedición: 2015/05/29 del 1 al 5000]]></text>
+				<text><![CDATA[Fecha de expedición: 2017/05/30 del 222 al 5000]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="385" y="172" width="233" height="15" uuid="cf750f89-ac3c-4c75-9db2-192df2c52130"/>
