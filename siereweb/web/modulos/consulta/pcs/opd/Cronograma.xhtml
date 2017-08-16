@@ -79,6 +79,14 @@ and open the template in the editor.
                 </ace:column>
                 
                 <ace:column id="OP" headerText="OP">
+                       <f:facet name="header">
+                        <h:panelGroup>
+                            <h:selectBooleanCheckbox title="Mostrar todas" value="#{pcsOrdenProduccionJSFBean.blnMostrarTodoCron}"
+                                                     valueChangeListener="#{pcsOrdenProduccionJSFBean.hdDtCronogramaMostrarTodo_VCE}">
+                                <f:ajax execute="@this" render="@all"/>
+                            </h:selectBooleanCheckbox>
+                        </h:panelGroup>
+                    </f:facet>
                     <h:outputText  value="#{car.cronogramaSel.numeroOP}"  rendered="#{car.cronogramaSel.numeroOP != null}" />
                     <h:commandButton styleClass="btnirop"
                              rendered="#{car.cronogramaSel.numeroOP == null}"

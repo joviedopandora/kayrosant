@@ -88,7 +88,7 @@ import javax.xml.bind.annotation.XmlTransient;
         
         
          @NamedQuery(name = "VntRegistroventa.clienteXServiciosPendientesOdenProduccion", 
-                 query = "SELECT v FROM VntRegistroventa v JOIN v.clnId c JOIN c.tclId t  WHERE t.tclId = :tclId AND v.rgvtActivarOp =:rgvtActivarOp   AND v.rgvtCantidadservasociadosOp > v.rgvtCantidadservprocesadosOp AND v.rgvtActCronograma = :rgvtActCronograma ORDER BY v.vdeId.vdeFechaevt ASC")
+                 query = "SELECT v FROM VntRegistroventa v JOIN v.clnId c JOIN c.tclId t  WHERE t.tclId = :tclId AND v.rgvtActivarOp =:rgvtActivarOp   AND v.rgvtCantidadservasociadosOp > v.rgvtCantidadservprocesadosOp AND v.rgvtActCronograma = :rgvtActCronograma ORDER BY v.vdeId.vdeFechaevt DESC")
     
 })
 @NamedNativeQueries({

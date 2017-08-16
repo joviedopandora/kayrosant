@@ -102,7 +102,10 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private boolean blnMostrarPanel;
     private boolean blnMostrarProductos;
     private Integer tipoConsulta;
+//<editor-fold defaultstate="collapsed" desc="Cronograma">
+    private boolean blnMostrarTodoCron = false;
 
+//</editor-fold>
     private String opDepartamento = "-1";
 
     private Long opCiudad;
@@ -684,6 +687,12 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Eventos">
+    public void hdDtCronogramaMostrarTodo_VCE(ValueChangeEvent vce) {
+        blnMostrarTodoCron = ((Boolean) vce.getNewValue()).booleanValue();
+        cargarCronograma();
+        
+    }
+
     private void cargarCronograma() {
         lstTablaServiciosPendientes.clear();
         int contador = 0;
@@ -703,7 +712,14 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 contador = 1;
             }
             s.setInidceFila(contador);
-            lstTablaServiciosPendientes.add(s);
+//            lstTablaServiciosPendientes.add(s);
+            if (blnMostrarTodoCron) {
+                lstTablaServiciosPendientes.add(s);
+            } else {
+                if (s.getCronogramaSel().getNumeroOP() == null) {
+                    lstTablaServiciosPendientes.add(s);
+                }
+            }
         }
 
     }
@@ -1385,12 +1401,12 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             String name = (tablaPopOrdenProduccionSel.getPopOrdenprod().
                     getRgvtId().getClnId().getClnAlias() == null
                     || tablaPopOrdenProduccionSel.getPopOrdenprod().
-                    getRgvtId().getClnId().getClnAlias().isEmpty() ? (tablaPopOrdenProduccionSel.
-                            getPopOrdenprod().getRgvtId().getClnId().
-                            getNombres() == null ? ""
+                            getRgvtId().getClnId().getClnAlias().isEmpty() ? (tablaPopOrdenProduccionSel.
+                                    getPopOrdenprod().getRgvtId().getClnId().
+                                    getNombres() == null ? ""
                                     : tablaPopOrdenProduccionSel.getPopOrdenprod().
-                                    getRgvtId().getClnId().
-                                    getNombres().replace(" ", "_")) : tablaPopOrdenProduccionSel.getPopOrdenprod().
+                                            getRgvtId().getClnId().
+                                            getNombres().replace(" ", "_")) : tablaPopOrdenProduccionSel.getPopOrdenprod().
                             getRgvtId().getClnId().getClnAlias());
             salida += name;
             salida += (tablaPopOrdenProduccionSel.getPopOrdenprod().getRgvtId().getVdeId().getVdeObsr() == null ? "" : "_" + tablaPopOrdenProduccionSel.getPopOrdenprod().getRgvtId().getVdeId().getVdeObsr().replace(" ", "_"));
@@ -1538,6 +1554,14 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
     public void setConfirmation(MessageConfirmationOP confirmation) {
         this.confirmation = confirmation;
+    }
+
+    public boolean isBlnMostrarTodoCron() {
+        return blnMostrarTodoCron;
+    }
+
+    public void setBlnMostrarTodoCron(boolean blnMostrarTodoCron) {
+        this.blnMostrarTodoCron = blnMostrarTodoCron;
     }
 
 }
