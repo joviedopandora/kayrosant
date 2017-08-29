@@ -478,6 +478,10 @@ and open the template in the editor.
                                                      actionListener="#{pcsCotizacionJSFBean.rowDtDetalleCliente_ActionEvent}">
                                         <f:attribute name="tdcs" value="#{itemDet}"/>
                                     </h:commandButton>
+                                      <h:selectBooleanCheckbox value="#{itemDet.contactoCopia}" title="Contacto copia"
+                                                                           >                                       
+                                         <f:attribute name="tdcs" value="#{itemDet}"/>
+                                    </h:selectBooleanCheckbox>
                                 </ace:column>
                                 <ace:column headerText="Nombres" style="width: 250px">
                                     <h:outputText value="#{itemDet.vntDetallecliente.dclnNombres}"

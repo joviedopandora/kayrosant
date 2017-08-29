@@ -18,6 +18,7 @@ public class TablaVntDetalleCliente extends TablaBaseGrid{
     
     private VntDetallecliente vntDetallecliente = new VntDetallecliente();
     private Integer edad;
+    private boolean contactoCopia=false;
    
 
     public TablaVntDetalleCliente() {
@@ -80,5 +81,19 @@ public class TablaVntDetalleCliente extends TablaBaseGrid{
     @Override
     public String toString() {
         return "TablaDetalleCliente{" + "vntDetallecliente=" + vntDetallecliente + '}';
+    }
+
+    /**
+     * @return the contactoCopia
+     */
+    public boolean isContactoCopia() {
+        return contactoCopia;
+    }
+
+    /**
+     * @param contactoCopia the contactoCopia to set
+     */
+    public void setContactoCopia(boolean contactoCopia) {
+        this.contactoCopia = contactoCopia;
     }
 }

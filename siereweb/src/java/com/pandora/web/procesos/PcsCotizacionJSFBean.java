@@ -48,6 +48,8 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -221,9 +223,14 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
     private List<TablaDetalleVentaDTO> lstVentas = new ArrayList<>();
     private String registroLlamadaObservacion;
 
+    //<editor-fold defaultstate="collapsed" desc="Cargar multiples archivos">
+    private List<File> lstArchivosCargar = new ArrayList<>();
+//</editor-fold>
+
     public String getNombreaAchivoSeleccionado() {
         if (fileInfo != null && fileInfo.isSaved()) {
             return "Archivo cargado :" + fileInfo.getFileName();
+
         }
         return null;
     }
@@ -247,6 +254,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 mostrarError("Error Archivo sin extensión ", 1);
                 //return;
             }
+            lstArchivosCargar.add(fileInfo.getFile());
 
         } else {
             mostrarError("Archivo no ha sido cargado ", 1);
@@ -685,6 +693,22 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
 
             vntDetevento = new VntDetevento();
             vntDetevento.setDclnId(tablaVntDetalleClienteSel.getVntDetallecliente());
+
+            StringBuilder strBConCopia = new StringBuilder();
+            int cont = 0;
+            for (TablaVntDetalleCliente tvdc : lstTablaVntDetalleCliente) {
+                if (tvdc.isContactoCopia() && !tvdc.equals(tablaVntDetalleClienteSel) && tvdc.getVntDetallecliente().getDclnEmail() != null) {
+                    strBConCopia.append(tvdc.getVntDetallecliente().getDclnEmail().trim());
+                    strBConCopia.append(";");
+                    cont++;
+
+                }
+            }
+            if (cont > 0) {
+                strBConCopia.delete(strBConCopia.length() - 1, strBConCopia.length());
+                vntDetevento.setVdeContcopia(strBConCopia.toString());
+            }
+
             vntDetevento.setRgvtId(vntRegistroventa);
             vntDetevento.setCiuId(ciuId == null || ciuId.equals(-1l) ? null : pcsOrdenProduccionSFBean.getRfCiudad(ciuId));
             vntDetevento.setVdeNombrescontacto(strDevNombres);
@@ -900,7 +924,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 List<VntServxventa> lstVntServxventasGrabar = new ArrayList<>();
                 int cantidad = 0;
                 for (TablaVntSrvXVenta vs : lstTablaVntSrvXVenta) {
-                   
+
                     cantidad += vs.getVntServxventa().getSrvxventCantidad();
                     vs.getVntServxventa().setSrvxventaProcesada(0);
                     vs.getVntServxventa().setSrvxventaProcesadaOP(0);
@@ -1090,7 +1114,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
 
     }
 
-    private boolean envioCorreoExcel(List<TablaVntDetalleCliente> seleccionados) {
+    private boolean envioCorreoExcel(List<TablaVntDetalleCliente> seleccionados, List<String> pLstConCopia) {
 
         try {
             fc = FacesContext.getCurrentInstance();
@@ -1127,6 +1151,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
 
             if (blnEnviarCorreoAPrincipal) {
                 email.addTo(usuario.getProperty("email"), usuario.getProperty("nombre"));
+
             }
             if (!seleccionados.isEmpty()) {
                 for (TablaVntDetalleCliente s : seleccionados) {
@@ -1134,6 +1159,9 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 }
             }
             email.addCc(getPrincipalJSFBean().getColxempLog().getEmpId().getEmpUsuariocorreo());
+            for (String contactoCopia : pLstConCopia) {
+                email.addCc(contactoCopia);
+            }
             //email.addTo(usuario.getProperty("email"), usuario.getProperty("nombre"));
             email.setFrom(getPrincipalJSFBean().getColxempLog().getEmpId().getEmpUsuariocorreo(), getPrincipalJSFBean().getColxempLog().getEmpId().getEmpNombre());
             email.setSubject(asuntoMensajeExcel);
@@ -1142,20 +1170,29 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             email.setAuthentication(getPrincipalJSFBean().getColxempLog().getEmpId().getEmpUsuariocorreo(),
                     getPrincipalJSFBean().getColxempLog().getEmpId().getEmpClavecorreo());
             MimeMultipart multiParte = new MimeMultipart();
-
-            if (fileInfo.getFile() != null && fileInfo.getFile().exists()) {
-
+            for (File archivoAdjunto : lstArchivosCargar) {
                 BodyPart adjunto = new MimeBodyPart();
                 //   pdf = "HV_BREYMER_ROBLES_CARO.pdf";
-                adjunto.setDataHandler(new DataHandler(new FileDataSource(fileInfo.getFile())));
+                adjunto.setDataHandler(new DataHandler(new FileDataSource(archivoAdjunto)));
                 //adjunto.setDataHandler(new DataHandler(new FileDataSource("C:\\workspace\\" + pdf)));
 
-                adjunto.setFileName(fileInfo.getFile().getName());
+                adjunto.setFileName(archivoAdjunto.getName());
                 multiParte.addBodyPart(adjunto);
             }
+//            if (fileInfo.getFile() != null && fileInfo.getFile().exists()) {
+//
+//                BodyPart adjunto = new MimeBodyPart();
+//                //   pdf = "HV_BREYMER_ROBLES_CARO.pdf";
+//                adjunto.setDataHandler(new DataHandler(new FileDataSource(fileInfo.getFile())));
+//                //adjunto.setDataHandler(new DataHandler(new FileDataSource("C:\\workspace\\" + pdf)));
+//
+//                adjunto.setFileName(fileInfo.getFile().getName());
+//                multiParte.addBodyPart(adjunto);
+//            }
 
             email.addPart(multiParte);
             email.send();
+            lstArchivosCargar.clear();
 
             // } catch (MessagingException ex) {
             //   Logger.getLogger(PcsCotizacionJSFBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -1267,8 +1304,6 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         return true;
 
     }
-
-   
 
 //</editor-fold>
     //</editor-fold>
@@ -1586,7 +1621,12 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                     envioCorreo(pdfs, seleccionados);
                 }
                 if (ejecutarExcel) {
-                    envioCorreoExcel(seleccionados);
+//                    vntDetevento.getVdeContcopia();
+                    List<String> lstContactoCopia = new ArrayList();
+                    if (vntDetevento.getVdeContcopia() != null) {
+                        lstContactoCopia = Arrays.asList(vntDetevento.getVdeContcopia().split(";", -1));
+                    }
+                    envioCorreoExcel(seleccionados, lstContactoCopia);
                 }
                 buscarGen_ActionEvent(ae);
 
@@ -3524,9 +3564,10 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         this.registroLlamadaObservacion = registroLlamadaObservacion;
     }
 
-
     /**
-    /**
+     * /
+     *
+     **
      * @return the dcln_direccion
      */
     public String getDcln_direccion() {
@@ -3554,4 +3595,11 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         this.strDetNumDias = strDetNumDias;
     }
 
+    public List<File> getLstArchivosCargar() {
+        return lstArchivosCargar;
+    }
+
+    public void setLstArchivosCargar(List<File> lstArchivosCargar) {
+        this.lstArchivosCargar = lstArchivosCargar;
+    }
 }

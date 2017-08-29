@@ -108,6 +108,9 @@ public class VntDetevento implements Serializable {
     @Column(name = "vde_horafinal")
     @Temporal(TemporalType.TIME)
     private Date vdeHorafinal;
+  
+    @Column(name = "vde_contcopia")
+    private String vdeContcopia;
     @JoinColumn(name = "rgvt_id", referencedColumnName = "rgvt_id")
     @OneToOne
     private VntRegistroventa rgvtId;
@@ -347,6 +350,20 @@ public class VntDetevento implements Serializable {
      */
     public void setVdeNumdias(Integer vdeNumdias) {
         this.vdeNumdias = vdeNumdias;
+    }
+
+    /**
+     * @return the vdeContcopia
+     */
+    public String getVdeContcopia() {
+        return vdeContcopia;
+    }
+
+    /**
+     * @param vdeContcopia the vdeContcopia to set
+     */
+    public void setVdeContcopia(String vdeContcopia) {
+        this.vdeContcopia = vdeContcopia;
     }
 
 }

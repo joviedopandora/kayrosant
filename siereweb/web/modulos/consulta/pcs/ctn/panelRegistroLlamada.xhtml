@@ -722,7 +722,12 @@ JAOR - CORREGIR LISTA EN COTIZACION SOLO SALEN 20 REGISTROS MAXIMOS
 
 
                                         </h:panelGrid>
-                                        <h:outputText value="#{pcsCotizacionJSFBean.nombreaAchivoSeleccionado}"/>  
+                                        <ace:dataTable  value="#{pcsCotizacionJSFBean.lstArchivosCargar}" var="itemArchCargar">
+                                            <ace:column headerText="Archivos para enviar">
+                                                <h:outputText value="#{itemArchCargar.name}"/>
+                                            </ace:column>
+                                        </ace:dataTable>
+                                       <!-- <h:outputText value="#{pcsCotizacionJSFBean.nombreaAchivoSeleccionado}"/>  -->
                                     </h:panelGrid>
 
 
