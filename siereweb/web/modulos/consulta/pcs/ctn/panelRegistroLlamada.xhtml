@@ -723,8 +723,14 @@ JAOR - CORREGIR LISTA EN COTIZACION SOLO SALEN 20 REGISTROS MAXIMOS
 
                                         </h:panelGrid>
                                         <ace:dataTable  value="#{pcsCotizacionJSFBean.lstArchivosCargar}" var="itemArchCargar">
+                                            <ace:column>
+                                                <ace:pushButton value="Eliminar" action="#{pcsCotizacionJSFBean.rowDtEliminarArchivo_AE}"
+                                                                >
+                                                    <f:setPropertyActionListener target="#{pcsCotizacionJSFBean.archivosAdjuntoSel}" value="#{itemArchCargar}" />
+                                                </ace:pushButton>
+                                            </ace:column>
                                             <ace:column headerText="Archivos para enviar">
-                                                <h:outputText value="#{itemArchCargar.name}"/>
+                                                <h:outputText value="#{itemArchCargar.nombreArchivo}"/>
                                             </ace:column>
                                         </ace:dataTable>
                                        <!-- <h:outputText value="#{pcsCotizacionJSFBean.nombreaAchivoSeleccionado}"/>  -->

@@ -224,7 +224,8 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
     private String registroLlamadaObservacion;
 
     //<editor-fold defaultstate="collapsed" desc="Cargar multiples archivos">
-    private List<File> lstArchivosCargar = new ArrayList<>();
+    private List<TablaArchivosAdjunto> lstArchivosCargar = new ArrayList<>();
+    private TablaArchivosAdjunto archivosAdjuntoSel;
 //</editor-fold>
 
     public String getNombreaAchivoSeleccionado() {
@@ -254,7 +255,10 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 mostrarError("Error Archivo sin extensión ", 1);
                 //return;
             }
-            lstArchivosCargar.add(fileInfo.getFile());
+            TablaArchivosAdjunto taa = new TablaArchivosAdjunto(fileInfo.getFile(), fileInfo.getFile().getName());
+            if (!lstArchivosCargar.contains(taa)) {
+                lstArchivosCargar.add(taa);
+            }
 
         } else {
             mostrarError("Archivo no ha sido cargado ", 1);
@@ -1170,13 +1174,13 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             email.setAuthentication(getPrincipalJSFBean().getColxempLog().getEmpId().getEmpUsuariocorreo(),
                     getPrincipalJSFBean().getColxempLog().getEmpId().getEmpClavecorreo());
             MimeMultipart multiParte = new MimeMultipart();
-            for (File archivoAdjunto : lstArchivosCargar) {
+            for (TablaArchivosAdjunto archivoAdjunto : lstArchivosCargar) {
                 BodyPart adjunto = new MimeBodyPart();
                 //   pdf = "HV_BREYMER_ROBLES_CARO.pdf";
-                adjunto.setDataHandler(new DataHandler(new FileDataSource(archivoAdjunto)));
+                adjunto.setDataHandler(new DataHandler(new FileDataSource(archivoAdjunto.getArchivo())));
                 //adjunto.setDataHandler(new DataHandler(new FileDataSource("C:\\workspace\\" + pdf)));
 
-                adjunto.setFileName(archivoAdjunto.getName());
+                adjunto.setFileName(archivoAdjunto.getNombreArchivo());
                 multiParte.addBodyPart(adjunto);
             }
 //            if (fileInfo.getFile() != null && fileInfo.getFile().exists()) {
@@ -1915,17 +1919,21 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         cargarListaParentesco();
     }
 
+     public void rowDtEliminarArchivo_AE(){
+      
+       lstArchivosCargar.remove(archivosAdjuntoSel);
+     }
     public void btnNuevoLamada_ActionEvent(ActionEvent ae) {
         //  limpiarFacesMessage();
         numPanel = PANEL_LLAMADA;
         blnNuevo = true;
         vntCliente = new VntCliente();
         // comoNosConoce = -1;
-        comoNosConoce = comoNosConoceDefecto.intValue();
+        comoNosConoce = comoNosConoceDefecto;
         edad = null;
         idSexoHomenajeado = "-1";
         // idMotivoEventoLLamada = -1;
-        idMotivoEventoLLamada = idMotivoEventoDefecto.intValue();
+        idMotivoEventoLLamada = idMotivoEventoDefecto;
         fechaEventoLLamada = null;
         homenajeadoLLamada = null;
         fileInfo = null;
@@ -3595,11 +3603,25 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         this.strDetNumDias = strDetNumDias;
     }
 
-    public List<File> getLstArchivosCargar() {
+    public List<TablaArchivosAdjunto> getLstArchivosCargar() {
         return lstArchivosCargar;
     }
 
-    public void setLstArchivosCargar(List<File> lstArchivosCargar) {
+    public void setLstArchivosCargar(List<TablaArchivosAdjunto> lstArchivosCargar) {
         this.lstArchivosCargar = lstArchivosCargar;
+    }
+
+    /**
+     * @return the archivosAdjuntoSel
+     */
+    public TablaArchivosAdjunto getArchivosAdjuntoSel() {
+        return archivosAdjuntoSel;
+    }
+
+    /**
+     * @param archivosAdjuntoSel the archivosAdjuntoSel to set
+     */
+    public void setArchivosAdjuntoSel(TablaArchivosAdjunto archivosAdjuntoSel) {
+        this.archivosAdjuntoSel = archivosAdjuntoSel;
     }
 }
