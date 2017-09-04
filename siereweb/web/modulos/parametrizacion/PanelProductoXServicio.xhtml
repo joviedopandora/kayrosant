@@ -152,18 +152,18 @@ and open the template in the editor.
                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                            currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
                                 <ace:column headerText="ID Producto"  style="width: 100px;"  >
-                                    <h:outputText value="#{itemInv.prdId.prdId}"
+                                    <h:outputText value="#{itemInv.vntProdxsrv.prdId.prdId}"
 
                                                   styleClass="textcolumnjustify letraOutput"/>
                                 </ace:column>
 
 
                                 <ace:column headerText="Nombre"  style="width: 700px;"  >
-                                    <h:outputText value="#{itemInv.prdId.prdNombre}"
+                                    <h:outputText value="#{itemInv.vntProdxsrv.prdId.prdNombre}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>
                                 <ace:column headerText="Cantidad"  style="width: 100px;"  >
-                                    <h:inputText value="#{itemInv.prodxsrvCantidad}" 
+                                    <h:inputText value="#{itemInv.vntProdxsrv.prodxsrvCantidad}" 
 
                                                  styleClass="inputs textcolumright" >
                                         <f:ajax execute="@this" render="@this" />
@@ -174,20 +174,30 @@ and open the template in the editor.
 
                                 <ace:column headerText="Estado" style="width: 100px;">
 
-                                    <h:selectBooleanCheckbox value="#{itemInv.prodxsrvEst}" 
-                                                             rendered="#{itemInv.prodxsrvId != null}"
+                                    <h:selectBooleanCheckbox value="#{itemInv.vntProdxsrv.prodxsrvEst}" 
+                                                             rendered="#{itemInv.vntProdxsrv.prodxsrvId != null}"
                                                              valueChangeListener="#{parametrizacionJSFBean.cambioEstadoProductoXServ_ValueChangeEvent}">
                                         <f:ajax execute="@this" render="@this"  />
                                         <f:attribute name="prodXServ" value="#{itemInv}" />
                                     </h:selectBooleanCheckbox>
 
                                     <h:commandButton styleClass="btnTrashStd"
-                                                     rendered="#{itemInv.prodxsrvId == null}"
+                                                     rendered="#{itemInv.vntProdxsrv.prodxsrvId == null}"
                                                      actionListener="#{parametrizacionJSFBean.rowDtEliminarProductoXServ_ActionEvent}"
                                                      title="Eliminar Producto">
                                         <f:attribute name="prodxServ" value="#{itemInv}"/>
                                     </h:commandButton>
-                                </ace:column>               
+                                </ace:column>   
+                                 <ace:column headerText="Eliminar" style="width: 100px;">
+
+                                 
+
+                                    <h:commandButton styleClass="btnTrashStd"                                                    
+                                                     actionListener="#{parametrizacionJSFBean.rowDtEliminarProductoXServ_ActionEvent}"
+                                                     title="Eliminar Producto">
+                                        <f:attribute name="prodxServ" value="#{itemInv}"/>
+                                    </h:commandButton>
+                                </ace:column> 
 
                             </ace:dataTable>
                         </div>

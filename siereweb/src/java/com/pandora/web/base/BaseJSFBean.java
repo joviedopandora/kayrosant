@@ -463,7 +463,7 @@ public abstract class BaseJSFBean implements Serializable {
                 Method metodo = claseObjLst.getMethod("isSeleccionado", new Class<?>[0]);
                 Object objResultSel = metodo.invoke(object, new Object[0]);
                 Boolean blnSel = (Boolean) objResultSel;
-                if (blnSel.booleanValue()) {
+                if (blnSel) {
                     lstRerirar.add(object);
                 }
 

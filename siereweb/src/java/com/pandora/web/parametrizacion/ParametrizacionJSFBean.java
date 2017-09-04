@@ -18,6 +18,7 @@ import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.mod.venta.dao.VntServicioxservicio;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.colaborador.ColaboradorJSFBean;
+import com.pandora.web.venta.TablaVntProdxsrv;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -82,7 +83,8 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     private String servArchivo = null;
     private List<SelectItem> lstTiposServicios = new ArrayList<>();
     private String rutaArchivos = "";
-    private List<VntProdxsrv> lstProductosXServ = new ArrayList<>();
+   
+    private List<TablaVntProdxsrv> lstProductosXServ = new ArrayList<>();
     private List<ServRfTipocliente> listaServiciosPorTipoCliente = new ArrayList<>();
     //Consultas de productos
     private Long idProducto = null;
@@ -140,7 +142,8 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     private void cargarProductoXServicio() {
         lstProductosXServ.clear();
         for (VntProdxsrv p : servicioSFBean.getLstVntProdxsrvXServicio(servicio.getVsrvId())) {
-            lstProductosXServ.add(p);
+            
+            lstProductosXServ.add(new TablaVntProdxsrv(p));
         }
 
     }
@@ -216,9 +219,13 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     }
 
     public void rowDtEliminarProductoXServ_ActionEvent(ActionEvent ae) {
-        Map map = ae.getComponent().getAttributes();
-        VntProdxsrv pxs = (VntProdxsrv) map.get("prodxServ");
-        lstProductosXServ.remove(pxs);
+        
+        TablaVntProdxsrv pxs = (TablaVntProdxsrv) ae.getComponent().getAttributes().get("prodxServ");
+        
+        servicioSFBean.elimiarPrdXServicio(pxs.getVntProdxsrv());
+        cargarProductoXServicio();
+        
+        
     }
 
     public void rowDtServicio_ActionEvent(ActionEvent ae) {
@@ -427,9 +434,9 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
             lstProductosXServ = new ArrayList<>();
             mostrarError("Debe asociar algún producto", 1);
         } else {
-            for (VntProdxsrv s : lstProductosXServ) {
-                if (s.getProdxsrvCantidad() == null || s.getProdxsrvCantidad() <= 0) {
-                    mostrarError("El Producto " + s.getPrdId().getPrdNombre() + " tiene canridad nula o menor igual que cero", 1);
+            for (TablaVntProdxsrv s : lstProductosXServ) {
+                if (s.getVntProdxsrv().getProdxsrvCantidad() == null || s.getVntProdxsrv().getProdxsrvCantidad() <= 0) {
+                    mostrarError("El Producto " + s.getVntProdxsrv().getPrdId().getPrdNombre() + " tiene canridad nula o menor igual que cero", 1);
                     error = true;
                 }
             }
@@ -438,7 +445,11 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
             return;
         }
         // se guarda
-        servicioSFBean.editarListaServicioXProducto(lstProductosXServ);
+        List<VntProdxsrv> lstPrdXServ=new ArrayList<>();
+        for (TablaVntProdxsrv tvp : lstProductosXServ) {
+            lstPrdXServ.add(tvp.getVntProdxsrv());
+        }
+        servicioSFBean.editarListaServicioXProducto(lstPrdXServ);
         lstProductosXServ.clear();
 
         cargarProductoXServicio();
@@ -446,10 +457,10 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     }
 
     public void aceptarProducto_ActionEvent(ActionEvent ae) {
-        for (VntProdxsrv s : lstProductosXServ) {
-            TablaProducto t = mapProductosSeleccionados.get(s.getPrdId().getPrdId());
+        for (TablaVntProdxsrv s : lstProductosXServ) {
+            TablaProducto t = mapProductosSeleccionados.get(s.getVntProdxsrv().getPrdId().getPrdId());
             if (t != null) {
-                s.setProdxsrvEst(true);
+                s.getVntProdxsrv().setProdxsrvEst(true);
                 mapProductosSeleccionados.remove(t);
             }
         }
@@ -460,7 +471,7 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
             t.setProdxsrvEst(true);
             t.setVsrvId(servicio);
             t.setProdxsrvCantidad(1);
-            lstProductosXServ.add(t);
+            lstProductosXServ.add(new TablaVntProdxsrv(t));
         }
 
     }
@@ -631,9 +642,9 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     }
 
     public void cambioEstadoProductoXServ_ValueChangeEvent(ValueChangeEvent vce) {
-        Map map = vce.getComponent().getAttributes();
-        VntProdxsrv prod = (VntProdxsrv) map.get("prodXServ");
-        prod.setProdxsrvEst((Boolean) vce.getNewValue());
+        
+        TablaVntProdxsrv prod = (TablaVntProdxsrv) vce.getComponent().getAttributes().get("prodXServ");
+        prod.getVntProdxsrv().setProdxsrvEst((Boolean) vce.getNewValue());
 
     }
 
@@ -808,14 +819,14 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
     /**
      * @return the lstProductosXServ
      */
-    public List<VntProdxsrv> getLstProductosXServ() {
+    public List<TablaVntProdxsrv> getLstProductosXServ() {
         return lstProductosXServ;
     }
 
     /**
      * @param lstProductosXServ the lstProductosXServ to set
      */
-    public void setLstProductosXServ(List<VntProdxsrv> lstProductosXServ) {
+    public void setLstProductosXServ(List<TablaVntProdxsrv> lstProductosXServ) {
         this.lstProductosXServ = lstProductosXServ;
     }
 

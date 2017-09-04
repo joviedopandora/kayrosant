@@ -96,7 +96,12 @@ public class ServicioSFBean implements Serializable {
     public VntRfTiposervicio getVntRfTiposervicioXId(Integer tsrvId) {
         return em.getReference(VntRfTiposervicio.class, tsrvId);
     }
-
+   @TransactionAttribute(TransactionAttributeType.REQUIRED) 
+    public void elimiarPrdXServicio(VntProdxsrv pVntProdxsrv){
+        VntProdxsrv vntProdxsrv = em.getReference(VntProdxsrv.class, pVntProdxsrv.getProdxsrvId());
+        em.remove(vntProdxsrv);
+        
+    }
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public VntServicio editarVntServicio(VntServicio servicio) {
         servicio = em.merge(servicio);
