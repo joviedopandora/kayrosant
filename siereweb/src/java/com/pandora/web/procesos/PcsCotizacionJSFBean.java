@@ -744,6 +744,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             ts.setVntServicio(v.getVsrvId());
             ts.setBigdPrecioCliente(v.getSrvxventPrecioventa());
             ts.setCantidadSrv(v.getSrvxventCantidad());
+            
             mapaServciosSelPopUp.put(v.getVsrvId().getVsrvId(), ts);
         }
         if (mapaServciosSelPopUp.isEmpty()) {
@@ -775,6 +776,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 tvsxv.getVntServxventa().setSrvxventEst(Boolean.TRUE);
                 tvsxv.getVntServxventa().setSrvxventPrecioventa(s.getBigdPrecioCliente());
                 tvsxv.getVntServxventa().setSrvxventValtotalclnt(s.getBigdPrecioCliente().multiply(new BigDecimal(s.getCantidadSrv())));
+                tvsxv.getVntServxventa().setSrvxventPorcentajeDesc(s.getVntServicio().getVsrvPorcentajeiva());
                 lstVntServxventasGrabar.add(tvsxv.getVntServxventa());
                 mapaFinal.put(tvsxv.getVntServxventa().getVsrvId().getVsrvId(), s);
 
