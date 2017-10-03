@@ -23,13 +23,15 @@ and open the template in the editor.
                         <div >
                             <label> Fecha Inicial *</label>
                         </div>
-                    </td>
+                    </td>  <!--Habilitar esta fecha-->     
                     <td  style="width: 100%">
                         <ace:dateTimeEntry value="#{liquidacionJSFBean.fechaInicial}" 
-                                           disabled="#{!liquidacionJSFBean.habilitarFechaIncial}"
+                                   disabled="#{!liquidacionJSFBean.habilitarFechaIncial}"
                                            styleClass="inputs"
                                            pattern="dd/MM/yyyy"
-                                           renderAsPopup="true">
+                                           renderAsPopup="true"
+                                           showOtherMonths="true"
+                                           navigator="true">
                             <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
                             <ace:ajax execute="@this" render="@this" />
                         </ace:dateTimeEntry>
