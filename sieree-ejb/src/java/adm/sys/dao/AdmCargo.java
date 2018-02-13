@@ -60,6 +60,8 @@ public class AdmCargo implements Serializable {
     @NotNull
     @Column(name = "indversion")
     private int indversion;
+    @Column(name = "crg_aplica_comision")
+    private boolean crgAplicaComision;
     @OneToMany(mappedBy = "crgId")
     private List<AdmActxcargo> admActxcargoList;
     @OneToMany(mappedBy = "crgId")
@@ -169,6 +171,14 @@ public class AdmCargo implements Serializable {
 
     public void setEvalCalificacionPagoList(List<EvalCalificacionPago> evalCalificacionPagoList) {
         this.evalCalificacionPagoList = evalCalificacionPagoList;
+    }
+
+    public boolean isCrgAplicaComision() {
+        return crgAplicaComision;
+    }
+
+    public void setCrgAplicaComision(boolean crgAplicaComision) {
+        this.crgAplicaComision = crgAplicaComision;
     }
 
   

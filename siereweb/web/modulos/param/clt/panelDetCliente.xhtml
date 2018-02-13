@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="cliente">
+        <ace:panel header="Detalle cliente">
+
+        </ace:panel>
+        <ace:panel header="Detalle cliente">
+            <ace:dataTable value="#{clienteJSFBean.lstTablaVntDetalleClientes}"
+                           var="itemDet"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{clienteJSFBean.rowDtDetCln_ActionEvent}">
+                        <f:attribute name="tcs" value="#{itemDetCln}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nombres" style="width: 80px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnNombres}"/>
+                </ace:column>
+                <ace:column headerText="Sexo" style="width: 50px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.sexId.sexDesc}"/>
+                </ace:column>
+                <ace:column headerText="Celular" style="width: 100px" >
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnCelular}"/>
+                </ace:column>
+                <ace:column headerText="Extensión" style="width: 50px" >
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnExtension}"/>
+                </ace:column>
+                <ace:column headerText="Correo" style="width: 250px" >
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnEmail}"/>
+                </ace:column>
+                <ace:column headerText="Sexo" style="width: 50px" >
+                    <h:outputText value="#{(itemDet.vntDetallecliente.sexId == null ?' ' :  itemDet.vntDetallecliente.sexId.sexId)}"/>
+                </ace:column>
+                <ace:column headerText="#Area - Patentezco" style="width: 100px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.prtId.prtNombre}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column  headerText="Nacimiento" style="width: 100px">
+                    <h:outputText value="#{itemDet.vntDetallecliente.dclnFechanace}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT-5"/>
+                    </h:outputText>
+                </ace:column>
+                <ace:column headerText="Edad" style="width: 50px" >
+                    <h:outputText value="#{itemDet.edad}"/>
+                </ace:column>
+
+                <ace:column  headerText="Cargo" style="width: 200px" >
+                    <h:outputText value="#{(itemDet.vntDetallecliente.rfCargocontacto == null ? '' : itemDet.vntDetallecliente.rfCargocontacto.cargoDesc)}">
+
+                    </h:outputText>
+                </ace:column>
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

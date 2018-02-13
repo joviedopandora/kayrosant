@@ -29,7 +29,13 @@ and open the template in the editor.
                         <f:attribute name="tcxe" value="#{item}"/>
                     </h:commandLink>
                 </ace:column>
-                <ace:column headerText="Tipo doc" style="width: 50px">
+                <ace:column  style="width: 50px">
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <h:outputText value="Tipo doc"/>
+                            <ace:textEntry value=""/>
+                        </h:panelGroup>
+                    </f:facet>
                     <h:outputText value="#{item.admColxemp.colCedula.tdcId.tdcId}"/>
                 </ace:column>
                 <ace:column headerText="Documento" style="width: 100px">

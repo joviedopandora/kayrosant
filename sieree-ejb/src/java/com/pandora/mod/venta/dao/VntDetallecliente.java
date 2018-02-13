@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VntDetallecliente.findAll", query = "SELECT v FROM VntDetallecliente v"),
     @NamedQuery(name = "VntDetallecliente.findByDclnId", query = "SELECT v FROM VntDetallecliente v WHERE v.dclnId = :dclnId"),
     @NamedQuery(name = "VntDetallecliente.findByDclnFechanace", query = "SELECT v FROM VntDetallecliente v WHERE v.dclnFechanace = :dclnFechanace"),
-    @NamedQuery(name = "VntDetallecliente.detalleXCliente", query = "SELECT v FROM VntDetallecliente v WHERE v.clnId.clnId = :clnId")})
+    @NamedQuery(name = "VntDetallecliente.detalleXCliente", query = "SELECT v FROM VntDetallecliente v WHERE v.clnId.clnId = :clnId AND v.dclnEstado = :dclnEstado")})
 public class VntDetallecliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -70,6 +70,16 @@ public class VntDetallecliente implements Serializable {
     @Size(max = 1500)
     @Column(name = "dcln_email")
     private String dclnEmail;
+    @Column(name = "dcln_estado")
+    private Boolean dclnEstado;
+
+    public Boolean getDclnEstado() {
+        return dclnEstado;
+    }
+
+    public void setDclnEstado(Boolean dclnEstado) {
+        this.dclnEstado = dclnEstado;
+    }
     ///
     @JoinColumn(name = "cargo_id", referencedColumnName = "cargo_id")
     @ManyToOne(fetch = FetchType.LAZY)

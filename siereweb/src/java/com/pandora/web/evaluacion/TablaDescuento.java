@@ -15,6 +15,7 @@ import com.pandora.web.base.TablaBaseGrid;
 public class TablaDescuento extends TablaBaseGrid {
 
     private EvalDescuento descuento;
+    private Integer cantidad;
 
     public TablaDescuento() {
         this.seleccionado = false;
@@ -31,6 +32,20 @@ public class TablaDescuento extends TablaBaseGrid {
 
     public void setDescuento(EvalDescuento descuento) {
         this.descuento = descuento;
+    }
+
+    /**
+     * @return the cantidad
+     */
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    /**
+     * @param cantidad the cantidad to set
+     */
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
     
     

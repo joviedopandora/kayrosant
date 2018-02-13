@@ -62,7 +62,12 @@ and open the template in the editor.
                             <ace:column headerText="Bonificación"   >
                                 <h:outputText value="#{itemCxc.bonificacion.bonificacionNombre}" styleClass="textcolumleft letraOutput"/>
                             </ace:column>
-
+                              <ace:column headerText="Cantidad"   >
+                                  <ace:textEntry value="#{itemCxc.cantidad}" styleClass="textcolumleft letraOutput" readonly="#{!itemCxc.bonificacion.bonificacionMultiplcable}">
+                                      <f:convertNumber integerOnly="true"/>
+                                        <ace:ajax execute="@this" render="@this" />
+                                  </ace:textEntry>
+                            </ace:column>
                             <ace:column headerText="Valor" style="width: 150px">
                                 <h:outputText value="#{itemCxc.bonificacion.bonificacionValor}"
                                               styleClass="textcolumleft letraOutput">

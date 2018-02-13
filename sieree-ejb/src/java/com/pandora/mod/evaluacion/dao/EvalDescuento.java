@@ -59,6 +59,8 @@ public class EvalDescuento implements Serializable {
     @NotNull
     @Column(name = "descuento_valor")
     private BigDecimal descuentoValor;
+    @Column(name = "descuenta_multiplicable")
+    private boolean descuentaMultiplicable;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evalDescuento", fetch = FetchType.LAZY)
     private List<EvalDescuentoColaborador> evalDescuentoColaboradorList;
 
@@ -140,6 +142,20 @@ public class EvalDescuento implements Serializable {
     @Override
     public String toString() {
         return "com.EvalDescuento[ descuentoId=" + descuentoId + " ]";
+    }
+
+    /**
+     * @return the descuentaMultiplicable
+     */
+    public boolean isDescuentaMultiplicable() {
+        return descuentaMultiplicable;
+    }
+
+    /**
+     * @param descuentaMultiplicable the descuentaMultiplicable to set
+     */
+    public void setDescuentaMultiplicable(boolean descuentaMultiplicable) {
+        this.descuentaMultiplicable = descuentaMultiplicable;
     }
     
 }

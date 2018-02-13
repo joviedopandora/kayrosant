@@ -55,6 +55,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         }
     }
 
+    
     ControlBandEntradaSFBean cbesfb;
 
     private ControlBandEntradaSFBean lookupControlBandEntradaSFBeanBean() {
@@ -92,6 +93,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private String strColCelular;
     private String strColEmail;
     private boolean blnColEstado;
+    String strBuscarUsr;
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
@@ -328,6 +330,9 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         blnMostrarPanel = false;
     }
 
+    public void headDtColXempBuscar_AE(ActionEvent ae){
+    
+    }
     public void rowDtColXEmp_ActionEvent(ActionEvent ae) {
         Map map = ae.getComponent().getAttributes();
         tablaAdmColXEmpSel = (TablaAdmColXEmp) map.get("tcxe");

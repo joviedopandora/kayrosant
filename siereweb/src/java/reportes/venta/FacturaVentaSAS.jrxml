@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FacturaVentaCorp" pageWidth="630" pageHeight="970" columnWidth="630" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="a8bdfa97-6527-4be5-83ee-15b331b94bab">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="480"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:/Users/Javier/Documents/javier/maximus/SIEREE/siereweb/src/java/reportes/venta/"]]></defaultValueExpression>
 	</parameter>
@@ -593,7 +593,7 @@ WHERE
 	<columnFooter>
 		<band height="199">
 			<staticText>
-				<reportElement x="2" y="65" width="340" height="10" uuid="10a75fd3-fdc5-4b50-a664-12e17536050d"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="65" width="340" height="10" uuid="10a75fd3-fdc5-4b50-a664-12e17536050d"/>
 				<box leftPadding="5">
 					<leftPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -604,7 +604,7 @@ WHERE
 				<text><![CDATA[La presente factura de venta tiene carácter de título valor Según ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="75" width="340" height="10" uuid="98425f44-6fc0-4c35-bffa-686ffa046857"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="75" width="340" height="10" uuid="98425f44-6fc0-4c35-bffa-686ffa046857"/>
 				<box leftPadding="5">
 					<leftPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -615,7 +615,7 @@ WHERE
 				<text><![CDATA[El artículo 621 -772 y 774 (Código de Comercio) Ley 1231 de julio de 2008]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="85" width="340" height="10" uuid="ff4aeb78-8895-4034-ab8a-a5bebe002515"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="85" width="340" height="10" uuid="ff4aeb78-8895-4034-ab8a-a5bebe002515"/>
 				<box leftPadding="5">
 					<leftPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
@@ -626,7 +626,7 @@ WHERE
 				<text><![CDATA[Máximus Producciones S.A.S no se hace responsable por factores climáticos, inconvenientes  ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="105" width="340" height="10" uuid="5fe6ff69-4f0f-422c-aca8-3277c86fd63e"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="105" width="340" height="10" uuid="5fe6ff69-4f0f-422c-aca8-3277c86fd63e"/>
 				<box leftPadding="5">
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.75"/>
@@ -786,7 +786,7 @@ WHERE
 			<staticText>
 				<reportElement x="2" y="155" width="476" height="25" uuid="266834b7-b6c1-4a5e-9f4a-a8bc2cd71822"/>
 				<textElement>
-					<font size="10" isBold="true"/>
+					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TRANSFERENCIAS- CUENTA  DE AHORROS BANCOLOMBIA N° 071-418683-51]]></text>
 			</staticText>
@@ -819,7 +819,7 @@ WHERE
 				<text><![CDATA[FIRMA VENDEDOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="95" width="340" height="10" uuid="c597ddd1-9418-4e3d-bdbc-058c75122193"/>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="95" width="340" height="10" uuid="c597ddd1-9418-4e3d-bdbc-058c75122193"/>
 				<box leftPadding="5">
 					<leftPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>

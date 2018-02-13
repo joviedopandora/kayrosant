@@ -236,6 +236,9 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         return null;
     }
 
+    public void lnkAsuntoCotManual_AE(ActionEvent ae){
+     asuntoMensajeExcel = vntDetevento.getRgvtId().getRgvtId() +  "_cotización " +   vntDetevento.getVdeObsr();
+    }
     public void fileEntryAction(FileEntryEvent event) {
         fileInfo = null;
         FileEntry fileEntry = (FileEntry) event.getSource();
@@ -246,6 +249,8 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         fileInfo = results.getFiles().get(0);
         if (fileInfo.isSaved()) {
             String fileName = fileInfo.getFile().getName();
+           
+           
             int i = fileName.lastIndexOf('.');
             String extension = null;
             if (i > 0) {
@@ -576,7 +581,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
 
     public void cargarListaDetalleClienteNuevo() {
         lstTablaVntDetalleCliente.clear();
-        for (VntDetallecliente vdc : pcsfb.getLstVntDetallecliente(vntCliente.getClnId())) {
+        for (VntDetallecliente vdc : pcsfb.getLstVntDetallecliente(vntCliente.getClnId(), true)) {
             TablaVntDetalleCliente tvdc = new TablaVntDetalleCliente();
             tvdc.setVntDetallecliente(vdc);
             tvdc.setEdad(null);
@@ -589,7 +594,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
 
     public void cargarListaDetalleClienteExistente() {
         lstTablaVntDetalleCliente.clear();
-        for (VntDetallecliente vdc : pcsfb.getLstVntDetallecliente(tablaVntClienteSel.getVntCliente().getClnId())) {
+        for (VntDetallecliente vdc : pcsfb.getLstVntDetallecliente(tablaVntClienteSel.getVntCliente().getClnId(), true)) {
             TablaVntDetalleCliente tvdc = new TablaVntDetalleCliente();
             tvdc.setVntDetallecliente(vdc);
             tvdc.setEdad(null);
@@ -2010,7 +2015,13 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         // limpiarFacesMessage();
         grabarDetalleCliente();
     }
-
+    public void rowDtDetalleClienteBorrar_ActionEvent(ActionEvent ae){
+       Map map = ae.getComponent().getAttributes();
+        tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("tdcs");
+         numPanel = PANEL_EVENTO;
+         VntCliente clienteSel = tablaVntDetalleClienteSel.getVntDetallecliente().getClnId();
+        
+    }
     public void rowDtDetalleCliente_ActionEvent(ActionEvent ae) {
         //limpiarFacesMessage();
         Map map = ae.getComponent().getAttributes();

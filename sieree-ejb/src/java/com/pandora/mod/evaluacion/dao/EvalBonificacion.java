@@ -59,6 +59,8 @@ public class EvalBonificacion implements Serializable {
     @NotNull
     @Column(name = "bonificacion_tipo_antiguedad")
     private boolean bonificacionTipoAntiguedad;
+    @Column(name = "bonificacion_multiplcable")
+    private boolean bonificacionMultiplcable;
     
     
 
@@ -151,6 +153,20 @@ public class EvalBonificacion implements Serializable {
     @Override
     public String toString() {
         return "com.EvalBonificacion[ bonificacionId=" + bonificacionId + " ]";
+    }
+
+    /**
+     * @return the bonificacionMultiplcable
+     */
+    public boolean isBonificacionMultiplcable() {
+        return bonificacionMultiplcable;
+    }
+
+    /**
+     * @param bonificacionMultiplcable the bonificacionMultiplcable to set
+     */
+    public void setBonificacionMultiplcable(boolean bonificacionMultiplcable) {
+        this.bonificacionMultiplcable = bonificacionMultiplcable;
     }
     
 }
