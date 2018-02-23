@@ -12,6 +12,7 @@ import com.pandora.mod.venta.dao.VntCliente;
 import com.pandora.mod.venta.dao.VntRfTipocliente;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
+import com.pandora.web.venta.TablaVntDetalleCliente;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +37,8 @@ import javax.naming.NamingException;
 @SessionScoped
 public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
+    
+
     //<editor-fold defaultstate="collapsed" desc="Variables y constantes">
     @Inject
     PrincipalJSFBean pjsfb;
@@ -57,6 +60,8 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private List<SelectItem> lstTipoCliente = new ArrayList<>();
     private List<TablaVntCliente> lstTablaVntCliente = new ArrayList<>();
     private TablaVntCliente tablaVntClienteSel = new TablaVntCliente();
+    private List<TablaVntDetalleCliente> lstTablaVntDetalleClientes = new ArrayList<>();
+    private TablaVntDetalleCliente tablaVntDetalleClienteSel = new TablaVntDetalleCliente();
     private String idTipoDoc = "-1";
     private Integer idTipoCliente = -1;
     private String strCltDocumento;
@@ -120,8 +125,8 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private void cargarListaTipoCliente() {
         lstTipoCliente.clear();
         lstTipoCliente.add(new SelectItem(-1, "SELECCIONE >>"));
-            for (VntRfTipocliente tc : csfb.getLstVntRfTipocliente(true)) {
-                lstTipoCliente.add(new SelectItem(tc.getTclId(), tc.getTclNombre()));
+        for (VntRfTipocliente tc : csfb.getLstVntRfTipocliente(true)) {
+            lstTipoCliente.add(new SelectItem(tc.getTclId(), tc.getTclNombre()));
         }
     }
 
@@ -136,12 +141,12 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     private void grabarCliente() {
         if (validarForm()) {
-            if(blnCltNuevo == true){
+            if (blnCltNuevo == true) {
                 vntCliente = new VntCliente();
                 vntCliente.setTdcId(csfb.getRfTipodocXId(idTipoDoc));
                 vntCliente.setClnIdentificacion(strCltDocumento);
                 vntCliente.setClnNombres(strCltNombres);
-              
+
                 vntCliente.setClnDiereccion(strCltDireccion);
                 vntCliente.setClnFijo(strCltTelefono);
                 vntCliente.setClnCelular(strCltCelular);
@@ -152,12 +157,12 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 vntCliente.setTclId(csfb.getVntRfTipocliente(idTipoCliente));
                 vntCliente.setClnFechaproceso(new Date());
                 csfb.editarCliente(vntCliente);
-            }else{
+            } else {
                 VntCliente vc = tablaVntClienteSel.getVntCliente();
                 vc.setTdcId(csfb.getRfTipodocXId(idTipoDoc));
 //                vntCliente.setClnIdentificacion(strCltDocumento);
                 vc.setClnNombres(strCltNombres);
-               
+
                 vc.setClnDiereccion(strCltDireccion);
                 vc.setClnFijo(strCltTelefono);
                 vc.setClnCelular(strCltCelular);
@@ -207,13 +212,18 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
         vntCliente = new VntCliente();
     }
 
+    public void rowDtDetCln_ActionEvent(ActionEvent ae) {
+        Map map = ae.getComponent().getAttributes();
+        tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("tcs");
+    }
+
     public void rowDtCliente_ActionEvent(ActionEvent ae) {
         Map map = ae.getComponent().getAttributes();
         tablaVntClienteSel = (TablaVntCliente) map.get("tcs");
         idTipoDoc = tablaVntClienteSel.getVntCliente().getTdcId().getTdcId();
         strCltDocumento = tablaVntClienteSel.getVntCliente().getClnIdentificacion();
         strCltNombres = tablaVntClienteSel.getVntCliente().getClnNombres();
-       
+
         strCltDireccion = tablaVntClienteSel.getVntCliente().getClnDiereccion();
         strCltTelefono = tablaVntClienteSel.getVntCliente().getClnFijo();
         strCltCelular = tablaVntClienteSel.getVntCliente().getClnCelular();
@@ -240,31 +250,31 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     @Override
     public boolean validarForm() {
-        if(idTipoDoc.equals("-1")){
+        if (idTipoDoc.equals("-1")) {
             mostrarError("Seleccione el tipo de documento", 1);
             return false;
         }
-        if(strCltDocumento == null || strCltDocumento.equals("")){
+        if (strCltDocumento == null || strCltDocumento.equals("")) {
             mostrarError("Ingrese el número de documento", 1);
             return false;
         }
-        if(strCltNombres == null || strCltNombres.equals("")){
+        if (strCltNombres == null || strCltNombres.equals("")) {
             mostrarError("Ingrese los nombres", 1);
             return false;
         }
-        if(strCltApellidos == null || strCltApellidos.equals("")){
+        if (strCltApellidos == null || strCltApellidos.equals("")) {
             mostrarError("Ingrese los apellidos", 1);
             return false;
         }
-        if(strCltDireccion == null || strCltDireccion.equals("")){
+        if (strCltDireccion == null || strCltDireccion.equals("")) {
             mostrarError("Ingrese la dirección", 1);
             return false;
         }
-        if(strCltTelefono == null || strCltTelefono.equals("")){
+        if (strCltTelefono == null || strCltTelefono.equals("")) {
             mostrarError("Ingrese el número de teléfono", 1);
             return false;
         }
-        if(idTipoCliente.equals(-1)){
+        if (idTipoCliente.equals(-1)) {
             mostrarError("Seleccione el tipo de cliente", 1);
             return false;
         }
@@ -275,7 +285,15 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Propiedades">
-        /**
+    public List<TablaVntDetalleCliente> getLstTablaVntDetalleClientes() {
+        return lstTablaVntDetalleClientes;
+    }
+
+    public void setLstTablaVntDetalleClientes(List<TablaVntDetalleCliente> lstTablaVntDetalleClientes) {
+        this.lstTablaVntDetalleClientes = lstTablaVntDetalleClientes;
+    }
+
+    /**
      * @return the blnNuevo
      */
     public boolean isBlnNuevo() {
@@ -539,6 +557,19 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
      */
     public void setLstTipoCliente(List<SelectItem> lstTipoCliente) {
         this.lstTipoCliente = lstTipoCliente;
+    }
+    /**
+     * @return the TablaVntDetalleClienteSel
+     */
+    public TablaVntDetalleCliente getTablaVntDetalleClienteSel() {
+        return tablaVntDetalleClienteSel;
+    }
+
+    /**
+     * @param TablaVntDetalleClienteSel the TablaVntDetalleClienteSel to set
+     */
+    public void setTablaVntDetalleClienteSel(TablaVntDetalleCliente TablaVntDetalleClienteSel) {
+        this.tablaVntDetalleClienteSel = TablaVntDetalleClienteSel;
     }
     //</editor-fold>
 }

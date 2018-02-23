@@ -15,6 +15,7 @@ import com.pandora.web.base.TablaBaseGrid;
 public class TablaBonificacion extends TablaBaseGrid {
 
     private EvalBonificacion bonificacion = null;
+    private Integer cantidad;
 
     public TablaBonificacion() {
          this.seleccionado = false;
@@ -33,6 +34,20 @@ public class TablaBonificacion extends TablaBaseGrid {
 
     public void setBonificacion(EvalBonificacion bonificacion) {
         this.bonificacion = bonificacion;
+    }
+
+    /**
+     * @return the cantidad
+     */
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    /**
+     * @param cantidad the cantidad to set
+     */
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
 
     

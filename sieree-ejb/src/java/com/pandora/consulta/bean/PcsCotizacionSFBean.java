@@ -126,12 +126,14 @@ public class PcsCotizacionSFBean implements Serializable {
      * Cargar lista de detalle por cliente
      *
      * @param pClnId
+     * @param pDclnEstado
      * @return
      */
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<VntDetallecliente> getLstVntDetallecliente(Long pClnId) {
-        Query q = em.createNamedQuery("VntDetallecliente.detalleXCliente");
-        q.setParameter("clnId", pClnId);
+    public List<VntDetallecliente> getLstVntDetallecliente(Long pClnId, boolean pDclnEstado) {
+        Query q = em.createNamedQuery("VntDetallecliente.detalleXCliente").
+        setParameter("clnId", pClnId).
+        setParameter("dclnEstado", pDclnEstado);
         return q.getResultList();
     }
 
@@ -296,6 +298,11 @@ public class PcsCotizacionSFBean implements Serializable {
     public RfCargocontacto getRfCargocontacto(Integer cargoId) {
         return em.find(RfCargocontacto.class, cargoId);
     }
+    
+    public void desasociarContactoCliente(VntDetallecliente pVntDetalleclient){
+    
+      
+   }
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Evento">

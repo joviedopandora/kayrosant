@@ -72,7 +72,7 @@ and open the template in the editor.
                 </h:selectOneMenu>
             </h:panelGrid>
         </ace:panel>
-        <ace:panel header="Usuarios registrados">
+        <ace:panel header="Clientes registrados">
             <ace:dataTable value="#{clienteJSFBean.lstTablaVntCliente}"
                            var="item"
                            rows="10"
@@ -99,10 +99,7 @@ and open the template in the editor.
                     <h:outputText value="#{item.vntCliente.clnNombres}"
                                   styleClass="textcolumleft"/>
                 </ace:column>
-                <ace:column headerText="Apellidos" style="width: 250px">
-                    <h:outputText value="#{item.vntCliente.clnApellidos}"
-                                  styleClass="textcolumleft"/>
-                </ace:column>
+              
                 <ace:column headerText="Dirección" style="width: 150px">
                     <h:outputText value="#{item.vntCliente.clnDiereccion}"
                                   styleClass="textcolumleft"/>

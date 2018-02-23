@@ -105,11 +105,18 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
         BigDecimal bonos = BigDecimal.ZERO;
         for (TablaDescuento t : lstDescuento) {
             if (t.isSeleccionado()) {
-                EvalDescuentoColaborador v = new EvalDescuentoColaborador();
-                v.setEvalDescuento(t.getDescuento());
-                v.setPopCxcevento(tablaOrdenProduccionColaboradorAsociado.getPopCxcevento());
-                tablaOrdenProduccionColaboradorAsociado.getMapaDescuento().put(t.getDescuento().getDescuentoId(), v);
-                bonos = bonos.add(t.getDescuento().getDescuentoValor());
+                if (t.getCantidad() != null && t.getCantidad() > 0) {
+                    EvalDescuentoColaborador v = new EvalDescuentoColaborador();
+                    v.setEvalDescuento(t.getDescuento());
+                    v.setPopCxcevento(tablaOrdenProduccionColaboradorAsociado.getPopCxcevento());
+                    tablaOrdenProduccionColaboradorAsociado.getMapaDescuento().put(t.getDescuento().getDescuentoId(), v);
+
+                    if (t.getDescuento().isDescuentaMultiplicable()) {
+                        bonos = bonos.add(t.getDescuento().getDescuentoValor().multiply(BigDecimal.valueOf(t.getCantidad().doubleValue())));
+                    } else {
+                        bonos = bonos.add(t.getDescuento().getDescuentoValor());
+                    }
+                }
             }
         }
 
@@ -146,16 +153,24 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
         // tablaOrdenProduccionColaboradorAsociado = null;
         tablaOrdenProduccionColaboradorAsociado.getMapaBonificaciones().clear();
         BigDecimal bonos = BigDecimal.ZERO;
+
         /* if (listaColaboradores.contains(tablaOrdenProduccionColaboradorAsociado)) {
          tablaOrdenProduccionColaboradorAsociado = listaColaboradores.get(listaColaboradores.indexOf(tablaOrdenProduccionColaboradorAsociado));
          }*/
         for (TablaBonificacion t : lstBonificacion) {
             if (t.isSeleccionado()) {
-                EvalBonificacionColaborador v = new EvalBonificacionColaborador();
-                v.setEvalBonificacion(t.getBonificacion());
-                v.setPopCxcevento(tablaOrdenProduccionColaboradorAsociado.getPopCxcevento());
-                tablaOrdenProduccionColaboradorAsociado.getMapaBonificaciones().put(t.getBonificacion().getBonificacionId(), v);
-                bonos = bonos.add(t.getBonificacion().getBonificacionValor());
+                if (t.getCantidad() != null && t.getCantidad() > 0) {
+                    EvalBonificacionColaborador v = new EvalBonificacionColaborador();
+                    v.setEvalBonificacion(t.getBonificacion());
+                    v.setPopCxcevento(tablaOrdenProduccionColaboradorAsociado.getPopCxcevento());
+                    tablaOrdenProduccionColaboradorAsociado.getMapaBonificaciones().put(t.getBonificacion().getBonificacionId(), v);
+                    if (t.getBonificacion().isBonificacionMultiplcable()) {
+                        bonos = bonos.add(t.getBonificacion().getBonificacionValor().multiply(BigDecimal.valueOf(t.getCantidad().doubleValue())));
+                    } else {
+                        bonos = bonos.add(t.getBonificacion().getBonificacionValor());
+                    }
+                }
+
             }
         }
 
@@ -197,9 +212,9 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
                 if (tablaVntRegistroventaSel.getOrdenprod().getOprDepart() != null
                         && tablaVntRegistroventaSel.getOrdenprod().getOprDepart().getDepId() != null
                         && tc.getPopCxcevento().getCxcId().
-                        getCpeId().getColCedula().getColDepart() != null
+                                getCpeId().getColCedula().getColDepart() != null
                         && tc.getPopCxcevento().getCxcId().
-                        getCpeId().getColCedula().getColDepart().getDepId() != null
+                                getCpeId().getColCedula().getColDepart().getDepId() != null
                         && !tablaVntRegistroventaSel.getOrdenprod().getOprDepart().equals(tc.getPopCxcevento().getCxcId().
                                 getCpeId().getColCedula().getColDepart())) {
                     tc.getPopCxcevento().setCxeValorPagar(pago.getPagoValorVisitante());
@@ -268,12 +283,14 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
 
         for (EvalBonificacion c : evaluacionSFBean.getLstEvalBonificacion(true)) {
             TablaBonificacion tb = new TablaBonificacion(c);
+            tb.setCantidad(!c.isBonificacionMultiplcable() ? 1 : 0);
             lstBonificacion.add(tb);
         }
 
         lstDescuento.clear();
         for (EvalDescuento c : evaluacionSFBean.getLstEvalDescuento(true)) {
             TablaDescuento tb = new TablaDescuento(c);
+            tb.setCantidad(!c.isDescuentaMultiplicable() ? 1 : 0);
             lstDescuento.add(tb);
         }
 
@@ -283,7 +300,7 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
         parametrosConsulta.setTipoCliente(getPrincipalJSFBean().getColxempLog().
                 getColCedula().getVntRfTipocliente() == null ? 1
                         : getPrincipalJSFBean().getColxempLog().getColCedula()
-                        .getVntRfTipocliente().getTclId());
+                                .getVntRfTipocliente().getTclId());
         parametrosConsulta.setCantidadEvaluaciones(EnPasoCalificacion.FINAL.getId());
         lstTablaVntRegistroventa.clear();
         /*if(parametrosConsulta.getFechaOp() == null){
@@ -394,7 +411,7 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
 
         ordenProduccionSFBean.grabarLstCxceventos(lista);
         this.listaColaboradores.remove(tablaOrdenProduccionColaboradorAsociado);
-       // cargarColaboradoresPorOp();
+        // cargarColaboradoresPorOp();
     }
 
     public void grabarInicial_ActionEvent(ActionEvent ae) {
@@ -662,7 +679,8 @@ public class EvaluacionJSFBean extends BaseJSFBean implements Serializable, IPas
                 && tablaVntRegistroventaSel.getOrdenprod().getOprId() != null
                 && tablaVntRegistroventaSel.getOrdenprod().getOprCantidadEvaluacion().equals(EnPasoCalificacion.PARCIAL_BONIFICACION.getId());
     }
-     public boolean isRenderEliminar() {
+
+    public boolean isRenderEliminar() {
         return tablaVntRegistroventaSel != null
                 && tablaVntRegistroventaSel.getOrdenprod() != null
                 && tablaVntRegistroventaSel.getOrdenprod().getOprId() != null

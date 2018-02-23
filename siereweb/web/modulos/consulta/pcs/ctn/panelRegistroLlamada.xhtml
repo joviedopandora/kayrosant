@@ -710,7 +710,7 @@ JAOR - CORREGIR LISTA EN COTIZACION SOLO SALEN 20 REGISTROS MAXIMOS
                                             <ace:fileEntry id="file-entry"
                                                            fileEntryListener="#{pcsCotizacionJSFBean.fileEntryAction}" 
                                                            immediate="true" useOriginalFilename="true" 
-
+                                                           
 
                                                            label ="Seleccione Excel de Cotizacion">
 
@@ -745,12 +745,15 @@ JAOR - CORREGIR LISTA EN COTIZACION SOLO SALEN 20 REGISTROS MAXIMOS
                         <tr>
                             <td style="width: 20%"> 
                                 <div> 
-                                    <label>Asunto Cotización Manual</label>
+                                    <ace:linkButton value="Asunto Cotización Manual" actionListener="#{pcsCotizacionJSFBean.lnkAsuntoCotManual_AE}">
+                                        <ace:ajax execute="@this" render="txtAsuntoMsgExcel"/>
+                                    </ace:linkButton>
+                                 
                                 </div>
                             </td>
                             <td style="width: 100%" colspan="4">
                                 <ace:textEntry value="#{pcsCotizacionJSFBean.asuntoMensajeExcel}"
-                                               styleClass="inputs" maxlength="100">
+                                               styleClass="inputs" maxlength="100" id="txtAsuntoMsgExcel">
                                     <f:converter converterId="convertMayusc"/>
                                     <ace:ajax execute="@this" render="@this" />
                                 </ace:textEntry>

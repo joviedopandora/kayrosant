@@ -175,7 +175,7 @@ WHERE
 				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{vsrv_desc}]]></textFieldExpression>
 			</textField>
-			<textField pattern="###0" isBlankWhenNull="true">
+			<textField pattern="###0.00" isBlankWhenNull="true">
 				<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="494" y="0" width="41" height="28" forecolor="#000000" backcolor="#FFFFFF" uuid="7de0c9cf-0528-4f48-a4c5-3c6c31be7653"/>
 				<box>
 					<topPen lineWidth="0.75"/>

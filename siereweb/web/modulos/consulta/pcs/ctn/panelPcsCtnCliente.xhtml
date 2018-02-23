@@ -198,14 +198,15 @@ and open the template in the editor.
                     </td> 
 
                     <td><div >
-                            <label>#{pcsCotizacionJSFBean.esNit ? 'Contacto * ' : 'Vendedor en Maximus'}</label>
+                            <label>Ejecutivo de cuenta *</label>
                         </div>
                     </td>
                     <td>
                         <ace:textEntry value="#{pcsCotizacionJSFBean.strCltContacto}"
                                        styleClass="inputs"
                                        >
-                            <ace:ajax execute="@this" render="@this"/>           
+                            <ace:ajax execute="@this" render="@this"/>       
+                               <f:converter converterId="convertMayusc"/>
 
                         </ace:textEntry>
                     </td> 
@@ -520,6 +521,13 @@ and open the template in the editor.
                                     <h:outputText value="#{(itemDet.vntDetallecliente.rfCargocontacto == null ? '' : itemDet.vntDetallecliente.rfCargocontacto.cargoDesc)}">
 
                                     </h:outputText>
+                                </ace:column>
+                                <ace:column>
+                                      <h:commandButton styleClass="btnSeleccionOpen"
+                                                     rendered="#{itemDet.vntDetallecliente.dclnId  != null}"
+                                                     actionListener="#{pcsCotizacionJSFBean.rowDtDetalleClienteBorrar_ActionEvent}">
+                                        <f:attribute name="tdcs" value="#{itemDet}"/>
+                                    </h:commandButton>
                                 </ace:column>
                             </ace:dataTable>
                         </div></td></tr>
