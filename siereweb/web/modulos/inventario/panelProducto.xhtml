@@ -125,7 +125,22 @@ and open the template in the editor.
                             </h:selectBooleanCheckbox>
                         </div>
 
-                    </td>     
+                    </td>   
+                     <td style="width: 20%"> 
+                        <div> 
+                            <label>Activar en OP </label>
+                        </div>
+                    </td>
+                    <td style="width: 30%">
+
+                        <div>
+
+                            <h:selectBooleanCheckbox value="#{inventarioJSFBean.producto.prdVarios}" >
+                                <f:ajax execute="@this" render="@this" />
+                            </h:selectBooleanCheckbox>
+                        </div>
+
+                    </td>  
                     <td style="width: 100%" colspan="2"> 
                         <h:commandButton value="Asociar Marca"
                                          styleClass="button"

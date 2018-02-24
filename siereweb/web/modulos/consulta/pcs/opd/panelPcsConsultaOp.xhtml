@@ -160,9 +160,13 @@ and open the template in the editor.
                            rows="30"
                            emptyMessage="No se encontraron datos"
                            paginatorPosition="bottom"
+                           scrollable="true"
+                           scrollHeight="400"
                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"                                   
                            currentPageReportTemplate="(OPs {startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
-
+                <f:facet name="header">
+                    <h:outputText value="Órdenes de producción existentes"/>
+                </f:facet>
                 <ace:column headerText="Nº Cotizacion " style="width: 100px" >
                     <h:outputText value="#{itemOpp.popOrdenprod.rgvtId.rgvtId}" style="font-size: large"/>
                 </ace:column>

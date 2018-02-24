@@ -735,6 +735,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         switch (numPanel) {
             case PANEL_CONSULTA_VENTAS:
                 cargarListaVentasAplicarOP();
+                cargarListaProductosVarios();
                 blnNuevo = true;
                 break;
             case PANEL_CONSULTA_PANEL_CONTROL:
