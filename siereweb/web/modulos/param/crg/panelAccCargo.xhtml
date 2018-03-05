@@ -13,19 +13,22 @@ and open the template in the editor.
       xmlns:ace="http://www.icefaces.org/icefaces/components"
       xmlns:ice="http://www.icesoft.com/icefaces/component">
     <ui:insert name="panelAccCargo">
-        <h:panelGroup rendered="#{cargoJSFBean.numPanel == 1 ? true : false}">
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
-                <h:commandButton styleClass="btnGuardarStd"                                                              
+         <h:panelGroup rendered="#{cargoJSFBean.numPanel == 1 ? true : false}">
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="2">
+                  <h:commandButton styleClass="btnGuardarStd"                                                              
                                  actionListener="#{cargoJSFBean.btnGrabarCargo_ActionEvent}"
                                  title="Grabar cargo">
-                </h:commandButton>            
-            </h:panelGrid>
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
-                <h:commandButton styleClass="btnNuevoStd"                                                              
+                </h:commandButton> 
+                
+                   <h:commandButton styleClass="btnNuevoStd"                                                              
                                  actionListener="#{cargoJSFBean.btnNuevoCargo_ActionEvent}"
-                                 title="Cancelar">
+                                 title="Nuevo">
                 </h:commandButton>
             </h:panelGrid>
+            
+           
+           
         </h:panelGroup>
+       
     </ui:insert>
 </html>

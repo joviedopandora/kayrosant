@@ -535,9 +535,11 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             vntCliente.setClnAlias(strCltAlias);
             vntCliente = pcsfb.editarCliente(vntCliente);
             tablaVntClienteSel.setVntCliente(vntCliente);
+        
             for (TablaVntDetalleCliente tvdc : lstTablaVntDetalleCliente) {
                 if (tvdc.getVntDetallecliente().getClnId() == null) {
                     tvdc.getVntDetallecliente().setClnId(vntCliente);
+                        tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
                 }
                 tvdc.setVntDetallecliente(pcsfb.editarDetalleCliente(tvdc.getVntDetallecliente()));
             }
@@ -1590,6 +1592,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 for (TablaVntDetalleCliente tvdc : lstTablaVntDetalleCliente) {
                     if (tvdc.getVntDetallecliente().getClnId() == null) {
                         tvdc.getVntDetallecliente().setClnId(vntCliente);
+                            tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
                     }
                     tvdc.setVntDetallecliente(pcsfb.editarDetalleCliente(tvdc.getVntDetallecliente()));
                     if (tvdc.isSeleccionado()) {

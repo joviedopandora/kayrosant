@@ -24,6 +24,14 @@ and open the template in the editor.
                         <f:attribute name="jsfBean" value="clienteJSFBean"/>
                         <f:attribute name="numPanel" value="1"/>
                     </h:commandLink>
+                       <h:commandLink id="btnNavCargo"
+                                   immediate="true"
+                                   value="Cargo contacto"
+                                   actionListener="#{clienteJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{clienteJSFBean.numPanel == 2 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="clienteJSFBean"/>
+                        <f:attribute name="numPanel" value="2"/>
+                    </h:commandLink>
                 </h:panelGrid>
             </ace:accordionPane>
         </ace:accordion>

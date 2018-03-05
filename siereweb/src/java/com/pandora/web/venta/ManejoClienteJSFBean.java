@@ -67,7 +67,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
     private String idTipoDoc;
     private String strCltDocumento;
     private String strCltNombres;
-    
+
     private String idSexo;
     private Integer intCltNumHijos;
     private Date datCltFechaNac;
@@ -90,7 +90,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
     private TablaVntDetalleCliente tablaVntDetalleclienteSel = new TablaVntDetalleCliente();
     private List<SelectItem> lstParentesco = new ArrayList<>();
     private String strDetNombre1;
-    
+
     private String idSexoDet;
     private Integer idParentesco;
     private Date datDetFechaNac;
@@ -117,7 +117,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
         idTipoDoc = "-1";
         strCltDocumento = "";
         strCltNombres = "";
-        
+
         idSexo = "-1";
         intCltNumHijos = null;
         datCltFechaNac = null;
@@ -129,7 +129,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
         idTipoCliente = -1;
         idActEco = -1;
         strDetNombre1 = "";
-        
+
         idParentesco = -1;
         idSexoDet = "-1";
         datDetFechaNac.equals(null);
@@ -162,7 +162,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
         idTipoDoc = vntCliente.getTdcId().getTdcId();
         strCltDocumento = vntCliente.getClnIdentificacion();
         strCltNombres = vntCliente.getClnNombres();
-       
+
         idSexo = vntCliente.getSexId().getSexId();
         intCltNumHijos = vntCliente.getClnNumhijos();
         datCltFechaNac = vntCliente.getClnFechanace();
@@ -257,7 +257,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
                 vntCliente.setTdcId(mcsfb.getRfTipodocXId(idTipoDoc));
                 vntCliente.setClnIdentificacion(strCltDocumento);
                 vntCliente.setClnNombres(strCltNombres);
-                
+
                 vntCliente.setSexId(mcsfb.getRfSexo(idSexo));
                 vntCliente.setClnNumhijos(intCltNumHijos);
                 vntCliente.setClnFechanace(datCltFechaNac);
@@ -279,7 +279,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
                 vc.setTdcId(mcsfb.getRfTipodocXId(idTipoDoc));
                 vc.setClnIdentificacion(strCltDocumento);
                 vc.setClnNombres(strCltNombres);
-                
+
                 vc.setSexId(mcsfb.getRfSexo(idSexo));
                 vc.setClnNumhijos(intCltNumHijos);
                 vc.setClnFechanace(datCltFechaNac);
@@ -307,16 +307,17 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
                 vntDetallecliente.setClnId(TablaVntClienteSel.getVntCliente());
             }
             vntDetallecliente.setDclnNombres(strDetNombre1);
-            
+
             vntDetallecliente.setSexId(mcsfb.getRfSexo(idSexoDet));
             vntDetallecliente.setPrtId(mcsfb.getRfParentesco(idParentesco));
             vntDetallecliente.setDclnFechanace(datDetFechaNac);
+            vntDetallecliente.setDclnEstado(Boolean.TRUE);
             vntDetallecliente = mcsfb.editarDetalleCliente(vntDetallecliente);
             limpiarFormulario();
             cargarListaDetalleCliente();
 //            vntDetallecliente = mcsfb.getVntDetalleclienteSel();
         } else {
-            return;
+          
         }
     }
 
@@ -398,7 +399,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
             mostrarError("Ingrese los nombres del cliente", 1);
             return false;
         }
-       
+
         if (idSexo.equals("-1")) {
             mostrarError("Seleccione el sexo del cliente", 1);
             return false;
@@ -439,7 +440,7 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
             mostrarError("Ingrese el primer nombre", 1);
             error = true;
         }
-        
+
         if (idParentesco.equals(-1)) {
             mostrarError("Seleccione el parentesco", 1);
             error = true;
@@ -775,7 +776,6 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
         this.strDetNombre1 = strDetNombre1;
     }
 
-    
     /**
      * @return the datDetFechaNac
      */
@@ -818,7 +818,6 @@ public class ManejoClienteJSFBean extends BaseJSFBean implements Serializable, I
         this.strCltNombres = strCltNombres;
     }
 
-   
     /**
      * @return the intCltNumHijos
      */

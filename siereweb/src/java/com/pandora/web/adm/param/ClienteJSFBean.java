@@ -6,8 +6,11 @@
 package com.pandora.web.adm.param;
 
 import adm.sys.dao.RfTipodoc;
+import com.pandora.adm.param.AdmParametrizacionSLBean;
 import com.pandora.adm.param.ClienteSFBean;
+import com.pandora.consulta.bean.PcsCotizacionSFBean;
 import com.pandora.jsfbeans.PrincipalJSFBean;
+import com.pandora.mod.venta.dao.RfCargocontacto;
 import com.pandora.mod.venta.dao.VntCliente;
 import com.pandora.mod.venta.dao.VntRfTipocliente;
 import com.pandora.web.base.BaseJSFBean;
@@ -20,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
@@ -37,12 +41,26 @@ import javax.naming.NamingException;
 @SessionScoped
 public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
-    
+    /**
+     * @return the crgContactoEst
+     */
+    public boolean isCrgContactoEst() {
+        return crgContactoEst;
+    }
+
+    /**
+     * @param crgContactoEst the crgContactoEst to set
+     */
+    public void setCrgContactoEst(boolean crgContactoEst) {
+        this.crgContactoEst = crgContactoEst;
+    }
 
     //<editor-fold defaultstate="collapsed" desc="Variables y constantes">
     @Inject
     PrincipalJSFBean pjsfb;
     ClienteSFBean csfb;
+    @EJB
+    private AdmParametrizacionSLBean admParametrizacionSLBean;
 
     private ClienteSFBean lookupClienteSFBean() {
         try {
@@ -75,6 +93,21 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private boolean blnCltEstado;
     private boolean blnCltNuevo;
 
+    private Integer crgConcattoId;
+    private String crgContactoDesc;
+    private boolean crgContactoEst;
+    private List<TablaRfCargoContacto> lstTablaCargocontactos = new ArrayList<>();
+    private TablaRfCargoContacto tablaRfCargoContactoSel;
+    private String strBuscarCln;
+
+    public String getStrBuscarCln() {
+        return strBuscarCln;
+    }
+
+    public void setStrBuscarCln(String strBuscarCln) {
+        this.strBuscarCln = strBuscarCln;
+    }
+
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
     @Override
@@ -88,6 +121,7 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
         cargarListaTipoDoc();
         cargarListaTipoCliente();
         cargarListaCliente();
+        cargarListaCargoscontacto();
     }
 
     @Override
@@ -110,6 +144,7 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
         blnCltEstado = false;
         blnCltNuevo = false;
         idTipoCliente = -1;
+
     }
 
     //</editor-fold>
@@ -136,6 +171,22 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
             TablaVntCliente tvc = new TablaVntCliente();
             tvc.setVntCliente(cliente);
             lstTablaVntCliente.add(tvc);
+        }
+    }
+
+    private void cargarListaClienteXTexto() {
+        lstTablaVntCliente.clear();
+        for (VntCliente cliente : admParametrizacionSLBean.getLstClienteXTexto(strBuscarCln)) {
+            TablaVntCliente tvc = new TablaVntCliente();
+            tvc.setVntCliente(cliente);
+            lstTablaVntCliente.add(tvc);
+        }
+    }
+
+    private void cargarListaCargoscontacto() {
+        lstTablaCargocontactos.clear();
+        for (RfCargocontacto rc : admParametrizacionSLBean.getLstCargocontactos()) {
+            lstTablaCargocontactos.add(new TablaRfCargoContacto(rc));
         }
     }
 
@@ -182,6 +233,18 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Eventos">
+    //<editor-fold defaultstate="collapsed" desc="Eventos contacto">
+    public void rowDtCargo_ActionEvent(ActionEvent ae) {
+        tablaRfCargoContactoSel = (TablaRfCargoContacto) ae.getComponent().getAttributes().get("itemCargos");
+        crgConcattoId = tablaRfCargoContactoSel.getCargocontacto().getCargoId();
+        crgContactoDesc = tablaRfCargoContactoSel.getCargocontacto().getCargoDesc();
+        crgContactoEst = tablaRfCargoContactoSel.getCargocontacto().getCargoEst();
+        blnHabilitar = false;
+        blnCltNuevo = false;
+
+    }
+
+//</editor-fold>
     @Override
     public void navegacionLateral_ActionEvent(ActionEvent ae) {
         numPanel = Integer.valueOf((String) ae.getComponent().getAttributes().get("numPanel"));
@@ -194,6 +257,42 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     @Override
     public void navLateral_ActionEvent(ActionEvent ae) {
 
+    }
+
+    public void btnGrabarCargoConct_ActionEvent(ActionEvent ae) {
+        if (blnCltNuevo) {
+            if (crgContactoDesc != null && crgContactoDesc.trim().length() > 5) {
+                RfCargocontacto rc = new RfCargocontacto();
+                rc.setCargoDesc(crgContactoDesc);
+                rc.setCargoEst(crgContactoEst);
+                rc = admParametrizacionSLBean.grabarCargoCliente(rc);
+                tablaRfCargoContactoSel.setCargocontacto(rc);
+                lstTablaCargocontactos.add(tablaRfCargoContactoSel);
+                mostrarError("Cargo grabado exitosamente", 3);
+                crgConcattoId = null;
+                crgContactoDesc = "";
+                crgContactoEst = false;
+                blnCltNuevo = true;
+            } else {
+                mostrarError("Debe colocar la descripción del nuevo cargo");
+            }
+
+        } else {
+            tablaRfCargoContactoSel.getCargocontacto().setCargoDesc(crgContactoDesc);
+            tablaRfCargoContactoSel.getCargocontacto().setCargoEst(crgContactoEst);
+            tablaRfCargoContactoSel.setCargocontacto(admParametrizacionSLBean.grabarCargoCliente(tablaRfCargoContactoSel.getCargocontacto()));
+            mostrarError("Cargo actualizado exitosamente", 3);
+        }
+
+    }
+
+    public void btnNuevoCargoConct_ActionEvent(ActionEvent ae) {
+        crgConcattoId = null;
+        crgContactoDesc = "";
+        crgContactoEst = false;
+        tablaRfCargoContactoSel = new TablaRfCargoContacto();
+        blnCltNuevo = true;
+        blnHabilitar = true;
     }
 
     public void btnGrabarCliente_ActionEvent(ActionEvent ae) {
@@ -240,7 +339,7 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     //<editor-fold defaultstate="collapsed" desc="Funciones heredadas">
     @Override
     public void buscarGen_ActionEvent(ActionEvent ae) {
-
+        cargarListaClienteXTexto();
     }
 
     @Override
@@ -558,6 +657,7 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
     public void setLstTipoCliente(List<SelectItem> lstTipoCliente) {
         this.lstTipoCliente = lstTipoCliente;
     }
+
     /**
      * @return the TablaVntDetalleClienteSel
      */
@@ -572,4 +672,60 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
         this.tablaVntDetalleClienteSel = TablaVntDetalleClienteSel;
     }
     //</editor-fold>
+
+    /**
+     * @return the lstTablaCargocontactos
+     */
+    public List<TablaRfCargoContacto> getLstTablaCargocontactos() {
+        return lstTablaCargocontactos;
+    }
+
+    /**
+     * @param lstTablaCargocontactos the lstTablaCargocontactos to set
+     */
+    public void setLstTablaCargocontactos(List<TablaRfCargoContacto> lstTablaCargocontactos) {
+        this.lstTablaCargocontactos = lstTablaCargocontactos;
+    }
+
+    /**
+     * @return the crgContactoDesc
+     */
+    public String getCrgContactoDesc() {
+        return crgContactoDesc;
+    }
+
+    /**
+     * @param crgContactoDesc the crgContactoDesc to set
+     */
+    public void setCrgContactoDesc(String crgContactoDesc) {
+        this.crgContactoDesc = crgContactoDesc;
+    }
+
+    /**
+     * @return the crgConcattoId
+     */
+    public Integer getCrgConcattoId() {
+        return crgConcattoId;
+    }
+
+    /**
+     * @param crgConcattoId the crgConcattoId to set
+     */
+    public void setCrgConcattoId(Integer crgConcattoId) {
+        this.crgConcattoId = crgConcattoId;
+    }
+
+    /**
+     * @return the tablaRfCargoContactoSel
+     */
+    public TablaRfCargoContacto getTablaRfCargoContactoSel() {
+        return tablaRfCargoContactoSel;
+    }
+
+    /**
+     * @param tablaRfCargoContactoSel the tablaRfCargoContactoSel to set
+     */
+    public void setTablaRfCargoContactoSel(TablaRfCargoContacto tablaRfCargoContactoSel) {
+        this.tablaRfCargoContactoSel = tablaRfCargoContactoSel;
+    }
 }

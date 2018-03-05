@@ -14,9 +14,11 @@ and open the template in the editor.
       xmlns:ice="http://www.icesoft.com/icefaces/component">
     <ui:composition template="/principal/templateGreen.xhtml">
         <ui:define name="top">
+
+        </ui:define>
+        <ui:define name="cabTop">
             <ui:include src="panelAccCliente.xhtml"/>
         </ui:define>
-
         <ui:define name="left">
             <ui:include src="leftCliente.xhtml"/>
         </ui:define>
@@ -25,6 +27,9 @@ and open the template in the editor.
             <!--<h:panelGroup style="top: 65px;margin-top: 10px;left:130px;position: absolute;">-->
             <h:panelGroup rendered="#{clienteJSFBean.numPanel == 1 ? true : false}" >                           
                 <ui:include src="panelCliente.xhtml"/>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{clienteJSFBean.numPanel == 2 ? true : false}" >                           
+                <ui:include src="panelContacto.xhtml"/>
             </h:panelGroup>
             <!--</h:panelGroup>-->
         </ui:define>

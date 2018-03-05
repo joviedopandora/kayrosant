@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="cargocont">
+        <ace:panel header="Cargos contacto">
+            <h:panelGrid columns="4" styleClass="tablaGrid">
+                <h:outputLabel value="Cod cargo"/>
+                <h:outputText value="#{clienteJSFBean.crgConcattoId}"
+                               styleClass="textPeq"
+                             
+                             >
+                    
+                </h:outputText>
+                <h:outputLabel value="Nombre cargo"/>
+                <ace:textEntry value="#{clienteJSFBean.crgContactoDesc}"
+                               styleClass="textGrande"
+                               >
+                    <f:converter converterId="convertMayusc"/>
+                </ace:textEntry>
+                <h:outputLabel value="Estado cargo"/>
+                <h:selectBooleanCheckbox value="#{clienteJSFBean.crgContactoEst}"
+                                         />
+
+            </h:panelGrid>
+        </ace:panel>
+        <ace:panel header="Cargos contacto registrados">
+            <ace:dataTable value="#{clienteJSFBean.lstTablaCargocontactos}"
+                           var="itemCargos"
+                           rows="10"
+                           paginator="true"
+                           emptyMessage="No se encontraron registros"
+                           paginatorPosition="bottom"
+                           paginatorAlwaysVisible="true"
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                           currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                <ace:column headerText=">>>" style="width: 50px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{clienteJSFBean.rowDtCargo_ActionEvent}">
+                        <f:attribute name="itemCargos" value="#{itemCargos}"/>
+                    </h:commandLink>
+                </ace:column>
+                <ace:column headerText="Nombre cargo" style="width: 50px;text-align: left">
+                    <h:outputText value="#{itemCargos.cargocontacto.cargoDesc}"/>
+                </ace:column>
+                <ace:column headerText="Estado" style="width: 50px">
+                    <h:selectBooleanCheckbox value="#{itemCargos.cargocontacto.cargoEst}"/>
+                </ace:column>
+
+            </ace:dataTable>
+        </ace:panel>
+    </ui:insert>
+</html>

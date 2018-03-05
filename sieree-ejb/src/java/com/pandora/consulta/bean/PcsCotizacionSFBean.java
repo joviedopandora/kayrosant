@@ -285,7 +285,11 @@ public class PcsCotizacionSFBean implements Serializable {
         q.setParameter("cargoEst", estado);
         return q.getResultList();
     }
-
+ @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<RfCargocontacto> getLstRfCargocontacto() {
+        Query q = em.createNamedQuery("RfCargocontacto.findAll");        
+        return q.getResultList();
+    }
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<VntDetevento> getListaVentas(Integer tclId) {
         Query q = em.createNamedQuery("VntDetevento.findListaVentas");
