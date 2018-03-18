@@ -31,6 +31,9 @@ and open the template in the editor.
             <h:panelGroup rendered="#{clienteJSFBean.numPanel == 2 ? true : false}" >                           
                 <ui:include src="panelContacto.xhtml"/>
             </h:panelGroup>
+             <h:panelGroup rendered="#{clienteJSFBean.numPanel == 3 ? true : false}" >                           
+                <ui:include src="panelDetCliente.xhtml"/>
+            </h:panelGroup>
             <!--</h:panelGroup>-->
         </ui:define>
     </ui:composition>

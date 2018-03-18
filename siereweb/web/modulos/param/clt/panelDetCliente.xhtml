@@ -13,9 +13,7 @@ and open the template in the editor.
       xmlns:ace="http://www.icefaces.org/icefaces/components"
       xmlns:ice="http://www.icesoft.com/icefaces/component">
     <ui:insert name="cliente">
-        <ace:panel header="Detalle cliente">
-
-        </ace:panel>
+   
         <ace:panel header="Detalle cliente">
             <ace:dataTable value="#{clienteJSFBean.lstTablaVntDetalleClientes}"
                            var="itemDet"
@@ -29,8 +27,17 @@ and open the template in the editor.
                 <ace:column headerText=">>>" style="width: 50px">
                     <h:commandLink value=">>>"
                                    actionListener="#{clienteJSFBean.rowDtDetCln_ActionEvent}">
-                        <f:attribute name="tcs" value="#{itemDetCln}"/>
+                        <f:attribute name="dclnsel" value="#{itemDet}"/>
                     </h:commandLink>
+                </ace:column>
+                 <ace:column headerText="Estado" style="width: 80px">
+                     <h:selectBooleanCheckbox value="#{itemDet.vntDetallecliente.dclnEstado}" valueChangeListener="#{clienteJSFBean.rowDtDetClnEstado_AE}"
+                                         >
+                         <f:attribute name="dclnchk" value="#{itemDet}"/>
+                         
+                         <ace:ajax execute="@this" render="@form"/>
+                         
+                     </h:selectBooleanCheckbox>
                 </ace:column>
                 <ace:column headerText="Nombres" style="width: 80px">
                     <h:outputText value="#{itemDet.vntDetallecliente.dclnNombres}"/>

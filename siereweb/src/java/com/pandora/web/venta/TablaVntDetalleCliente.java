@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.pandora.web.venta;
 
 import com.pandora.mod.venta.dao.VntDetallecliente;
@@ -14,17 +13,16 @@ import java.util.Objects;
  *
  * @author byrobles
  */
-public class TablaVntDetalleCliente extends TablaBaseGrid{
-    
+public class TablaVntDetalleCliente extends TablaBaseGrid {
+
     private VntDetallecliente vntDetallecliente = new VntDetallecliente();
     private Integer edad;
-    private boolean contactoCopia=false;
-   
+    private boolean contactoCopia = false;
 
     public TablaVntDetalleCliente() {
     }
-    
-    TablaVntDetalleCliente(VntDetallecliente pVntDetallecliente){
+
+    public TablaVntDetalleCliente(VntDetallecliente pVntDetallecliente) {
         this.vntDetallecliente = pVntDetallecliente;
     }
 

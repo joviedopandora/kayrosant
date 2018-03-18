@@ -69,7 +69,7 @@ and open the template in the editor.
                     </td>
 
                     <td><div >
-                            <label><h:outputText value="Alias"  
+                            <label><h:outputText value="Nombre comercial"  
 			rendered="#{pcsCotizacionJSFBean.esNit}"/></label>
                         </div>
                     </td>
@@ -260,7 +260,7 @@ and open the template in the editor.
                 <tr><th  class="thtablaFormulario" colspan="4"> #{pcsCotizacionJSFBean.esNit ? 'Agregar Nuevo Contacto' : 'Homenajeado'}</th></tr>
                 <tr>
                     <td><div >
-                            <label>Nombres *</label>
+                            <label>Razón soclial *</label>
                         </div>
                     </td>
                     <td colspan="3">
@@ -522,13 +522,7 @@ and open the template in the editor.
 
                                     </h:outputText>
                                 </ace:column>
-                                <ace:column>
-                                      <h:commandButton styleClass="btnSeleccionOpen"
-                                                     rendered="#{itemDet.vntDetallecliente.dclnId  != null}"
-                                                     actionListener="#{pcsCotizacionJSFBean.rowDtDetalleClienteBorrar_ActionEvent}">
-                                        <f:attribute name="tdcs" value="#{itemDet}"/>
-                                    </h:commandButton>
-                                </ace:column>
+                              
                             </ace:dataTable>
                         </div></td></tr>
 

@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "VntCliente.findByTipoCliente", query = "SELECT v FROM VntCliente v WHERE v.tclId.tclId = :tclId"),
     @NamedQuery(name = "VntCliente.findByNumIdentXDiferente", query = "SELECT v FROM VntCliente v WHERE v.clnIdentificacion = :clnIdentificacion AND v.clnId <> :clnId"),
-    @NamedQuery(name = "VntCliente.findAll", query = "SELECT v FROM VntCliente v "),
+    @NamedQuery(name = "VntCliente.findAll", query = "SELECT v FROM VntCliente v ORDER BY v.clnNombres"),
     @NamedQuery(name = "VntCliente.findByClnId", query = "SELECT v FROM VntCliente v WHERE v.clnId = :clnId"),
     @NamedQuery(name = "VntCliente.findByClnIdentificacion", query = "SELECT v FROM VntCliente v WHERE v.clnIdentificacion = :clnIdentificacion"),
     @NamedQuery(name = "VntCliente.findByClnNombres", query = "SELECT v FROM VntCliente v WHERE v.clnNombres = :clnNombres"),
@@ -54,7 +54,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "VntCliente.findByClnFechanace", query = "SELECT v FROM VntCliente v WHERE v.clnFechanace = :clnFechanace"),
     @NamedQuery(name = "VntCliente.findByClnNumhijos", query = "SELECT v FROM VntCliente v WHERE v.clnNumhijos = :clnNumhijos"),
     @NamedQuery(name = "VntCliente.clnXTextoKids", query = "SELECT v FROM VntCliente v WHERE  (v.clnNombres LIKE :txtBuscar OR v.clnIdentificacion LIKE :txtBuscar OR v.clnAlias LIKE :txtBuscar) AND v.tclId.tclId = :tclId"),
-    @NamedQuery(name = "VntCliente.clnXTexto", query = "SELECT v FROM VntCliente v WHERE  (v.clnNombres LIKE :txtBuscar OR v.clnIdentificacion LIKE :txtBuscar OR v.clnAlias LIKE :txtBuscar) AND v.tclId.tclId <> :tclId")
+    @NamedQuery(name = "VntCliente.clnXTexto", query = "SELECT v FROM VntCliente v WHERE  (v.clnNombres LIKE :txtBuscar OR v.clnIdentificacion LIKE :txtBuscar OR v.clnAlias LIKE :txtBuscar) AND v.tclId.tclId <> :tclId"),
+        @NamedQuery(name = "VntCliente.clnXTextoGen", query = "SELECT v FROM VntCliente v WHERE  (v.clnNombres LIKE :txtBuscar OR v.clnIdentificacion LIKE :txtBuscar OR v.clnAlias LIKE :txtBuscar) ORDER BY v.clnNombres")
 })
 public class VntCliente implements Serializable {
 

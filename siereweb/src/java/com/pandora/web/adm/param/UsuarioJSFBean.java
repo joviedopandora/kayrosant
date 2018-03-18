@@ -12,6 +12,7 @@ import adm.sys.dao.AdmColaborador;
 import adm.sys.dao.AdmColxemp;
 import adm.sys.dao.AdmCrgxcol;
 import adm.sys.dao.RfTipodoc;
+import com.pandora.adm.param.AdmParametrizacionSLBean;
 import com.pandora.jsfbeans.PrincipalJSFBean;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -40,10 +42,26 @@ import javax.naming.NamingException;
 @SessionScoped
 public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
+    /**
+     * @return the fechaNacimiento
+     */
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    /**
+     * @param fechaNacimiento the fechaNacimiento to set
+     */
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Variables y constantes">
     @Inject
     PrincipalJSFBean pjsfb;
     UsuarioSFBean usfb;
+    @EJB
+    AdmParametrizacionSLBean admParametrizacionSLBean;
 
     private UsuarioSFBean lookupUsuarioSFBean() {
         try {
@@ -55,7 +73,6 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         }
     }
 
-    
     ControlBandEntradaSFBean cbesfb;
 
     private ControlBandEntradaSFBean lookupControlBandEntradaSFBeanBean() {
@@ -93,7 +110,8 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private String strColCelular;
     private String strColEmail;
     private boolean blnColEstado;
-    String strBuscarUsr;
+    private String strBuscarUsr;
+    private Date fechaNacimiento;
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
@@ -154,6 +172,15 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         }
     }
 
+    private void cargarListaUsuarioXText() {
+        lstTablaAdmColaborador.clear();
+        for (AdmColaborador colaborador : admParametrizacionSLBean.getLstColaboradorXText(strBuscarUsr)) {
+            TablaAdmColaborador tac = new TablaAdmColaborador();
+            tac.setAdmColaborador(colaborador);
+            lstTablaAdmColaborador.add(tac);
+        }
+    }
+
     private void cargarListaUsrXEmp() {
         lstTablaAdmColXEmp.clear();
         for (AdmColxemp colxemp : usfb.getLstAdmColxemp(cbesfb.getAdmColxempLog().getEmpId())) {
@@ -198,6 +225,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 admColaborador.setColCelular(strColCelular);
                 admColaborador.setColEmail(strColEmail);
                 admColaborador.setColEst(blnColEstado);
+                admColaborador.setColFechaNacimiento(fechaNacimiento);
                 usfb.editarColaborador(admColaborador);
             } else {
                 AdmColaborador ac = tablaAdmColaboradorSel.getAdmColaborador();
@@ -222,14 +250,31 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         }
     }
 
+    private void desactivarCargoXCol() {
+        for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
+            tacxc.setAdmCrgxcol(usfb.editarCrgxcol(tablaAdmCrgXCol.getAdmCrgxcol()));
+
+        }
+    }
+
+    private void eliminarCrgXUsr() {
+        if (validarForm()) {
+            for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
+                if (tacxc.isSeleccionado()) {
+                        
+                }
+            }
+        }
+    }
+
     private void grabarCrgXUsr() {
         if (validarForm()) {
-            FacesContext context = FacesContext.getCurrentInstance();
+
             for (TablaAdmCargo tac : lstTablaAdmCargo) {
                 if (tac.isSeleccionado()) {
                     tablaAdmCrgXCol.getAdmCrgxcol().setCpeId(tablaAdmColXEmpSel.getAdmColxemp());
                     tablaAdmCrgXCol.getAdmCrgxcol().setCrgId(tac.getAdmCargo());
-                    tablaAdmCrgXCol.getAdmCrgxcol().setCxcEst(false);
+                    tablaAdmCrgXCol.getAdmCrgxcol().setCxcEst(true);
                     tablaAdmCrgXCol.getAdmCrgxcol().setCxcFcre(new Date());
                     boolean cargo = false;
                     for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
@@ -241,7 +286,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                     }
                     if (!cargo) {
                         lstTablaAdmCrgXCol.add(tablaAdmCrgXCol);
-                        usfb.addCrgxcol(tablaAdmCrgXCol.getAdmCrgxcol());
+                        usfb.editarCrgxcol(tablaAdmCrgXCol.getAdmCrgxcol());
                         tablaAdmCrgXCol = new TablaAdmCrgXCol();
                     }
                 }
@@ -253,7 +298,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
             }
         } else {
             mostrarError("Error al grabar", 1);
-            return;
+
         }
     }
 
@@ -316,6 +361,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         strColCelular = tablaAdmColaboradorSel.getAdmColaborador().getColCelular();
         strColEmail = tablaAdmColaboradorSel.getAdmColaborador().getColEmail();
         blnColEstado = tablaAdmColaboradorSel.getAdmColaborador().getColEst();
+        fechaNacimiento = tablaAdmColaboradorSel.getAdmColaborador().getColFechaNacimiento();
         blnNuevo = false;
         blnHabilitar = true;
     }
@@ -330,9 +376,10 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         blnMostrarPanel = false;
     }
 
-    public void headDtColXempBuscar_AE(ActionEvent ae){
-    
+    public void headDtColXempBuscar_AE(ActionEvent ae) {
+
     }
+
     public void rowDtColXEmp_ActionEvent(ActionEvent ae) {
         Map map = ae.getComponent().getAttributes();
         tablaAdmColXEmpSel = (TablaAdmColXEmp) map.get("tcxe");
@@ -346,6 +393,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     //<editor-fold defaultstate="collapsed" desc="Funciones heredadas">
     @Override
     public void buscarGen_ActionEvent(ActionEvent ae) {
+        cargarListaUsuarioXText();
 
     }
 
@@ -767,4 +815,12 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         this.tablaAdmCrgXCol = tablaAdmCrgXCol;
     }
     //</editor-fold>
+
+    public String getStrBuscarUsr() {
+        return strBuscarUsr;
+    }
+
+    public void setStrBuscarUsr(String strBuscarUsr) {
+        this.strBuscarUsr = strBuscarUsr;
+    }
 }

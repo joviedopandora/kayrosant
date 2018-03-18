@@ -28,11 +28,18 @@ and open the template in the editor.
                 </ace:textEntry>
                 <h:outputLabel value="Descripción"/>
                 <h:inputTextarea value="#{cargoJSFBean.strCrgDescripcion}"
-                               styleClass="textAreaGrande">
+                                 styleClass="textAreaGrande">
                     <f:converter converterId="convertMayusc"/>
                 </h:inputTextarea>
                 <h:outputLabel value="Estado"/>
                 <h:selectBooleanCheckbox value="#{cargoJSFBean.blnCrgEstado}"/>
+                 <h:outputLabel value="Aplica comisión"/>
+                <h:selectBooleanCheckbox value="#{cargoJSFBean.blnCrgEstado}"/>
+                  <h:outputLabel value="Tipo cargo"/>
+                  <ace:simpleSelectOneMenu value="#{cargoJSFBean.tipoCargo}">
+                      <f:selectItems value="#{cargoJSFBean.lstItemsTipoCargo}"/>
+                  </ace:simpleSelectOneMenu>
+               
             </h:panelGrid>
         </ace:panel>
         <ace:panel header="Cargos registrados">
@@ -61,6 +68,14 @@ and open the template in the editor.
                 <ace:column headerText="Descripción" style="width: 250px">
                     <h:outputText value="#{item.admCargo.crgDesc}"
                                   styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Tipo" style="width: 250px">
+                    <h:outputText value="#{item.admCargo.crgTipo}"
+                                  styleClass="textcolumleft"/>
+                </ace:column>
+                <ace:column headerText="Aplica comisión" style="width: 250px">
+                    <h:selectBooleanCheckbox value="#{item.admCargo.crgAplicaComision}"
+                                             />
                 </ace:column>
                 <ace:column headerText="Estado" style="width: 50px">
                     <h:selectBooleanCheckbox value="#{item.admCargo.crgEst}"/>

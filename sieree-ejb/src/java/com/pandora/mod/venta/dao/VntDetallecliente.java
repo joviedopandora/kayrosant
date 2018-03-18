@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VntDetallecliente.findAll", query = "SELECT v FROM VntDetallecliente v"),
     @NamedQuery(name = "VntDetallecliente.findByDclnId", query = "SELECT v FROM VntDetallecliente v WHERE v.dclnId = :dclnId"),
     @NamedQuery(name = "VntDetallecliente.findByDclnFechanace", query = "SELECT v FROM VntDetallecliente v WHERE v.dclnFechanace = :dclnFechanace"),
-    @NamedQuery(name = "VntDetallecliente.detalleXCliente", query = "SELECT v FROM VntDetallecliente v WHERE v.clnId.clnId = :clnId AND v.dclnEstado = :dclnEstado")})
+    @NamedQuery(name = "VntDetallecliente.detalleXCliente", query = "SELECT v FROM VntDetallecliente v WHERE v.clnId.clnId = :clnId AND v.dclnEstado = :dclnEstado"),
+@NamedQuery(name = "VntDetallecliente.detalleXClienteGen", query = "SELECT v FROM VntDetallecliente v WHERE v.clnId.clnId = :clnId ORDER BY v.dclnNombres")})
 public class VntDetallecliente implements Serializable {
 
     private static final long serialVersionUID = 1L;

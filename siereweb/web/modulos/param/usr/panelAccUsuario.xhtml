@@ -14,34 +14,57 @@ and open the template in the editor.
       xmlns:ice="http://www.icesoft.com/icefaces/component">
     <ui:insert name="panelAccUsuario">
         <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 1 ? true : false}">
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15">
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="4">
+                <ace:textEntry value="#{usuarioJSFBean.strBuscarUsr}"
+                               style="width: 200px" 
+                               title="Digite el número de identificación o nombre del usuario">
+                    <f:converter converterId="convertMayusc"/>
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:textEntry>
+                <h:commandButton styleClass="btnBuscarStd"
+                                 actionListener="#{usuarioJSFBean.buscarGen_ActionEvent}" 
+
+                                 title="Buscar">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
                 <h:commandButton styleClass="btnGuardarStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnGrabarUsuario_ActionEvent}"
                                  title="Grabar usuario">
-                </h:commandButton>            
-            </h:panelGrid>
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15">
+                </h:commandButton>     
                 <h:commandButton styleClass="btnNuevoStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnNuevoUsuario_ActionEvent}"
                                  title="Cancelar">
                 </h:commandButton>
             </h:panelGrid>
+
+
         </h:panelGroup>
         <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 2 ? true : false}">
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:220px;position: fixed;z-index: 15"
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="4"
                          rendered="#{usuarioJSFBean.blnMostrarPanel}">
-                <h:commandButton styleClass="btnNuevoStd"                                                              
+                <ace:textEntry value="#{usuarioJSFBean.strBuscarUsr}"
+                               style="width: 200px" 
+                               title="Digite el número de identificación o nombre del usuario">
+                    <f:converter converterId="convertMayusc"/>
+                    <ace:ajax execute="@this" render="@all"/>
+                </ace:textEntry>
+                <h:commandButton styleClass="btnBuscarStd"
+                                 actionListener="#{usuarioJSFBean.buscarGen_ActionEvent}" 
+
+                                 title="Buscar">
+                    <f:ajax execute="@this" render="@all"/>
+                </h:commandButton>
+                <h:commandButton styleClass="btnGuardarStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnAgregarCrgXUsr_ActionEvent}"
                                  title="Agregar cargo">
-                </h:commandButton>            
-            </h:panelGrid>
-            <h:panelGrid style="float: right;top: 3px;margin-top: 3px;left:260px;position: fixed;z-index: 15"
-                         rendered="#{usuarioJSFBean.blnMostrarPanel}">
+                </h:commandButton>        
                 <h:commandButton styleClass="btnVolverStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnVolverCrgXUsr_ActionEvent}"
                                  title="Regresar">
                 </h:commandButton>
             </h:panelGrid>
+         
         </h:panelGroup>
+        
     </ui:insert>
 </html>

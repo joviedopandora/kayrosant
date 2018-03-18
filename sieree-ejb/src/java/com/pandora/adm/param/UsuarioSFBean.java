@@ -126,7 +126,7 @@ public class UsuarioSFBean {
      * @return
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public AdmCrgxcol addCrgxcol(AdmCrgxcol pAdmCrgxcol) {
+    public AdmCrgxcol editarCrgxcol(AdmCrgxcol pAdmCrgxcol) {
         pAdmCrgxcol = em.merge(pAdmCrgxcol);
         return pAdmCrgxcol;
     }

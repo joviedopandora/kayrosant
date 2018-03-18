@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.Context;
@@ -56,6 +57,9 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
     private String strCrgNombre;
     private String strCrgDescripcion;
     private boolean blnCrgEstado;
+    private boolean blnAplicaComision;
+    private String tipoCargo;
+    private List<SelectItem> lstItemsTipoCargo = new ArrayList<>();
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
@@ -66,6 +70,7 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
         blnNuevo = true;
         blnHabilitar = false;
         cargarListaCargo();
+        cargarTiposCargo();
     }
 
     @Override
@@ -92,6 +97,13 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
             lstTablaAdmCargo.add(tac);
         }
     }
+    
+    private void cargarTiposCargo(){
+        lstItemsTipoCargo.clear();
+      lstItemsTipoCargo.add(itemSeleccione);
+      lstItemsTipoCargo.add(new SelectItem("operativo", "Operativo"));
+      lstItemsTipoCargo.add(new SelectItem("administrativo", "Administrativo"));
+    }
 
     private void grabarCargo() {
         if (validarForm()) {
@@ -101,6 +113,8 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
                 admCargo.setCrgNombre(strCrgNombre);
                 admCargo.setCrgDesc(strCrgDescripcion);
                 admCargo.setCrgEst(blnCrgEstado);
+                admCargo.setCrgAplicaComision(blnAplicaComision);
+                admCargo.setCrgTipo(tipoCargo);
                 csfb.editarCargo(admCargo);
             } else {
                 AdmCargo ac = tablaAdmCargoSel.getAdmCargo();
@@ -108,6 +122,8 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
                 ac.setCrgNombre(strCrgNombre);
                 ac.setCrgDesc(strCrgDescripcion);
                 ac.setCrgEst(blnCrgEstado);
+                ac.setCrgAplicaComision(blnAplicaComision);
+                ac.setCrgTipo(tipoCargo);
                 csfb.editarCargo(ac);
             }
         } else {
@@ -129,7 +145,7 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
     @Override
     public void navLateral_ActionEvent(ActionEvent ae) {
-        
+
     }
 
     public void btnGrabarCargo_ActionEvent(ActionEvent ae) {
@@ -146,6 +162,7 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
         blnNuevo = true;
         blnHabilitar = false;
         admCargo = new AdmCargo();
+        tipoCargo="-1";
     }
 
     public void rowDtCargo_ActionEvent(ActionEvent ae) {
@@ -155,6 +172,8 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
         strCrgNombre = tablaAdmCargoSel.getAdmCargo().getCrgNombre();
         strCrgDescripcion = tablaAdmCargoSel.getAdmCargo().getCrgDesc();
         blnCrgEstado = tablaAdmCargoSel.getAdmCargo().getCrgEst();
+        blnAplicaComision= tablaAdmCargoSel.getAdmCargo().isCrgAplicaComision();
+        tipoCargo= tablaAdmCargoSel.getAdmCargo().getCrgTipo();
         blnNuevo = false;
         blnHabilitar = true;
     }
@@ -173,11 +192,11 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
     @Override
     public boolean validarForm() {
-        if(strCrgId == null || strCrgId.equals("")){
+        if (strCrgId == null || strCrgId.equals("")) {
             mostrarError("Ingrese el id", 1);
             return false;
         }
-        if(strCrgNombre == null || strCrgDescripcion.equals("")){
+        if (strCrgNombre == null || strCrgDescripcion.equals("")) {
             mostrarError("Ingrese el nombre", 1);
             return false;
         }
@@ -312,6 +331,42 @@ public class CargoJSFBean extends BaseJSFBean implements Serializable, IPasos {
      */
     public void setBlnCrgEstado(boolean blnCrgEstado) {
         this.blnCrgEstado = blnCrgEstado;
+    }
+
+    /**
+     * @return the blnAplicaComision
+     */
+    public boolean isBlnAplicaComision() {
+        return blnAplicaComision;
+    }
+
+    /**
+     * @param blnAplicaComision the blnAplicaComision to set
+     */
+    public void setBlnAplicaComision(boolean blnAplicaComision) {
+        this.blnAplicaComision = blnAplicaComision;
+    }
+
+    /**
+     * @return the tipoCargo
+     */
+    public String getTipoCargo() {
+        return tipoCargo;
+    }
+
+    /**
+     * @param tipoCargo the tipoCargo to set
+     */
+    public void setTipoCargo(String tipoCargo) {
+        this.tipoCargo = tipoCargo;
+    }
+
+    public List<SelectItem> getLstItemsTipoCargo() {
+        return lstItemsTipoCargo;
+    }
+
+    public void setLstItemsTipoCargo(List<SelectItem> lstItemsTipoCargo) {
+        this.lstItemsTipoCargo = lstItemsTipoCargo;
     }
     //</editor-fold>
 }

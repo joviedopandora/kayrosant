@@ -4,7 +4,6 @@
  */
 package adm.sys.dao;
 
-
 import com.pandora.mod.evaluacion.dao.EvalCalificacionPago;
 import java.io.Serializable;
 import java.util.List;
@@ -22,22 +21,28 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "adm_cargo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdmCargo.findAll", query = "SELECT a FROM AdmCargo a ORDER BY a.crgNombre"),
-    @NamedQuery(name = "AdmCargo.findByCrgId", query = "SELECT a FROM AdmCargo a WHERE a.crgId = :crgId"),
-    @NamedQuery(name = "AdmCargo.findByCrgNombre", query = "SELECT a FROM AdmCargo a WHERE a.crgNombre = :crgNombre"),
-    @NamedQuery(name = "AdmCargo.findByCrgDesc", query = "SELECT a FROM AdmCargo a WHERE a.crgDesc = :crgDesc"),
-    @NamedQuery(name = "AdmCargo.findByCrgEst", query = "SELECT a FROM AdmCargo a WHERE a.crgEst = :crgEst ORDER BY a.crgNombre"),
-    @NamedQuery(name = "AdmCargo.findByIndversion", query = "SELECT a FROM AdmCargo a WHERE a.indversion = :indversion"),
+    @NamedQuery(name = "AdmCargo.findAll", query = "SELECT a FROM AdmCargo a ORDER BY a.crgNombre")
+    ,
+    @NamedQuery(name = "AdmCargo.findByCrgId", query = "SELECT a FROM AdmCargo a WHERE a.crgId = :crgId")
+    ,
+    @NamedQuery(name = "AdmCargo.findByCrgNombre", query = "SELECT a FROM AdmCargo a WHERE a.crgNombre = :crgNombre")
+    ,
+    @NamedQuery(name = "AdmCargo.findByCrgDesc", query = "SELECT a FROM AdmCargo a WHERE a.crgDesc = :crgDesc")
+    ,
+    @NamedQuery(name = "AdmCargo.findByCrgEst", query = "SELECT a FROM AdmCargo a WHERE a.crgEst = :crgEst ORDER BY a.crgNombre")
+    ,
+    @NamedQuery(name = "AdmCargo.findByIndversion", query = "SELECT a FROM AdmCargo a WHERE a.indversion = :indversion")
+    ,
     //Cargos activos
-    @NamedQuery(name = "AdmCargo.findByCrgXEst", query = "SELECT a FROM AdmCargo a WHERE a.crgEst = :crgEst"),
+    @NamedQuery(name = "AdmCargo.findByCrgXEst", query = "SELECT a FROM AdmCargo a WHERE a.crgEst = :crgEst")
+    ,
     @NamedQuery(name = "AdmCargo.cargoXProceso", query = "SELECT a FROM AdmCargo a WHERE a.crgId IN(SELECT DISTINCT crg.crgId FROM AdmCargo crg JOIN crg.admActxcargoList axc JOIN axc.actId act JOIN act.pcdId pdc JOIN pdc.proId pro WHERE pro.proId = :proId ) "
             + "ORDER BY a.crgNombre ")
 })
 public class AdmCargo implements Serializable {
-   
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "admCargo", fetch = FetchType.LAZY)
     private List<EvalCalificacionPago> evalCalificacionPagoList;
-  
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -62,6 +67,10 @@ public class AdmCargo implements Serializable {
     private int indversion;
     @Column(name = "crg_aplica_comision")
     private boolean crgAplicaComision;
+    @Column(name = "crg_tipo")
+    private String crgTipo;
+    @Column(name = "crg_editable")
+    private boolean crgEditable;
     @OneToMany(mappedBy = "crgId")
     private List<AdmActxcargo> admActxcargoList;
     @OneToMany(mappedBy = "crgId")
@@ -163,7 +172,6 @@ public class AdmCargo implements Serializable {
         return "com.padora.dao.AdmCargo[ crgId=" + crgId + " ]";
     }
 
-
     @XmlTransient
     public List<EvalCalificacionPago> getEvalCalificacionPagoList() {
         return evalCalificacionPagoList;
@@ -181,5 +189,32 @@ public class AdmCargo implements Serializable {
         this.crgAplicaComision = crgAplicaComision;
     }
 
-  
+    /**
+     * @return the crgTipo
+     */
+    public String getCrgTipo() {
+        return crgTipo;
+    }
+
+    /**
+     * @param crgTipo the crgTipo to set
+     */
+    public void setCrgTipo(String crgTipo) {
+        this.crgTipo = crgTipo;
+    }
+
+    /**
+     * @return the crgEditable
+     */
+    public boolean isCrgEditable() {
+        return crgEditable;
+    }
+
+    /**
+     * @param crgEditable the crgEditable to set
+     */
+    public void setCrgEditable(boolean crgEditable) {
+        this.crgEditable = crgEditable;
+    }
+
 }

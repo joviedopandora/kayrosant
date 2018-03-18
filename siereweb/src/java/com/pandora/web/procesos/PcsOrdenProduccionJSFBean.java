@@ -5,6 +5,8 @@
  */
 package com.pandora.web.procesos;
 
+import adm.sys.dao.AdmColaborador;
+import adm.sys.dao.AdmColxemp;
 import adm.sys.dao.AdmCrgxcol;
 import adm.sys.dao.AdmInforme;
 import com.icesoft.faces.context.Resource;
@@ -690,7 +692,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     public void hdDtCronogramaMostrarTodo_VCE(ValueChangeEvent vce) {
         blnMostrarTodoCron = ((Boolean) vce.getNewValue()).booleanValue();
         cargarCronograma();
-        
+
     }
 
     private void cargarCronograma() {
@@ -1016,6 +1018,10 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private com.icesoft.faces.context.Resource generarInformeOP(PopOrdenprod op) {
         HashMap hmParametros = new HashMap();
         hmParametros.put("p_idorden", op.getOprId());
+        AdmColaborador admColLog = pjsfb.getColxempLog().getColCedula();
+
+        String nombreColLog = admColLog.getColNombre1() + " " + admColLog.getColNombre2() + " " + admColLog.getColApellido1() + " " + admColLog.getColApellido2();
+        hmParametros.put("strSolicitanteProd", nombreColLog);
         AdmInforme informe = astslb.getAdmInformeXId(EnInforme.ORDEN_DE_PRODUCCION_DE_CLIENTES_COORPORATIVOS.getId());
 
         String rutaLogo = informe.getInfJasperruta() + "/logos/maximus_corporativo.jpg";

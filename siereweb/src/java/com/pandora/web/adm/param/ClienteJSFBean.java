@@ -12,6 +12,7 @@ import com.pandora.consulta.bean.PcsCotizacionSFBean;
 import com.pandora.jsfbeans.PrincipalJSFBean;
 import com.pandora.mod.venta.dao.RfCargocontacto;
 import com.pandora.mod.venta.dao.VntCliente;
+import com.pandora.mod.venta.dao.VntDetallecliente;
 import com.pandora.mod.venta.dao.VntRfTipocliente;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
@@ -26,6 +27,7 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -227,9 +229,19 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
             }
         } else {
             mostrarError("Error al grabar", 1);
-            return;
+
         }
     }
+
+    //<editor-fold defaultstate="collapsed" desc="Detalle cliente">
+    private void cargarDetalleClnXCliente() {
+        lstTablaVntDetalleClientes.clear();
+        for (VntDetallecliente vdc : admParametrizacionSLBean.getLstDetalleClnXCln(tablaVntClienteSel.getVntCliente().getClnId())) {
+            TablaVntDetalleCliente tvdc = new TablaVntDetalleCliente(vdc);
+            lstTablaVntDetalleClientes.add(tvdc);
+        }
+    }
+//</editor-fold>
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Eventos">
@@ -313,7 +325,19 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     public void rowDtDetCln_ActionEvent(ActionEvent ae) {
         Map map = ae.getComponent().getAttributes();
-        tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("tcs");
+        tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("dclnsel");
+    }
+
+    public void rowDtDetClnEstado_AE(ValueChangeEvent ae) {
+          Map map = ae.getComponent().getAttributes();
+        tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("dclnchk");
+        
+       if(tablaVntDetalleClienteSel!=null){
+           tablaVntDetalleClienteSel.getVntDetallecliente().setDclnEstado((Boolean)ae.getNewValue());
+         tablaVntDetalleClienteSel.setVntDetallecliente(admParametrizacionSLBean.
+                editarDetalleCliente(tablaVntDetalleClienteSel.getVntDetallecliente()));
+       }
+      
     }
 
     public void rowDtCliente_ActionEvent(ActionEvent ae) {
@@ -333,6 +357,12 @@ public class ClienteJSFBean extends BaseJSFBean implements Serializable, IPasos 
         blnCltNuevo = tablaVntClienteSel.getVntCliente().getClnNuevo();
         blnCltNuevo = false;
         blnHabilitar = true;
+        switch (numPanel) {
+            case 1:
+                cargarDetalleClnXCliente();
+                break;
+        }
+
     }
 
     //</editor-fold>
