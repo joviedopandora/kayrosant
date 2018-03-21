@@ -33,6 +33,7 @@ import javax.inject.Named;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import utilidades.Seguridad;
 
 /**
  *
@@ -41,6 +42,34 @@ import javax.naming.NamingException;
 @Named
 @SessionScoped
 public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos {
+
+    /**
+     * @return the strUsuario
+     */
+    public String getStrUsuario() {
+        return strUsuario;
+    }
+
+    /**
+     * @param strUsuario the strUsuario to set
+     */
+    public void setStrUsuario(String strUsuario) {
+        this.strUsuario = strUsuario;
+    }
+
+    /**
+     * @return the strClave
+     */
+    public String getStrClave() {
+        return strClave;
+    }
+
+    /**
+     * @param strClave the strClave to set
+     */
+    public void setStrClave(String strClave) {
+        this.strClave = strClave;
+    }
 
     /**
      * @return the fechaNacimiento
@@ -112,6 +141,8 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private boolean blnColEstado;
     private String strBuscarUsr;
     private Date fechaNacimiento;
+    private String strUsuario;
+    private String strClave;
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
@@ -226,7 +257,20 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 admColaborador.setColEmail(strColEmail);
                 admColaborador.setColEst(blnColEstado);
                 admColaborador.setColFechaNacimiento(fechaNacimiento);
+
                 usfb.editarColaborador(admColaborador);
+                AdmColxemp colxemp = new AdmColxemp();
+                colxemp.setColCedula(admColaborador);
+                colxemp.setCpeUsuario(strUsuario);
+                colxemp.setCpeClave(Seguridad.hashPasswordSha512(strClave));
+                colxemp.setEmpId(cbesfb.getAdmColxempLog().getEmpId());
+                colxemp.setCpeFcre(new Date());
+
+                colxemp.setColCedula(admColaborador);
+                colxemp.setCpeClave(Seguridad.hashPasswordSha512(strClave));
+
+                admColaborador.getAdmColxempList().add(colxemp);
+
             } else {
                 AdmColaborador ac = tablaAdmColaboradorSel.getAdmColaborador();
                 ac.setTdcId(usfb.getRfTipodocXId(idTipoDoc));
@@ -243,6 +287,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 ac.setColEmail(strColEmail);
                 ac.setColEst(blnColEstado);
                 usfb.editarColaborador(ac);
+                //  AdmColxemp colxemp = usfb.getLstAdmColxempXColaboradorXEmpresa(ac.getColCedula(), cbesfb.getAdmColxempLog().getCpeId());
             }
         } else {
             mostrarError("Error al grabar", 3);
@@ -259,11 +304,14 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     private void eliminarCrgXUsr() {
         if (validarForm()) {
+
+            List<TablaAdmCrgXCol> lstCargosRetirar = retirarElemTabla(lstTablaAdmCrgXCol);
+            List< AdmCrgxcol> lstAdmCrgxcols = new ArrayList<AdmCrgxcol>();
             for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
-                if (tacxc.isSeleccionado()) {
-                        
-                }
+                lstAdmCrgxcols.add(tacxc.getAdmCrgxcol());
             }
+          lstAdmCrgxcols=  usfb.editarLstCargoXCol(lstAdmCrgxcols);
+          
         }
     }
 
@@ -368,6 +416,11 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     public void btnAgregarCrgXUsr_ActionEvent(ActionEvent ae) {
         grabarCrgXUsr();
+        cargarListaCrgXUsr();
+    }
+
+    public void btnEliminarCargo_ActionEvent(ActionEvent ae) {
+        eliminarCrgXUsr();
         cargarListaCrgXUsr();
     }
 

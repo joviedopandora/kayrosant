@@ -87,6 +87,16 @@ and open the template in the editor.
                                styleClass="textMediano">
                     <f:converter converterId="convertMayusc"/>
                 </ace:textEntry>
+                  <h:outputLabel value="Usuario"/>
+                  <ace:textEntry value="#{usuarioJSFBean.strUsuario}"
+                               styleClass="textMediano">
+                    
+                </ace:textEntry>
+                <h:outputLabel value="Clave"/>
+                <h:inputSecret value="#{usuarioJSFBean.strClave}"
+                               styleClass="textMediano" >
+                    
+                </h:inputSecret>
                 <h:outputLabel value="Estado"/>
                 <h:selectBooleanCheckbox value="#{usuarioJSFBean.blnColEstado}"/>
             </h:panelGrid>

@@ -49,6 +49,7 @@ import com.pandora.web.venta.TablaVntRegistroventa;
 import com.pandora.web.venta.TablaVntSrvXVenta;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -312,7 +313,28 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
             mostrarError("Se han procesado los servicios anulados de la ondén de producción", 3);
         }
-        tablaPopOrdenProduccionSel.getPopOrdenprod().setRgvtId(tablaVntRegistroventaSel.getVntRegistroventa());
+           //Cargar datos de la venta en la orden de producción
+          VntRegistroventa rv= tablaVntRegistroventaSel.getVntRegistroventa();
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setRgvtId(rv);
+        Calendar calFechaEvtIni= Calendar.getInstance();
+        calFechaEvtIni.setTime(rv.getVdeId().getVdeFechaevt());
+         Calendar calFechaEvtFin= Calendar.getInstance();
+        calFechaEvtFin.setTime(rv.getVdeId().getVdeFechaevt());
+          Calendar calHoraEvtIni= Calendar.getInstance();
+        calHoraEvtIni.setTime(rv.getVdeId().getVdeHorainicio());
+        Calendar calHoraEvtFin= Calendar.getInstance();
+        calHoraEvtFin.setTime(rv.getVdeId().getVdeHorafinal());
+        
+        calFechaEvtIni.set(calFechaEvtIni.get(Calendar.YEAR), calFechaEvtIni.get(Calendar.MONTH), calFechaEvtIni.get(Calendar.DAY_OF_MONTH),
+                calHoraEvtIni.get(Calendar.HOUR_OF_DAY), calHoraEvtIni.get(Calendar.MINUTE));
+        calFechaEvtFin.set(calFechaEvtIni.get(Calendar.YEAR), calFechaEvtIni.get(Calendar.MONTH), calFechaEvtIni.get(Calendar.DAY_OF_MONTH),
+                calHoraEvtFin.get(Calendar.HOUR_OF_DAY), calHoraEvtFin.get(Calendar.MINUTE));
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setOprFechaevtini(calFechaEvtIni.getTime());
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setOprFechaevtfin(calFechaEvtFin.getTime());
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setOprDireccionevento(rv.getVdeId().getVdeDireccionevt());
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setOprContactoevento(rv.getVdeId().getVdeNombrescontacto());
+        tablaPopOrdenProduccionSel.getPopOrdenprod().setOprCelularcontacto(rv.getVdeId().getVdeCelular1());
+        
         cargarListaCiudades(null);
         if (tablaVntRegistroventaSel.getVntRegistroventa().getVdeId() != null && tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId() != null
                 && tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getCiuId() != null) {
@@ -320,6 +342,9 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             opDepartamento = tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getDepId().getDepId();
             cargarListaCiudades(opDepartamento);
             opCiudad = tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getCiuId();
+         
+          
+         
         }
 
         lstTablaVntSrvXVenta = lstSelFact;

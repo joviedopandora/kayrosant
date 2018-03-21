@@ -118,7 +118,7 @@ public class UsuarioSFBean {
         q.setParameter("cpeId", pCpeId);
         return q.getResultList();
     }
-    
+
     /**
      * Agregar cargo a colaborador
      *
@@ -130,7 +130,16 @@ public class UsuarioSFBean {
         pAdmCrgxcol = em.merge(pAdmCrgxcol);
         return pAdmCrgxcol;
     }
-    
+
+    public List<AdmCrgxcol> editarLstCargoXCol(List<AdmCrgxcol> pLstAdmCrgxcols) {
+        for (AdmCrgxcol cxg : pLstAdmCrgxcols) {
+            cxg.setCpeId(em.getReference(AdmColxemp.class, cxg.getCpeId().getCpeId()));
+            cxg.setCrgId(em.getReference(AdmCargo.class, cxg.getCrgId().getCrgId()));
+            cxg = em.merge(cxg);
+        }
+        return pLstAdmCrgxcols;
+    }
+
     public AdmCrgxcol getAdmCrgxcol(Integer pCrgxcol) {
         return em.getReference(AdmCrgxcol.class, pCrgxcol);
     }
@@ -158,5 +167,13 @@ public class UsuarioSFBean {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void editarColaborador(AdmColaborador pAdmColaborador) {
         pAdmColaborador = em.merge(pAdmColaborador);
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<AdmColxemp> getLstAdmColxempXColaboradorXEmpresa(String colCedula, Integer empId) {
+        Query q = em.createNamedQuery("AdmColxemp.findByEmpresaXColaborador");
+        q.setParameter("colCedula", colCedula);
+        q.setParameter("empId", empId);
+        return q.getResultList();
     }
 }

@@ -58,13 +58,17 @@ and open the template in the editor.
                                  actionListener="#{usuarioJSFBean.btnAgregarCrgXUsr_ActionEvent}"
                                  title="Agregar cargo">
                 </h:commandButton>        
+                <h:commandButton styleClass="btnCancelarStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnEliminarCargo_ActionEvent}"
+                                 title="Cancelar">
+                </h:commandButton>
                 <h:commandButton styleClass="btnVolverStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnVolverCrgXUsr_ActionEvent}"
                                  title="Regresar">
                 </h:commandButton>
             </h:panelGrid>
-         
+
         </h:panelGroup>
-        
+
     </ui:insert>
 </html>
