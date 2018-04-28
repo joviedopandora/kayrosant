@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  *
  * @author luis
+ * 07/04/2018 JAOR: ajuste en servicios replica orden de selecciòn
  */
 @Entity
 @Table(name = "vnt_servxventa")
@@ -37,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VntServxventa.srvXRegVnt", query = "SELECT v FROM VntServxventa v JOIN v.rgvtId r WHERE r.rgvtId = :rgvtId"),//codigo query para modificar las facturas que ya se hicieron
     
     // lista de  servicios replica
-    @NamedQuery(name = "VntServxventa.servxventa", query = "SELECT v FROM VntServxventa v JOIN v.rgvtId r WHERE r.rgvtId = :rgvtId ORDER BY r.rgvtId ASC"),
+    //@NamedQuery(name = "VntServxventa.servxventa", query = "SELECT v FROM VntServxventa v JOIN v.rgvtId r WHERE r.rgvtId = :rgvtId ORDER BY r.rgvtId ASC"),
+    // cambia orden selecciòn por srvxventId
+    @NamedQuery(name = "VntServxventa.servxventa", query = "SELECT v FROM VntServxventa v JOIN v.rgvtId r WHERE r.rgvtId = :rgvtId ORDER BY v.srvxventId ASC"),
     //Lista de servicios por venta por cliente
     @NamedQuery(name = "VntServxventa.srvXCteYEstV", query = "SELECT v FROM VntServxventa v JOIN v.rgvtId r JOIN r.estrvntId e JOIN r.clnId c WHERE c.clnId = :clnId AND e.estrvntId = :estrvntId"),
     //Lista de servicios de venta por factura
