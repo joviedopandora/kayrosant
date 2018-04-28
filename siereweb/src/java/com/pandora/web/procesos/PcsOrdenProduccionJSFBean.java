@@ -81,6 +81,20 @@ import utilidades.ManejoFecha;
 @SessionScoped
 public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
+    /**
+     * @return the lngPxoId
+     */
+    public Long getLngPxoId() {
+        return lngPxoId;
+    }
+
+    /**
+     * @param lngPxoId the lngPxoId to set
+     */
+    public void setLngPxoId(Long lngPxoId) {
+        this.lngPxoId = lngPxoId;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Variables y constantes">
     @Inject
     PrincipalJSFBean pjsfb;
@@ -105,6 +119,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private boolean blnMostrarPanel;
     private boolean blnMostrarProductos;
     private Integer tipoConsulta;
+    private boolean blnSelSubservicio;
 //<editor-fold defaultstate="collapsed" desc="Cronograma">
     private boolean blnMostrarTodoCron = false;
 
@@ -217,7 +232,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             Integer pendiente = x.getSrvxventCantidad() - x.getSrvxventaProcesadaOP();
             s.setCantidadPendiente(pendiente);
             s.setCantidadSeleccionada(pendiente);
-            if ( pendiente > 0) {
+            if (pendiente > 0) {
                 s.setBlnEditar(true);
             }
             lstTablaServiciosPendientes.add(s);
@@ -313,18 +328,18 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
             mostrarError("Se han procesado los servicios anulados de la ondén de producción", 3);
         }
-           //Cargar datos de la venta en la orden de producción
-          VntRegistroventa rv= tablaVntRegistroventaSel.getVntRegistroventa();
+        //Cargar datos de la venta en la orden de producción
+        VntRegistroventa rv = tablaVntRegistroventaSel.getVntRegistroventa();
         tablaPopOrdenProduccionSel.getPopOrdenprod().setRgvtId(rv);
-        Calendar calFechaEvtIni= Calendar.getInstance();
+        Calendar calFechaEvtIni = Calendar.getInstance();
         calFechaEvtIni.setTime(rv.getVdeId().getVdeFechaevt());
-         Calendar calFechaEvtFin= Calendar.getInstance();
+        Calendar calFechaEvtFin = Calendar.getInstance();
         calFechaEvtFin.setTime(rv.getVdeId().getVdeFechaevt());
-          Calendar calHoraEvtIni= Calendar.getInstance();
+        Calendar calHoraEvtIni = Calendar.getInstance();
         calHoraEvtIni.setTime(rv.getVdeId().getVdeHorainicio());
-        Calendar calHoraEvtFin= Calendar.getInstance();
+        Calendar calHoraEvtFin = Calendar.getInstance();
         calHoraEvtFin.setTime(rv.getVdeId().getVdeHorafinal());
-        
+
         calFechaEvtIni.set(calFechaEvtIni.get(Calendar.YEAR), calFechaEvtIni.get(Calendar.MONTH), calFechaEvtIni.get(Calendar.DAY_OF_MONTH),
                 calHoraEvtIni.get(Calendar.HOUR_OF_DAY), calHoraEvtIni.get(Calendar.MINUTE));
         calFechaEvtFin.set(calFechaEvtIni.get(Calendar.YEAR), calFechaEvtIni.get(Calendar.MONTH), calFechaEvtIni.get(Calendar.DAY_OF_MONTH),
@@ -334,7 +349,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         tablaPopOrdenProduccionSel.getPopOrdenprod().setOprDireccionevento(rv.getVdeId().getVdeDireccionevt());
         tablaPopOrdenProduccionSel.getPopOrdenprod().setOprContactoevento(rv.getVdeId().getVdeNombrescontacto());
         tablaPopOrdenProduccionSel.getPopOrdenprod().setOprCelularcontacto(rv.getVdeId().getVdeCelular1());
-        
+
         cargarListaCiudades(null);
         if (tablaVntRegistroventaSel.getVntRegistroventa().getVdeId() != null && tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId() != null
                 && tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getCiuId() != null) {
@@ -342,9 +357,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             opDepartamento = tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getDepId().getDepId();
             cargarListaCiudades(opDepartamento);
             opCiudad = tablaVntRegistroventaSel.getVntRegistroventa().getVdeId().getCiuId().getCiuId();
-         
-          
-         
+
         }
 
         lstTablaVntSrvXVenta = lstSelFact;
@@ -464,6 +477,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 PopProdxservxop pxsxo = new PopProdxservxop();
                 pxsxo.setPrdId(vpxs.getPrdId());
                 pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
+                pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
                 //  jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
                 //  pxsxo.setPxsoEstado(Boolean.TRUE);    //
                 pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
@@ -490,6 +504,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                     PopProdxservxop pxsxo = new PopProdxservxop();
                     pxsxo.setPrdId(vpxs.getPrdId());
                     pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
+                     pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
                     // jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
                     // pxsxo.setPxsoEstado(Boolean.TRUE);   //
                     pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
@@ -714,8 +729,25 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Eventos">
+    private Long lngPxoId;
+
+    public void rowDtSelSubservicio_VCE(TablaPopProdXServXOp vce) {
+        // Long pxsoId = (Long) vce.getComponent().getAttributes().get("pxsoId");
+//       Long pxsoId =  Long.parseLong(FacesContext.getCurrentInstance().getExternalContext()
+//                         .getRequestParameterMap()
+//                         .get("pxsoId"));
+        
+        Long pxsoId =vce.getPopProdxservxop().getServicioAsociadoId();
+      //  blnSelSubservicio = (Boolean) vce.getNewValue();
+        for (TablaPopProdXServXOp tppxsxo : lstTablaPopProdXServXOp) {
+            if (tppxsxo.getPopProdxservxop().getServicioAsociadoId().equals(pxsoId)) {
+                tppxsxo.getPopProdxservxop().setPxsoEstado(blnSelSubservicio);
+            }
+        }
+    }
+
     public void hdDtCronogramaMostrarTodo_VCE(ValueChangeEvent vce) {
-        blnMostrarTodoCron = ((Boolean) vce.getNewValue()).booleanValue();
+        blnMostrarTodoCron = ((Boolean) vce.getNewValue());
         cargarCronograma();
 
     }
@@ -1104,10 +1136,11 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             for (PopProdxservxop p : k.getPopProdxservxopList()) {
                 if (p.getPrdId().equals(tablaProductoSel.getInvProducto())) {
                     p.setPxsoCantprod(p.getPxsoCantprod() + tablaProductoSel.getCantProds());
+                    
                     for (TablaPopProdXServXOp tpxsxo : lstTablaPopProdXServXOp) {
                         if (tpxsxo.getPopProdxservxop().getPrdId().equals(tablaProductoSel.getInvProducto())) {
                             tpxsxo.getPopProdxservxop().setPxsoCantprod(p.getPxsoCantprod());
-
+                            tpxsxo.getPopProdxservxop().setPxsoCantprodfija(p.getPxsoCantprod());
                             break;
                         }
                     }
@@ -1596,4 +1629,17 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         this.blnMostrarTodoCron = blnMostrarTodoCron;
     }
 
+    /**
+     * @return the blnSelSubservicio
+     */
+    public boolean isBlnSelSubservicio() {
+        return blnSelSubservicio;
+    }
+
+    /**
+     * @param blnSelSubservicio the blnSelSubservicio to set
+     */
+    public void setBlnSelSubservicio(boolean blnSelSubservicio) {
+        this.blnSelSubservicio = blnSelSubservicio;
+    }
 }

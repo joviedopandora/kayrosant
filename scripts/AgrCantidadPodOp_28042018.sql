@@ -1,0 +1,1 @@
+alter table pop_prodxservxop add column pxso_cantprodfija integer ;
