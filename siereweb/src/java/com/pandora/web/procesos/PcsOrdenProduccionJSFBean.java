@@ -217,7 +217,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             Integer pendiente = x.getSrvxventCantidad() - x.getSrvxventaProcesadaOP();
             s.setCantidadPendiente(pendiente);
             s.setCantidadSeleccionada(pendiente);
-            if (pendiente != null && pendiente > 0) {
+            if ( pendiente > 0) {
                 s.setBlnEditar(true);
             }
             lstTablaServiciosPendientes.add(s);

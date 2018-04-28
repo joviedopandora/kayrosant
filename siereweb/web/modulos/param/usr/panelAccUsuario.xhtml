@@ -33,14 +33,14 @@ and open the template in the editor.
                 </h:commandButton>     
                 <h:commandButton styleClass="btnNuevoStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnNuevoUsuario_ActionEvent}"
-                                 title="Cancelar">
+                                 title="Nuevo">
                 </h:commandButton>
             </h:panelGrid>
 
 
         </h:panelGroup>
         <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 2 ? true : false}">
-            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="4"
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="5"
                          rendered="#{usuarioJSFBean.blnMostrarPanel}">
                 <ace:textEntry value="#{usuarioJSFBean.strBuscarUsr}"
                                style="width: 200px" 
@@ -60,7 +60,7 @@ and open the template in the editor.
                 </h:commandButton>        
                 <h:commandButton styleClass="btnCancelarStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnEliminarCargo_ActionEvent}"
-                                 title="Cancelar">
+                                 title="Desasignar">
                 </h:commandButton>
                 <h:commandButton styleClass="btnVolverStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnVolverCrgXUsr_ActionEvent}"

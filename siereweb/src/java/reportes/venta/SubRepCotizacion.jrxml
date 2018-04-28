@@ -22,7 +22,8 @@ COALESCE (srvxvent_precioventa,0) - COALESCE(srvxvent_precioventa,0)* COALESCE (
 FROM
      "vnt_servicio" vnt_servicio INNER JOIN "vnt_servxventa" vnt_servxventa ON vnt_servicio."vsrv_id" = vnt_servxventa."vsrv_id"
 WHERE
-     rgvt_id = $P{c_Venta}]]>
+     rgvt_id = $P{c_Venta}
+ORDER BY vnt_servicio."vsrv_nombre"]]>
 	</queryString>
 	<field name="costodescuento" class="java.math.BigDecimal"/>
 	<field name="porcdes" class="java.math.BigDecimal"/>
