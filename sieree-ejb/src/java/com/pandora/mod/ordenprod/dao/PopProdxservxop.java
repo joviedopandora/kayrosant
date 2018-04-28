@@ -88,6 +88,8 @@ public class PopProdxservxop implements Serializable {
     private Boolean pxsoEstadoentrada;
     @Column(name = "pxso_observentrada")
     private String pxsoObserventrada;
+    @Column(name = "pxso_cantprodfija")
+    private Integer pxsoCantprodfija;
     @JoinColumn(name = "sxo_id", referencedColumnName = "sxo_id")
     @ManyToOne
     private PopServxop sxoId;
@@ -102,6 +104,7 @@ public class PopProdxservxop implements Serializable {
     private Long servicioAsociadoId;
     @Column(name = "vsrv_desc")
     private String servicioAsociadoDesc;
+    
     
       
     public PopProdxservxop() {
@@ -326,6 +329,20 @@ public class PopProdxservxop implements Serializable {
 
     public void setServicioAsociadoDesc(String servicioAsociadoDesc) {
         this.servicioAsociadoDesc = servicioAsociadoDesc;
+    }
+
+    /**
+     * @return the pxsoCantprodfija
+     */
+    public Integer getPxsoCantprodfija() {
+        return pxsoCantprodfija;
+    }
+
+    /**
+     * @param pxsoCantprodfija the pxsoCantprodfija to set
+     */
+    public void setPxsoCantprodfija(Integer pxsoCantprodfija) {
+        this.pxsoCantprodfija = pxsoCantprodfija;
     }
   
     

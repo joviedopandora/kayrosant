@@ -563,9 +563,16 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                                 </ace:column>
 
                                 <ace:column headerText="SUBS-SERVICIO" style="width: 150px"   groupBy="#{itemPrd.popProdxservxop.servicioAsociadoDesc}">
-                                    <h:outputText value="#{itemPrd.popProdxservxop.servicioAsociadoDesc}"
-                                                  styleClass="textcolumleft letraOutput"/>
-                                </ace:column>
+                                    <h:panelGrid columns="2">
+                                        <h:selectBooleanCheckbox value="#{pcsOrdenProduccionJSFBean.blnSelSubservicio}">
+                                            <f:ajax listener="#{pcsOrdenProduccionJSFBean.rowDtSelSubservicio_VCE(itemPrd)}"/>                                        
+                                            <f:ajax execute="@this" render="@all" />
+                                        </h:selectBooleanCheckbox>
+                                        <h:outputText value="#{itemPrd.popProdxservxop.servicioAsociadoDesc}"
+                                                      styleClass="textcolumleft letraOutput"/>
+                                    </h:panelGrid>
+
+                                </ace:column> 
                                 <ace:column headerText="Activo" style="width: 150px">
                                     <h:selectBooleanCheckbox value="#{itemPrd.popProdxservxop.pxsoEstado}">
                                         <f:ajax execute="@this" render="@this" />
@@ -576,8 +583,13 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                                     <h:outputText value="#{itemPrd.popProdxservxop.prdId.prdNombre}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>
-                                <ace:column headerText="Cantidad" style="width: 50px">
-                                    <h:outputText value="#{itemPrd.popProdxservxop.pxsoCantprod}"/>
+                                <ace:column headerText="Cant. Aut" style="width: 50px">
+                                    <h:outputText value="#{itemPrd.popProdxservxop.pxsoCantprodfija}"/>
+                                </ace:column>
+                                <ace:column headerText="Cant. OP" style="width: 50px">
+                                    <ace:textEntry value="#{itemPrd.popProdxservxop.pxsoCantprod}" style="width: 40px">
+                                        <ace:ajax execute="@this" render="@this"/>
+                                    </ace:textEntry>
                                 </ace:column>
 
                             </ace:dataTable>
@@ -619,7 +631,7 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
 
 
                                 <ace:column headerText="Nombre Cargo"  styleClass="textcolumleft letraOutput" 
-                                            
+
                                             sortBy="#{itemCxc.admCrgxcol.crgId.crgNombre}"
                                             >
                                     <h:outputText value="#{itemCxc.admCrgxcol.crgId.crgNombre}"/>
@@ -637,11 +649,11 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                                             #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
                                             #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
                                             #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}"
-                                            
+
                                             filterBy="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
-                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
-                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
-                                                  #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}" filterMatchMode="contains"
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido1} 
+                                            #{itemCxc.admCrgxcol.cpeId.colCedula.colApellido2}" filterMatchMode="contains"
                                             >
                                     <h:outputText value="#{itemCxc.admCrgxcol.cpeId.colCedula.colNombre1} 
                                                   #{itemCxc.admCrgxcol.cpeId.colCedula.colNombre2}
