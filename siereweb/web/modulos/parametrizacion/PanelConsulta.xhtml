@@ -15,6 +15,9 @@ and open the template in the editor.
     <ui:insert name="PanelParametrizacion">
 
         <ace:panel header="Servicios"  style="width: 100%" styleClass="thtablaFormulario" >
+            <!-- JAOR 28/04/2018
+                 se retira filtro de búsqueda 
+            
             <h:panelGrid columns="2">
                 <h:outputText value="Estado"/>
                 <ace:checkboxButton styleClass="inputs"
@@ -24,6 +27,8 @@ and open the template in the editor.
                     <ace:ajax execute="@this" render="@form"/>
                 </ace:checkboxButton>
             </h:panelGrid>
+            -->
+            
             <table class="tablaFormulario"  border="1" bordercolor="F7B409">
                 <tr><th  class="thtablaFormulario" colspan="2"> Servicios </th></tr>
                 <tr>
@@ -88,15 +93,26 @@ and open the template in the editor.
                                     <h:outputText id="nameCell" value="#{itemInv.tsrvId.tsrvNombre}"/>
                                 </ace:column>
 
-
               
+                                <ace:column headerText="Estado"  >
+                                    <f:facet name="header">
+                                    <!-- JAOR - 28/04/2018
+                                     adiciona filtro de búsqueda por estado  -->
+                                    <h:selectBooleanCheckbox styleClass="inputs"
+                                         label="Filtrar Servicios Activos/Inactivos"
+                                         value="#{parametrizacionJSFBean.blnSrvEst}"
+                                         valueChangeListener="#{parametrizacionJSFBean.filtrarXEstado_VCE}">
+                                    <f:ajax execute="@this" render="@form"/>
+                                    </h:selectBooleanCheckbox>
+                                    </f:facet> 
 
-
-                                <ace:column headerText="Estado" >
+                                
                                     <h:outputText value="#{(itemInv.vsrvEst ? 'Activo' : 'Inactivo')}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>               
 
+
+                                
                                 <ace:column headerText="valor a cliente ($)" style="width: 100px">
                                     <h:outputText value="#{itemInv.vsrvValunitcliente}"
                                                   styleClass="textcolumright letraOutput">

@@ -16,6 +16,7 @@ import com.pandora.adm.dao.InvTipotransc;
 import com.pandora.adm.dao.InvTransac;
 import com.pandora.mod.inventario.InventarioSFBean;
 import com.pandora.mod.inventario.TablaConsultaInventario;
+import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
 import com.pandora.web.venta.TablaVntFactura;
@@ -34,6 +35,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.naming.Context;
@@ -72,6 +74,7 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
     private Integer presentacion = -1;
     private List<SelectItem> lstMarcasActivasXProducto = new ArrayList<>();
     private List<SelectItem> lstPresentacionesActivasXProducto = new ArrayList<>();
+    private boolean BlnPrdEst;
 
     public InvMarcxprod getMarcaxproducto() {
         return marcaxproducto;
@@ -151,6 +154,14 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
         }
     }
 
+     private void cargarProductosxEst() {
+        lstInvProducto.clear();
+        for (InvProducto p : inventarioSFBean.getLstInvProductoxEst(BlnPrdEst)) {
+            lstInvProducto.add(p);
+        }
+    }
+
+    
     @Override
     public void init() {
         inventarioSFBean = lookupInventarioSFBean();
@@ -1106,6 +1117,9 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
     public void setIdProducto(Integer idProducto) {
         this.idProducto = idProducto;
     }
+    
+    
+  
 
     /**
      * @return the verPanelEditarInvent
@@ -1245,5 +1259,15 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
         cs2.setLabel("Meta");
 
     }
+    
+     /** JAOR 28/04/2018
+     * @return blnProdEst
+     */
+    public boolean isBlnPrdEst() {
+        return BlnPrdEst;
+    }
 
+    public void filtrarXEstadoProd_VCE(ValueChangeEvent vce) {
+        cargarProductosxEst();
+    }
 }

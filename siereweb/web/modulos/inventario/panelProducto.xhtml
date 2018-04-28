@@ -209,6 +209,15 @@ and open the template in the editor.
                                 </ace:column>               
 
                                 <ace:column headerText="Estado" >
+                                     <!-- JAOR - 28/04/2018 
+                                     adiciona filtro de búsqueda por estado  -->
+                                    <ace:checkboxButton styleClass="inputs"
+                                         label="Filtrar Productos Activos/Inactivos"
+                                        value="#{inventarioJSFBean.blnPrdEst}"
+                                         valueChangeListener="#{inventarioJSFBean.filtrarXEstadoProd_VCE}">
+                                    <ace:ajax execute="@this" render="@form"/>
+                                    </ace:checkboxButton>
+                                    
                                     <h:outputText value="#{(itemInv.prdEst ? 'Activo' : 'Inactivo')}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>               

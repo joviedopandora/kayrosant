@@ -15,6 +15,7 @@ import com.pandora.adm.dao.InvProducto;
 import com.pandora.adm.dao.InvTipotransc;
 import com.pandora.adm.dao.InvTransac;
 import com.pandora.mod.venta.dao.VntFactura;
+import com.pandora.mod.venta.dao.VntServicio;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.LocalBean;
@@ -67,6 +68,14 @@ public class InventarioSFBean {
         return q.getResultList();
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<InvProducto> getLstInvProductoxEst(Boolean pPrdEst) {
+        Query q = em.createNamedQuery("InvProducto.findByPrdEst");
+        q.setParameter("prd_est", pPrdEst);
+        return q.getResultList();
+    }
+     
+    
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<InvCatprod> getLstInvCatprod(boolean cpdEst) {
         Query q = em.createNamedQuery("InvCatprod.findByCpdEst");
