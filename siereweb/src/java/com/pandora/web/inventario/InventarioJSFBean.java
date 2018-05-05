@@ -74,7 +74,7 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
     private Integer presentacion = -1;
     private List<SelectItem> lstMarcasActivasXProducto = new ArrayList<>();
     private List<SelectItem> lstPresentacionesActivasXProducto = new ArrayList<>();
-    private boolean BlnPrdEst;
+    private boolean blnPrdEst;
 
     public InvMarcxprod getMarcaxproducto() {
         return marcaxproducto;
@@ -156,7 +156,7 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
 
      private void cargarProductosxEst() {
         lstInvProducto.clear();
-        for (InvProducto p : inventarioSFBean.getLstInvProductoxEst(BlnPrdEst)) {
+        for (InvProducto p : inventarioSFBean.getLstInvProductoxEst(blnPrdEst)) {
             lstInvProducto.add(p);
         }
     }
@@ -1264,10 +1264,10 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
      * @return blnProdEst
      */
     public boolean isBlnPrdEst() {
-        return BlnPrdEst;
+        return blnPrdEst;
     }
 
-    public void filtrarXEstadoProd_VCE(ValueChangeEvent vce) {
+    public void filtrarXEstadoProd_VCE() {
         cargarProductosxEst();
     }
 }

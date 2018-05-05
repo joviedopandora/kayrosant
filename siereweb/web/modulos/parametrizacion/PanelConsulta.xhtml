@@ -28,7 +28,7 @@ and open the template in the editor.
                 </ace:checkboxButton>
             </h:panelGrid>
             -->
-            
+
             <table class="tablaFormulario"  border="1" bordercolor="F7B409">
                 <tr><th  class="thtablaFormulario" colspan="2"> Servicios </th></tr>
                 <tr>
@@ -93,26 +93,30 @@ and open the template in the editor.
                                     <h:outputText id="nameCell" value="#{itemInv.tsrvId.tsrvNombre}"/>
                                 </ace:column>
 
-              
-                                <ace:column headerText="Estado"  >
+
+                                <ace:column  >
                                     <f:facet name="header">
-                                    <!-- JAOR - 28/04/2018
-                                     adiciona filtro de búsqueda por estado  -->
-                                    <h:selectBooleanCheckbox styleClass="inputs"
-                                         label="Filtrar Servicios Activos/Inactivos"
-                                         value="#{parametrizacionJSFBean.blnSrvEst}"
-                                         valueChangeListener="#{parametrizacionJSFBean.filtrarXEstado_VCE}">
-                                    <f:ajax execute="@this" render="@form"/>
-                                    </h:selectBooleanCheckbox>
+                                        <!-- JAOR - 28/04/2018
+                                         adiciona filtro de búsqueda por estado  -->
+                                        <h:panelGrid columns="1">
+                                            <h:outputText value="Estado"/>
+                                            <h:selectBooleanCheckbox styleClass="inputs"
+                                                                     label="Filtrar Servicios Activos/Inactivos"
+                                                                     value="#{parametrizacionJSFBean.blnSrvEst}"
+                                                                     valueChangeListener="#{parametrizacionJSFBean.filtrarXEstado_VCE}">
+                                                <f:ajax execute="@this" render="@all"/>
+                                            </h:selectBooleanCheckbox>
+                                        </h:panelGrid>
+
                                     </f:facet> 
 
-                                
+
                                     <h:outputText value="#{(itemInv.vsrvEst ? 'Activo' : 'Inactivo')}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>               
 
 
-                                
+
                                 <ace:column headerText="valor a cliente ($)" style="width: 100px">
                                     <h:outputText value="#{itemInv.vsrvValunitcliente}"
                                                   styleClass="textcolumright letraOutput">

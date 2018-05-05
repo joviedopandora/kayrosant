@@ -71,7 +71,7 @@ public class InventarioSFBean {
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<InvProducto> getLstInvProductoxEst(Boolean pPrdEst) {
         Query q = em.createNamedQuery("InvProducto.findByPrdEst");
-        q.setParameter("prd_est", pPrdEst);
+        q.setParameter("prdEst", pPrdEst);
         return q.getResultList();
     }
      

@@ -6,11 +6,11 @@
 package com.pandora.web.procesos;
 
 import adm.sys.dao.AdmColaborador;
-import adm.sys.dao.AdmColxemp;
 import adm.sys.dao.AdmCrgxcol;
 import adm.sys.dao.AdmInforme;
 import com.icesoft.faces.context.Resource;
 import com.pandora.adm.dao.InvProducto;
+import com.pandora.adm.param.ServicioSFBean;
 import com.pandora.consulta.bean.PcsOrdenProduccionSFBean;
 import com.pandora.jsfbeans.PrincipalJSFBean;
 import com.pandora.mod.logistica.dao.LgtEstadoevento;
@@ -21,8 +21,6 @@ import com.pandora.mod.ordenprod.dao.PopCxcrespon;
 import com.pandora.mod.ordenprod.dao.PopCxcrol;
 import com.pandora.adm.rf.dao.RfDep;
 import com.pandora.adm.rf.dao.RfCiudad;
-import com.pandora.adm.rf.dao.RfEstadofactura;
-import com.pandora.bussiness.util.EnEstadoFactura;
 import com.pandora.bussiness.util.EnEstadoLogistica;
 import com.pandora.bussiness.util.EnEstadosOp;
 import com.pandora.consulta.bean.ConsultaOPDTO;
@@ -35,6 +33,7 @@ import com.pandora.mod.venta.dao.VntCronograma;
 import com.pandora.mod.venta.dao.VntDetevento;
 import com.pandora.mod.venta.dao.VntProdxsrv;
 import com.pandora.mod.venta.dao.VntRegistroventa;
+import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.mod.venta.dao.VntServicioxservicio;
 import com.pandora.mod.venta.dao.VntServxventa;
 import com.pandora.web.adm.param.TablaAdmCrgXCol;
@@ -44,6 +43,8 @@ import com.pandora.web.ordenprod.OrdenProduccionJSFBean;
 import com.pandora.web.ordenprod.TablaPopOrdenProduccion;
 import com.pandora.web.ordenprod.TablaPopProdXServXOp;
 import com.pandora.web.ordenprod.TablaPopServXOp;
+import com.pandora.web.parametrizacion.ParametrizacionJSFBean;
+import com.pandora.web.parametrizacion.TablaServicio;
 import com.pandora.web.procs.comp.TablaProducto;
 import com.pandora.web.venta.TablaVntRegistroventa;
 import com.pandora.web.venta.TablaVntSrvXVenta;
@@ -71,7 +72,6 @@ import utilidades.EnFormatDate;
 import utilidades.EnInforme;
 import utilidades.EnOpcionFactura;
 import utilidades.EnTipoCliente;
-import utilidades.ManejoFecha;
 
 /**
  *
@@ -80,6 +80,34 @@ import utilidades.ManejoFecha;
 @Named
 @SessionScoped
 public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializable, IPasos {
+
+    /**
+     * @return the tablaServicioSel
+     */
+    public TablaServicio getTablaServicioSel() {
+        return tablaServicioSel;
+    }
+
+    /**
+     * @param tablaServicioSel the tablaServicioSel to set
+     */
+    public void setTablaServicioSel(TablaServicio tablaServicioSel) {
+        this.tablaServicioSel = tablaServicioSel;
+    }
+
+    /**
+     * @return the blnMostrarServicios
+     */
+    public boolean isBlnMostrarServicios() {
+        return blnMostrarServicios;
+    }
+
+    /**
+     * @param blnMostrarServicios the blnMostrarServicios to set
+     */
+    public void setBlnMostrarServicios(boolean blnMostrarServicios) {
+        this.blnMostrarServicios = blnMostrarServicios;
+    }
 
     /**
      * @return the lngPxoId
@@ -102,6 +130,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private PcsOrdenProduccionSFBean popsfb;
     @EJB
     private CronogramaSLBean cronogramaSLBean;
+    @EJB
+    private ServicioSFBean servicioSFBean;
 
     private List<TablaVntRegistroventa> lstTablaVntRegistroventa = new ArrayList<>();
     private Integer tipoClienteSel = 1;
@@ -118,6 +148,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private boolean blnNuevo;
     private boolean blnMostrarPanel;
     private boolean blnMostrarProductos;
+    private boolean blnMostrarServicios;
     private Integer tipoConsulta;
     private boolean blnSelSubservicio;
 //<editor-fold defaultstate="collapsed" desc="Cronograma">
@@ -127,6 +158,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     private String opDepartamento = "-1";
 
     private Long opCiudad;
+    private List<TablaServicio> lstTablaServicios = new ArrayList<>();
+    private TablaServicio tablaServicioSel = new TablaServicio();
     private List<TablaPopOrdenProduccion> lstTablaPopOrdenProduccion = new ArrayList<>();
     private TablaPopOrdenProduccion tablaPopOrdenProduccionSel = new TablaPopOrdenProduccion();
     private List<TablaPopServXOp> lstTablaPopServXOp = new ArrayList<>();
@@ -207,12 +240,22 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         lstTablaPopServXOp.clear();
         lstTablaPopProdXServXOp.clear();
         lstTablaAdmCrgXCol.clear();
+        lstTablaServicios.clear();
         lstTablaProducto.clear();
         opCiudad = -1L;
         opDepartamento = "-1";
         cargarListaCiudades(null);
         //lstCiudades.clear();
         //  lstDepartamentos.clear();
+    }
+
+    private void cargarListaServicios() {
+        lstTablaServicios.clear();
+        for (VntServicio s : servicioSFBean.getLstServiciosXEst(true)) {
+            TablaServicio ts = new TablaServicio();
+            ts.setServicio(s);
+            lstTablaServicios.add(ts);
+        }
     }
 
     public void rowDtRegistroVentaSelServicios_ActionEvent(ActionEvent ae) {
@@ -504,7 +547,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                     PopProdxservxop pxsxo = new PopProdxservxop();
                     pxsxo.setPrdId(vpxs.getPrdId());
                     pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
-                     pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
+                    pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
                     // jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
                     // pxsxo.setPxsoEstado(Boolean.TRUE);   //
                     pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
@@ -736,9 +779,9 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 //       Long pxsoId =  Long.parseLong(FacesContext.getCurrentInstance().getExternalContext()
 //                         .getRequestParameterMap()
 //                         .get("pxsoId"));
-        
-        Long pxsoId =vce.getPopProdxservxop().getServicioAsociadoId();
-      //  blnSelSubservicio = (Boolean) vce.getNewValue();
+
+        Long pxsoId = vce.getPopProdxservxop().getServicioAsociadoId();
+        //  blnSelSubservicio = (Boolean) vce.getNewValue();
         for (TablaPopProdXServXOp tppxsxo : lstTablaPopProdXServXOp) {
             if (tppxsxo.getPopProdxservxop().getServicioAsociadoId().equals(pxsoId)) {
                 tppxsxo.getPopProdxservxop().setPxsoEstado(blnSelSubservicio);
@@ -1114,9 +1157,69 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         blnMostrarPanel = false;
     }
 
+    public void btnAgregarServicios_ActionEvent(ActionEvent ae) {
+        blnMostrarServicios = true;
+        blnMostrarProductos = false;
+        cargarListaServicios();
+    }
+
     public void btnAgregarProductosVarios_ActionEvent(ActionEvent ae) {
         blnMostrarProductos = true;
+        blnMostrarServicios = false;
         cargarListaProductosVarios();
+    }
+
+    public void rowDetbtnAgregarServicio_ActionEvent(ActionEvent ae) {
+        Map map = ae.getComponent().getAttributes();
+        tablaServicioSel = (TablaServicio) map.get("itemServicios");
+        
+
+        List<VntProdxsrv> pxs = popsfb.getLstVntProdxsrvXServicio(tablaServicioSel.getServicio().getVsrvId());
+        PopServxop ps = new PopServxop();
+        ps.setVsrvId(tablaServicioSel.getServicio());
+        ps.setSxoCantsrv(1);
+        ps.setOprId(tablaPopOrdenProduccionSel.getPopOrdenprod());
+        ps.setSxoEstado(Boolean.TRUE);
+        //tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(tablaServicioSel.getServicio());
+        //List<VntProdxsrv> pxs = popsfb.getLstVntProdxsrvXServicio(vs.getVntServxventa().getVsrvId().getVsrvId());
+
+        for (VntProdxsrv vpxs : pxs) {
+           // for (PopServxop psxo : tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList()) {
+
+                PopProdxservxop pxsxo = new PopProdxservxop();
+                pxsxo.setPrdId(vpxs.getPrdId());
+                pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
+                //pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
+                pxsxo.setPxsoCantprodfija(0);
+                //  jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
+                //  pxsxo.setPxsoEstado(Boolean.TRUE);    //
+                pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
+                pxsxo.setPxsoEstadosalida(Boolean.FALSE);
+                pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
+                pxsxo.setSxoId(ps);
+                pxsxo.setServicioAsociadoId(tablaServicioSel.getServicio().getVsrvId());
+                pxsxo.setServicioAsociadoDesc(tablaServicioSel.getServicio().getVsrvNombre());
+            //  psxo.getPopProdxservxopList().add(pxsxo);
+                //tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(psxo);
+                if (ps.getPopProdxservxopList() == null) {
+                    ps.setPopProdxservxopList(new ArrayList<PopProdxservxop>());
+                }
+                ps.getPopProdxservxopList().add(pxsxo);
+                TablaPopProdXServXOp tppxsxo = new TablaPopProdXServXOp();
+                tppxsxo.setPopProdxservxop(pxsxo);
+                lstTablaPopProdXServXOp.add(tppxsxo);
+
+            }
+        for (TablaPopProdXServXOp lXOp : lstTablaPopProdXServXOp) {
+            tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(lXOp.getPopProdxservxop().getSxoId());
+             
+        }
+//           for (PopServxop psxo : tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList()) {
+//               
+//        }
+
+        mostrarError("Servicio adicionado exitosamente", 3);
+
     }
 
     public void btnAgregarProducto_ActionEvent(ActionEvent ae) {
@@ -1136,7 +1239,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             for (PopProdxservxop p : k.getPopProdxservxopList()) {
                 if (p.getPrdId().equals(tablaProductoSel.getInvProducto())) {
                     p.setPxsoCantprod(p.getPxsoCantprod() + tablaProductoSel.getCantProds());
-                    
+
                     for (TablaPopProdXServXOp tpxsxo : lstTablaPopProdXServXOp) {
                         if (tpxsxo.getPopProdxservxop().getPrdId().equals(tablaProductoSel.getInvProducto())) {
                             tpxsxo.getPopProdxservxop().setPxsoCantprod(p.getPxsoCantprod());
@@ -1159,6 +1262,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 pxsxo.setSxoId(psxo);
                 pxsxo.setPrdId(tablaProductoSel.getInvProducto());
                 pxsxo.setPxsoCantprod(tablaProductoSel.getCantProds());
+                pxsxo.setPxsoCantprodfija(0);
                 pxsxo.setPxsoEstado(Boolean.TRUE);
                 pxsxo.setPxsoEstadosalida(Boolean.FALSE);
                 pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
@@ -1641,5 +1745,13 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
      */
     public void setBlnSelSubservicio(boolean blnSelSubservicio) {
         this.blnSelSubservicio = blnSelSubservicio;
+    }
+
+    public List<TablaServicio> getLstTablaServicios() {
+        return lstTablaServicios;
+    }
+
+    public void setLstTablaServicios(List<TablaServicio> lstTablaServicios) {
+        this.lstTablaServicios = lstTablaServicios;
     }
 }

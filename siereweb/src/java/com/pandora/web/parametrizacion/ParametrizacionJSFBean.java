@@ -55,6 +55,20 @@ import utilidades.EnTipoCliente;
 @SessionScoped
 public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable {
 
+    /**
+     * @return the fuenteNav
+     */
+    public String getFuenteNav() {
+        return fuenteNav;
+    }
+
+    /**
+     * @param fuenteNav the fuenteNav to set
+     */
+    public void setFuenteNav(String fuenteNav) {
+        this.fuenteNav = fuenteNav;
+    }
+
     @EJB
     private ServicioSFBean servicioSFBean;
 
@@ -67,7 +81,10 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
             throw new RuntimeException(ne);
         }
     }
-
+    //<editor-fold defaultstate="collapsed" desc="Orden de producción">
+    
+//</editor-fold>
+    private String fuenteNav;
     private VntServicio servicio = new VntServicio();
     private List<VntServicio> lstServicios = new ArrayList<>();
     private List<TablaServicio> lstServiciosHijos = new ArrayList<>();
@@ -178,6 +195,7 @@ public class ParametrizacionJSFBean extends BaseJSFBean implements Serializable 
         nombreProducto = null;
         descProducto = null;
         categoria = -1;
+        fuenteNav=null;
 
     }
 
