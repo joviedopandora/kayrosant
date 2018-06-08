@@ -22,23 +22,36 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "adm_colxemp")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdmColxemp.findAll", query = "SELECT a FROM AdmColxemp a"),
-    @NamedQuery(name = "AdmColxemp.findByCpeId", query = "SELECT a FROM AdmColxemp a WHERE a.cpeId = :cpeId"),
-    @NamedQuery(name = "AdmColxemp.findByCpeUsuario", query = "SELECT a FROM AdmColxemp a WHERE a.cpeUsuario = :cpeUsuario"),
-    @NamedQuery(name = "AdmColxemp.findByCpeClave", query = "SELECT a FROM AdmColxemp a WHERE a.cpeClave = :cpeClave"),
-    @NamedQuery(name = "AdmColxemp.findByCpeEstcop", query = "SELECT a FROM AdmColxemp a WHERE a.cpeEstcop = :cpeEstcop"),
-    @NamedQuery(name = "AdmColxemp.findByCpeEmail", query = "SELECT a FROM AdmColxemp a WHERE a.cpeEmail = :cpeEmail"),
-    @NamedQuery(name = "AdmColxemp.findByCpeTel", query = "SELECT a FROM AdmColxemp a WHERE a.cpeTel = :cpeTel"),
+    @NamedQuery(name = "AdmColxemp.findAll", query = "SELECT a FROM AdmColxemp a")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeId", query = "SELECT a FROM AdmColxemp a WHERE a.cpeId = :cpeId")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeUsuario", query = "SELECT a FROM AdmColxemp a WHERE a.cpeUsuario = :cpeUsuario")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeClave", query = "SELECT a FROM AdmColxemp a WHERE a.cpeClave = :cpeClave")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeEstcop", query = "SELECT a FROM AdmColxemp a WHERE a.cpeEstcop = :cpeEstcop")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeEmail", query = "SELECT a FROM AdmColxemp a WHERE a.cpeEmail = :cpeEmail")
+    ,
+    @NamedQuery(name = "AdmColxemp.findByCpeTel", query = "SELECT a FROM AdmColxemp a WHERE a.cpeTel = :cpeTel")
+    ,
     @NamedQuery(name = "AdmColxemp.validarCol", query = "SELECT a FROM AdmColxemp a "
-            + "WHERE a.cpeUsuario = :cpeUsuario AND a.cpeClave = :cpeClave"),
+            + "WHERE a.cpeUsuario = :cpeUsuario AND a.cpeClave = :cpeClave")
+    ,
     //Personas por grupo por paso
     //Colaboradores por empresa
     @NamedQuery(name = "AdmColxemp.findByEmpresa", query = "SELECT a FROM AdmColxemp a WHERE a.empId = :empId "
-            + " ORDER BY a.colCedula.colApellido1, a.colCedula.colNombre1"),
-    @NamedQuery(name = "AdmColxemp.findByEmpresaXColaborador", query = "SELECT a FROM AdmColxemp a WHERE a.empId.empId = :empId AND a.colCedula.colCedula = :colCedula"),
+            + " ORDER BY a.colCedula.colApellido1, a.colCedula.colNombre1")
+    ,     
+    @NamedQuery(name = "AdmColxemp.findByEmpresaXColaborador", query = "SELECT a FROM AdmColxemp a WHERE a.empId.empId = :empId AND a.colCedula.colCedula = :colCedula")
+    ,
       @NamedQuery(name = "AdmColxemp.validarColUsuario", query = "SELECT a FROM AdmColxemp a "
             + "WHERE a.cpeUsuario = :cpeUsuario "),
-})
+  @NamedQuery(name = "AdmColxemp.findCedONomXEmp", query = "SELECT cxe FROM AdmColxemp cxe JOIN cxe.colCedula usr JOIN cxe.empId emp  WHERE  emp.empId = :empId AND usr.colCedula IN(SELECT  DISTINCT u.colCedula FROM AdmColaborador u "
+            + " WHERE (u.colCedula = :texto OR u.colNombre1 LIKE :texto OR u.colApellido1 LIKE :texto)) "
+            + " ORDER BY usr.colApellido1, usr.colNombre1")})
+
 public class AdmColxemp implements Serializable {
 
     @Basic(optional = false)
@@ -237,7 +250,6 @@ public class AdmColxemp implements Serializable {
         this.cpeFcre = cpeFcre;
     }
 
-
     /**
      * @return the sysCpextprmList
      */
@@ -251,7 +263,6 @@ public class AdmColxemp implements Serializable {
     public void setSysCpextprmList(List<SysCpextprm> sysCpextprmList) {
         this.sysCpextprmList = sysCpextprmList;
     }
-
 
     public int getIndversion() {
         return indversion;

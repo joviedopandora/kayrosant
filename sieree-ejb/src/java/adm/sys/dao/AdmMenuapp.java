@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "adm_menuapp")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdmMenuapp.findAll", query = "SELECT a FROM AdmMenuapp a"),
+    @NamedQuery(name = "AdmMenuapp.findAll", query = "SELECT a FROM AdmMenuapp a ORDER BY a.menNombre"),
     @NamedQuery(name = "AdmMenuapp.findByMenId", query = "SELECT a FROM AdmMenuapp a WHERE a.menId = :menId"),
     @NamedQuery(name = "AdmMenuapp.findByMenNombre", query = "SELECT a FROM AdmMenuapp a WHERE a.menNombre = :menNombre"),
     @NamedQuery(name = "AdmMenuapp.findByMenDesc", query = "SELECT a FROM AdmMenuapp a WHERE a.menDesc = :menDesc"),
@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AdmMenuapp.menuAppXCol", query = "SELECT menu FROM AdmMenuapp menu WHERE "
             + "menu.menId IN(SELECT DISTINCT m.menId FROM AdmMenuapp m JOIN m.admModappList modApp JOIN "
             + "modApp.admSubmodappList smApp JOIN smApp.admCpexsubmodappList cpeXSApp JOIN cpeXSApp.cxcId cxc "
-            + "WHERE cxc.cxcId = :cxcId)")})
+            + "WHERE cxc.cxcId = :cxcId  )")})
 public class AdmMenuapp implements Serializable {
 
     private static final long serialVersionUID = 1L;

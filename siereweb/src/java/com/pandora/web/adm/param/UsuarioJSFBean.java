@@ -10,7 +10,11 @@ import adm.sys.dao.AdmCargo;
 import com.pandora.adm.param.UsuarioSFBean;
 import adm.sys.dao.AdmColaborador;
 import adm.sys.dao.AdmColxemp;
+import adm.sys.dao.AdmCpexsubmodapp;
 import adm.sys.dao.AdmCrgxcol;
+import adm.sys.dao.AdmMenuapp;
+import adm.sys.dao.AdmModapp;
+import adm.sys.dao.AdmSubmodapp;
 import adm.sys.dao.RfTipodoc;
 import com.pandora.adm.param.AdmParametrizacionSLBean;
 import com.pandora.jsfbeans.PrincipalJSFBean;
@@ -27,6 +31,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,63 +49,40 @@ import utilidades.Seguridad;
 public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos {
 
     /**
-     * @return the strUsuario
+     * @return the selTodoSubmoduloXUsr
      */
-    public String getStrUsuario() {
-        return strUsuario;
+    public boolean isSelTodoSubmoduloXUsr() {
+        return selTodoSubmoduloXUsr;
     }
 
     /**
-     * @param strUsuario the strUsuario to set
+     * @param selTodoSubmoduloXUsr the selTodoSubmoduloXUsr to set
      */
-    public void setStrUsuario(String strUsuario) {
-        this.strUsuario = strUsuario;
+    public void setSelTodoSubmoduloXUsr(boolean selTodoSubmoduloXUsr) {
+        this.selTodoSubmoduloXUsr = selTodoSubmoduloXUsr;
     }
 
     /**
-     * @return the strClave
+     * @return the selTodoSubmodulo
      */
-    public String getStrClave() {
-        return strClave;
+    public boolean isSelTodoSubmodulo() {
+        return selTodoSubmodulo;
     }
 
     /**
-     * @param strClave the strClave to set
+     * @param selTodoSubmodulo the selTodoSubmodulo to set
      */
-    public void setStrClave(String strClave) {
-        this.strClave = strClave;
-    }
-
-    /**
-     * @return the fechaNacimiento
-     */
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    /**
-     * @param fechaNacimiento the fechaNacimiento to set
-     */
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
+    public void setSelTodoSubmodulo(boolean selTodoSubmodulo) {
+        this.selTodoSubmodulo = selTodoSubmodulo;
     }
 
     //<editor-fold defaultstate="collapsed" desc="Variables y constantes">
     @Inject
     PrincipalJSFBean pjsfb;
+    @EJB
     UsuarioSFBean usfb;
     @EJB
     AdmParametrizacionSLBean admParametrizacionSLBean;
-
-    private UsuarioSFBean lookupUsuarioSFBean() {
-        try {
-            Context c = new InitialContext();
-            return (UsuarioSFBean) c.lookup("java:global/SIEREE/SIEREE-ejb/UsuarioSFBean!com.pandora.adm.param.UsuarioSFBean");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
 
     ControlBandEntradaSFBean cbesfb;
 
@@ -144,11 +126,115 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private String strUsuario;
     private String strClave;
 
+    private Integer menuAppSel;
+    private Integer modAppIdSel;
+    private boolean selTodoSubmodulo;
+    private boolean selTodoSubmoduloXUsr;
+    //<editor-fold defaultstate="collapsed" desc="Modulos">
+    private List<SelectItem> lstItemsMenuApp = new ArrayList<>();
+    private List<SelectItem> lstItemsSubmenuapp = new ArrayList<>();
+    private List<TablaAdmSubmodapp> lstTablaSubmodapps = new ArrayList<>();
+    private List<TablaAdmSubmodapp> lstTablaSubmodappsXUsr = new ArrayList<>();
+
+    public List<TablaAdmSubmodapp> getLstTablaSubmodappsXUsr() {
+        return lstTablaSubmodappsXUsr;
+    }
+
+    public void setLstTablaSubmodappsXUsr(List<TablaAdmSubmodapp> lstTablaSubmodappsXUsr) {
+        this.lstTablaSubmodappsXUsr = lstTablaSubmodappsXUsr;
+    }
+
+    public List<TablaAdmSubmodapp> getLstTablaSubmodapps() {
+        return lstTablaSubmodapps;
+    }
+
+    public void setLstTablaSubmodapps(List<TablaAdmSubmodapp> lstTablaSubmodapps) {
+        this.lstTablaSubmodapps = lstTablaSubmodapps;
+    }
+
+//</editor-fold>
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del Bean">
+    private void grabarModuloUsr() {
+        List<AdmSubmodapp> lstAdmSubmodapps = new ArrayList<>();
+        for (TablaAdmSubmodapp tas : lstTablaSubmodapps) {
+            if (tas.isSeleccionado()) {
+                lstAdmSubmodapps.add(tas.getAdmSubmodapp());
+            }
+        }
+        if (!lstAdmSubmodapps.isEmpty()) {
+            List<AdmCpexsubmodapp> lstAdmCpexsubmodapps = new ArrayList<>();
+            for (AdmSubmodapp as : lstAdmSubmodapps) {
+
+                for (AdmCrgxcol crgxcol : tablaAdmColXEmpSel.getAdmColxemp().getAdmCrgxcolList()) {
+                    AdmCpexsubmodapp ac = new AdmCpexsubmodapp();
+                    ac.setCxcId(crgxcol);
+                    ac.setSmdId(as);
+                    ac.setCxmEst(true);
+                    lstAdmCpexsubmodapps.add(ac);
+                }
+
+            }
+            usfb.grabarSubmodulosXColaborador(lstAdmCpexsubmodapps);
+        }
+         mostrarError("Módulo grabado correctamente", 3);
+        cargarTablaSubmodXColaborador();
+    }
+    private void eliminarModuloUsr() {
+        List<AdmSubmodapp> lstAdmSubmodapps = new ArrayList<>();
+        for (TablaAdmSubmodapp tas : lstTablaSubmodappsXUsr) {
+            if (tas.isSeleccionado()) {
+                lstAdmSubmodapps.add(tas.getAdmSubmodapp());
+            }
+        }
+        if (!lstAdmSubmodapps.isEmpty()) {
+            List<AdmCpexsubmodapp> lstAdmCpexsubmodapps = new ArrayList<>();
+            for (AdmSubmodapp as : lstAdmSubmodapps) {
+
+                for (AdmCrgxcol crgxcol : tablaAdmColXEmpSel.getAdmColxemp().getAdmCrgxcolList()) {
+                    AdmCpexsubmodapp ac = new AdmCpexsubmodapp();
+                    ac.setCxcId(crgxcol);
+                    ac.setSmdId(as);
+                    ac.setCxmEst(true);
+                    lstAdmCpexsubmodapps.add(ac);
+                }
+
+            }
+            usfb.eliminargrabarSubmodulosXColaborador(lstAdmCpexsubmodapps);
+        }
+        mostrarError("Módulo retirado correctamente", 2);
+        cargarTablaSubmodXColaborador();
+    }
+
+    public void rowDtSuboduloSelTodo_VCE(boolean pSelTodoSubmodulo) {
+        selTodoLst(lstTablaSubmodapps, pSelTodoSubmodulo);
+    }
+      public void rowDtSuboduloXColSelTodo_VCE(boolean pSelTodoSubmodulo) {
+        selTodoLst(lstTablaSubmodappsXUsr, pSelTodoSubmodulo);
+    }
+
+
+    public void ddlMenuApp_VCE(ValueChangeEvent vce) {
+        menuAppSel = (Integer) vce.getNewValue();
+        cargarModulosXMenu();
+    }
+
+    public void ddlModApp_VCE(ValueChangeEvent vce) {
+        modAppIdSel = (Integer) vce.getNewValue();
+        cargarTablaSubmodXModulo();
+    }
+
+    public void btnGrabarModulosUsr_ActionEvent(ActionEvent ae) {
+        grabarModuloUsr();
+    }
+
+    public void btnEliminarModulosUsuario_ActionEvent() {
+        eliminarModuloUsr(); 
+    }
+
     @Override
     public void init() {
-        usfb = lookupUsuarioSFBean();
+
         cbesfb = lookupControlBandEntradaSFBeanBean();
         cbesfb.setAdmColxempLog(pjsfb.getMssfb().getColxempLog());
         numPanel = 1;
@@ -162,7 +248,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     @Override
     public void limpiarVariables() {
-        usfb.remove();
+
         blnMostrarPanel = false;
         lstTablaAdmColaborador.clear();
         limpiarCampos();
@@ -186,6 +272,38 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Procedimientos y funciones">
+    public void cargarMenuApp() {
+        lstItemsMenuApp.clear();
+        lstItemsMenuApp.add(itemSeleccioneInt);
+        for (AdmMenuapp admMenuapp : usfb.getLstAdmMenuapp()) {
+
+            lstItemsMenuApp.add(new SelectItem(admMenuapp.getMenId(), admMenuapp.getMenNombre()));
+        }
+    }
+
+    public void cargarModulosXMenu() {
+        lstItemsSubmenuapp.clear();
+        lstItemsSubmenuapp.add(itemSeleccioneInt);
+        for (AdmModapp admModapp : usfb.getLstModappXMenu(menuAppSel)) {
+
+            lstItemsSubmenuapp.add(new SelectItem(admModapp.getModId(), admModapp.getModNombre()));
+        }
+    }
+
+    public void cargarTablaSubmodXModulo() {
+        lstTablaSubmodapps.clear();
+        for (AdmSubmodapp admSubmodapp : usfb.getLstSubmodappXModId(modAppIdSel)) {
+            lstTablaSubmodapps.add(new TablaAdmSubmodapp(admSubmodapp));
+        }
+    }
+
+    public void cargarTablaSubmodXColaborador() {
+        lstTablaSubmodappsXUsr.clear();
+        for (AdmSubmodapp admSubmodapp : usfb.getLstSubmodappXCpeId(cpeId)) {
+            lstTablaSubmodappsXUsr.add(new TablaAdmSubmodapp(admSubmodapp));
+        }
+    }
+
     private void cargarListaTipoDoc() {
         lstTipoDoc.clear();
         lstTipoDoc.add(new SelectItem("-1", "SELECCIONE >>"));
@@ -215,6 +333,15 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     private void cargarListaUsrXEmp() {
         lstTablaAdmColXEmp.clear();
         for (AdmColxemp colxemp : usfb.getLstAdmColxemp(cbesfb.getAdmColxempLog().getEmpId())) {
+            TablaAdmColXEmp tacxe = new TablaAdmColXEmp();
+            tacxe.setAdmColxemp(colxemp);
+            lstTablaAdmColXEmp.add(tacxe);
+        }
+    }
+
+    private void cargarListaUsrXEmpXTexto() {
+        lstTablaAdmColXEmp.clear();
+        for (AdmColxemp colxemp : usfb.getLstAdmColxempXtexto(cbesfb.getAdmColxempLog().getEmpId(), strBuscarUsr)) {
             TablaAdmColXEmp tacxe = new TablaAdmColXEmp();
             tacxe.setAdmColxemp(colxemp);
             lstTablaAdmColXEmp.add(tacxe);
@@ -267,7 +394,6 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 colxemp.setCpeFcre(new Date());
 
                 colxemp.setColCedula(admColaborador);
-                colxemp.setCpeClave(Seguridad.hashPasswordSha512(strClave));
 
                 admColaborador.getAdmColxempList().add(colxemp);
 
@@ -286,6 +412,14 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 ac.setColCelular(strColCelular);
                 ac.setColEmail(strColEmail);
                 ac.setColEst(blnColEstado);
+                for (AdmColxemp colxemp : ac.getAdmColxempList()) {
+                    if (colxemp.getEmpId().equals(cbesfb.getAdmColxempLog().getEmpId())) {
+                        colxemp.setCpeUsuario(strUsuario);
+                        colxemp.setCpeClave(Seguridad.hashPasswordSha512(strClave));
+                    }
+                }
+
+                //= usfb.getLstAdmColxempXColaboradorXEmpresa(strColDocumento, cbesfb.getAdmColxempLog().getEmpId().getEmpId()).get(0);
                 usfb.editarColaborador(ac);
                 //  AdmColxemp colxemp = usfb.getLstAdmColxempXColaboradorXEmpresa(ac.getColCedula(), cbesfb.getAdmColxempLog().getCpeId());
             }
@@ -310,8 +444,8 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
             for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
                 lstAdmCrgxcols.add(tacxc.getAdmCrgxcol());
             }
-          lstAdmCrgxcols=  usfb.editarLstCargoXCol(lstAdmCrgxcols);
-          
+            lstAdmCrgxcols = usfb.editarLstCargoXCol(lstAdmCrgxcols);
+
         }
     }
 
@@ -363,6 +497,9 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                 break;
             case 2:
                 cargarListaUsrXEmp();
+                break;
+            case 3:
+                cargarMenuApp();
                 break;
         }
         blnNuevo = true;
@@ -438,15 +575,32 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
         tablaAdmColXEmpSel = (TablaAdmColXEmp) map.get("tcxe");
         cpeId = tablaAdmColXEmpSel.getAdmColxemp().getCpeId();
         blnMostrarPanel = true;
+        numPanel = 2;
         cargarListaCargoXEstado();
         cargarListaCrgXUsr();
+    }
+
+    public void rowDtColXEmpModulos_ActionEvent(ActionEvent ae) {
+        Map map = ae.getComponent().getAttributes();
+        tablaAdmColXEmpSel = (TablaAdmColXEmp) map.get("tcxe");
+        cpeId = tablaAdmColXEmpSel.getAdmColxemp().getCpeId();
+        numPanel = 3;
+        cargarMenuApp();
+        cargarTablaSubmodXColaborador();
     }
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Funciones heredadas">
     @Override
     public void buscarGen_ActionEvent(ActionEvent ae) {
-        cargarListaUsuarioXText();
+        switch (numPanel) {
+            case 1:
+                cargarListaUsuarioXText();
+                break;
+            case 2:
+                cargarListaUsrXEmpXTexto();
+                break;
+        }
 
     }
 
@@ -876,4 +1030,103 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     public void setStrBuscarUsr(String strBuscarUsr) {
         this.strBuscarUsr = strBuscarUsr;
     }
+
+    /**
+     * @return the modAppIdSel
+     */
+    public Integer getModAppIdSel() {
+        return modAppIdSel;
+    }
+
+    /**
+     * @param modAppIdSel the modAppIdSel to set
+     */
+    public void setModAppIdSel(Integer modAppIdSel) {
+        this.modAppIdSel = modAppIdSel;
+    }
+
+    /**
+     * @return the menuAppSel
+     */
+    public Integer getMenuAppSel() {
+        return menuAppSel;
+    }
+
+    /**
+     * @param menuAppSel the menuAppSel to set
+     */
+    public void setMenuAppSel(Integer menuAppSel) {
+        this.menuAppSel = menuAppSel;
+    }
+
+    /**
+     * @return the lstItemsMenuApp
+     */
+    public List<SelectItem> getLstItemsMenuApp() {
+        return lstItemsMenuApp;
+    }
+
+    /**
+     * @param lstItemsMenuApp the lstItemsMenuApp to set
+     */
+    public void setLstItemsMenuApp(List<SelectItem> lstItemsMenuApp) {
+        this.lstItemsMenuApp = lstItemsMenuApp;
+    }
+
+    /**
+     * @return the lstItemsSubmenuapp
+     */
+    public List<SelectItem> getLstItemsSubmenuapp() {
+        return lstItemsSubmenuapp;
+    }
+
+    /**
+     * @param lstItemsSubmenuapp the lstItemsSubmenuapp to set
+     */
+    public void setLstItemsSubmenuapp(List<SelectItem> lstItemsSubmenuapp) {
+        this.lstItemsSubmenuapp = lstItemsSubmenuapp;
+    }
+
+    /**
+     * @return the strUsuario
+     */
+    public String getStrUsuario() {
+        return strUsuario;
+    }
+
+    /**
+     * @param strUsuario the strUsuario to set
+     */
+    public void setStrUsuario(String strUsuario) {
+        this.strUsuario = strUsuario;
+    }
+
+    /**
+     * @return the strClave
+     */
+    public String getStrClave() {
+        return strClave;
+    }
+
+    /**
+     * @param strClave the strClave to set
+     */
+    public void setStrClave(String strClave) {
+        this.strClave = strClave;
+    }
+
+    /**
+     * @return the fechaNacimiento
+     */
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    /**
+     * @param fechaNacimiento the fechaNacimiento to set
+     */
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
 }

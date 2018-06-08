@@ -32,6 +32,10 @@ and open the template in the editor.
             <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 2 ? true : false}">                           
                 <ui:include src="panelCrgXUsr.xhtml"/>
             </h:panelGroup>
+            <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 3 ? true : false}">                           
+                <ui:include src="  panelModulosPorUsuario.xhtml"/>
+            </h:panelGroup>
+
             <!--</h:panelGroup>-->
         </ui:define>
     </ui:composition>

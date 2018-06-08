@@ -40,8 +40,7 @@ and open the template in the editor.
 
         </h:panelGroup>
         <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 2 ? true : false}">
-            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="5"
-                         rendered="#{usuarioJSFBean.blnMostrarPanel}">
+            <h:panelGrid columns="2" style="float: right;top: 0px;margin-top: 0px;right:380px;position: fixed;z-index: 20">
                 <ace:textEntry value="#{usuarioJSFBean.strBuscarUsr}"
                                style="width: 200px" 
                                title="Digite el número de identificación o nombre del usuario">
@@ -54,6 +53,10 @@ and open the template in the editor.
                                  title="Buscar">
                     <f:ajax execute="@this" render="@all"/>
                 </h:commandButton>
+            </h:panelGrid>
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="5"
+                         rendered="#{usuarioJSFBean.blnMostrarPanel}">
+
                 <h:commandButton styleClass="btnGuardarStd"                                                              
                                  actionListener="#{usuarioJSFBean.btnAgregarCrgXUsr_ActionEvent}"
                                  title="Agregar cargo">
@@ -67,6 +70,21 @@ and open the template in the editor.
                                  title="Regresar">
                 </h:commandButton>
             </h:panelGrid>
+
+        </h:panelGroup>
+        <h:panelGroup rendered="#{usuarioJSFBean.numPanel == 3 ? true : false}">
+            <h:panelGrid style="float: right;top: 0px;margin-top: 0px;right:220px;position: fixed;z-index: 20" styleClass="animationHolder" columns="4">
+
+                <h:commandButton styleClass="btnGuardarStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnGrabarModulosUsr_ActionEvent}"
+                                 title="Grabar usuario">
+                </h:commandButton>     
+                <h:commandButton styleClass="btnCancelarStd"                                                              
+                                 actionListener="#{usuarioJSFBean.btnEliminarModulosUsuario_ActionEvent}"
+                                 title="Nuevo">
+                </h:commandButton>
+            </h:panelGrid>
+
 
         </h:panelGroup>
 

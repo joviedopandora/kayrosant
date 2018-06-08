@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
             + "WHERE  a.cxcEst = :cxcEst AND (cpe.colCedula.colCedula = :colCedula OR cpe.colCedula.colNombre1 LIKE :texto OR cpe.colCedula.colApellido1 LIKE :texto) "
             + "ORDER BY cpe.colCedula.colApellido1, cpe.colCedula.colNombre1"),
     //Cargos por colaborador por estado
-    @NamedQuery(name = "AdmCrgxcol.crgXColXEst", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe WHERE cpe.cpeId = :cpeId AND a.cxcEst = :cxcEst"),
+    @NamedQuery(name = "AdmCrgxcol.crgXColXEst", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe  WHERE cpe.cpeId = :cpeId AND a.cxcEst = :cxcEst AND a.cxcPrincipal = :cxcPrincipal"),
     //Cargos por colaborador
     @NamedQuery(name = "AdmCrgxcol.findByCrgXCol", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe  WHERE cpe.cpeId = :cpeId"),
     @NamedQuery(name = "AdmCrgxcol.findByCrgXColCedu", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe JOIN cpe.colCedula cedula"
@@ -49,6 +49,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AdmCrgxcol.findByCrgXEstado", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe JOIN cpe.colCedula col WHERE a.crgId.crgId = :crgId ORDER BY col.colApellido1"),
     @NamedQuery(name = "AdmCrgxcol.findByCrgXActivos", query = "SELECT a FROM AdmCrgxcol a JOIN a.cpeId cpe JOIN cpe.colCedula col WHERE a.cxcEst=:cxcEst AND a.cpeId.colCedula.estadoColaborador.idEstadocolaborador = 1 ORDER BY col.colApellido1")})
 public class AdmCrgxcol implements Serializable {
+
+    /**
+     * @return the cxcPrincipal
+     */
+    public boolean isCxcPrincipal() {
+        return cxcPrincipal;
+    }
+
+    /**
+     * @param cxcPrincipal the cxcPrincipal to set
+     */
+    public void setCxcPrincipal(boolean cxcPrincipal) {
+        this.cxcPrincipal = cxcPrincipal;
+    }
 
     @OneToMany(mappedBy = "cxcIdnew")
     private List<LogOrdenprod> logOrdenprodList;
@@ -71,6 +85,8 @@ public class AdmCrgxcol implements Serializable {
     @Column(name = "cxc_fcre")
     @Temporal(TemporalType.TIMESTAMP)
     private Date cxcFcre;
+     @Column(name = "cxc_principal")
+    private boolean cxcPrincipal;
     @OneToMany(mappedBy = "cxcId")
     private List<AdmIpssedexcol> admIpssedexcolList;
     @JoinColumn(name = "cpe_id", referencedColumnName = "cpe_id")

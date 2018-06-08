@@ -4,7 +4,6 @@
  */
 package adm.sys.dao;
 
-import adm.sys.dao.AdmColxemp;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -18,13 +17,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "adm_cpexsubmodapp")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdmCpexsubmodapp.findAll", query = "SELECT a FROM AdmCpexsubmodapp a"),
-    @NamedQuery(name = "AdmCpexsubmodapp.findByCxmId", query = "SELECT a FROM AdmCpexsubmodapp a WHERE a.cxmId = :cxmId"),
-    @NamedQuery(name = "AdmCpexsubmodapp.findByCxmEst", query = "SELECT a FROM AdmCpexsubmodapp a WHERE a.cxmEst = :cxmEst"),
-    @NamedQuery(name = "AdmCpexsubmodapp.findByIndversion", query = "SELECT a FROM AdmCpexsubmodapp a WHERE a.indversion = :indversion")})
+    @NamedQuery(name = "AdmCpexsubmodapp.findAll", query = "SELECT a FROM AdmCpexsubmodapp a")
+    ,
+    @NamedQuery(name = "AdmCpexsubmodapp.findByCxmId", query = "SELECT a FROM AdmCpexsubmodapp a WHERE a.cxmId = :cxmId")
+    ,
+    @NamedQuery(name = "AdmCpexsubmodapp.cxmXSubmodXCxc", query = "SELECT a FROM AdmCpexsubmodapp a JOIN a.cxcId cxc JOIN a.smdId smd WHERE cxc.cxcId = :cxcId AND smd.smdId = :smdId"),
+
+})
 public class AdmCpexsubmodapp implements Serializable {
 
+  
     private static final long serialVersionUID = 1L;
+    @SequenceGenerator(sequenceName = "cpexsubmodapp_cxm_id_seq", name = "cpexsubmodapp_cxm_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "cpexsubmodapp_cxm_id_seq", strategy = GenerationType.SEQUENCE)
     @Id
     @Basic(optional = false)
     @NotNull
@@ -33,7 +38,9 @@ public class AdmCpexsubmodapp implements Serializable {
     @Column(name = "cxm_est")
     private Boolean cxmEst;
     @Column(name = "indversion")
+    @Version
     private Integer indversion;
+   
     @JoinColumn(name = "smd_id", referencedColumnName = "smd_id")
     @ManyToOne
     private AdmSubmodapp smdId;

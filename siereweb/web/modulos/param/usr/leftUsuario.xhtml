@@ -35,6 +35,16 @@ and open the template in the editor.
                         <f:attribute name="numPanel" value="2"/>
                     </h:commandLink>
                 </h:panelGrid>
+                 <h:panelGrid columns="1" rowClasses="altoElmLateral">
+                    <h:commandLink id="btnNavModXUsr"
+                                   immediate="true"
+                                   value="Módulos por usuario"
+                                   actionListener="#{usuarioJSFBean.navegacionLateral_ActionEvent}"
+                                   styleClass="#{usuarioJSFBean.numPanel == 3 ? 'btnNavLateralSel' : 'btnNavLateral'}">
+                        <f:attribute name="jsfBean" value="usuarioJSFBean"/>
+                        <f:attribute name="numPanel" value="3"/>
+                    </h:commandLink>
+                </h:panelGrid>
             </ace:accordionPane>
         </ace:accordion>
     </ui:insert>

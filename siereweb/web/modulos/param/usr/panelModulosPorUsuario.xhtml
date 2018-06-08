@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:icecore="http://www.icefaces.org/icefaces/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components"
+      xmlns:ice="http://www.icesoft.com/icefaces/component">
+    <ui:insert name="asociarmodulos">
+
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Usuario: " 
+                           style="font-size: 12px;font-weight: bold"/>
+            <h:outputText value="#{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.tdcId.tdcId} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colCedula} - 
+                          #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colNombre1} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colNombre2} 
+                          #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colApellido1} #{usuarioJSFBean.tablaAdmColXEmpSel.admColxemp.colCedula.colApellido2}"
+                          style="font-size: 14px;font-weight: bold"/>
+        </h:panelGrid>
+        <ace:panel header="Módulos del sistema">
+            <h:panelGrid columns="4">
+                <h:outputText value="Menú"/>
+                <h:selectOneMenu value="#{usuarioJSFBean.menuAppSel}" valueChangeListener="#{usuarioJSFBean.ddlMenuApp_VCE}">
+                    <f:selectItems  value="#{usuarioJSFBean.lstItemsMenuApp}"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+                <h:outputText value="Módulo"/>
+                <h:selectOneMenu value="#{usuarioJSFBean.modAppIdSel}" valueChangeListener="#{usuarioJSFBean.ddlModApp_VCE}">
+                    <f:selectItems  value="#{usuarioJSFBean.lstItemsSubmenuapp}"/>
+                    <f:ajax execute="@this" render="@all"/>
+                </h:selectOneMenu>
+            </h:panelGrid>
+        </ace:panel>
+        <h:panelGrid columns="2"  styleClass="tablaAlnVer">
+            <ace:panel header="Submodulos" >
+                <ace:dataTable value="#{usuarioJSFBean.lstTablaSubmodapps}"
+                               var="itemSubmodapp"
+                               rows="10"
+                               paginator="true"
+                               emptyMessage="No se encontraron registros"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="SUBÓDULOS DEL SISTEMA" styleClass="titulo1" />
+                    </f:facet>
+ 
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGrid>
+                                <h:selectBooleanCheckbox value="#{usuarioJSFBean.selTodoSubmodulo}">
+                                    <f:ajax execute="@this" render="@all"
+                                            listener="#{usuarioJSFBean.rowDtSuboduloSelTodo_VCE(usuarioJSFBean.selTodoSubmodulo)}"/>
+                                </h:selectBooleanCheckbox>
+                            </h:panelGrid>
+
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{itemSubmodapp.seleccionado}"/>
+                    </ace:column>
+
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Id submódulo"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{itemSubmodapp.admSubmodapp.smdId}"/>
+                    </ace:column>
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Nombre submódulo"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{itemSubmodapp.admSubmodapp.smdNombre}"/>
+                    </ace:column>
+
+                </ace:dataTable>
+            </ace:panel>
+            <ace:panel header="Submodulos" >
+                <ace:dataTable value="#{usuarioJSFBean.lstTablaSubmodappsXUsr}"
+                               var="itemSubmodappXCol"
+                               rows="10"
+                               paginator="true"
+                               emptyMessage="No se encontraron registros"
+                               paginatorPosition="bottom"
+                               paginatorAlwaysVisible="true"
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                               currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                    <f:facet name="header">
+                        <h:outputText value="SUBÓDULOS DEL SISTEMA ASIGNADOS" styleClass="titulo1" />
+                    </f:facet>
+
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGrid>
+                                <h:selectBooleanCheckbox value="#{usuarioJSFBean.selTodoSubmoduloXUsr}">
+                                    <f:ajax execute="@this" render="@all"
+                                            listener="#{usuarioJSFBean.rowDtSuboduloXColSelTodo_VCE(usuarioJSFBean.selTodoSubmoduloXUsr)}"/>
+                                </h:selectBooleanCheckbox>
+                            </h:panelGrid>
+
+                        </f:facet>
+                        <h:selectBooleanCheckbox value="#{itemSubmodappXCol.seleccionado}"/>
+                    </ace:column>     
+                          <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Módulo"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+                              <h:outputText value="#{itemSubmodappXCol.admSubmodapp.modId.modNombre}"/>
+                    </ace:column>
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Id submódulo"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{itemSubmodappXCol.admSubmodapp.smdId}"/>
+                    </ace:column>
+                    <ace:column  style="width: 50px">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="Nombre submódulo"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:outputText value="#{itemSubmodappXCol.admSubmodapp.smdNombre}"/>
+                    </ace:column>
+
+                </ace:dataTable>
+            </ace:panel>
+        </h:panelGrid>
+
+    </ui:insert>
+</html>

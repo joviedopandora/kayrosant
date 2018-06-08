@@ -23,9 +23,15 @@ and open the template in the editor.
                            paginatorAlwaysVisible="true"
                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                            currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
-                <ace:column headerText=">>>" style="width: 50px">
+                <ace:column headerText="Adm. cargos" style="width: 50px">
                     <h:commandLink value=">>>"
                                    actionListener="#{usuarioJSFBean.rowDtColXEmp_ActionEvent}">
+                        <f:attribute name="tcxe" value="#{itemTColXEmp}"/>
+                    </h:commandLink>
+                </ace:column>
+                    <ace:column headerText="Adm. módulos" style="width: 60px">
+                    <h:commandLink value=">>>"
+                                   actionListener="#{usuarioJSFBean.rowDtColXEmpModulos_ActionEvent}">
                         <f:attribute name="tcxe" value="#{itemTColXEmp}"/>
                     </h:commandLink>
                 </ace:column>

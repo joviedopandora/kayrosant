@@ -20,16 +20,31 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "adm_submodapp")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdmSubmodapp.findAll", query = "SELECT a FROM AdmSubmodapp a"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdId", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdId = :smdId"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdNombre", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdNombre = :smdNombre"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdDesc", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdDesc = :smdDesc"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdEst", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdEst = :smdEst"),
-    @NamedQuery(name = "AdmSubmodapp.findByIndversion", query = "SELECT a FROM AdmSubmodapp a WHERE a.indversion = :indversion"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdReglanav", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdReglanav = :smdReglanav"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdJsfbean", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdJsfbean = :smdJsfbean"),
-    @NamedQuery(name = "AdmSubmodapp.findBySmdRutarecrs", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdRutarecrs = :smdRutarecrs"),
-    @NamedQuery(name = "AdmSubmodapp.getSubmodXModXCpe", query = "SELECT s FROM AdmSubmodapp s JOIN s.admCpexsubmodappList cpexs JOIN cpexs.cxcId cxc JOIN s.modId m WHERE cxc.cxcId = :cxcId AND m.modId = :modId")})
+    @NamedQuery(name = "AdmSubmodapp.findAll", query = "SELECT a FROM AdmSubmodapp a")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdId", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdId = :smdId")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdNombre", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdNombre = :smdNombre")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdDesc", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdDesc = :smdDesc")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdEst", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdEst = :smdEst")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findByIndversion", query = "SELECT a FROM AdmSubmodapp a WHERE a.indversion = :indversion")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdReglanav", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdReglanav = :smdReglanav")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdJsfbean", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdJsfbean = :smdJsfbean")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.findBySmdRutarecrs", query = "SELECT a FROM AdmSubmodapp a WHERE a.smdRutarecrs = :smdRutarecrs")
+    ,
+    @NamedQuery(name = "AdmSubmodapp.getSubmodXModXCpe", 
+            query = "SELECT s FROM AdmSubmodapp s JOIN s.admCpexsubmodappList cpexs JOIN cpexs.cxcId cxc JOIN s.modId m WHERE cxc.cxcId = :cxcId AND m.modId = :modId AND cxc.cxcPrincipal = :cxcPrincipal")
+    ,
+@NamedQuery(name = "AdmSubmodapp.findBySmdXMod", query = "SELECT a FROM AdmSubmodapp a  JOIN a.modId modulo WHERE modulo.modId = :modId ORDER BY modulo.modNombre "),
+@NamedQuery(name = "AdmSubmodapp.getSubmodXCpe", query = "SELECT s FROM AdmSubmodapp s JOIN s.modId modulo "
+        + " JOIN s.admCpexsubmodappList cpexs JOIN cpexs.cxcId cxc JOIN s.modId m WHERE cxc.cpeId.cpeId = :cpeId ORDER BY modulo.modNombre, s.smdNombre")
+})
 public class AdmSubmodapp implements Serializable {
 
     private static final long serialVersionUID = 1L;

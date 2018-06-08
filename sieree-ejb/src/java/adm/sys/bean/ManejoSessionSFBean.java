@@ -32,7 +32,7 @@ import javax.persistence.Query;
 @Stateful
 @LocalBean
 public class ManejoSessionSFBean extends BaseSistemaSFBean {
-    
+
     private SysSegtarea sysSegtareaActual = new SysSegtarea();
 
     /**
@@ -65,6 +65,8 @@ public class ManejoSessionSFBean extends BaseSistemaSFBean {
             Query q = em.createNamedQuery("AdmCrgxcol.crgXColXEst");
             q.setParameter("cpeId", colxempLog.getCpeId());
             q.setParameter("cxcEst", pCxcEst);
+            q.setParameter("cxcPrincipal", true);
+
             crgxcolActual = (AdmCrgxcol) q.getSingleResult();
             return true;
         } catch (NoResultException ex) {
@@ -122,6 +124,7 @@ public class ManejoSessionSFBean extends BaseSistemaSFBean {
         Query q = em.createNamedQuery("AdmSubmodapp.getSubmodXModXCpe");
         q.setParameter("cxcId", pCxcId);
         q.setParameter("modId", pModId);
+        q.setParameter("cxcPrincipal", true);
         return q.getResultList();
     }
 
@@ -150,7 +153,7 @@ public class ManejoSessionSFBean extends BaseSistemaSFBean {
     public void setSysSegtareaActual(SysSegtarea sysSegtareaActual) {
         this.sysSegtareaActual = sysSegtareaActual;
     }
-    
+
     public AdmColxemp editarAdmColxemp(AdmColxemp pColxemp) {
         pColxemp = em.merge(pColxemp);
         return pColxemp;

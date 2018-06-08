@@ -8,13 +8,18 @@ package com.pandora.adm.param;
 import adm.sys.dao.AdmCargo;
 import adm.sys.dao.AdmColaborador;
 import adm.sys.dao.AdmColxemp;
+import adm.sys.dao.AdmCpexsubmodapp;
 import adm.sys.dao.AdmCrgxcol;
 import adm.sys.dao.AdmEmpresa;
+import adm.sys.dao.AdmMenuapp;
+import adm.sys.dao.AdmModapp;
+import adm.sys.dao.AdmSubmodapp;
 import adm.sys.dao.RfTipodoc;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
@@ -27,17 +32,12 @@ import javax.persistence.Query;
  *
  * @author byrobles
  */
-@Stateful
+@Stateless
 @LocalBean
 public class UsuarioSFBean {
 
     @PersistenceContext
     EntityManager em;
-
-    @Remove
-    public void remove() {
-
-    }
 
     /**
      * Cargar lista de tipo de documento por estado
@@ -93,6 +93,20 @@ public class UsuarioSFBean {
         Query q = em.createNamedQuery("AdmColxemp.findByEmpresa");
         q.setParameter("empId", pEmpId);
         return q.getResultList();
+    }
+
+    /**
+     * Cargar lista de colaboradores por empresa
+     *
+     * @param pEmpId
+     * @param texto
+     * @return
+     */
+    public List<AdmColxemp> getLstAdmColxempXtexto(AdmEmpresa pEmpId, String texto) {
+        return em.createNamedQuery("AdmColxemp.findCedONomXEmp")
+                .setParameter("empId", pEmpId.getEmpId())
+                .setParameter("texto", texto).getResultList();
+
     }
 
     /**
@@ -166,6 +180,9 @@ public class UsuarioSFBean {
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void editarColaborador(AdmColaborador pAdmColaborador) {
+        for (AdmColxemp colxemp : pAdmColaborador.getAdmColxempList()) {
+            colxemp = em.merge(colxemp);
+        }
         pAdmColaborador = em.merge(pAdmColaborador);
     }
 
@@ -175,5 +192,40 @@ public class UsuarioSFBean {
         q.setParameter("colCedula", colCedula);
         q.setParameter("empId", empId);
         return q.getResultList();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<AdmMenuapp> getLstAdmMenuapp() {
+        return em.createNamedQuery("AdmMenuapp.findAll").getResultList();
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<AdmModapp> getLstModappXMenu(Integer pMenId) {
+        return em.createNamedQuery("AdmModapp.getModappXMenu").setParameter("menId", pMenId).getResultList();
+    }
+
+    public List<AdmSubmodapp> getLstSubmodappXModId(Integer pModId) {
+        return em.createNamedQuery("AdmSubmodapp.findBySmdXMod").setParameter("modId", pModId).getResultList();
+    }
+
+    public List<AdmSubmodapp> getLstSubmodappXCpeId(Integer pCpeId) {
+        return em.createNamedQuery("AdmSubmodapp.getSubmodXCpe").
+                setParameter("cpeId", pCpeId).
+                getResultList();
+    }
+    
+    public void grabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps){
+        for (AdmCpexsubmodapp ac : pLstAdmCpexsubmodapps) {
+          ac= em.merge(ac);
+        }
+    }
+    
+    public void eliminargrabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps){
+      for (AdmCpexsubmodapp ac : pLstAdmCpexsubmodapps) {
+          ac= (AdmCpexsubmodapp) em.createNamedQuery("AdmCpexsubmodapp.cxmXSubmodXCxc").
+                  setParameter("cxcId", ac.getCxcId().getCxcId()).
+                  setParameter("smdId", ac.getSmdId().getSmdId()).getSingleResult();
+          em.remove(ac);
+        }
     }
 }
