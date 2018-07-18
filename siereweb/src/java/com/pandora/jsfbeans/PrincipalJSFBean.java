@@ -23,6 +23,7 @@ import javax.el.ExpressionFactory;
 import javax.el.MethodExpression;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.MethodExpressionActionListener;
@@ -164,8 +165,19 @@ public class PrincipalJSFBean extends BaseJSFBean implements Serializable {
                     menuItemSubMod.getAttributes().put("jsfbean", admSubmodapp.getSmdJsfbean());
                     //menuItemSubMod.set(false);
                     menuItemSubMod.setImmediate(true);
-                    menuItemMod.getChildren().add(menuItemSubMod);
-                    addAjaxBehaviorTo(menuItemSubMod);
+                    boolean existeSubmod= false;
+                    for(UIComponent mism : menuItemMod.getChildren()){
+                        if(mism.getId().equals(menuItemSubMod.getId())){
+                        existeSubmod=true;
+                        break;
+                        }
+                    }
+                    if(!existeSubmod){
+                     menuItemMod.getChildren().add(menuItemSubMod);
+                      addAjaxBehaviorTo(menuItemSubMod);
+                    }
+                   
+                   
                 }
                 if (menuItemMod.getChildren() != null && !menuItemMod.getChildren().isEmpty()) {
                    menuItemApp.getChildren().add(menuItemMod); 

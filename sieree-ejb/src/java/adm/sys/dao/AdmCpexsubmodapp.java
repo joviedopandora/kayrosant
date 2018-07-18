@@ -40,7 +40,7 @@ public class AdmCpexsubmodapp implements Serializable {
     @Column(name = "indversion")
     @Version
     private Integer indversion;
-   
+    
     @JoinColumn(name = "smd_id", referencedColumnName = "smd_id")
     @ManyToOne
     private AdmSubmodapp smdId;

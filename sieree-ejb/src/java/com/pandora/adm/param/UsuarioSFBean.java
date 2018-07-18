@@ -35,7 +35,7 @@ import javax.persistence.Query;
 @Stateless
 @LocalBean
 public class UsuarioSFBean {
-
+    
     @PersistenceContext
     EntityManager em;
 
@@ -106,7 +106,7 @@ public class UsuarioSFBean {
         return em.createNamedQuery("AdmColxemp.findCedONomXEmp")
                 .setParameter("empId", pEmpId.getEmpId())
                 .setParameter("texto", texto).getResultList();
-
+        
     }
 
     /**
@@ -137,14 +137,30 @@ public class UsuarioSFBean {
      * Agregar cargo a colaborador
      *
      * @param pAdmCrgxcol
-     * @return
      */
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
-    public AdmCrgxcol editarCrgxcol(AdmCrgxcol pAdmCrgxcol) {
-        pAdmCrgxcol = em.merge(pAdmCrgxcol);
-        return pAdmCrgxcol;
+    public void editarCrgxcol(AdmCrgxcol pAdmCrgxcol) {
+        List<AdmCrgxcol> lstAdmCrgxcols = em.createNamedQuery("AdmCrgxcol.findByCrgXCol").setParameter("cpeId", pAdmCrgxcol.getCpeId().getCpeId()).getResultList();
+        Integer cantidadEx = 0;
+       
+        for (AdmCrgxcol cxcExistente : lstAdmCrgxcols) {
+            if (cxcExistente.getCpeId().equals(pAdmCrgxcol.getCpeId()) && cxcExistente.getCrgId().equals(pAdmCrgxcol.getCrgId())) {
+             cxcExistente.setCxcPrincipal(true);
+                cantidadEx++;
+            }else{
+             cxcExistente.setCxcPrincipal(false);
+            }
+        }
+        if (cantidadEx.equals(0)) {
+            lstAdmCrgxcols.add(pAdmCrgxcol);
+        }
+        for (AdmCrgxcol crgxcol : lstAdmCrgxcols) {
+            crgxcol = em.merge(crgxcol);
+        }
+//        pAdmCrgxcol = em.merge(pAdmCrgxcol);
+//        return pAdmCrgxcol;
     }
-
+    
     public List<AdmCrgxcol> editarLstCargoXCol(List<AdmCrgxcol> pLstAdmCrgxcols) {
         for (AdmCrgxcol cxg : pLstAdmCrgxcols) {
             cxg.setCpeId(em.getReference(AdmColxemp.class, cxg.getCpeId().getCpeId()));
@@ -153,7 +169,7 @@ public class UsuarioSFBean {
         }
         return pLstAdmCrgxcols;
     }
-
+    
     public AdmCrgxcol getAdmCrgxcol(Integer pCrgxcol) {
         return em.getReference(AdmCrgxcol.class, pCrgxcol);
     }
@@ -185,7 +201,7 @@ public class UsuarioSFBean {
         }
         pAdmColaborador = em.merge(pAdmColaborador);
     }
-
+    
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<AdmColxemp> getLstAdmColxempXColaboradorXEmpresa(String colCedula, Integer empId) {
         Query q = em.createNamedQuery("AdmColxemp.findByEmpresaXColaborador");
@@ -193,39 +209,39 @@ public class UsuarioSFBean {
         q.setParameter("empId", empId);
         return q.getResultList();
     }
-
+    
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<AdmMenuapp> getLstAdmMenuapp() {
         return em.createNamedQuery("AdmMenuapp.findAll").getResultList();
     }
-
+    
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<AdmModapp> getLstModappXMenu(Integer pMenId) {
         return em.createNamedQuery("AdmModapp.getModappXMenu").setParameter("menId", pMenId).getResultList();
     }
-
+    
     public List<AdmSubmodapp> getLstSubmodappXModId(Integer pModId) {
         return em.createNamedQuery("AdmSubmodapp.findBySmdXMod").setParameter("modId", pModId).getResultList();
     }
-
+    
     public List<AdmSubmodapp> getLstSubmodappXCpeId(Integer pCpeId) {
         return em.createNamedQuery("AdmSubmodapp.getSubmodXCpe").
                 setParameter("cpeId", pCpeId).
                 getResultList();
     }
     
-    public void grabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps){
+    public void grabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps) {
         for (AdmCpexsubmodapp ac : pLstAdmCpexsubmodapps) {
-          ac= em.merge(ac);
+            ac = em.merge(ac);
         }
     }
     
-    public void eliminargrabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps){
-      for (AdmCpexsubmodapp ac : pLstAdmCpexsubmodapps) {
-          ac= (AdmCpexsubmodapp) em.createNamedQuery("AdmCpexsubmodapp.cxmXSubmodXCxc").
-                  setParameter("cxcId", ac.getCxcId().getCxcId()).
-                  setParameter("smdId", ac.getSmdId().getSmdId()).getSingleResult();
-          em.remove(ac);
+    public void eliminargrabarSubmodulosXColaborador(List<AdmCpexsubmodapp> pLstAdmCpexsubmodapps) {
+        for (AdmCpexsubmodapp ac : pLstAdmCpexsubmodapps) {
+            ac = (AdmCpexsubmodapp) em.createNamedQuery("AdmCpexsubmodapp.cxmXSubmodXCxc").
+                    setParameter("cxcId", ac.getCxcId().getCxcId()).
+                    setParameter("smdId", ac.getSmdId().getSmdId()).getSingleResult();
+            em.remove(ac);
         }
     }
 }

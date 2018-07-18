@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -171,15 +172,17 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                     ac.setCxcId(crgxcol);
                     ac.setSmdId(as);
                     ac.setCxmEst(true);
+                    
                     lstAdmCpexsubmodapps.add(ac);
                 }
 
             }
             usfb.grabarSubmodulosXColaborador(lstAdmCpexsubmodapps);
         }
-         mostrarError("Módulo grabado correctamente", 3);
+        mostrarError("Módulo grabado correctamente", 3);
         cargarTablaSubmodXColaborador();
     }
+
     private void eliminarModuloUsr() {
         List<AdmSubmodapp> lstAdmSubmodapps = new ArrayList<>();
         for (TablaAdmSubmodapp tas : lstTablaSubmodappsXUsr) {
@@ -196,10 +199,26 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                     ac.setCxcId(crgxcol);
                     ac.setSmdId(as);
                     ac.setCxmEst(true);
-                    lstAdmCpexsubmodapps.add(ac);
+                    
+                    if (lstAdmCpexsubmodapps.size() > 1) {
+                        Integer cantidadExistente = 0;
+                        for (AdmCpexsubmodapp cpexsmdapp : lstAdmCpexsubmodapps) {
+                            if (Objects.equals(cpexsmdapp.getCxcId().getCxcId(), ac.getCxcId().getCxcId())
+                                    && Objects.equals(cpexsmdapp.getSmdId().getSmdId(), ac.getSmdId().getSmdId())) {
+                                cantidadExistente++;
+                            }
+                        }
+                        if (cantidadExistente == 0) {
+                            lstAdmCpexsubmodapps.add(ac);
+                        }
+                    } else {
+                        lstAdmCpexsubmodapps.add(ac);
+                    }
+
                 }
 
             }
+
             usfb.eliminargrabarSubmodulosXColaborador(lstAdmCpexsubmodapps);
         }
         mostrarError("Módulo retirado correctamente", 2);
@@ -209,10 +228,10 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     public void rowDtSuboduloSelTodo_VCE(boolean pSelTodoSubmodulo) {
         selTodoLst(lstTablaSubmodapps, pSelTodoSubmodulo);
     }
-      public void rowDtSuboduloXColSelTodo_VCE(boolean pSelTodoSubmodulo) {
+
+    public void rowDtSuboduloXColSelTodo_VCE(boolean pSelTodoSubmodulo) {
         selTodoLst(lstTablaSubmodappsXUsr, pSelTodoSubmodulo);
     }
-
 
     public void ddlMenuApp_VCE(ValueChangeEvent vce) {
         menuAppSel = (Integer) vce.getNewValue();
@@ -229,7 +248,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     }
 
     public void btnEliminarModulosUsuario_ActionEvent() {
-        eliminarModuloUsr(); 
+        eliminarModuloUsr();
     }
 
     @Override
@@ -430,17 +449,22 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
     }
 
     private void desactivarCargoXCol() {
+        List<AdmCrgxcol> lstCargoXCol = new ArrayList();
+        
         for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
-            tacxc.setAdmCrgxcol(usfb.editarCrgxcol(tablaAdmCrgXCol.getAdmCrgxcol()));
+            lstCargoXCol.add(tacxc.getAdmCrgxcol());
+           // tacxc.setAdmCrgxcol(usfb.editarCrgxcol(tablaAdmCrgXCol.getAdmCrgxcol()));
 
         }
+        usfb.editarLstCargoXCol(lstCargoXCol);
+        
     }
 
     private void eliminarCrgXUsr() {
         if (validarForm()) {
 
             List<TablaAdmCrgXCol> lstCargosRetirar = retirarElemTabla(lstTablaAdmCrgXCol);
-            List< AdmCrgxcol> lstAdmCrgxcols = new ArrayList<AdmCrgxcol>();
+            List< AdmCrgxcol> lstAdmCrgxcols = new ArrayList<>();
             for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
                 lstAdmCrgxcols.add(tacxc.getAdmCrgxcol());
             }
@@ -458,6 +482,7 @@ public class UsuarioJSFBean extends BaseJSFBean implements Serializable, IPasos 
                     tablaAdmCrgXCol.getAdmCrgxcol().setCrgId(tac.getAdmCargo());
                     tablaAdmCrgXCol.getAdmCrgxcol().setCxcEst(true);
                     tablaAdmCrgXCol.getAdmCrgxcol().setCxcFcre(new Date());
+                    tablaAdmCrgXCol.getAdmCrgxcol().setCxcPrincipal(true);
                     boolean cargo = false;
                     for (TablaAdmCrgXCol tacxc : lstTablaAdmCrgXCol) {
                         if (tacxc.getAdmCrgxcol().getCrgId() != null
