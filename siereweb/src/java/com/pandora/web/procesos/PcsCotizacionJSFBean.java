@@ -236,9 +236,10 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         return null;
     }
 
-    public void lnkAsuntoCotManual_AE(ActionEvent ae){
-     asuntoMensajeExcel = vntDetevento.getRgvtId().getRgvtId() +  "_cotización " +   vntDetevento.getVdeObsr();
+    public void lnkAsuntoCotManual_AE(ActionEvent ae) {
+        asuntoMensajeExcel = vntDetevento.getRgvtId().getRgvtId() + "_cotización " + vntDetevento.getVdeObsr();
     }
+
     public void fileEntryAction(FileEntryEvent event) {
         fileInfo = null;
         FileEntry fileEntry = (FileEntry) event.getSource();
@@ -249,8 +250,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         fileInfo = results.getFiles().get(0);
         if (fileInfo.isSaved()) {
             String fileName = fileInfo.getFile().getName();
-           
-           
+
             int i = fileName.lastIndexOf('.');
             String extension = null;
             if (i > 0) {
@@ -535,11 +535,11 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             vntCliente.setClnAlias(strCltAlias);
             vntCliente = pcsfb.editarCliente(vntCliente);
             tablaVntClienteSel.setVntCliente(vntCliente);
-        
+
             for (TablaVntDetalleCliente tvdc : lstTablaVntDetalleCliente) {
                 if (tvdc.getVntDetallecliente().getClnId() == null) {
                     tvdc.getVntDetallecliente().setClnId(vntCliente);
-                        tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
+                    tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
                 }
                 tvdc.setVntDetallecliente(pcsfb.editarDetalleCliente(tvdc.getVntDetallecliente()));
             }
@@ -751,7 +751,8 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             ts.setVntServicio(v.getVsrvId());
             ts.setBigdPrecioCliente(v.getSrvxventPrecioventa());
             ts.setCantidadSrv(v.getSrvxventCantidad());
-            
+            ts.setBigdProcentajeDesc(v.getSrvxventPorcentajeDesc());
+
             mapaServciosSelPopUp.put(v.getVsrvId().getVsrvId(), ts);
         }
         if (mapaServciosSelPopUp.isEmpty()) {
@@ -803,6 +804,9 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 vntServxventa.setSrvxventEst(Boolean.TRUE);
                 vntServxventa.setSrvxventPrecioventa(tvs.getBigdPrecioCliente());
                 vntServxventa.setSrvxventValtotalclnt(tvs.getBigdPrecioCliente().multiply(new BigDecimal(tvs.getCantidadSrv())));
+                vntServxventa.setSrvxventPorcentajeDesc(tvs.getBigdProcentajeDesc());
+                TablaVntSrvXVenta tvsxv = new TablaVntSrvXVenta(vntServxventa);
+                aplicarDescuentoXServicio(tvsxv, tvs.getBigdProcentajeDesc(), BigDecimal.ZERO);
                 lstVntServxventasGrabar.add(vntServxventa);
             }
         }
@@ -1592,7 +1596,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
                 for (TablaVntDetalleCliente tvdc : lstTablaVntDetalleCliente) {
                     if (tvdc.getVntDetallecliente().getClnId() == null) {
                         tvdc.getVntDetallecliente().setClnId(vntCliente);
-                            tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
+                        tvdc.getVntDetallecliente().setDclnEstado(Boolean.TRUE);
                     }
                     tvdc.setVntDetallecliente(pcsfb.editarDetalleCliente(tvdc.getVntDetallecliente()));
                     if (tvdc.isSeleccionado()) {
@@ -1929,10 +1933,11 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         cargarListaParentesco();
     }
 
-     public void rowDtEliminarArchivo_AE(){
-      
-       lstArchivosCargar.remove(archivosAdjuntoSel);
-     }
+    public void rowDtEliminarArchivo_AE() {
+
+        lstArchivosCargar.remove(archivosAdjuntoSel);
+    }
+
     public void btnNuevoLamada_ActionEvent(ActionEvent ae) {
         //  limpiarFacesMessage();
         numPanel = PANEL_LLAMADA;
@@ -2018,13 +2023,15 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         // limpiarFacesMessage();
         grabarDetalleCliente();
     }
-    public void rowDtDetalleClienteBorrar_ActionEvent(ActionEvent ae){
-       Map map = ae.getComponent().getAttributes();
+
+    public void rowDtDetalleClienteBorrar_ActionEvent(ActionEvent ae) {
+        Map map = ae.getComponent().getAttributes();
         tablaVntDetalleClienteSel = (TablaVntDetalleCliente) map.get("tdcs");
-         numPanel = PANEL_EVENTO;
-         VntCliente clienteSel = tablaVntDetalleClienteSel.getVntDetallecliente().getClnId();
-        
+        numPanel = PANEL_EVENTO;
+        VntCliente clienteSel = tablaVntDetalleClienteSel.getVntDetallecliente().getClnId();
+
     }
+
     public void rowDtDetalleCliente_ActionEvent(ActionEvent ae) {
         //limpiarFacesMessage();
         Map map = ae.getComponent().getAttributes();
@@ -2214,16 +2221,20 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
     }
 
     public void cambioDescuentoXServicio(ValueChangeEvent vce) {
-        TablaVntSrvXVenta tsxvs = (TablaVntSrvXVenta) vce.getComponent().getAttributes().get("tsxvs");
-        tsxvs.getVntServxventa().setSrvxventPorcentajeDesc(((BigDecimal) vce.getNewValue()));
+        TablaVntSrvXVenta tsxvs = (TablaVntSrvXVenta) vce.getComponent().getAttributes().get("tsxvs");        
+        aplicarDescuentoXServicio(tsxvs, (BigDecimal)vce.getNewValue(), (BigDecimal)vce.getOldValue());
         //vntRegistroventa.getRgvtDescuento()
 
+    }
+
+    private void aplicarDescuentoXServicio(TablaVntSrvXVenta tsxvs, BigDecimal newProcentaje, BigDecimal oldProcentaje) {
+        tsxvs.getVntServxventa().setSrvxventPorcentajeDesc(newProcentaje);
         if (tsxvs.getVntServxventa().getSrvxventPorcentajeDesc() == null) {
             tsxvs.getVntServxventa().setSrvxventDescuento(BigDecimal.ZERO);
         } else {
             BigDecimal cien = new BigDecimal(100);
             if (tsxvs.getVntServxventa().getSrvxventPorcentajeDesc().compareTo(cien) == 1) {
-                tsxvs.getVntServxventa().setSrvxventPorcentajeDesc((BigDecimal) vce.getOldValue());
+                tsxvs.getVntServxventa().setSrvxventPorcentajeDesc(oldProcentaje);
 
             } else {
                 BigDecimal valor = tsxvs.getVntServxventa().getSrvxventValtotalclnt().multiply(tsxvs.getVntServxventa().getSrvxventPorcentajeDesc()).divide(cien);

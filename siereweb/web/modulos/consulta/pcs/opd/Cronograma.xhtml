@@ -38,7 +38,15 @@ and open the template in the editor.
 
 
                 <ace:column headerText="Nombre Evento"  styleClass="textcolumleft letraOutput" sortBy="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}"
-                            filterBy="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}" filterMatchMode="contains">
+                           >
+                    <f:facet name="header">
+                        <h:panelGroup>
+                            <ace:textEntry value="#{pcsOrdenProduccionJSFBean.strFiltrovdeObsr}" valueChangeListener="#{pcsOrdenProduccionJSFBean.carTable_FiltroObsr_VCE}" >
+                                <ace:ajax execute="@this" render="@form" />
+                            </ace:textEntry>
+                        </h:panelGroup>
+                    </f:facet>
+
                     <h:outputText value="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}"/>
 
                 </ace:column>

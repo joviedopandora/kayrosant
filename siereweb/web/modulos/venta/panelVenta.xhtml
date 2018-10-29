@@ -86,6 +86,18 @@ and open the template in the editor.
                             <ace:ajax execute="@this" render="@this"/>
                         </ace:textEntry>
                     </ace:column>
+                     <ace:column headerText="% descuento" style="width: 150px" stacked="false">
+                         <ace:textEntry value=" #{item.valorDescuento}" >
+                            <f:convertNumber pattern="#0.00"/>
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </ace:column>
+                      <ace:column headerText="% descuento" style="width: 150px" stacked="false">
+                         <ace:textEntry value=" #{(item.valorDescuento / item.bigdPrecioCliente)*100}" >
+                            <f:convertNumber pattern="#0.00"/>
+                            <ace:ajax execute="@this" render="@this"/>
+                        </ace:textEntry>
+                    </ace:column>
                 </ace:dataTable>
                 <ace:dataTable value="#{gestionVentaJSFBean.lstTablaSrvXVentas}"
                                var="item"

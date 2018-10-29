@@ -543,16 +543,16 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                             <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaPopProdXServXOp}" 
                                            style="font-size: large;"
                                            var="itemPrd"
-
-                                           rows="30"
-
-                                           paginator="true"
+                                         
+                                           scrollHeight="700"
+                                           scrollable="true"
+                                           staticHeaders="true"
+                                           paginator="false"                                           
                                            emptyMessage="No se encontraron registros"
                                            paginatorPosition="bottom"
                                            paginatorAlwaysVisible="true"
                                            paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                            currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
-
                                 <ace:column headerText="# Servicios" style="width: 50px" groupBy="#{itemPrd.popProdxservxop.sxoId.vsrvId.vsrvNombre}">
                                     <h:outputText value="#{itemPrd.popProdxservxop.sxoId.sxoCantsrv}"
                                                   styleClass="textcolumncenter letraOutput"/>
@@ -712,7 +712,7 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                                  actionListener="#{pcsOrdenProduccionJSFBean.btnAgregarProductosVarios_ActionEvent}">
                     <f:ajax execute="@this" render="@all" />
                 </h:commandButton>
-                  <h:commandButton value="Agregar Servicio"
+                <h:commandButton value="Agregar Servicio"
                                  class="wrapper button"
                                  actionListener="#{pcsOrdenProduccionJSFBean.btnAgregarServicios_ActionEvent}">
                     <f:ajax execute="@this" render="@all" />
@@ -721,32 +721,37 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                 <br></br>
                 <h:panelGroup rendered="#{pcsOrdenProduccionJSFBean.blnMostrarServicios}">
                     <ace:dataTable value="#{pcsOrdenProduccionJSFBean.lstTablaServicios}"                           
-                                                   var="itemServicios"
-                                                   rows="30"
-                                                   paginator="true"
-                                                   emptyMessage="No se encontraron registros"
-                                                   paginatorPosition="bottom"
-                                                   paginatorAlwaysVisible="true"
-                                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
+                                   var="itemServicios"
+                                   rows="30"
+                                   paginator="true"
+                                   emptyMessage="No se encontraron registros"
+                                   paginatorPosition="bottom"
+                                   paginatorAlwaysVisible="true"
+                                   paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                   currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
                         <f:facet name="header">
-                            <h:outputText value="Lista de servicios"/>
+                            <h:outputText value="LISTA DE SERVICIOS" styleClass="titulo1" />
                         </f:facet>
+                         <ace:column headerText="Id servicio"  sortBy="#{itemServicios.servicio.vsrvNombre}"
+                                     filterBy="#{itemServicios.servicio.vsrvId}" filterMatchMode="contains"  style="width: 50px">
+                            <h:outputText value="#{itemServicios.servicio.vsrvId}"
+                                          styleClass="textcolumleft letraOutput"/>
+                        </ace:column>
                         <ace:column headerText="Servicio"  sortBy="#{itemServicios.servicio.vsrvNombre}"
-                                                    filterBy="#{itemServicios.servicio.vsrvNombre}" filterMatchMode="contains"  style="width: 300px">
-                                            <h:outputText value="#{itemServicios.servicio.vsrvNombre}"
-                                                          styleClass="textcolumleft letraOutput"/>
-                                        </ace:column>
+                                    filterBy="#{itemServicios.servicio.vsrvNombre}" filterMatchMode="contains"  style="width: 300px">
+                            <h:outputText value="#{itemServicios.servicio.vsrvNombre}"
+                                          styleClass="textcolumleft letraOutput"/>
+                        </ace:column>
 
-                                            <ace:column style="width: 50px">
-                                            <h:commandButton styleClass="btnGuardarStd"
-                                                             actionListener="#{pcsOrdenProduccionJSFBean.rowDetbtnAgregarServicio_ActionEvent}">
-                                                <f:attribute name="itemServicios" value="#{itemServicios}"/>
-                                            </h:commandButton>
-                                        </ace:column>
-                      </ace:dataTable>
+                        <ace:column style="width: 50px">
+                            <h:commandButton styleClass="btnGuardarStd"
+                                             actionListener="#{pcsOrdenProduccionJSFBean.rowDetbtnAgregarServicio_ActionEvent}">
+                                <f:attribute name="itemServicios" value="#{itemServicios}"/>
+                            </h:commandButton>
+                        </ace:column>
+                    </ace:dataTable>
                 </h:panelGroup>
-                
+
                 <h:panelGroup rendered="#{pcsOrdenProduccionJSFBean.blnMostrarProductos}">
                     <table  class="tablaFormulario"  border="1" bordercolor="F7B409">
                         <tr><th  class="thtablaFormulario"> Otros Productos </th></tr>
@@ -766,9 +771,13 @@ JAOR Abril24 - ajuste tabla de productos asociados a Servicio en creaciòn OP
                                                    currentPageReportTemplate="({startRecord} - {endRecord} de {totalRecords}, Página: {currentPage}/{totalPages})">
 
 
-
+                                        <ace:column headerText="Id producto"  sortBy="#{itemPv.invProducto.prdId}"
+                                                    filterBy="#{itemPv.invProducto.prdId}" filterMatchMode="contains"  style="width: 50px">
+                                            <h:outputText value="#{itemPv.invProducto.prdId}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
                                         <ace:column headerText="Producto"  sortBy="#{itemPv.invProducto.prdNombre}"
-                                                    filterBy="#{itemPv.invProducto.prdNombre}" filterMatchMode="contains"  style="width: 300px">
+                                                    filterBy="#{itemPv.invProducto.prdNombre}" filterMatchMode="contains"  style="width: 50px">
                                             <h:outputText value="#{itemPv.invProducto.prdNombre}"
                                                           styleClass="textcolumleft letraOutput"/>
                                         </ace:column>

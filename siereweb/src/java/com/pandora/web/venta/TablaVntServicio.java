@@ -13,16 +13,19 @@ import java.util.Objects;
  *
  * @author luis
  */
-public class TablaVntServicio extends TablaBaseGrid{
-    private VntServicio vntServicio =  new VntServicio();
+public class TablaVntServicio extends TablaBaseGrid {
+
+    private VntServicio vntServicio = new VntServicio();
     private BigDecimal bigdPrecioCliente;
+    private BigDecimal bigdProcentajeDesc;
 
     public TablaVntServicio() {
     }
+
     public TablaVntServicio(VntServicio pVntServicio) {
         this.vntServicio = pVntServicio;
     }
-    
+
     private Integer cantidadSrv;
 
     @Override
@@ -46,7 +49,6 @@ public class TablaVntServicio extends TablaBaseGrid{
         }
         return true;
     }
-    
 
     /**
      * @return the vntServicio
@@ -88,5 +90,13 @@ public class TablaVntServicio extends TablaBaseGrid{
      */
     public void setCantidadSrv(Integer cantidadSrv) {
         this.cantidadSrv = cantidadSrv;
+    }
+
+    public BigDecimal getBigdProcentajeDesc() {
+        return bigdProcentajeDesc;
+    }
+
+    public void setBigdProcentajeDesc(BigDecimal bigdProcentajeDesc) {
+        this.bigdProcentajeDesc = bigdProcentajeDesc;
     }
 }

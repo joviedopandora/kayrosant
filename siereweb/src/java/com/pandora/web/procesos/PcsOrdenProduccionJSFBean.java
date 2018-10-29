@@ -1133,14 +1133,57 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         return genInfRecurso(hmParametros, informe, 2, rutaLogo);
 
     }
+//Filtro obsr
+    private String strFiltrovdeObsr;
+
+    public String getStrFiltrovdeObsr() {
+        return strFiltrovdeObsr;
+    }
+
+    public void setStrFiltrovdeObsr(String strFiltrovdeObsr) {
+        this.strFiltrovdeObsr = strFiltrovdeObsr;
+    }
+    List<TablaVntSrvXVenta> lstTablaServiciosPendientesFiltrados = new ArrayList<>();
+
+    public void carTable_FiltroObsr_VCE(ValueChangeEvent vce) {
+        lstTablaServiciosPendientesFiltrados.clear();
+        strFiltrovdeObsr = (String) vce.getNewValue();
+
+        if (strFiltrovdeObsr.isEmpty()) {
+            cargarCronograma();
+        } else {
+            for (TablaVntSrvXVenta tvsxv : lstTablaServiciosPendientes) {
+                if (tvsxv.getVntServxventa().getRgvtId().getVdeId().getVdeObsr().toUpperCase().contains(strFiltrovdeObsr.toUpperCase())) {
+                    lstTablaServiciosPendientesFiltrados.add(tvsxv);
+                }
+
+            }
+            if (!lstTablaServiciosPendientesFiltrados.isEmpty()) {
+                lstTablaServiciosPendientes.clear();
+                for (TablaVntSrvXVenta xVenta : lstTablaServiciosPendientesFiltrados) {
+                    lstTablaServiciosPendientes.add(xVenta);
+                }
+            }
+
+        }
+
+    }
 
     public void guardarCronograma_ActionEvent(ActionEvent ae) {
 
         List<VntCronograma> listaGrabar = new ArrayList<>();
-        for (TablaVntSrvXVenta s : lstTablaServiciosPendientes) {
-            listaGrabar.add(s.getCronogramaSel());
+        if (lstTablaServiciosPendientesFiltrados.isEmpty()) {
+            for (TablaVntSrvXVenta s : lstTablaServiciosPendientes) {
+                listaGrabar.add(s.getCronogramaSel());
+            }
+        } else {
+            for (TablaVntSrvXVenta s : lstTablaServiciosPendientesFiltrados) {
+                listaGrabar.add(s.getCronogramaSel());
+            }
         }
+
         cronogramaSLBean.editarListCronograma(listaGrabar);
+        //     cargarServiciosXventa();
         mostrarError("Cronograma actualizado correctamente", 3);
 
     }
@@ -1172,7 +1215,6 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
     public void rowDetbtnAgregarServicio_ActionEvent(ActionEvent ae) {
         Map map = ae.getComponent().getAttributes();
         tablaServicioSel = (TablaServicio) map.get("itemServicios");
-        
 
         List<VntProdxsrv> pxs = popsfb.getLstVntProdxsrvXServicio(tablaServicioSel.getServicio().getVsrvId());
         PopServxop ps = new PopServxop();
@@ -1184,35 +1226,35 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         //List<VntProdxsrv> pxs = popsfb.getLstVntProdxsrvXServicio(vs.getVntServxventa().getVsrvId().getVsrvId());
 
         for (VntProdxsrv vpxs : pxs) {
-           // for (PopServxop psxo : tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList()) {
+            // for (PopServxop psxo : tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList()) {
 
-                PopProdxservxop pxsxo = new PopProdxservxop();
-                pxsxo.setPrdId(vpxs.getPrdId());
-                pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
-                //pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
-                pxsxo.setPxsoCantprodfija(0);
-                //  jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
-                //  pxsxo.setPxsoEstado(Boolean.TRUE);    //
-                pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
-                pxsxo.setPxsoEstadosalida(Boolean.FALSE);
-                pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
-                pxsxo.setSxoId(ps);
-                pxsxo.setServicioAsociadoId(tablaServicioSel.getServicio().getVsrvId());
-                pxsxo.setServicioAsociadoDesc(tablaServicioSel.getServicio().getVsrvNombre());
+            PopProdxservxop pxsxo = new PopProdxservxop();
+            pxsxo.setPrdId(vpxs.getPrdId());
+            pxsxo.setPxsoCantprod(vpxs.getProdxsrvCantidad());
+            //pxsxo.setPxsoCantprodfija(vpxs.getProdxsrvCantidad());
+            pxsxo.setPxsoCantprodfija(0);
+            //  jaor Abril 24 - modifica carga variable estado default True por valor del registro de producto //
+            //  pxsxo.setPxsoEstado(Boolean.TRUE);    //
+            pxsxo.setPxsoEstado(vpxs.getProdxsrvEst());
+            pxsxo.setPxsoEstadosalida(Boolean.FALSE);
+            pxsxo.setPxsoEstadoentrada(Boolean.FALSE);
+            pxsxo.setSxoId(ps);
+            pxsxo.setServicioAsociadoId(tablaServicioSel.getServicio().getVsrvId());
+            pxsxo.setServicioAsociadoDesc(tablaServicioSel.getServicio().getVsrvNombre());
             //  psxo.getPopProdxservxopList().add(pxsxo);
-                //tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(psxo);
-                if (ps.getPopProdxservxopList() == null) {
-                    ps.setPopProdxservxopList(new ArrayList<PopProdxservxop>());
-                }
-                ps.getPopProdxservxopList().add(pxsxo);
-                TablaPopProdXServXOp tppxsxo = new TablaPopProdXServXOp();
-                tppxsxo.setPopProdxservxop(pxsxo);
-                lstTablaPopProdXServXOp.add(tppxsxo);
-
+            //tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(psxo);
+            if (ps.getPopProdxservxopList() == null) {
+                ps.setPopProdxservxopList(new ArrayList<PopProdxservxop>());
             }
+            ps.getPopProdxservxopList().add(pxsxo);
+            TablaPopProdXServXOp tppxsxo = new TablaPopProdXServXOp();
+            tppxsxo.setPopProdxservxop(pxsxo);
+            lstTablaPopProdXServXOp.add(tppxsxo);
+
+        }
         for (TablaPopProdXServXOp lXOp : lstTablaPopProdXServXOp) {
             tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList().add(lXOp.getPopProdxservxop().getSxoId());
-             
+
         }
 //           for (PopServxop psxo : tablaPopOrdenProduccionSel.getPopOrdenprod().getPopServxopList()) {
 //               
