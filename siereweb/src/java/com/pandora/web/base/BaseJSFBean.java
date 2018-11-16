@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -50,9 +51,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.PartialViewContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -62,6 +61,7 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.export.JExcelApiExporter;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Months;
@@ -77,12 +77,11 @@ import utilidades.EnFormatDate;
 public abstract class BaseJSFBean implements Serializable {
 
     //<editor-fold defaultstate="collapsed" desc="Constantes">
-    
 //    private DataSource getJdbcProcAud() throws NamingException {
 //        Context c = new InitialContext();
 //        return (DataSource) c.lookup("java:comp/env/jdbcProcAud");
 //    }
-    @Resource(name ="jdbcSysPandora" )
+    @Resource(name = "jdbcSysPandora")
     protected DataSource jdbcProcAud;
     private String ruta_recursos = "/WEB-INF/classes/";
     protected com.icesoft.faces.context.Resource jasperResourceExcel;
@@ -159,6 +158,178 @@ public abstract class BaseJSFBean implements Serializable {
     }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Funciones comunes">
+
+    /**
+     * Ir al servlet que de descarga de archivos
+     *
+     * @param pRecursoDescarga
+     */
+    protected void irAServletDescarga(RecursoDescarga pRecursoDescarga) {
+        try {
+            fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            URL url = new URL( ec.getRequestScheme(),
+            ec.getRequestServerName(),
+            ec.getRequestServerPort(),
+            ec.getRequestContextPath());           
+//            String contextoApp = ec.getApplicationContextPath();
+            HttpSession httpSession =(HttpSession) ec.getSession(false);
+            httpSession.setAttribute("rd", pRecursoDescarga);
+            ec.redirect(url.toString() + "/DescargarArchivoServlet");
+        } catch (IOException ex) {
+            Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Generar informe
+     *
+     * @param hmParamInf Parámetros del informe
+     * @param pAdmInforme Informe
+     * @param tipoExportacion Tipo exportación, 1 para excel, 2 para PDF, 3 para
+     * html, 4 para CSV, 5 para xlsx
+     * @return Recurso binario resultado de la generación del informe
+     */
+    protected RecursoDescarga genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion) {
+        try {
+            fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            try (Connection con = jdbcProcAud.getConnection()) {
+                InputStream inputStream = ec.getResourceAsStream(ruta_recursos + pAdmInforme.getInfJasperruta() + "/" + pAdmInforme.getInfJasper());
+                hmParamInf.put("SUBREPORT_DIR", ec.getRealPath(ruta_recursos + pAdmInforme.getInfJasperruta()) + "/");
+                JasperPrint jp = JasperFillManager.fillReport(inputStream, hmParamInf, con);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                RecursoDescarga jrResourceRetorna = null;
+                switch (tipoExportacion) {
+                    case 1:
+                        JExcelApiExporter jeae = new JExcelApiExporter();
+
+                        jeae.setParameter(JRXlsExporterParameter.INPUT_STREAM, inputStream);
+                        jeae.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
+                        jeae.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
+                        jeae.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+                        jeae.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
+                        jeae.exportReport();
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre());
+
+                        break;
+
+                    case 2:
+
+                        JasperExportManager.exportReportToPdfStream(jp, baos);
+
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/pdf", pAdmInforme.getInfNombre());
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+                        JRCsvExporter exporterCSV = new JRCsvExporter();
+                        exporterCSV.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
+                        exporterCSV.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, true);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, true);
+                        exporterCSV.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
+                        exporterCSV.exportReport();
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre());
+                        break;
+
+                    case 5:
+                        JRXlsxExporter exporterXLSX = new JRXlsxExporter();
+                        exporterXLSX.setParameter(JRXlsExporterParameter.INPUT_STREAM, inputStream);
+                        exporterXLSX.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
+                        exporterXLSX.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
+                        exporterXLSX.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+                        exporterXLSX.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
+                        exporterXLSX.exportReport();
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xlsx", pAdmInforme.getInfNombre());
+                        break;
+                }
+                if (jrResourceRetorna != null) {
+                    return jrResourceRetorna;
+                } else {
+                    return null;
+                }
+
+            }
+
+        } catch (JRException | SQLException ex) {
+            Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    /**
+     * Generar informe
+     *
+     * @param hmParamInf Parámetros del informe
+     * @param pAdmInforme Informe
+     * @param tipoExportacion Tipo exportación, 1 para excel, 2 para PDF, 3 para
+     * html, 4 para CSV
+     * @return Recurso binario resultado de la generación del informe
+     */
+    protected RecursoDescarga genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion, String logo) {
+        try {
+            fc = FacesContext.getCurrentInstance();
+            ExternalContext ec = fc.getExternalContext();
+            try (Connection con = jdbcProcAud.getConnection()) {
+
+                InputStream inputStream = ec.getResourceAsStream(getRuta_recursos() + pAdmInforme.getInfJasperruta() + "/" + pAdmInforme.getInfJasper());
+                hmParamInf.put("SUBREPORT_DIR", ec.getRealPath(getRuta_recursos() + pAdmInforme.getInfJasperruta()) + "/");
+                hmParamInf.put("rutalogo", ec.getRealPath(getRuta_recursos() + logo));
+                JasperPrint jp = JasperFillManager.fillReport(inputStream, hmParamInf, con);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                RecursoDescarga jrResourceRetorna = null;
+                switch (tipoExportacion) {
+                    case 1:
+                        JExcelApiExporter jeae = new JExcelApiExporter();
+
+                        jeae.setParameter(JRXlsExporterParameter.INPUT_STREAM, inputStream);
+                        jeae.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
+                        jeae.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
+                        jeae.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
+                        jeae.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
+                        jeae.exportReport();
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre() + ".xls");
+                        break;
+
+                    case 2:
+
+                        JasperExportManager.exportReportToPdfStream(jp, baos);
+
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/pdf", pAdmInforme.getInfNombre() + ".pdf");
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+                        JRCsvExporter exporterCSV = new JRCsvExporter();
+                        exporterCSV.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
+                        exporterCSV.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, true);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true);
+                        exporterCSV.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, true);
+                        exporterCSV.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
+                        exporterCSV.exportReport();
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre()+".csv");
+                        break;
+                }
+                if (jrResourceRetorna != null) {
+                    return jrResourceRetorna;
+                } else {
+                    return null;
+                }
+
+            }
+
+        } catch (JRException | SQLException ex) {
+            Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
     public String getHoraFromDate(Date pFecIni) {
         SimpleDateFormat sd = new SimpleDateFormat("HH:mm");
@@ -317,76 +488,6 @@ public abstract class BaseJSFBean implements Serializable {
 
         /*      FacesContext.getCurrentInstance().addMessage(null, message);
          JavascriptContext.addJavascriptCall(FacesContext.getCurrentInstance(), "myNotificacionBar.show();");*/
-    }
-
-    /**
-     * Generar informe
-     *
-     * @param hmParamInf Parámetros del informe
-     * @param pAdmInforme Informe
-     * @param tipoExportacion Tipo exportación, 1 para excel, 2 para PDF, 3 para
-     * html, 4 para CSV
-     * @return Recurso binario resultado de la generación del informe
-     */
-    protected com.icesoft.faces.context.Resource genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion, String logo) {
-        try {
-            fc = FacesContext.getCurrentInstance();
-            ExternalContext ec = fc.getExternalContext();
-            try (Connection con = jdbcProcAud.getConnection()) {
-
-                InputStream inputStream = ec.getResourceAsStream(getRuta_recursos() + pAdmInforme.getInfJasperruta() + "/" + pAdmInforme.getInfJasper());
-                hmParamInf.put("SUBREPORT_DIR", ec.getRealPath(getRuta_recursos() + pAdmInforme.getInfJasperruta()) + "/");
-                hmParamInf.put("rutalogo", ec.getRealPath(getRuta_recursos() + logo));
-                JasperPrint jp = JasperFillManager.fillReport(inputStream, hmParamInf, con);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                com.icesoft.faces.context.Resource jrResourceRetorna = null;
-                switch (tipoExportacion) {
-                    case 1:
-                        JExcelApiExporter jeae = new JExcelApiExporter();
-
-                        jeae.setParameter(JRXlsExporterParameter.INPUT_STREAM, inputStream);
-                        jeae.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
-                        jeae.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
-                        jeae.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
-                        jeae.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
-                        jeae.exportReport();
-                        jrResourceRetorna = new RecursosOut(pAdmInforme.getInfNombre(), baos);
-                        break;
-
-                    case 2:
-
-                        JasperExportManager.exportReportToPdfStream(jp, baos);
-
-                        jrResourceRetorna = new RecursosOut(pAdmInforme.getInfJasper(), baos);
-
-                        break;
-                    case 3:
-
-                        break;
-                    case 4:
-                        JRCsvExporter exporterCSV = new JRCsvExporter();
-                        exporterCSV.setParameter(JRXlsExporterParameter.JASPER_PRINT, jp);
-                        exporterCSV.setParameter(JRXlsExporterParameter.OUTPUT_STREAM, baos);
-                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_COLUMNS, true);
-                        exporterCSV.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, true);
-                        exporterCSV.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, true);
-                        exporterCSV.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
-                        exporterCSV.exportReport();
-                        jrResourceRetorna = new RecursosOut(pAdmInforme.getInfJasper(), baos);
-                        break;
-                }
-                if (jrResourceRetorna != null) {
-                    return jrResourceRetorna;
-                } else {
-                    return null;
-                }
-
-            }
-
-        } catch (JRException | SQLException ex) {
-            Logger.getLogger(BaseJSFBean.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
     }
 
     /**

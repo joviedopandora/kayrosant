@@ -1335,8 +1335,8 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         if (idTipoCliente.equals(EnTipoCliente.KIDS.getId())) {
             rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
         }
-
-        tabla.setJaspResource(genInfRecurso(hmParametros, informe, 1, rutaLogo));
+        irAServletDescarga(genInfRecurso(hmParametros, informe, 1, rutaLogo));
+        //tabla.setJaspResource(genInfRecurso(hmParametros, informe, 1, rutaLogo));
 
     }
 

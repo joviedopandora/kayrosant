@@ -1109,13 +1109,14 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 tablaPopOrdenProduccionSel.getCronograma().setPopOrdenprod(tablaPopOrdenProduccionSel.getPopOrdenprod());
                 tablaPopOrdenProduccionSel.setCronograma(cronogramaSLBean.editarCronograma(tablaPopOrdenProduccionSel.getCronograma()));
             }
-            jasperResource = generarInformeOP(tablaPopOrdenProduccionSel.getPopOrdenprod());
+           // jasperResource = 
+                     generarInformeOP(tablaPopOrdenProduccionSel.getPopOrdenprod());
         }
 
         mostrarError("Guardado Exitoso!!", 3);
     }
 
-    private com.icesoft.faces.context.Resource generarInformeOP(PopOrdenprod op) {
+    private void generarInformeOP(PopOrdenprod op) {
         HashMap hmParametros = new HashMap();
         hmParametros.put("p_idorden", op.getOprId());
         AdmColaborador admColLog = pjsfb.getColxempLog().getColCedula();
@@ -1130,7 +1131,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
             hmParametros.put("rutaFoto", rutaLogo);
         }
-        return genInfRecurso(hmParametros, informe, 2, rutaLogo);
+        
+        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo));
 
     }
 //Filtro obsr
@@ -1753,7 +1755,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         public void generarReporte(ActionEvent ae) {
             this.respuesta = (TablaPopOrdenProduccion) ae.getComponent().getAttributes().get("tabla");
 
-            this.respuesta.setResource(generarInformeOP(this.respuesta.getPopOrdenprod()));
+           /* this.respuesta.setResource(*/
+                    generarInformeOP(this.respuesta.getPopOrdenprod());
 
         }
 

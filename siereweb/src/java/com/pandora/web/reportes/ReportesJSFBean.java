@@ -111,7 +111,8 @@ public class ReportesJSFBean extends BaseJSFBean implements Serializable {
                 break;
 
         }
-        jaspResource = genInfRecurso(hmParametros, informe, 1, null);
+       // jaspResource = 
+              irAServletDescarga(    genInfRecurso(hmParametros, informe, 1, null));
     }
 
     @Override

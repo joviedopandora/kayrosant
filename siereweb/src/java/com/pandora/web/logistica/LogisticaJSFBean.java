@@ -84,7 +84,7 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
         lsfb = lookupLogisticaSFBean();
         numPanel = 1;
         blnMostrarPanel = false;
-        cargarListaOrdenProdXProcesado(numPanel-1);
+        cargarListaOrdenProdXProcesado(numPanel - 1);
         TIPO_TRANSACCION_ENTRADA = null;
         TIPO_TRANSACCION_SALIDA = null;
         for (InvTipotransc t : lsfb.getLstInvTipotransc(true, true)) {
@@ -207,14 +207,14 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
             PopOrdenprod prp = tablaPopOrdenProduccionSel.getPopOrdenprod();
             prp.setEevId(ordenProduccionSFBean.getLgtEstadoeventoById(EnEstadoLogistica.EVENTO_DESPACHADO.getId()));
             prp.setOprEstadodespacho(numPanel);
-            if(prp.getOprEstadodespacho() == 2){
+            if (prp.getOprEstadodespacho() == 2) {
                 prp.setEevId(ordenProduccionSFBean.getLgtEstadoeventoById(EnEstadoLogistica.EVENTO_RECIBIDO.getId()));
             }
             prp = lsfb.editarPopOrdenprod(prp);
             cargarListaServXOrdenProd();
             cargarListaProdxservxopXOp();
             blnMostrarPanel = false;
-            cargarListaOrdenProdXProcesado(numPanel-1);
+            cargarListaOrdenProdXProcesado(numPanel - 1);
             // PopOrdenprod prp = tablaPopOrdenProduccionSel.getPopOrdenprod();
 
         } else {
@@ -240,7 +240,8 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
 
             }
 
-            jasperResource = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+            // jasperResource =
+            irAServletDescarga(genInfRecurso(hmParametros, informe, 2, rutaLogo));
         }
     }
 
@@ -258,7 +259,7 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
         switch (numPanel) {
             case 1:
             case 2:
-                cargarListaOrdenProdXProcesado(numPanel-1);
+                cargarListaOrdenProdXProcesado(numPanel - 1);
                 break;
             case 3:
                 cargarListaOrdenProdXProcesado(valorRadioconsulta);

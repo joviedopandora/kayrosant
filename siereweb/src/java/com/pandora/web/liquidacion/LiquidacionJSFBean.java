@@ -91,7 +91,8 @@ public class LiquidacionJSFBean extends BaseJSFBean implements Serializable {
     
     public void generarReporteConsolidadoPorItem(ActionEvent ae) {
         TablaConsolidadoLiquidacion t = (TablaConsolidadoLiquidacion) ae.getComponent().getAttributes().get("tablaConsolidado");
-        t.setJasperResourcePDF(generarReporte(t.getLiquidacionconsolidado().getIdLiquidaconso()));
+        generarReporte(t.getLiquidacionconsolidado().getIdLiquidaconso());
+        //t.setJasperResourcePDF(generarReporte(t.getLiquidacionconsolidado().getIdLiquidaconso()));
     }
     
     private void loadConsolidadoLiquidacion() {
@@ -126,7 +127,8 @@ public class LiquidacionJSFBean extends BaseJSFBean implements Serializable {
         mostrarError("Liquidación de nomina generada exitosamente con el # " + pgLiquidacionconsolidado.getIdLiquidaconso(), 3);
         consultaNominaDTO = new ConsultaNominaDTO();
         
-        this.jasperResourcePDF = generarReporte(pgLiquidacionconsolidado.getIdLiquidaconso());
+        //this.jasperResourcePDF = 
+        generarReporte(pgLiquidacionconsolidado.getIdLiquidaconso());
         for (PgLiquidacion liq : pgLiquidacionconsolidado.getPgLiquidacionList()) {
             if (!liq.getIdTipopago().getIdTipopago().equals(EnTipoPagoNomina.TRANSFERENCIA.getId())) {
                 enviarCorreoPinPago(liq);
@@ -190,14 +192,15 @@ public class LiquidacionJSFBean extends BaseJSFBean implements Serializable {
         
     }
     
-    public com.icesoft.faces.context.Resource generarReporte(Integer idConsolidado) {
+    public void generarReporte(Integer idConsolidado) {
         
         HashMap hmParamInf = new HashMap();
         hmParamInf.put("p_Liquida", idConsolidado);
         
         AdmInforme pAdmInforme = admSysTareaSLBean.getAdmInformeXId(EnInforme.NOMINA.getId());
         String rutaLogo = "reportes/venta/logos/maximus.jpg";
-        return genInfRecurso(hmParamInf, pAdmInforme, 2, rutaLogo);
+        irAServletDescarga(genInfRecurso(hmParamInf, pAdmInforme, 2, rutaLogo));
+        //return genInfRecurso(hmParamInf, pAdmInforme, 2, rutaLogo);
     }
     
     public void seleccionarParaPago(ValueChangeEvent vce) {
