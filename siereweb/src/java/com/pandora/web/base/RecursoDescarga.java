@@ -14,6 +14,7 @@ public class RecursoDescarga {
     private byte[] byteRecurso ;
     private String tipoMime;
     private String nombre;
+    private String nombreArchivo;
 
     public RecursoDescarga() {
     }
@@ -66,6 +67,14 @@ public class RecursoDescarga {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
     }
     
 }
