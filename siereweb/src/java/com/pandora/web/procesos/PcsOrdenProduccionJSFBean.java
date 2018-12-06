@@ -1132,7 +1132,7 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             hmParametros.put("rutaFoto", rutaLogo);
         }
         
-        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo));
+        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo,"OP_" + getNombreArchivoGeneracionOp()));
 
     }
 //Filtro obsr

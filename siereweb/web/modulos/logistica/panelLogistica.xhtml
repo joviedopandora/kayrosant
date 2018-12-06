@@ -10,8 +10,7 @@ and open the template in the editor.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:icecore="http://www.icefaces.org/icefaces/core"
-      xmlns:ace="http://www.icefaces.org/icefaces/components"
-      xmlns:ice="http://www.icesoft.com/icefaces/component">
+      xmlns:ace="http://www.icefaces.org/icefaces/components"      
     <ui:insert name="logistica">
         <icecore:singleSubmit />
         <ace:panel header="LOGISTICA  #{(logisticaJSFBean.numPanel ==1 ?'- SALIDAS' : (logisticaJSFBean.numPanel ==2 ?' - ENTRADAS':'') )}" rendered="#{!logisticaJSFBean.blnMostrarPanel}">

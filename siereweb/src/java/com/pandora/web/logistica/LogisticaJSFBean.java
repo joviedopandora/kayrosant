@@ -21,6 +21,7 @@ import com.pandora.mod.ordenprod.dao.PopServxop;
 import com.pandora.mod.venta.dao.VntDetevento;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
+import com.pandora.web.base.RecursoDescarga;
 import com.pandora.web.ordenprod.TablaPopOrdenProduccion;
 import com.pandora.web.ordenprod.TablaPopProdXServXOp;
 import com.pandora.web.ordenprod.TablaPopServXOp;
@@ -64,18 +65,15 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
     private List<TablaPopServXOp> lstTablaPopServXOp = new ArrayList<>();
     private TablaPopServXOp tablaPopServXOpSel = new TablaPopServXOp();
     private List<TablaPopProdXServXOp> lstTablaPopProdXServXOp = new ArrayList<>();
-    private com.icesoft.faces.context.Resource jasperResource = null;
+    
     private PopOrdenprod popOrdenprodSel = null;
     private InvTipotransc TIPO_TRANSACCION_SALIDA = null;
     private InvTipotransc TIPO_TRANSACCION_ENTRADA = null;
 
-    public Resource getJasperResource() {
-        return jasperResource;
-    }
-
-    public void setJasperResource(Resource jasperResource) {
-        this.jasperResource = jasperResource;
-    }
+    //<editor-fold defaultstate="collapsed" desc="Variables movimiento inventario">
+    
+    private String codigBarrasMov;
+//</editor-fold>
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Métodos del bean">
@@ -106,6 +104,9 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Procedimientos y funciones">
+    //<editor-fold defaultstate="collapsed" desc="Funciones movimiento inventario">
+     
+//</editor-fold>
     private void cargarListaOrdenProdXProcesado(Integer estadoProcesado) {
         lstTablaPopOrdenProduccion.clear();
 
@@ -218,12 +219,15 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
             // PopOrdenprod prp = tablaPopOrdenProduccionSel.getPopOrdenprod();
 
         } else {
-            return;
         }
     }
 
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="eventos">
+    //<editor-fold defaultstate="collapsed" desc="Eventos movimiento inventario">
+    
+//</editor-fold>
+    
     public void btnGenerarReporteOrdenProduccion_ActionEvent(ActionEvent ae) {
         if (tablaPopOrdenProduccionSel != null && tablaPopOrdenProduccionSel.getPopOrdenprod() != null && tablaPopOrdenProduccionSel.getPopOrdenprod().getOprId() != null) {
             HashMap hmParametros = new HashMap();
@@ -241,7 +245,12 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
             }
 
             // jasperResource =
-            irAServletDescarga(genInfRecurso(hmParametros, informe, 2, rutaLogo));
+            RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+            if (rd != null) {
+                irAServletDescarga(rd);
+            }else{
+                mostrarError("Error al generar reporte, consulte con el administrador");
+            }
         }
     }
 
@@ -491,5 +500,13 @@ public class LogisticaJSFBean extends BaseJSFBean implements Serializable, IPaso
      */
     public void setPopOrdenprodSel(PopOrdenprod popOrdenprodSel) {
         this.popOrdenprodSel = popOrdenprodSel;
+    }
+
+    public String getCodigBarrasMov() {
+        return codigBarrasMov;
+    }
+
+    public void setCodigBarrasMov(String codigBarrasMov) {
+        this.codigBarrasMov = codigBarrasMov;
     }
 }

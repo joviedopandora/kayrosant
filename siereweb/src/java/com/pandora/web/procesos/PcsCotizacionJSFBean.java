@@ -36,6 +36,7 @@ import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.mod.venta.dao.VntServxventa;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
+import com.pandora.web.base.RecursoDescarga;
 import com.pandora.web.venta.TablaVntCliente;
 import com.pandora.web.venta.TablaVntDetalleCliente;
 import com.pandora.web.venta.TablaVntServicio;
@@ -927,7 +928,7 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
             subCliente += "_" + d.getDclnId().getDclnDireccion().replace(" ", "_");
             subCliente += "_" + (d.getVdeObsr() == null ? "" : "_" + d.getVdeObsr().replace(" ", "_"));
         }
-        return d.getRgvtId().getRgvtId() + "_" + nombre + subCliente + ".xls";
+        return d.getRgvtId().getRgvtId() + "_" + nombre + subCliente;
 
     }
 
@@ -1335,9 +1336,14 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
         if (idTipoCliente.equals(EnTipoCliente.KIDS.getId())) {
             rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
         }
-        irAServletDescarga(genInfRecurso(hmParametros, informe, 1, rutaLogo));
-        //tabla.setJaspResource(genInfRecurso(hmParametros, informe, 1, rutaLogo));
+        RecursoDescarga rd = genInfRecurso(hmParametros, informe, 1, rutaLogo, tabla.getNombreArchivo());
+        if (rd != null) {
+            irAServletDescarga(rd);
+        } else {
+            mostrarError("Error al generar reporte, consulte con el administrador");
+        }
 
+        //tabla.setJaspResource(genInfRecurso(hmParametros, informe, 1, rutaLogo));
     }
 
     public void buscarCotizacionXDetalleCliente_ActionEvent(ActionEvent ae) {
@@ -2221,8 +2227,8 @@ public class PcsCotizacionJSFBean extends BaseJSFBean implements Serializable, I
     }
 
     public void cambioDescuentoXServicio(ValueChangeEvent vce) {
-        TablaVntSrvXVenta tsxvs = (TablaVntSrvXVenta) vce.getComponent().getAttributes().get("tsxvs");        
-        aplicarDescuentoXServicio(tsxvs, (BigDecimal)vce.getNewValue(), (BigDecimal)vce.getOldValue());
+        TablaVntSrvXVenta tsxvs = (TablaVntSrvXVenta) vce.getComponent().getAttributes().get("tsxvs");
+        aplicarDescuentoXServicio(tsxvs, (BigDecimal) vce.getNewValue(), (BigDecimal) vce.getOldValue());
         //vntRegistroventa.getRgvtDescuento()
 
     }

@@ -33,6 +33,7 @@ import com.pandora.pagocuenta.dao.FinFormapago;
 import com.pandora.pagocuenta.dao.RfBanco;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
+import com.pandora.web.base.RecursoDescarga;
 import com.pandora.web.venta.TablaVntFactura;
 import com.pandora.web.venta.TablaVntRegistroventa;
 import com.pandora.web.venta.TablaVntRemision;
@@ -754,11 +755,11 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
         public void generarReporte(ActionEvent ae) {
             this.respuestaFacturaDTO = (TablaRespuestaFacturaDTO) ae.getComponent().getAttributes().get("tabla");
             if (this.respuestaFacturaDTO.getFactura() != null) {
-              //  this.respuestaFacturaDTO.setResource(
-                        getReporteByFactura(respuestaFacturaDTO.getFactura());
+                //  this.respuestaFacturaDTO.setResource(
+                getReporteByFactura(respuestaFacturaDTO.getFactura());
             } else {
                 //this.respuestaFacturaDTO.setResource(
-                        getReporteByRemision(respuestaFacturaDTO.getRemision());
+                getReporteByRemision(respuestaFacturaDTO.getRemision());
             }
         }
 
@@ -1134,8 +1135,13 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
             hmParametros.put("p_FacturaVentaCorp", idFactrura);
             AdmInforme informe = astslb.getAdmInformeXId(1);
             String rutaLogo = informe.getInfJasperruta() + "/logos/maximus_corporativo.jpg";
-           // jaspResource = 
-                 irAServletDescarga(     genInfRecurso(hmParametros, informe, 2, rutaLogo));
+            // jaspResource = 
+            RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+            if (rd != null) {
+                irAServletDescarga(rd);
+            } else {
+                mostrarError("Error al generar reporte, consulte con el administrador");
+            }
 
         } else {
             HashMap hmParametros = new HashMap();
@@ -1143,7 +1149,13 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
             AdmInforme informe = astslb.getAdmInformeXId(2);
             String rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
             //jaspResource =
-                    irAServletDescarga(  genInfRecurso(hmParametros, informe, 2, rutaLogo));
+            RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+            if (rd != null) {
+                irAServletDescarga(rd);
+            } else {
+                mostrarError("Error al generar reporte, consulte con el administrador");
+            }
+
         }
     }
 
@@ -1704,7 +1716,7 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
             if (editarFactura()) {
                 numPanel = PANEL_FACTURA_VENTA;
                 //jaspResource = 
-                        getReporteByFactura(factura);
+                getReporteByFactura(factura);
             }
         }
     }
@@ -1729,7 +1741,30 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
         fc = FacesContext.getCurrentInstance();
         ExternalContext ec = fc.getExternalContext();
         hmParametros.put("rutafondo", ec.getRealPath(getRuta_recursos() + informe.getInfJasperruta() + getRutaLogoByEstado(vf.getEftId().getEftId())));
-        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo));
+        String strNombreReporte = construirNombreArchivoFactura();
+        RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo, strNombreReporte);
+        if (rd != null) {
+            irAServletDescarga(rd);
+        } else {
+            mostrarError("Error al generar reporte, consulte con el administrador");
+        }
+
+    }
+
+    private String construirNombreArchivoFactura() {
+        StringBuilder strBNombreFactura = new StringBuilder("F_");
+        if (factura != null && factura.getVfctNumfactura() != null) {
+            strBNombreFactura.append(factura.getVfctNumfactura());
+        }
+        if (factura.getRgvtId().getClnId().getClnAlias() != null) {
+            strBNombreFactura.append("_");
+            strBNombreFactura.append(factura.getRgvtId().getClnId().getClnAlias());
+        }
+        if (factura.getRgvtId().getVdeId().getVdeObsr() != null) {
+            strBNombreFactura.append("_");
+            strBNombreFactura.append(factura.getRgvtId().getVdeId().getVdeObsr());
+        }
+        return strBNombreFactura.toString();
     }
 
     public void btnRegresarFactura_ActionEvent(ActionEvent ae) {
@@ -1766,7 +1801,13 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
         AdmInforme informe = astslb.getAdmInformeXId(EnInforme.FACTURA_VENTA.getId());
         String rutaLogo = informe.getInfJasperruta() + "/logos/";
         // jaspResource = 
-        irAServletDescarga(genInfRecurso(hmParametros, informe, 2, rutaLogo));
+        RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+        if (rd != null) {
+            irAServletDescarga(rd);
+        } else {
+            mostrarError("Error al generar reporte, consulte con el administrador");
+        }
+
     }
 
     //</editor-fold>
@@ -1851,15 +1892,15 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
         AdmInforme informe = astslb.getAdmInformeXId(EnInforme.REMISION_VENTA.getId());
         String rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
         hmParametros.put("rutaEstado", informe.getInfJasperruta() + getRutaLogoByEstado(vr.getEftId().getEftId()));
-        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo));
+        irAServletDescarga(genInfRecurso(hmParametros, informe, 2, rutaLogo));
     }
 
     public void btnEditarRemision_ActionEvent(ActionEvent ae) {
         if (editarRemision()) {
             mostrarError("Remisión guardada correctamente", 3);
 
-           // jaspResource = 
-                    getReporteByRemision(remision);
+            // jaspResource = 
+            getReporteByRemision(remision);
 
         }
     }
@@ -1897,7 +1938,13 @@ public class PcsVentasJSFBean extends BaseJSFBean implements Serializable, IPaso
         AdmInforme informe = astslb.getAdmInformeXId(2);
         String rutaLogo = informe.getInfJasperruta() + "/logos/";
         //jaspResource = 
-                irAServletDescarga(  genInfRecurso(hmParametros, informe, 2, rutaLogo));
+         RecursoDescarga rd = genInfRecurso(hmParametros, informe, 2, rutaLogo);
+        if (rd != null) {
+            irAServletDescarga(rd);
+        } else {
+            mostrarError("Error al generar reporte, consulte con el administrador");
+        }
+        
     }
     //</editor-fold>
 

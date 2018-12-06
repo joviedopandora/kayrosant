@@ -7,6 +7,7 @@ package com.pandora.web.reportes;
 
 import adm.sys.dao.AdmInforme;
 import com.pandora.web.base.BaseJSFBean;
+import com.pandora.web.base.RecursoDescarga;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -112,7 +113,13 @@ public class ReportesJSFBean extends BaseJSFBean implements Serializable {
 
         }
        // jaspResource = 
-              irAServletDescarga(    genInfRecurso(hmParametros, informe, 1, null));
+         RecursoDescarga rd =   genInfRecurso(hmParametros, informe, 1);
+        if (rd != null) {
+            irAServletDescarga(rd);
+        } else {
+            mostrarError("Error al generar reporte, consulte con el administrador");
+        }
+              
     }
 
     @Override

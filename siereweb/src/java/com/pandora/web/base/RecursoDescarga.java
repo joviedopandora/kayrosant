@@ -25,6 +25,12 @@ public class RecursoDescarga {
         this.nombre = nombre;
     }
 
+     public RecursoDescarga(byte[] byteRecurso, String tipoMime, String nombre, String nombreArchivo) {
+        this.byteRecurso = byteRecurso;
+        this.tipoMime = tipoMime;
+        this.nombre = nombre;
+        this.nombreArchivo = nombreArchivo;
+    }
     
     
     /**

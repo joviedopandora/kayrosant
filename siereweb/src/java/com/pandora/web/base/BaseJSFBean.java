@@ -268,9 +268,10 @@ public abstract class BaseJSFBean implements Serializable {
      * @param pAdmInforme Informe
      * @param tipoExportacion Tipo exportación, 1 para excel, 2 para PDF, 3 para
      * html, 4 para CSV
+     * @param strParametros Lista de parámetros, se espera, ruta logo obligatorio y opcional el nombre del archivo que será descargado
      * @return Recurso binario resultado de la generación del informe
      */
-    protected RecursoDescarga genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion, String logo) {
+    protected RecursoDescarga genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion, String... strParametros) {
         try {
             fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
@@ -278,10 +279,12 @@ public abstract class BaseJSFBean implements Serializable {
 
                 InputStream inputStream = ec.getResourceAsStream(getRuta_recursos() + pAdmInforme.getInfJasperruta() + "/" + pAdmInforme.getInfJasper());
                 hmParamInf.put("SUBREPORT_DIR", ec.getRealPath(getRuta_recursos() + pAdmInforme.getInfJasperruta()) + "/");
-                hmParamInf.put("rutalogo", ec.getRealPath(getRuta_recursos() + logo));
+                hmParamInf.put("rutalogo", ec.getRealPath(getRuta_recursos() + strParametros[0]));
                 JasperPrint jp = JasperFillManager.fillReport(inputStream, hmParamInf, con);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 RecursoDescarga jrResourceRetorna = null;
+                
+                String nombreArchivoSalidaRporte= strParametros.length==2? strParametros[1]: pAdmInforme.getInfNombre() ;
                 switch (tipoExportacion) {
                     case 1:
                         JExcelApiExporter jeae = new JExcelApiExporter();
@@ -292,14 +295,15 @@ public abstract class BaseJSFBean implements Serializable {
                         jeae.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
                         jeae.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
                         jeae.exportReport();
-                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre() + ".xls");
+                        
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", nombreArchivoSalidaRporte + ".xls");
                         break;
 
                     case 2:
 
                         JasperExportManager.exportReportToPdfStream(jp, baos);
 
-                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/pdf", pAdmInforme.getInfNombre() + ".pdf");
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/pdf", nombreArchivoSalidaRporte + ".pdf");
 
                         break;
                     case 3:
@@ -314,7 +318,7 @@ public abstract class BaseJSFBean implements Serializable {
                         exporterCSV.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND, true);
                         exporterCSV.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
                         exporterCSV.exportReport();
-                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", pAdmInforme.getInfNombre()+".csv");
+                        jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", nombreArchivoSalidaRporte + ".csv");
                         break;
                 }
                 if (jrResourceRetorna != null) {
