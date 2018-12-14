@@ -185,17 +185,10 @@ and open the template in the editor.
                                         <h:commandButton styleClass="btnGenerarInforme"
                                                          actionListener="#{pcsCotizacionJSFBean.generarReporteCotizacionXventa_ActionEvent}"
                                                          title="Generar Reporte">  
-                                            <f:ajax execute="@this" render="@all" />
+                                            <f:ajax disabled="true" />
                                             <f:attribute name="tabla" value="#{item}" />
                                         </h:commandButton>
-                                        <ice:outputResource resource="#{item.jaspResource}"
-                                                            mimeType="application/vnd.ms-excel"
-                                                            fileName="#{item.nombreArchivo}"
-                                                            shared="false"
-                                                            label=" "
-                                                            type="button"
-                                                            styleClass="btnInformeEXCEL">
-                                        </ice:outputResource>
+                                     
 
 
                                     </h:panelGrid> 

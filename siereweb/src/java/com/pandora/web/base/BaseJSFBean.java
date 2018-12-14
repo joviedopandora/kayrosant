@@ -285,6 +285,7 @@ public abstract class BaseJSFBean implements Serializable {
                 RecursoDescarga jrResourceRetorna = null;
                 
                 String nombreArchivoSalidaRporte= strParametros.length==2? strParametros[1]: pAdmInforme.getInfNombre() ;
+                nombreArchivoSalidaRporte=nombreArchivoSalidaRporte.length()>=40? nombreArchivoSalidaRporte=nombreArchivoSalidaRporte.substring(0,39) :nombreArchivoSalidaRporte;
                 switch (tipoExportacion) {
                     case 1:
                         JExcelApiExporter jeae = new JExcelApiExporter();

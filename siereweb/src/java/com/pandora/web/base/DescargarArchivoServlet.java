@@ -39,14 +39,18 @@ public class DescargarArchivoServlet extends HttpServlet {
             throws ServletException, IOException {
         OutputStream responseOutputStream;
         HttpSession httpSession = request.getSession();
-        RecursoDescarga rd = (RecursoDescarga) httpSession.getAttribute("rd");
-        response.setContentType(rd.getTipoMime());
-        response.setHeader("Content-disposition", "attachment; filename=" + rd.getNombre());
-        responseOutputStream = response.getOutputStream();
-        responseOutputStream.write(rd.getByteRecurso());
 
-        responseOutputStream.flush();
-        httpSession.removeAttribute("rd");
+        RecursoDescarga rd = (RecursoDescarga) httpSession.getAttribute("rd");
+        if (rd != null) {
+            response.setContentType(rd.getTipoMime());
+            response.setHeader("Content-disposition", "attachment; filename=\"" + rd.getNombre()+"\"");
+            responseOutputStream = response.getOutputStream();
+            responseOutputStream.write(rd.getByteRecurso());
+
+            responseOutputStream.flush();
+            httpSession.removeAttribute("rd");
+            responseOutputStream.close();
+        }
 
     }
 
