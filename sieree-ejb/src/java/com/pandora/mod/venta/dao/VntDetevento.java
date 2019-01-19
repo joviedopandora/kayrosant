@@ -56,6 +56,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VntDetevento.findByVdeObsr", query = "SELECT v FROM VntDetevento v WHERE v.vdeObsr = :vdeObsr"),
     @NamedQuery(name = "VntDetevento.detEvtXVenta", query = "SELECT v FROM VntDetevento v WHERE v.rgvtId.rgvtId = :rgvtId")
 })
+
 public class VntDetevento implements Serializable {
 
     private static final long serialVersionUID = 1L;

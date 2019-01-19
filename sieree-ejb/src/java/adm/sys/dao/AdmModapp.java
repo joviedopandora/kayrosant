@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
 //Obtener modulos de la aplicación por menú
     @NamedQuery(name = "AdmModapp.getModappXMenu", query = "SELECT m FROM AdmModapp m JOIN m.menId menu "
     + " WHERE menu.menId = :menId "
-    + " ORDER BY m.modNombre ")})
+    + " ORDER BY m.modNombre ")
+})
 public class AdmModapp implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
