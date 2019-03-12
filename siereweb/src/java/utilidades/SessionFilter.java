@@ -48,9 +48,9 @@ public class SessionFilter implements Filter {
             HttpSession session = httpServletRequest.getSession(false);
             if (session == null) {
                 //httpServletResponse.sendRedirect("/Error.jsf");
-                httpServletRequest.getServletContext().getRequestDispatcher("/index.jsf").forward(request, response);
+                //httpServletRequest.getServletContext().getRequestDispatcher("/index.jsf").forward(request, response);
             } else if (session.getAttribute("usrLog") == null) {
-                httpServletRequest.getServletContext().getRequestDispatcher("/index.jsf").forward(request, response);
+               // httpServletRequest.getServletContext().getRequestDispatcher("/index.jsf").forward(request, response);
                
             }
         }

@@ -50,15 +50,7 @@ and open the template in the editor.
                 <f:ajax execute="@this" render="@form" />
             </h:commandButton>
 
-            <ice:outputResource resource="#{pcsOrdenProduccionJSFBean.jasperResource}"
-                                rendered="#{pcsOrdenProduccionJSFBean.numPanel == 2 or pcsOrdenProduccionJSFBean.numPanel == 4}"
-                                mimeType="application/pdf"
-                                fileName="OP_#{pcsOrdenProduccionJSFBean.nombreArchivoGeneracionOp}.pdf"
-                                shared="false"
-                                label=" "
-                                type="button"
-                                styleClass="btnInformePDF">
-            </ice:outputResource>
+          
 
             <h:commandButton styleClass="btnBuscarStd"
                              rendered="#{pcsOrdenProduccionJSFBean.numPanel == 4 and !pcsOrdenProduccionJSFBean.blnMostrarPanel}"

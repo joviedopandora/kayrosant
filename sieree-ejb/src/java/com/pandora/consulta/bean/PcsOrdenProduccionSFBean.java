@@ -187,6 +187,19 @@ public class PcsOrdenProduccionSFBean {
         q.setParameter("prdVarios", pPrdVarios);
         return q.getResultList();
     }
+    
+     /**
+     * Cargar lista de productos varios
+     *
+     * @param pPrdVarios
+     * @return
+     */
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<InvProducto> getLstInvProductoXEstado(boolean prdEst) {
+        Query q = em.createNamedQuery("InvProducto.findByPrdEst");
+        q.setParameter("prdEst", prdEst);
+        return q.getResultList();
+    }
 
     /**
      * Grabar servicio por orden de producción

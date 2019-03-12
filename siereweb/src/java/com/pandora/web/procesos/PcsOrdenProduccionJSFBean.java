@@ -712,7 +712,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
     private void cargarListaProductosVarios() {
         lstTablaProducto.clear();
-        for (InvProducto producto : popsfb.getLstInvProductoXVarios(true)) {
+        
+        for (InvProducto producto : popsfb.getLstInvProductoXEstado(true)) {
             TablaProducto tp = new TablaProducto();
             tp.setInvProducto(producto);
             lstTablaProducto.add(tp);
