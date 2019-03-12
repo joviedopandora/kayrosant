@@ -33,7 +33,7 @@ and open the template in the editor.
                              rendered="#{pcsOrdenProduccionJSFBean.numPanel == 2 ? true : false}"
                              actionListener="#{pcsOrdenProduccionJSFBean.btnGenerarReporteOrdenProduccion_ActionEvent}"
                              title="Generar Informe de Orden Producción">
-                <f:ajax execute="@this" render="@all" />
+                <f:ajax disabled="true" />
             </h:commandButton>
 
             <h:commandButton styleClass="btnGuardarStd"

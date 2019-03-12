@@ -25,7 +25,6 @@ import com.pandora.mod.venta.dao.VntRemision;
 import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.mod.venta.dao.VntServxventa;
 import com.pandora.pagocuenta.dao.FinFormapago;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Remove;

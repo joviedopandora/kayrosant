@@ -24,9 +24,13 @@ and open the template in the editor.
                            scrollHeight="350"
                            rows="20">
 
-                <ace:column  headerText="#Venta" sortBy="#{car.vntServxventa.rgvtId.rgvtId}}"
-                             filterBy="#{car.vntServxventa.rgvtId.rgvtId}" filterMatchMode="contains">
-                    <h:outputText  value="#{car.vntServxventa.rgvtId.rgvtId}"/>
+                <ace:column  headerText="#Venta">
+                    <f:facet name="header">
+                        <ace:textEntry  value="#{pcsOrdenProduccionJSFBean.strFiltrovdergvtId}" valueChangeListener="#{pcsOrdenProduccionJSFBean.carTable_FiltroId_VCE}">
+                            <ace:ajax execute="@this" render="@form" />
+                        </ace:textEntry>  
+                    </f:facet>
+                    <h:outputText value="#{car.vntServxventa.rgvtId.rgvtId}"/>
                 </ace:column>
                 <ace:column  headerText="Indice">
                     <h:outputText  value="#{car.inidceFila}"/>
@@ -38,7 +42,7 @@ and open the template in the editor.
 
 
                 <ace:column headerText="Nombre Evento"  styleClass="textcolumleft letraOutput" sortBy="#{car.vntServxventa.rgvtId.vdeId.vdeObsr}"
-                           >
+                            >
                     <f:facet name="header">
                         <h:panelGroup>
                             <ace:textEntry value="#{pcsOrdenProduccionJSFBean.strFiltrovdeObsr}" valueChangeListener="#{pcsOrdenProduccionJSFBean.carTable_FiltroObsr_VCE}" >

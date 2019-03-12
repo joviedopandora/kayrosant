@@ -1109,8 +1109,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
                 tablaPopOrdenProduccionSel.getCronograma().setPopOrdenprod(tablaPopOrdenProduccionSel.getPopOrdenprod());
                 tablaPopOrdenProduccionSel.setCronograma(cronogramaSLBean.editarCronograma(tablaPopOrdenProduccionSel.getCronograma()));
             }
-           // jasperResource = 
-                     generarInformeOP(tablaPopOrdenProduccionSel.getPopOrdenprod());
+            // jasperResource = 
+            generarInformeOP(tablaPopOrdenProduccionSel.getPopOrdenprod());
         }
 
         mostrarError("Guardado Exitoso!!", 3);
@@ -1131,12 +1131,13 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
             rutaLogo = informe.getInfJasperruta() + "/logos/maximus_kids.jpg";
             hmParametros.put("rutaFoto", rutaLogo);
         }
-        
-        irAServletDescarga(   genInfRecurso(hmParametros, informe, 2, rutaLogo,"OP_" + getNombreArchivoGeneracionOp()));
+
+        irAServletDescarga(genInfRecurso(hmParametros, informe, 2, rutaLogo, "OP_" + getNombreArchivoGeneracionOp()));
 
     }
 //Filtro obsr
     private String strFiltrovdeObsr;
+    private String strFiltrovdergvtId;
 
     public String getStrFiltrovdeObsr() {
         return strFiltrovdeObsr;
@@ -1146,6 +1147,35 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         this.strFiltrovdeObsr = strFiltrovdeObsr;
     }
     List<TablaVntSrvXVenta> lstTablaServiciosPendientesFiltrados = new ArrayList<>();
+
+    public void carTable_FiltroId_VCE(ValueChangeEvent vce) {
+        lstTablaServiciosPendientesFiltrados.clear();
+        strFiltrovdergvtId = (String) vce.getNewValue();
+
+        if (strFiltrovdergvtId.isEmpty()) {
+            cargarCronograma();
+        } else {
+             cargarCronograma();
+            if (esNumero(strFiltrovdergvtId)) {
+                for (TablaVntSrvXVenta tvsxv : lstTablaServiciosPendientes) {
+                    if (String.valueOf(tvsxv.getVntServxventa().getRgvtId().getRgvtId()).equals(strFiltrovdergvtId)) {
+                        lstTablaServiciosPendientesFiltrados.add(tvsxv);
+                    }
+
+                }
+                if (!lstTablaServiciosPendientesFiltrados.isEmpty()) {
+                    lstTablaServiciosPendientes.clear();
+                    for (TablaVntSrvXVenta xVenta : lstTablaServiciosPendientesFiltrados) {
+                        lstTablaServiciosPendientes.add(xVenta);
+                    }
+                } else {
+                    lstTablaServiciosPendientes.clear();
+                }
+            }
+
+        }
+
+    }
 
     public void carTable_FiltroObsr_VCE(ValueChangeEvent vce) {
         lstTablaServiciosPendientesFiltrados.clear();
@@ -1755,8 +1785,8 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
         public void generarReporte(ActionEvent ae) {
             this.respuesta = (TablaPopOrdenProduccion) ae.getComponent().getAttributes().get("tabla");
 
-           /* this.respuesta.setResource(*/
-                    generarInformeOP(this.respuesta.getPopOrdenprod());
+            /* this.respuesta.setResource(*/
+            generarInformeOP(this.respuesta.getPopOrdenprod());
 
         }
 
@@ -1798,5 +1828,19 @@ public class PcsOrdenProduccionJSFBean extends BaseJSFBean implements Serializab
 
     public void setLstTablaServicios(List<TablaServicio> lstTablaServicios) {
         this.lstTablaServicios = lstTablaServicios;
+    }
+
+    /**
+     * @return the strFiltrovdergvtId
+     */
+    public String getStrFiltrovdergvtId() {
+        return strFiltrovdergvtId;
+    }
+
+    /**
+     * @param strFiltrovdergvtId the strFiltrovdergvtId to set
+     */
+    public void setStrFiltrovdergvtId(String strFiltrovdergvtId) {
+        this.strFiltrovdergvtId = strFiltrovdergvtId;
     }
 }

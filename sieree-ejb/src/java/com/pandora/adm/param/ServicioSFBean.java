@@ -143,7 +143,7 @@ public class ServicioSFBean implements Serializable {
                 consulta.append(" AND p.prdDesc LIKE :prdDesc ");
             }
         }
-        consulta.append(" ORDER BY p.prdNombre");
+        consulta.append(" ORDER BY p.prdDesc, p.prdNombre");
         Query q = em.createQuery(consulta.toString());
         if (dto.getIdProducto() != null) {
             q.setParameter("prdId", dto.getIdProducto());

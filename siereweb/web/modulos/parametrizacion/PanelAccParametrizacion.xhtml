@@ -294,7 +294,7 @@ and open the template in the editor.
                         <tr>
                             <td style="width: 20%"> 
                                 <div> 
-                                    <label>Ubicación</label>
+                                    <label>Conjunto</label>
                                 </div>
                             </td>
                             <td style="width: 30%">
@@ -397,6 +397,10 @@ and open the template in the editor.
 
                                          <ace:column headerText="Nombre" >
                                             <h:outputText value="#{itemPr.producto.prdNombre}"
+                                                          styleClass="textcolumleft letraOutput"/>
+                                        </ace:column>
+                                          <ace:column headerText="Conjunto" >
+                                            <h:outputText value="#{itemPr.producto.prdDesc}"
                                                           styleClass="textcolumleft letraOutput"/>
                                         </ace:column>
                                         

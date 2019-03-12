@@ -197,7 +197,8 @@ and open the template in the editor.
                                     <h:outputText value="#{itemInv.prdNombre}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>
-                                <ace:column headerText="Ubicación" >
+                                <ace:column headerText="Conjunto" filterBy="#{itemInv.prdDesc}" filterMatchMode="contains" 
+                                             >
                                     <h:outputText value="#{itemInv.prdDesc}"
                                                   styleClass="textcolumleft letraOutput"/>
                                 </ace:column>

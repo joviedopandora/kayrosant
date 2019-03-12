@@ -168,12 +168,12 @@ public abstract class BaseJSFBean implements Serializable {
         try {
             fc = FacesContext.getCurrentInstance();
             ExternalContext ec = fc.getExternalContext();
-            URL url = new URL( ec.getRequestScheme(),
-            ec.getRequestServerName(),
-            ec.getRequestServerPort(),
-            ec.getRequestContextPath());           
+            URL url = new URL(ec.getRequestScheme(),
+                    ec.getRequestServerName(),
+                    ec.getRequestServerPort(),
+                    ec.getRequestContextPath());
 //            String contextoApp = ec.getApplicationContextPath();
-            HttpSession httpSession =(HttpSession) ec.getSession(false);
+            HttpSession httpSession = (HttpSession) ec.getSession(false);
             httpSession.setAttribute("rd", pRecursoDescarga);
             ec.redirect(url.toString() + "/DescargarArchivoServlet");
         } catch (IOException ex) {
@@ -268,7 +268,8 @@ public abstract class BaseJSFBean implements Serializable {
      * @param pAdmInforme Informe
      * @param tipoExportacion Tipo exportación, 1 para excel, 2 para PDF, 3 para
      * html, 4 para CSV
-     * @param strParametros Lista de parámetros, se espera, ruta logo obligatorio y opcional el nombre del archivo que será descargado
+     * @param strParametros Lista de parámetros, se espera, ruta logo
+     * obligatorio y opcional el nombre del archivo que será descargado
      * @return Recurso binario resultado de la generación del informe
      */
     protected RecursoDescarga genInfRecurso(HashMap hmParamInf, AdmInforme pAdmInforme, Integer tipoExportacion, String... strParametros) {
@@ -283,9 +284,9 @@ public abstract class BaseJSFBean implements Serializable {
                 JasperPrint jp = JasperFillManager.fillReport(inputStream, hmParamInf, con);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 RecursoDescarga jrResourceRetorna = null;
-                
-                String nombreArchivoSalidaRporte= strParametros.length==2? strParametros[1]: pAdmInforme.getInfNombre() ;
-                nombreArchivoSalidaRporte=nombreArchivoSalidaRporte.length()>=40? nombreArchivoSalidaRporte=nombreArchivoSalidaRporte.substring(0,39) :nombreArchivoSalidaRporte;
+
+                String nombreArchivoSalidaRporte = strParametros.length == 2 ? strParametros[1] : pAdmInforme.getInfNombre();
+                nombreArchivoSalidaRporte = nombreArchivoSalidaRporte.length() >= 40 ? nombreArchivoSalidaRporte = nombreArchivoSalidaRporte.substring(0, 39) : nombreArchivoSalidaRporte;
                 switch (tipoExportacion) {
                     case 1:
                         JExcelApiExporter jeae = new JExcelApiExporter();
@@ -296,7 +297,7 @@ public abstract class BaseJSFBean implements Serializable {
                         jeae.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS, Boolean.TRUE);
                         jeae.setParameter(JRExporterParameter.CHARACTER_ENCODING, "UTF8");
                         jeae.exportReport();
-                        
+
                         jrResourceRetorna = new RecursoDescarga(baos.toByteArray(), "application/xls", nombreArchivoSalidaRporte + ".xls");
                         break;
 
@@ -770,6 +771,15 @@ public abstract class BaseJSFBean implements Serializable {
                 destination.close();
             }
         }
+    }
+
+    protected  boolean esNumero(String str) {
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public String convertDateToStringFormat(Date date, EnFormatDate formatDate) {

@@ -26,16 +26,19 @@ and open the template in the editor.
                 <h:commandButton styleClass="btnBuscarStd"
                                  actionListener="#{pcsCotizacionJSFBean.buscarGen_ActionEvent}"
                                  title="Buscar">
+                    <f:ajax execute="@this" render="@form"/>
                 </h:commandButton>
                 <h:commandButton styleClass="btnNuevoStd"
                                  actionListener="#{pcsCotizacionJSFBean.btnNuevoCliente_ActionEvent}"
                                  title="Agregar nuevo cliente">
+                    <f:ajax execute="@this" render="@form"/>
                 </h:commandButton>
                 
                 <h:commandButton value="Nueva llamada"
                                  styleClass="btnNewCall"
                                  actionListener="#{pcsCotizacionJSFBean.btnNuevoLamada_ActionEvent}"
                                  title="Nueva Llamada¡¡">
+                    <f:ajax execute="@this" render="@form"/>
                 </h:commandButton>
             </h:panelGrid>
             <h:panelGrid columns="1" border="0" cellpadding="0" width="100%">
