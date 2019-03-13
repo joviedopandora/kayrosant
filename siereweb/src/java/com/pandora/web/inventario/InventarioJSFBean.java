@@ -15,7 +15,7 @@ import com.pandora.adm.dao.InvProducto;
 import com.pandora.adm.dao.InvTipotransc;
 import com.pandora.adm.dao.InvTransac;
 import com.pandora.mod.inventario.InventarioSFBean;
-import com.pandora.mod.inventario.TablaConsultaInventario;
+import com.pandora.mod.inventario.ConsultaInventarioDTO;
 import com.pandora.mod.venta.dao.VntServicio;
 import com.pandora.web.base.BaseJSFBean;
 import com.pandora.web.base.IPasos;
@@ -708,14 +708,14 @@ public class InventarioJSFBean extends BaseJSFBean implements Serializable, IPas
     }
 
     private void consultar() {
-        TablaConsultaInventario tci = new TablaConsultaInventario();
+        ConsultaInventarioDTO tci = new ConsultaInventarioDTO();
         lstInventario.clear();
         lstInvProducto.clear();
         tci.setIdProducto(idProducto);
         tci.setCodigoBarras((codigoConsulta == null ? codigoConsulta : codigoConsulta.trim()));
         tci.setNombreProducto((nombreConsulta == null ? nombreConsulta : nombreConsulta.trim()));
-        tci.setMarca(marca);
-        tci.setPresentacion(presentacion);
+        tci.setMarNombre(marca);
+        tci.setPspNombre(presentacion);
         for (InvInvent i : inventarioSFBean.getLstInvInventXParametros(tci)) {
             lstInventario.add(i);
         }

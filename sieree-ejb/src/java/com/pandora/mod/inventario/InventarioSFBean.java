@@ -251,7 +251,7 @@ public class InventarioSFBean {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<InvInvent> getLstInvInventXParametros(TablaConsultaInventario tci) {
+    public List<InvInvent> getLstInvInventXParametros(ConsultaInventarioDTO tci) {
         StringBuilder sql = new StringBuilder("SELECT  i FROM InvInvent i WHERE i.prdId.prdEst = :pspEst ");
         if (tci.getCodigoBarras() != null && !tci.getCodigoBarras().isEmpty()) {
             sql.append(" AND  UPPER(i.invCodigobarras) LIKE UPPER(:invCodigobarras) ");
@@ -262,11 +262,11 @@ public class InventarioSFBean {
         if (tci.getNombreProducto() != null && !tci.getNombreProducto().isEmpty()) {
             sql.append(" AND  UPPER(i.prdId.prdNombre) LIKE UPPER(:prdNombre) ");
         }
-        if (tci.getMarca() != null && tci.getMarca() != -1) {
+        if (tci.getMarNombre() != null && tci.getMarNombre() != -1) {
             sql.append(" AND i.marId.marId = :marId ");
         }
 
-        if (tci.getPresentacion() != null && tci.getPresentacion() != -1) {
+        if (tci.getPspNombre() != null && tci.getPspNombre() != -1) {
             sql.append(" AND i.pspId.pspId = :pspId ");
         }
 
@@ -282,18 +282,18 @@ public class InventarioSFBean {
         if (tci.getNombreProducto() != null && !tci.getNombreProducto().isEmpty()) {
             q.setParameter("prdNombre", "%" + tci.getNombreProducto() + "%");
         }
-        if (tci.getMarca() != null && tci.getMarca() != -1) {
-            q.setParameter("marId", tci.getMarca());
+        if (tci.getMarNombre() != null && tci.getMarNombre() != -1) {
+            q.setParameter("marId", tci.getMarNombre());
         }
 
-        if (tci.getPresentacion() != null && tci.getPresentacion() != -1) {
-            q.setParameter("pspId", tci.getPresentacion());
+        if (tci.getPspNombre() != null && tci.getPspNombre() != -1) {
+            q.setParameter("pspId", tci.getPspNombre());
         }
         return q.getResultList();
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<InvProducto> getLstInvProductoXParametros(TablaConsultaInventario tci) {
+    public List<InvProducto> getLstInvProductoXParametros(ConsultaInventarioDTO tci) {
         StringBuilder sql = new StringBuilder("SELECT  i FROM InvProducto i WHERE i.prdEst = :pspEst ");
 
         if (tci.getIdProducto() != null) {
@@ -302,11 +302,11 @@ public class InventarioSFBean {
         if (tci.getNombreProducto() != null && !tci.getNombreProducto().isEmpty()) {
             sql.append(" AND UPPER(i.prdNombre) LIKE UPPER(:prdNombre) ");
         }
-        if (tci.getMarca() != null && tci.getMarca() != -1) {
+        if (tci.getMarNombre() != null && tci.getMarNombre() != -1) {
             sql.append(" AND i.invMarcxprodList.marId = :marId ");
         }
 
-        if (tci.getPresentacion() != null && tci.getPresentacion() != -1) {
+        if (tci.getPspNombre() != null && tci.getPspNombre() != -1) {
             sql.append(" AND i.invPresntxprodList.pspId= :pspId ");
         }
 
@@ -320,12 +320,12 @@ public class InventarioSFBean {
         if (tci.getNombreProducto() != null && !tci.getNombreProducto().isEmpty()) {
             q.setParameter("prdNombre", "%" + tci.getNombreProducto() + "%");
         }
-        if (tci.getMarca() != null && tci.getMarca() != -1) {
-            q.setParameter("marId", tci.getMarca());
+        if (tci.getMarNombre() != null && tci.getMarNombre() != -1) {
+            q.setParameter("marId", tci.getMarNombre());
         }
 
-        if (tci.getPresentacion() != null && tci.getPresentacion() != -1) {
-            q.setParameter("pspId", tci.getPresentacion());
+        if (tci.getPspNombre() != null && tci.getPspNombre() != -1) {
+            q.setParameter("pspId", tci.getPspNombre());
         }
         return q.getResultList();
     }

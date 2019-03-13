@@ -10,16 +10,16 @@ import java.io.Serializable;
  *
  * @author breyner.robles
  */
-public class TablaConsultaInventario implements Serializable {
+public class ConsultaInventarioDTO implements Serializable {
 
     private String codigoBarras = null;
     private Integer idProducto = null;
     private String nombreProducto = null;
-    private Integer marca = null;
-    private Integer presentacion = null;
+    private Integer marNombre = null;
+    private Integer pspNombre = null;
    
 
-    public TablaConsultaInventario() {
+    public ConsultaInventarioDTO() {
     }
 
     public String getCodigoBarras() {
@@ -46,19 +46,19 @@ public class TablaConsultaInventario implements Serializable {
         this.nombreProducto = nombreProducto;
     }
 
-    public Integer getMarca() {
-        return marca;
+    public Integer getMarNombre() {
+        return marNombre;
     }
 
-    public void setMarca(Integer marca) {
-        this.marca = marca;
+    public void setMarNombre(Integer marNombre) {
+        this.marNombre = marNombre;
     }
 
-    public Integer getPresentacion() {
-        return presentacion;
+    public Integer getPspNombre() {
+        return pspNombre;
     }
 
-    public void setPresentacion(Integer presentacion) {
-        this.presentacion = presentacion;
+    public void setPspNombre(Integer pspNombre) {
+        this.pspNombre = pspNombre;
     }
 }
